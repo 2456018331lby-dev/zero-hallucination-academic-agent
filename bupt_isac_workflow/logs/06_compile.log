@@ -8,14 +8,4 @@
     - Severe Overfull   : 0
     - Undefined Refs    : 0
 ======================================================================
-[OK] Successfully compiled PDF: C:\Users\24560\Desktop\study\pidemo\bupt_isac_workflow\thesis_project\main.pdf (375.4 KB)
-======================================================================
-[-] Pandoc binary was not found in PATH or standard directories.
-    Tip: To enable native Pandoc LaTeX->Docx AST compilation, run:
-         winget install JohnMacFarlane.Pandoc
-[*] Gracefully falling back to native Python GB/T docx engine...
-======================================================================
-[*] Executing native Python fallback exporter...
-[OK] Generated Word Thesis: C:\Users\24560\Desktop\study\pidemo\bupt_isac_workflow\thesis_project\thesis.docx
-
-[OK] Fallback docx generated successfully: C:\Users\24560\Desktop\study\pidemo\bupt_isac_workflow\thesis_project\thesis.docx
+[OK] Successfully compiled PDF: C:\Users\24560\Desktop\study\pidemo\bupt_isac_workflow\thesis_project\main.pdf (375.6 KB)
