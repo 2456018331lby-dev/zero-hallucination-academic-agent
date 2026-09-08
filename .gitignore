@@ -1,0 +1,38 @@
+# Unrelated sub-projects and scratch files
+4k-image-api/
+pelican_bicycle.svg
+pelican_viewer.html
+PI-DARWIN-SELECTION.md
+/gate_summary.json
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# LaTeX auxiliary compilation files
+*.aux
+*.toc
+*.lof
+*.lot
+*.out
+*.nav
+*.snm
+*.vrb
+*.bcf
+*.run.xml
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Ignore root/intermediate LaTeX logs, but preserve authentic execution logs in logs/
+*.log
+!*/logs/*.log
+!logs/*.log
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

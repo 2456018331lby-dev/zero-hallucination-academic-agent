@@ -1,0 +1,827 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="nexus-font-support">
+
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="google" content="nositelinkssearchbox"/>
+    <meta name="tdm-reservation" content="0">
+    <title>
+        On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds
+      -  University of Edinburgh Research Explorer</title>
+    
+    
+    
+
+
+
+<meta property="og:site_name" content="University of Edinburgh Research Explorer">
+
+
+    <meta property="og:title" content="On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds"/>
+
+
+<meta property="og:url" content="https://www.research.ed.ac.uk/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/">
+<meta property="og:locale" content="en_GB">
+
+
+
+
+    
+        <meta property="og:image" content="https://www.research.ed.ac.uk/skin/headerImage/">
+    
+
+
+
+
+    
+        <meta property="og:type" content="article">
+    
+
+    
+
+    
+
+
+    <link rel="stylesheet" href="/assets/application-d8c4196ba42289b701050fcf209ab3eb.css" />
+    
+    
+    <link href="/skin/css/" rel="stylesheet"/>
+    
+    <script src="/skin/script/" type="text/javascript"></script>
+    <script type="text/javascript" src="/assets/application-d9c3c96b32ee7877543159e1191a25d2.js" ></script>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/assets/html5shiv.min-ca5300beead9a4a9d2c9c584a9016410.js" ></script>
+    <script type="text/javascript" src="/assets/respond.min-678d372b349e434d9923e1b591f14a1e.js" ></script>
+    <![endif]-->
+    
+        
+        
+        <meta name="citation_title" content="On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds"></meta><meta name="citation_author" content="Cheng-Xiang Wang"></meta><meta name="citation_author_institution" content="Southeast University"></meta><meta name="citation_author" content="Xiaohu You"></meta><meta name="citation_author_institution" content="Southeast University"></meta><meta name="citation_author" content="Xiqi Gao"></meta><meta name="citation_author_institution" content="Southeast Univ, Southeast University - China, Dept Radio Engn"></meta><meta name="citation_author" content="Xiuming Zhu"></meta><meta name="citation_author_institution" content="Southeast University"></meta><meta name="citation_author" content="Zixin Li"></meta><meta name="citation_author_institution" content="Southeast University"></meta><meta name="citation_author" content="Chuan Zhang"></meta><meta name="citation_author_institution" content="Southeast University"></meta><meta name="citation_author" content="Haiming Wang"></meta><meta name="citation_author_institution" content="Southeast University"></meta><meta name="citation_author" content="Yongming Huang"></meta><meta name="citation_author_institution" content="Southeast University"></meta><meta name="citation_author" content="Yunfei  Chen"></meta><meta name="citation_author_institution" content="University of Warwick"></meta><meta name="citation_author" content="Harald Haas"></meta><meta name="citation_author_institution" content="School of Engineering"></meta><meta name="citation_author" content="John Thompson"></meta><meta name="citation_author_institution" content="School of Engineering"></meta><meta name="citation_author_email" content="J.S.Thompson@ed.ac.uk"></meta><meta name="citation_author" content="Erik Larsson"></meta><meta name="citation_author_institution" content="Linköping University"></meta><meta name="citation_author" content="M. Di Renzo"></meta><meta name="citation_author_institution" content="Universite Paris-Saclay"></meta><meta name="citation_author" content="Wen Tong"></meta><meta name="citation_author" content="Peiying Zhu"></meta><meta name="citation_author" content="Xuemin Shen"></meta><meta name="citation_author_institution" content="University of Waterloo"></meta><meta name="citation_author" content="Vincent Poor"></meta><meta name="citation_author_institution" content="Princeton University"></meta><meta name="citation_author" content="Lajos Hanzo"></meta><meta name="citation_author_institution" content="University of Southampton"></meta><meta name="citation_publication_date" content="2023/05/23"></meta><meta name="citation_pdf_url" content="https://www.research.ed.ac.uk/files/332247594/COMST_00431_2022.R1_Accept_v4_230214.pdf"></meta><meta name="citation_online_date" content="2023/03/14"></meta><meta name="citation_doi" content="10.1109/COMST.2023.3249835"></meta><meta name="citation_language" content="English"></meta><meta name="citation_keywords" content="6G application scenarios; 6G challenges; 6G key performance indicators (KPIs); 6G key technologies; 6G network architecture; 6G testbeds; 6G vision"></meta><meta name="citation_journal_title" content="IEEE Communications Surveys &amp; Tutorials"></meta><meta name="citation_issn" content="1553-877X"></meta><meta name="citation_publisher" content="Institute of Electrical and Electronics Engineers"></meta><meta name="citation_volume" content="25"></meta><meta name="citation_issue" content="2"></meta><meta name="citation_firstpage" content="905"></meta><meta name="citation_lastpage" content="974"></meta>
+        <script src="/assets/Chart.min-27bff060c3e539ceb22e763c8f2e9e10.js"></script>
+        <script src="/assets/jquery.content-chart-9c09bb79ba3fc3829b6478d0e114f737.js"></script>
+        
+    
+    
+    <!-- Google Analytics: No account ID (G) found -->
+    <script src="//assets.adobedtm.com/4a848ae9611a/ea83f870454d/launch-af020409b299.min.js" async=""></script>
+    
+    
+</head>
+
+<body class="" data-page="publications">
+
+<div id="aria-polite" aria-live="polite"></div>
+<div id="aria-assertive" aria-live="assertive"></div>
+
+<a href="#main-navigation" class="sr-only sr-only-focusable">Skip to main navigation</a>
+
+    <a href="#main-search" class="sr-only sr-only-focusable">Skip to search</a>
+
+<a href="#main-content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+
+
+
+
+
+
+    <header class="header" id="page-header">
+        <div class="primary  ">
+            <div class="container">
+                
+                <a href="/en/" class="logo">
+                    
+                        <span class="sr-only">University of Edinburgh Research Explorer Home</span>
+                        <img src="/skin/headerImage/" alt="University of Edinburgh Research Explorer Logo"/>
+                    
+                </a>
+                
+                    <ul class="header-tools ">
+                        
+                            <li class="help-and-faq">
+                                <a href="https://library.ed.ac.uk/research-support/research-information-management/pure" target="_blank">
+                                    <i class="icon icon-lifebuoy" aria-hidden="true"></i>
+                                    <span class="label">Help &amp; FAQ</span>
+                                    <span class="sr-only">&nbsp; Link opens in a new tab</span>
+                                </a>
+                            </li>
+                        
+                        
+                    </ul>
+                
+                
+                
+            </div>
+        </div>
+
+        
+            <div class="header-search">
+                
+<form action="/en/searchAll/index/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/" method="get"
+      class="search-form" id="search-everything">
+
+    <div class="global-search-wrapper">
+        <div class="global-search mini">
+            <div class="field-button-wrapper">
+                <div class="search-cell search-field">
+                    <label for="main-search" class="sr-only">Search content at University of Edinburgh Research Explorer</label>
+                    <input id="main-search" class="search-field" value="" name="search"
+                           placeholder="Search..."/>
+                </div>
+
+                <div class="search-submit">
+                    <button type="submit" aria-label="Search">
+                        <i class="icon icon-magnifying-glass" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(function () {
+        var searchForm = $("#search-everything");
+        var searchField = $(".search-field", searchForm);
+        searchForm.on("submit", function () {
+            var field = searchField.find("input");
+            var searchString = field.val();
+
+            // No enter key submit nothing :-)
+            if (!searchString) return false;
+
+            if (searchString.length >= 200) {
+                searchForm.attr("method", "post");
+                searchForm.attr("action", "/en/concepts/copypaste/");
+                field.attr("name", "text");
+            }
+        });
+    });
+</script>
+            </div>
+        
+
+
+        
+        
+            <div class="subMenu">
+                <div class="secondary">
+                    <div class="container">
+                        <nav id="main-navigation" aria-label="Main navigation" class="content-navigation three-third">
+                            <ul data-value="More" role="menubar" aria-label="Main navigation">
+                                <li class="" role="none">
+                                    <a href="/en/" role="menuitem" tabindex="-1">Home</a>
+                                </li>
+
+                                
+                                    <li class="selected" role="none">
+                                        <a class="portal_link" tabindex="0" role="menuitem" href="/en/publications/"><span>Research output</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/persons/"><span>Profiles</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/organisations/"><span>Research units</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/projects/"><span>Projects</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/datasets/"><span>Datasets</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/prizes/"><span>Prizes</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/activities/"><span>Activities</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/clippings/"><span>Press/Media</span></a>
+                                    </li>
+                                
+                                    <li class="" role="none">
+                                        <a class="portal_link" tabindex="-1" role="menuitem" href="/en/equipments/"><span>Equipment</span></a>
+                                    </li>
+                                
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+        
+    </header>
+
+    <main id="page-content">
+        
+    <div class="page-section page-section-publications page-section-publications-view ">
+
+        
+        
+        
+        
+        <section
+                class="page-section-header page-section-header-publications page-section-header-publications-view
+                 no-backdrop-image"
+                data-stickyheader=""
+                style="">
+            
+            
+        
+
+
+<div class="container">
+    <div class="row">
+        <div class="introduction no-metrics">
+            <div class="rendering"><h1><span>On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds</span></h1></div>
+            <div class="rendering rendering_researchoutput  rendering_researchoutput_associatespersonsclassifiedportal rendering_contributiontojournal rendering_associatespersonsclassifiedportal rendering_contributiontojournal_associatespersonsclassifiedportal"><ul class="relations persons"><li>Cheng-Xiang Wang</li><li>, Xiaohu You</li><li>, Xiqi Gao</li><li>, Xiuming Zhu</li><li>, Zixin Li</li><li>, Chuan Zhang</li><li>, Haiming Wang</li><li>, Yongming Huang</li><li>, Yunfei  Chen</li><li>, Harald Haas</li><li>, <a rel="Person" href="https://www.research.ed.ac.uk/en/persons/john-thompson/" class="link person"><span>John Thompson</span></a></li><li>, Erik Larsson</li><li>, M. Di Renzo</li><li>, Wen Tong</li><li>, Peiying Zhu</li><li>, Xuemin Shen</li><li>, Vincent Poor</li><li>, Lajos Hanzo</li></div>
+            <div class="rendering rendering_researchoutput  rendering_researchoutput_associatesorganisationsportal rendering_contributiontojournal rendering_associatesorganisationsportal rendering_contributiontojournal_associatesorganisationsportal"><ul class="relations organisations"><li class="school"><a rel="Organisation" href="https://www.research.ed.ac.uk/en/organisations/school-of-engineering/" class="link"><span>School of Engineering</span></a></li></ul></div>
+            
+            <div class="rendering rendering_researchoutput  rendering_researchoutput_publicationcontenttyperendererportalng rendering_contributiontojournal rendering_publicationcontenttyperendererportalng rendering_contributiontojournal_publicationcontenttyperendererportalng"><p class="type"><span class="type_family">Research output<span class="type_family_sep">: </span></span><span class="type_classification_parent">Contribution to journal<span class="type_parent_sep"> › </span></span><span class="type_classification">Article</span><span class="type_classification"><span class="type_parent_sep"> › </span>peer-review</span></p></div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+<div class="subMenu">
+    <div class="content-profile-navigation">
+    <div class="container">
+        <nav role="navigation">
+            <ul role="menubar">
+                <li class="selected" role="none">
+                    <a class="portal_link" role="menuitem" href="/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/"><span>
+                        <i class="icon icon-publication" aria-hidden="true"></i>
+                        <span class="label">Overview</span>
+                    </span></a>
+                </li>
+                
+                    <li class="" role="none">
+                        <a class="portal_link" role="menuitem" href="/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/fingerprints/"><span>
+                            <i class="icon icon-fingerprint" aria-hidden="true"></i>
+                            <span class="label">Fingerprint</span>
+                        </span></a>
+                    </li>
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+
+            </ul>
+        </nav>
+    </div>
+    </div>
+</div>
+
+    
+        </section>
+
+        <div id="main-content"
+             class="page-section-content page-section-content-publications page-section-content-publications-view   ">
+            
+        <section class="page-section content-relation-section">
+            <div class="container">
+                <div class="clearfix">
+                    <div class="content-content publication-content">
+                        
+                        
+                            <h2 class="subheader">Abstract</h2>
+                        <div class="rendering rendering_researchoutput  rendering_researchoutput_abstractportal rendering_contributiontojournal rendering_abstractportal rendering_contributiontojournal_abstractportal"><div class="textblock"><p>Fifth generation (5G) mobile communication systems have entered the stage of commercial deployment, providing users with new services, improved user experiences as well as a host of novel opportunities to various industries. However, 5G still faces many challenges. To address these challenges, international industrial, academic, and standards organizations have commenced research on sixth generation (6G) wireless communication systems. A series of white papers and survey papers have been published, which aim to define 6G in terms of requirements, application scenarios, key technologies, etc. Although ITU-R has been working on the 6G vision and it is expected to reach a consensus on what 6G will be by mid-2023, the related global discussions are still wide open and the existing literature has identified numerous open issues. This paper first provides a comprehensive portrayal of the 6G vision, technical requirements, and application scenarios, covering the current common understanding of 6G. Then, a critical appraisal of the 6G network architecture and key technologies is presented. Furthermore, existing testbeds and advanced 6G verification platforms are detailed for the first time. In addition, future research directions and open challenges are identified to stimulate the on-going global debate. Finally, lessons learned to date concerning 6G networks are discussed.</p></div></div>
+                        <div class="rendering rendering_researchoutput  rendering_researchoutput_detailsportal rendering_contributiontojournal rendering_detailsportal rendering_contributiontojournal_detailsportal"><div class="article"><table class="properties"><tbody><tr class="language"><th scope="row">Original language</th><td>English</td></tr><tr><th scope="row">Pages (from-to)</th><td>905-974</td></tr><tr class="numberofpages"><th scope="row">Number of pages</th><td>71</td></tr><tr><th scope="row">Journal</th><td><a rel="Journal" href="#" class="link"><span>IEEE Communications Surveys &amp; Tutorials</span></a></td></tr><tr><th scope="row">Volume</th><td>25</td></tr><tr><th scope="row">Issue number</th><td>2</td></tr><tr><th scope="row">Early online date</th><td><span class="date">27 Feb 2023</span></td></tr><tr class="digital_object_identifiers"><th scope="row">DOIs</th><td><ul class="relations digital_object_identifiers"><li><a onclick="window.open(this.href, '_blank','noopener,noreferrer'); return false;" href="https://doi.org/10.1109/COMST.2023.3249835" class="link"><span>https://doi.org/10.1109/COMST.2023.3249835</span></a> </li></ul></td></tr><tr class="status"><th scope="row">Publication status</th><td><span class="prefix">Published - </span><span class="date">23 May 2023</span></td></tr></tbody></table></div></div>
+                        
+
+                        
+
+                        
+
+                        <div class="rendering rendering_keywordable rendering_expertkeywordgrouspbytypeportal rendering_keywordable_expertkeywordgrouspbytypeportal"><div class="keyword-group"><h2 class="subheader">Keywords / Materials (for Non-textual outputs)</h2><ul class="relations keywords"><li class="userdefined-keyword"><span>6G application scenarios</span></li><li class="userdefined-keyword"><span>6G challenges</span></li><li class="userdefined-keyword"><span>6G key performance indicators (KPIs)</span></li><li class="userdefined-keyword"><span>6G key technologies</span></li><li class="userdefined-keyword"><span>6G network architecture</span></li><li class="userdefined-keyword"><span>6G testbeds</span></li><li class="userdefined-keyword"><span>6G vision</span></li></ul></div></div>
+
+                    </div>
+
+                    <div class="content-sidebar publication-sidebar">
+                        
+                            <h2 class="subheader">Access to Document</h2>
+                        <div class="rendering rendering_researchoutput  rendering_researchoutput_publicationaccessrenderer rendering_contributiontojournal rendering_publicationaccessrenderer rendering_contributiontojournal_publicationaccessrenderer"><ul class="dois"><li><div class="doi"><a onclick="window.open(this.href, '_blank','noopener,noreferrer'); return false;" href="https://doi.org/10.1109/COMST.2023.3249835" class="link"><span>10.1109/COMST.2023.3249835</span></a></div></li></ul><ul class="documents"><li class="open-access"><div class="document"><a onclick="if (this.href) {window.open(this.href)}; return false;" href="/files/332247594/COMST_00431_2022.R1_Accept_v4_230214.pdf" class="link document-link"><span>COMST-00431-2022.R1_Accept_v4_230214</span></a><span class="meta">Accepted author manuscript, 8.95 MB</span></div></li></ul></div>
+
+                        
+
+                        
+
+                        
+
+                        <div class="rendering rendering_researchoutput  rendering_researchoutput_versioneddocumentspureportal rendering_contributiontojournal rendering_versioneddocumentspureportal rendering_contributiontojournal_versioneddocumentspureportal"><ul class="relations documents"></ul></div>
+
+                        
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+            <section class="page-section content-relation-section publication-fingerprint">
+                <div class="container">
+                    <div class="header">
+                        <h2 class="section-title">
+                            <i class="icon icon-fingerprint" aria-hidden="true"></i>
+                            <span class="title">Fingerprint</span>
+                        </h2>
+                        <span class="sub-title">
+                            Dive into the research topics of 'On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds'. Together they form a unique fingerprint.
+                        </span>
+                    </div>
+
+                    <ul class="publication-top-concepts" role="menubar"  aria-label="Related fingerprints">
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="55c5a560-7ad8-4ca7-9e15-532293a960a9"
+            data-concept-uuid="55c5a560-7ad8-4ca7-9e15-532293a960a9"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="1.0"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="100%">
+            <span class="rank"></span>
+            <span class="concept">Testbed</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">100%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="db557158-f34b-4a99-bde0-093645e3a947"
+            data-concept-uuid="db557158-f34b-4a99-bde0-093645e3a947"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="1.0"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="100%">
+            <span class="rank"></span>
+            <span class="concept">Key Requirement</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">100%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="c1ff9cb3-4922-4ca4-91f8-23f07fb46f0e"
+            data-concept-uuid="c1ff9cb3-4922-4ca4-91f8-23f07fb46f0e"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="1.0"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="100%">
+            <span class="rank"></span>
+            <span class="concept">6G</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">100%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="f539067f-5994-49a9-9d99-83ee9ec39914"
+            data-concept-uuid="f539067f-5994-49a9-9d99-83ee9ec39914"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="0.2"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="20%">
+            <span class="rank"></span>
+            <span class="concept">Application Scenario</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">20%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="cf3b43c8-2c6e-4edb-ba5b-3bd42bad9048"
+            data-concept-uuid="cf3b43c8-2c6e-4edb-ba5b-3bd42bad9048"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="0.1"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="10%">
+            <span class="rank"></span>
+            <span class="concept">Network Architecture</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">10%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="c5c611af-34be-4687-b15e-f7f31b374a69"
+            data-concept-uuid="c5c611af-34be-4687-b15e-f7f31b374a69"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="0.1"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="10%">
+            <span class="rank"></span>
+            <span class="concept">Research Direction</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">10%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="3dfb35f6-cc04-42dd-ae24-717a8d9f1eaf"
+            data-concept-uuid="3dfb35f6-cc04-42dd-ae24-717a8d9f1eaf"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="0.1"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="10%">
+            <span class="rank"></span>
+            <span class="concept">User Experience</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">10%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                            <li class="concept-badge-large-container dropdown-overflow" role="none">
+
+    <button tabindex="0"
+            class="concept-badge-large dropdown-toggle"
+            type="button"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="ff017f54-dea1-4270-9bfc-cd5bb38f7213"
+            data-concept-uuid="ff017f54-dea1-4270-9bfc-cd5bb38f7213"
+            data-rank-size="32"
+            data-rank-thickness="8"
+            data-rank-value="0.1"
+            data-summary="true"
+            data-summary-url="/en/concepts/summary/">
+        <span class="concept-wrapper" title="10%">
+            <span class="rank"></span>
+            <span class="concept">5G Mobile Communication</span>
+            <span class="thesauri">Computer Science</span>
+            <span class="value sr-only">10%</span>
+        </span>
+    </button>
+
+    <div class="dropdown-container"></div>
+
+</li>
+                        
+                    </ul>
+                    <div class="footer">
+                        <div class="view-all align-center">
+                            <a class="portal_link btn-primary btn-large btn-content-link" href="/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/fingerprints/"><span>
+                                View full fingerprint
+                                <i class="icon icon-right-open-mini" aria-hidden="true"></i>
+                            </span></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        
+
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        <section class="page-section cite">
+            <div class="container">
+                <section class="publication-cite" aria-labelledby="publications-cite-title">
+    <h2 class="subheader" id="publications-cite-title">Cite this</h2>
+    <ul class="tabs" role="tablist" aria-label="Cite this">
+        
+            <li class="selected" role="tab" id="tab-0" aria-controls="cite-apa" tabindex="-1"  aria-selected="false" >
+                APA
+            </li>
+        
+            <li class="" role="tab" id="tab-1" aria-controls="cite-author" tabindex="-1"  aria-selected="false" >
+                Author
+            </li>
+        
+            <li class="" role="tab" id="tab-2" aria-controls="cite-BIBTEX" tabindex="-1"  aria-selected="false" >
+                BIBTEX
+            </li>
+        
+            <li class="" role="tab" id="tab-3" aria-controls="cite-harvard" tabindex="-1"  aria-selected="false" >
+                Harvard
+            </li>
+        
+            <li class="" role="tab" id="tab-4" aria-controls="cite-standard" tabindex="-1"  aria-selected="false" >
+                Standard
+            </li>
+        
+            <li class="" role="tab" id="tab-5" aria-controls="cite-RIS" tabindex="-1"  aria-selected="false" >
+                RIS
+            </li>
+        
+            <li class="" role="tab" id="tab-6" aria-controls="cite-vancouver" tabindex="-1"  aria-selected="false" >
+                Vancouver
+            </li>
+        
+    </ul>
+    <div class="tab-container">
+        
+            <div id="cite-apa" class="tab selected" role="tabpanel" aria-labelledby="tab-0" tabindex="-1" aria-hidden="true">
+                <div class="rendering rendering_researchoutput  rendering_researchoutput_apa rendering_contributiontojournal rendering_apa rendering_contributiontojournal_apa">Wang, C.-X., You, X., Gao, X., Zhu, X., Li, Z., Zhang, C., Wang, H., Huang, Y.,  Chen, Y., Haas, H.<a rel="Person" href="https://www.research.ed.ac.uk/en/persons/john-thompson/" class="link"><span>, Thompson, J.</span></a>, Larsson, E., Renzo, M. D., Tong, W., Zhu, P., Shen, X., Poor, V., &amp; Hanzo, L. (2023). <a rel="ContributionToJournal" href="https://www.research.ed.ac.uk/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/" class="link"><span>On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds</span></a>. <span><em>IEEE Communications Surveys &amp; Tutorials</em></span>, <em>25</em>(2), 905-974. <a onclick="window.open(this.href, '_blank','noopener,noreferrer'); return false;" href="https://doi.org/10.1109/COMST.2023.3249835" class="link"><span>https://doi.org/10.1109/COMST.2023.3249835</span></a></div>
+            </div>
+        
+            <div id="cite-author" class="tab " role="tabpanel" aria-labelledby="tab-1" tabindex="-1" aria-hidden="true">
+                <div class="rendering rendering_researchoutput  rendering_researchoutput_author rendering_contributiontojournal rendering_author rendering_contributiontojournal_author">Wang, Cheng-Xiang ; You, Xiaohu ; Gao, Xiqi et al. / <a rel="ContributionToJournal" href="https://www.research.ed.ac.uk/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/" class="link"><span><strong>On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds</strong></span></a>. In: <a rel="Journal" href="#" class="link"><span>IEEE Communications Surveys &amp; Tutorials</span></a>. 2023 ; Vol. 25, No. 2. pp. 905-974.</div>
+            </div>
+        
+            <div id="cite-BIBTEX" class="tab " role="tabpanel" aria-labelledby="tab-2" tabindex="-1" aria-hidden="true">
+                <div class="rendering rendering_researchoutput  rendering_researchoutput_bibtex rendering_contributiontojournal rendering_bibtex rendering_contributiontojournal_bibtex"><div>@article{0828f169e5854c42881580d2b30ca49a,</div><div>  title     = "On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds",</div><div>  abstract  = "Fifth generation (5G) mobile communication systems have entered the stage of commercial deployment, providing users with new services, improved user experiences as well as a host of novel opportunities to various industries. However, 5G still faces many challenges. To address these challenges, international industrial, academic, and standards organizations have commenced research on sixth generation (6G) wireless communication systems. A series of white papers and survey papers have been published, which aim to define 6G in terms of requirements, application scenarios, key technologies, etc. Although ITU-R has been working on the 6G vision and it is expected to reach a consensus on what 6G will be by mid-2023, the related global discussions are still wide open and the existing literature has identified numerous open issues. This paper first provides a comprehensive portrayal of the 6G vision, technical requirements, and application scenarios, covering the current common understanding of 6G. Then, a critical appraisal of the 6G network architecture and key technologies is presented. Furthermore, existing testbeds and advanced 6G verification platforms are detailed for the first time. In addition, future research directions and open challenges are identified to stimulate the on-going global debate. Finally, lessons learned to date concerning 6G networks are discussed.",</div><div>  keywords  = "6G application scenarios, 6G challenges, 6G key performance indicators (KPIs), 6G key technologies, 6G network architecture, 6G testbeds, 6G vision",</div><div>  author    = "Cheng-Xiang Wang and Xiaohu You and Xiqi Gao and Xiuming Zhu and Zixin Li and Chuan Zhang and Haiming Wang and Yongming Huang and Yunfei Chen and Harald Haas and John Thompson and Erik Larsson and Renzo, \{M. Di\} and Wen Tong and Peiying Zhu and Xuemin Shen and Vincent Poor and Lajos Hanzo",</div><div>  note      = "Publisher Copyright: {\textcopyright} 1998-2012 IEEE.",</div><div>  year      = "2023",</div><div>  month     = may,</div><div>  day       = "23",</div><div>  doi       = "10.1109/COMST.2023.3249835",</div><div>  language  = "English",</div><div>  volume    = "25",</div><div>  pages     = "905--974",</div><div>  journal   = "IEEE Communications Surveys \&amp; Tutorials",</div><div>  issn      = "1553-877X",</div><div>  publisher = "Institute of Electrical and Electronics Engineers",</div><div>  number    = "2",</div><p>}</p></div>
+            </div>
+        
+            <div id="cite-harvard" class="tab " role="tabpanel" aria-labelledby="tab-3" tabindex="-1" aria-hidden="true">
+                <div class="rendering rendering_researchoutput  rendering_researchoutput_harvard rendering_contributiontojournal rendering_harvard rendering_contributiontojournal_harvard">Wang, C-X, You, X, Gao, X, Zhu, X, Li, Z, Zhang, C, Wang, H, Huang, Y,  Chen, Y, Haas, H<a rel="Person" href="https://www.research.ed.ac.uk/en/persons/john-thompson/" class="link"><span>, Thompson, J</span></a>, Larsson, E, Renzo, MD, Tong, W, Zhu, P, Shen, X, Poor, V &amp; Hanzo, L 2023, '<a rel="ContributionToJournal" href="https://www.research.ed.ac.uk/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/" class="link harvard_title"><span>On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds</span></a>', <span><em>IEEE Communications Surveys &amp; Tutorials</em></span>, vol. 25, no. 2, pp. 905-974. <a onclick="window.open(this.href, '_blank','noopener,noreferrer'); return false;" href="https://doi.org/10.1109/COMST.2023.3249835" class="link"><span>https://doi.org/10.1109/COMST.2023.3249835</span></a></div>
+            </div>
+        
+            <div id="cite-standard" class="tab " role="tabpanel" aria-labelledby="tab-4" tabindex="-1" aria-hidden="true">
+                <div class="rendering rendering_researchoutput  rendering_researchoutput_standard rendering_contributiontojournal rendering_standard rendering_contributiontojournal_standard"><a rel="ContributionToJournal" href="https://www.research.ed.ac.uk/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/" class="link"><span><strong>On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds.</strong></span></a> / Wang, Cheng-Xiang; You, Xiaohu; Gao, Xiqi et al. <br />In: <span>IEEE Communications Surveys &amp; Tutorials</span>, Vol. 25, No. 2, 23.05.2023, p. 905-974.<p class="type"><span class="type_family">Research output<span class="type_family_sep">: </span></span><span class="type_classification_parent">Contribution to journal<span class="type_parent_sep"> › </span></span><span class="type_classification">Article</span><span class="type_classification"><span class="type_parent_sep"> › </span>peer-review</span></p></div>
+            </div>
+        
+            <div id="cite-RIS" class="tab " role="tabpanel" aria-labelledby="tab-5" tabindex="-1" aria-hidden="true">
+                <div class="rendering rendering_researchoutput  rendering_researchoutput_ris rendering_contributiontojournal rendering_ris rendering_contributiontojournal_ris"><p>TY  - JOUR</p><p>T1  - On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds</p><p>AU  - Wang, Cheng-Xiang</p><p>AU  - You, Xiaohu</p><p>AU  - Gao, Xiqi</p><p>AU  - Zhu, Xiuming</p><p>AU  - Li, Zixin</p><p>AU  - Zhang, Chuan</p><p>AU  - Wang, Haiming</p><p>AU  - Huang, Yongming</p><p>AU  -  Chen, Yunfei</p><p>AU  - Haas, Harald</p><p>AU  - Thompson, John</p><p>AU  - Larsson, Erik</p><p>AU  - Renzo, M. Di</p><p>AU  - Tong, Wen</p><p>AU  - Zhu, Peiying</p><p>AU  - Shen, Xuemin</p><p>AU  - Poor, Vincent</p><p>AU  - Hanzo, Lajos</p><p>N1  - Publisher Copyright:
+© 1998-2012 IEEE.</p><p>PY  - 2023/5/23</p><p>Y1  - 2023/5/23</p><p>N2  - Fifth generation (5G) mobile communication systems have entered the stage of commercial deployment, providing users with new services, improved user experiences as well as a host of novel opportunities to various industries. However, 5G still faces many challenges. To address these challenges, international industrial, academic, and standards organizations have commenced research on sixth generation (6G) wireless communication systems. A series of white papers and survey papers have been published, which aim to define 6G in terms of requirements, application scenarios, key technologies, etc. Although ITU-R has been working on the 6G vision and it is expected to reach a consensus on what 6G will be by mid-2023, the related global discussions are still wide open and the existing literature has identified numerous open issues. This paper first provides a comprehensive portrayal of the 6G vision, technical requirements, and application scenarios, covering the current common understanding of 6G. Then, a critical appraisal of the 6G network architecture and key technologies is presented. Furthermore, existing testbeds and advanced 6G verification platforms are detailed for the first time. In addition, future research directions and open challenges are identified to stimulate the on-going global debate. Finally, lessons learned to date concerning 6G networks are discussed.</p><p>AB  - Fifth generation (5G) mobile communication systems have entered the stage of commercial deployment, providing users with new services, improved user experiences as well as a host of novel opportunities to various industries. However, 5G still faces many challenges. To address these challenges, international industrial, academic, and standards organizations have commenced research on sixth generation (6G) wireless communication systems. A series of white papers and survey papers have been published, which aim to define 6G in terms of requirements, application scenarios, key technologies, etc. Although ITU-R has been working on the 6G vision and it is expected to reach a consensus on what 6G will be by mid-2023, the related global discussions are still wide open and the existing literature has identified numerous open issues. This paper first provides a comprehensive portrayal of the 6G vision, technical requirements, and application scenarios, covering the current common understanding of 6G. Then, a critical appraisal of the 6G network architecture and key technologies is presented. Furthermore, existing testbeds and advanced 6G verification platforms are detailed for the first time. In addition, future research directions and open challenges are identified to stimulate the on-going global debate. Finally, lessons learned to date concerning 6G networks are discussed.</p><p>KW  - 6G application scenarios</p><p>KW  - 6G challenges</p><p>KW  - 6G key performance indicators (KPIs)</p><p>KW  - 6G key technologies</p><p>KW  - 6G network architecture</p><p>KW  - 6G testbeds</p><p>KW  - 6G vision</p><p>U2  - 10.1109/COMST.2023.3249835</p><p>DO  - 10.1109/COMST.2023.3249835</p><p>M3  - Article</p><p>SN  - 1553-877X</p><p>VL  - 25</p><p>SP  - 905</p><p>EP  - 974</p><p>JO  - IEEE Communications Surveys &amp; Tutorials</p><p>JF  - IEEE Communications Surveys &amp; Tutorials</p><p>IS  - 2</p><p>ER  - </p></div>
+            </div>
+        
+            <div id="cite-vancouver" class="tab " role="tabpanel" aria-labelledby="tab-6" tabindex="-1" aria-hidden="true">
+                <div class="rendering rendering_researchoutput  rendering_researchoutput_vancouver rendering_contributiontojournal rendering_vancouver rendering_contributiontojournal_vancouver">Wang CX, You X, Gao X, Zhu X, Li Z, Zhang C et al. <span class="title"><a rel="ContributionToJournal" href="https://www.research.ed.ac.uk/en/publications/on-the-road-to-6g-visions-requirements-key-technologies-and-testb/" class="link"><span>On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds</span></a></span>. <span>IEEE Communications Surveys &amp; Tutorials</span>. 2023 May 23;25(2):905-974. Epub 2023 Feb 27. doi: 10.1109/COMST.2023.3249835</div>
+            </div>
+        
+
+        <script>
+            $(function() {
+                $(".tab-container .rendering a:not([href^='http://dx.doi.org'])").contents().unwrap();
+            });
+        </script>
+    </div>
+</section>
+
+            </div>
+        </section>
+        <script>
+    $(function () {
+        if($('.publication-sidebar').length > 0){
+            if($('a.document-link').length === 0){
+                $(".metrics-top").addClass("one");
+                $('div.metrics-downloads').remove();
+            }
+        }
+    });
+
+    function plumXError(e) {
+        $(e).closest('.metric-plum-x').closest('.metrics-bottom').addClass('one');
+        $(e).closest('.metric-plum-x').remove();
+    }
+    $('div.altmetric-embed').on('altmetric:hide', function () {
+        $(this).closest('.metric-altmetric').closest('.metrics-bottom').addClass('one');
+        $(this).closest('.metric-altmetric').remove();
+    });
+</script>
+        
+
+
+
+
+
+    
+        </div>
+    </div>
+
+    <div id="new-modal-overlay"></div>
+    
+    </main>
+
+    <footer id="page-footer" class="main-footer">
+        <div class="container">
+            <div class="footer-wrapper">
+                <div class="content-navigation three-third">
+                    <div dir="ltr" class="footer-columns">
+                        
+                            <div class="footer-column">
+                                <div class="footer-icon">
+                                    <img src="/skin/footerIcon/" alt="University of Edinburgh Research Explorer Logo"/>
+                                </div>
+                            </div>
+                        
+                        <div class="footer-column">
+                            <p>
+                                Powered by <a href="http://www.elsevier.com/online-tools/research-intelligence/products-and-services/pure" target="_blank">Pure <span class="sr-only">Link opens in a new tab</span></a>, <a href="http://www.scopus.com/" target="_blank">Scopus <span class="sr-only">Link opens in a new tab</span></a> & <a href="https://www.elsevier.com/products/elsevier-fingerprint-engine" target="_blank">Elsevier Fingerprint Engine&trade; <span class="sr-only">Link opens in a new tab</span></a>
+                            </p>
+
+                            <p>
+                                All content on this site: Copyright &copy; 2026 University of Edinburgh Research Explorer, its licensors, and contributors. All rights are reserved, including those for text and data mining, AI training, and similar technologies. For all open access content, the relevant licensing terms apply
+                            </p>
+
+                            <p>We use cookies to help provide and enhance our service and tailor content. By continuing you agree to the <a href="/en/about/cookies/">use of cookies</a></p>
+                            
+                            
+                            <p></p>
+                        </div>
+
+                        <div class="footer-column">
+                            
+                                <p><a href="https://www.ed.ac.uk/about/website/privacy" target="_blank">University of Edinburgh Research Explorer data protection policy <span class="sr-only">&nbsp; Link opens in a new tab</span></a></p>
+                            
+                            
+                            
+                                <p><a href="https://library.ed.ac.uk/accessibility-statements/university-of-edinburgh-research-explorer-website" target="_blank" rel="nofollow">About web accessibility <span class="sr-only">&nbsp; Link opens in a new tab</span></a></p>
+                            
+
+                            <p>
+                                
+                            </p>
+
+                            <p>
+                                
+                            </p>
+
+                            <p>
+                                <a href="https://elsevier.responsibledisclosure.com/hc/en-us/requests/new" target="_blank" rel="nofollow">Report vulnerability <span class="sr-only">&nbsp; Link opens in a new tab</span></a>
+                            </p>
+                        </div>
+
+                        
+                            <div class="footer-column">
+                                
+                                    
+                                        <p>
+                                            <a href="/en/contact/index/"> Contact us</a>
+                                        </p>
+                                    
+                                
+
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="back-to-top">
+            <a href="#" class="back-to-top" aria-label="Go to top"><i class="icon icon-up-open"></i></a>
+        </div>
+    </footer>
+
+
+    <script src="//d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+
+
+
+    
+
+    
+
+
+<script>window.appData = window.appData || [];</script><script type="text/javascript">
+try {(function() {
+appData.push({...{"page":{"businessUnit":"ELS:RP:ST","cmsName":"Pure Portal","environment":"prod","language":"en","loadTime":"190","loadTimestamp":"1788567481855","name":"pure portal:publications:view","noTracking":"false","productName":"PR","type":"CP-CA"},"visitor":{"accountId":"","accountName":"pr:University of Edinburgh","ipAddress":"","accessType":"pr:ANON_GUEST","loginStatus":"anonymous"},"content":[{"id":"0828f169-e585-4c42-8815-80d2b30ca49a","title":"On the Road to 6G: Visions, Requirements, Key Technologies and Testbeds","recordType":"researchoutput"}]}, event: "pageLoad"});})();} catch(e) {if(console) { console.log(e) } }</script>
+<script>try {(function() {
+window.appData = window.appData || [];
+})();} catch(e) {if(console) { console.log(e) } }</script>
+
+</body>
+</html>
+

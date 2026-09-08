@@ -1,0 +1,50 @@
+===========================================================================
+[*] Academic Quality Gates Orchestration (DoD Enforcement)
+[*] Project Target: C:\Users\24560\Desktop\study\pidemo\ris_thesis_workflow\ris_thesis_project
+[*] Mode: SCAFFOLD DRAFT (Watermark Enforced)
+===========================================================================
+
+>>> [1/4] Running Gate 1: Citation Verification Gate...
+    Status: [FAIL]
+[ OK ] he2021channel  (references.tex)  Channel Estimation for RIS-Aided mmWave MIMO Systems via Atomic Norm Minimization
+        verified: title, authors, year, volume, issue, pages
+[ OK ] zhi2023timescale  (references.tex)  Two-Timescale Design for Reconfigurable Intelligent Surface-Aided Massive MIMO Systems With Imperfect CSI
+        verified: title, authors, year, volume, issue, pages
+[ OK ] yang2021deep  (references.tex)  Deep Reinforcement Learning-Based Intelligent Reflecting Surface for Secure Wireless Communications
+        verified: title, authors, year, volume, issue, pages
+[ OK ] shen2022modeling  (references.tex)  Modeling and Architecture Design of Reconfigurable Intelligent Surfaces Using Scattering Parameter Network Analysis
+        verified: title, authors, year, volume, issue, pages
+[ OK ] letaief2022edge  (references.tex)  Edge Artificial Intelligence for 6G: Vision, Enabling Technologies, and Applications
+        verified: title, authors, year, volume, issue, pages
+[ OK ] liu2022integrated  (references.tex)  Integrated Sensing and Communications: Toward Dual-Functional Wireless Networks for 6G and Beyond
+        verified: title, authors, year, volume, issue, pages
+[ OK ] hong2021role  (references.tex)  The Role of Millimeter-Wave Technologies in 5G/6G Wireless Communications
+        verified: title, authors, year, volume, issue, pages
+[WARN] 鍚屾椂瀛樺湪 .bib 涓?thebibliography 鍙屽弬鑰冩簮锛屽簲淇濇寔鍗曚竴浜嬪疄婧?
+========================================================================
+
+
+>>> [2/4] Running Gate 2: Data Provenance & Traceability Gate...
+    Status: [FAIL]
+        -> Found quantitative claim '澧炵泭 28.5%' in chap04_experiments.tex, but no experiments/*.csv found!
+        -> Found quantitative claim '杈惧埌 24.6dB' in chap04_experiments.tex, but no experiments/*.csv found!
+        -> Found quantitative claim '杈惧埌 24.6dB' in chap04_experiments.tex, but no experiments/*.csv found!
+
+>>> [3/4] Running Gate 3: Academic Compliance Gate...
+    Status: [PASS]
+
+>>> [4/4] Running Gate 4: Human Review Sign-Off Gate...
+    Status: [NOTICE] - Reviewer name '鍖椾含澶у鐮旂┒鐢?/ 瀵煎笀澶嶆牳缁?[AI 鑷鏃犳晥鍗犱綅]' is a placeholder or AI-generated token. Gate 4 strictly requires real human author/advisor sign-off.
+
+===========================================================================
+[*] Quality Gates Summary Table:
+    - Gate 1: Citation Verification Gate            : [FAIL]
+    - Gate 2: Data Provenance & Traceability Gate   : [FAIL]
+    - Gate 3: Academic Compliance Gate              : [PASS]
+    - Gate 4: Human Review Sign-Off Gate            : [NOTICE]
+[*] Overall Outcome: [FAIL]
+
+[BLOCKED] Quality Gates failed! Defense-submission PDF compilation and
+          unwatermarked Word (.docx) export are strictly forbidden until fixed.
+===========================================================================
+[OK] Quality gates summary report saved to: gate_summary.json

@@ -1,0 +1,175 @@
+% -*- coding: utf-8 -*-
+\documentclass[aspectratio=169,10pt,UTF8]{ctexbeamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+\definecolor{PkuRed}{RGB}{139, 0, 0}
+\definecolor{AcademiaBlue}{RGB}{20, 55, 90}
+\definecolor{DarkSlate}{RGB}{44, 62, 80}
+\definecolor{LightBg}{RGB}{248, 250, 252}
+
+\setbeamercolor{structure}{fg=PkuRed}
+\setbeamercolor{title}{fg=white,bg=PkuRed}
+\setbeamercolor{frametitle}{fg=white,bg=PkuRed}
+\setbeamercolor{block title}{fg=white,bg=PkuRed}
+\setbeamercolor{block body}{bg=LightBg,fg=DarkSlate}
+
+\title[面向 6G 语义通信与联合信源信道编码前沿综述]{面向 6G 的端到端信源信道联合语义通信技术研究}
+\subtitle{北京大学信息科学技术学院 / 电子学院研究生文献汇报}
+\author[汇报人]{汇报人：硕士研究生（085402 通信工程） \quad 指导教师：教授}
+\institute[北京大学]{北京大学 · 电子信息 / 通信工程}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{汇报大纲 (Agenda)}
+  \tableofcontents
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\section{立项背景与香农分离定理的瓶颈}
+% -----------------------------------------------------------------------------
+\begin{frame}{1. 研究背景与核心科学问题 (Motivation)}
+  \begin{block}{香农分离定理在 6G 极限制约下的失效}
+    经典无线通信依赖“独立信源压缩 + 独立信道纠错”，仅在码长 $n \to \infty$ 时渐进最优。
+    \begin{itemize}
+      \item \textbf{短码长失效}：在车联网微秒级低时延场景下，有限包长导致信道容量严重退化；
+      \item \textbf{信道悬崖效应 (Cliff Effect)}：信噪比一旦跌破数字门限，误码率雪崩，通信彻底瞬断。
+    \end{itemize}
+  \end{block}
+  \vspace{0.2cm}
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \textbf{学术定位}：从比特传输（Level A）走向意图/任务交互（Level B/C）。
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{技术路径}：深度联合信源信道编码 (Deep Joint Source-Channel Coding, Deep JSCC)。
+    \end{column}
+  \end{columns}
+  \note{汇报提示：开门见山点出香农分离定理在短码长下的失效和信道悬崖效应，这是导师最看重的立项切入点。}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\section{领域技术演进脉络}
+% -----------------------------------------------------------------------------
+\begin{frame}{2. 领域技术发展脉络 (Timeline \& Evolution)}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{alertblock}{第一阶段 (2019-2021)}
+        \textbf{端到端语义基石}
+        \begin{itemize}
+          \item Xie et al. (IEEE TSP)
+          \item Transformer 文本语义提取
+          \item 负信噪比下性能优于 5G
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{block}{第二阶段 (2022-2024)}
+        \textbf{非线性流形与消除断崖}
+        \begin{itemize}
+          \item Dai et al. (IEEE JSAC)
+          \item 变分自编码流形映射
+          \item 全面实现平滑优雅降级
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{exampleblock}{第三阶段 (2025-至今)}
+        \textbf{数字硬件协同与落地}
+        \begin{itemize}
+          \item Zhang et al. (IEEE JSAC)
+          \item 离散可微星座量化
+          \item 兼容现有商用数字基带
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\section{代表性顶刊文献深度剖析}
+% -----------------------------------------------------------------------------
+\begin{frame}{3. 重点文献精读：非线性变换自适应编码 (Dai et al., JSAC 2022)}
+  \small
+  \textbf{文献来源}：IEEE Journal on Selected Areas in Communications (北邮牛凯团队)
+  \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \begin{block}{核心机理与数学模型}
+        \begin{itemize}
+          \item 提出非线性分析与合成变换 $g_a, g_s$；
+          \item 引入变分高斯混合超先验建模特征流形概率分布；
+          \item 优化目标：$\min_{\theta} J = R + \lambda D$。
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{量化实证与局限性}
+        \begin{itemize}
+          \item \textbf{实验增益}：随信道 SNR 在 0$\sim$20dB 连续变化，重构 PSNR 平滑递增，无断崖；
+          \item \textbf{学术局限}：网络计算复杂度高（千亿级 FLOPs），微秒级车联网无法实时运行。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \note{汇报提示：重点讲解其如何通过变分熵自编码消除通信断崖，并顺势指出其算力过高这一可改进切入点。}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\section{横向对比与技术矩阵}
+% -----------------------------------------------------------------------------
+\begin{frame}{4. 领域代表性文献横向对比矩阵 (三线表规范)}
+  \centering
+  \scriptsize
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cllllllc@{}}
+    \toprule
+    \textbf{序号} & \textbf{代表文献} & \textbf{期刊/会议} & \textbf{核心技术机制} & \textbf{传输模态} & \textbf{量化增益 (SOTA对比)} & \textbf{硬件兼容性} \\
+    \midrule
+    1 & Xie et al.     & 2021 IEEE TSP  & Transformer 端到端自注意力 & 短文本语义 & 低 SNR 下 BLEU 提 40\% & 仅模拟/不兼容 \\
+    2 & Dai et al.     & 2022 IEEE JSAC & 变分自编码非线性连续流形   & 图像流形   & 彻底消灭断崖, PSNR 提 3.8dB & 仅模拟/不兼容 \\
+    3 & Zhang et al.   & 2025 IEEE JSAC & 离散可微量化数字调制       & 特征向量   & 兼容商用 QAM, 时延降低 58\% & \textbf{兼容商用数字芯片} \\
+    4 & Kang et al.    & 2024 IEEE TWC  & 任务导向决策/主观重建解耦  & 监控图像   & 传输带宽开销削减 75\%   & 部分兼容 \\
+    \bottomrule
+  \end{tabular*}
+  \vspace{0.3cm}
+  \begin{itemize}
+    \item \textbf{已有突破}：突破香农分离界限，恶劣信噪比下通信鲁棒性大幅跃升；
+    \item \textbf{遗留死结}：高速时变信道多普勒频移导致信噪比突变失配，固定网络出现泛化崩溃。
+  \end{itemize}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+\section{毕业论文选题思考与开题切入点}
+% -----------------------------------------------------------------------------
+\begin{frame}{5. 北京大学 085402 学位论文拟定切入方向}
+  \begin{block}{拟定学位论文题目：面向高速时变信道的轻量化自适应联合信源信道语义通信}
+    \begin{itemize}
+      \item \textbf{科学猜想 (Hypothesis)}：通过引入瞬时 CSI 门控的轻量级特征自适应剪枝机制，可在高速移动信道下实现微秒级信噪比失配自愈。
+      \item \textbf{技术路线图 (Roadmap)}：
+        \begin{enumerate}
+          \item 搭建开源 Baseline 并在高多普勒频移信道（TDL-D）下复现泛化衰减实验；
+          \item 构造信噪比驱动的门控剪枝模块与可微分数字量化网络；
+          \item 在实验室 USRP X310 软件无线电平台上跑通端到端实时硬件验证。
+        \end{enumerate}
+    \end{itemize}
+  \end{block}
+  \note{汇报提示：向导师展现完整的科研演进闭环：从现有前人理论缺陷 $\to$ 提出科学假设 $\to$ 设计算法 $\to$ 软硬件双重验证。}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Huge \textcolor{PkuRed}{\textbf{Q \& A}} \\
+    \vspace{0.5cm}
+    \normalsize 请各位老师与评委专家批评指正！
+  \end{center}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,233 @@
+% -*- coding: utf-8 -*-
+% =============================================================================
+% 北京邮电大学研究生学位论文 LaTeX 模板工程 (符合 GB/T 7713.1-2006 规范)
+% 专业领域：电子信息（专业代码：085402 通信工程）
+% 研究方向：面向低空智联网的无人机通感一体化波形设计与感知辅助通信资源管理
+% TODO: 待对照北邮官方模板校准封面格式与校徽布局
+% =============================================================================
+
+\documentclass[12pt,a4paper,openany,UTF8]{ctexrep}
+
+% -----------------------------------------------------------------------------
+% 页面尺寸与版面几何布局 (BUPT Thesis Layout)
+% -----------------------------------------------------------------------------
+\usepackage{geometry}
+\geometry{
+  top=3.0cm,
+  bottom=2.5cm,
+  left=2.6cm,
+  right=2.6cm,
+  headheight=15pt,
+  headsep=18pt,
+  footskip=25pt
+}
+
+% -----------------------------------------------------------------------------
+% 数学公式与符号支持
+% -----------------------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsfonts,amsthm,bm}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{definition}{定义}[chapter]
+
+% -----------------------------------------------------------------------------
+% 图表、三线表与算法环境支持 (GB/T 7713 规范禁用双竖线，强制 booktabs)
+% -----------------------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup{font={small},labelfont={bf},skip=6pt}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% 页眉页脚排版
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small 北京邮电大学硕士学位论文：\leftmark}
+\fancyfoot[C]{\small \thepage}
+\renewcommand{\headrulewidth}{0.75pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% -----------------------------------------------------------------------------
+% 超链接与受控 TODO 占位符
+% -----------------------------------------------------------------------------
+\usepackage{xcolor}
+\providecommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black,
+  pdfauthor={北京邮电大学硕士研究生},
+  pdftitle={面向低空智联网的无人机通感一体化波形设计与感知辅助通信资源管理}
+}
+\pdfstringdefDisableCommands{\def\bm#1{#1}}
+
+% -----------------------------------------------------------------------------
+% 正文开始
+% -----------------------------------------------------------------------------
+\begin{document}
+
+% 论文封面 (Title Page)
+\begin{titlepage}
+  \centering
+  \vspace*{1.2cm}
+  {\Huge \textbf{北\quad 京\quad 邮\quad 电\quad 大\quad 学}\par}
+  \vspace{0.5cm}
+  {\Large \textbf{BEIJING UNIVERSITY OF POSTS AND TELECOMMUNICATIONS}\par}
+  \vspace{1.2cm}
+  {\Large \textbf{硕\quad 士\quad 学\quad 位\quad 论\quad 文}\par}
+  \vspace{1.5cm}
+  {\LARGE \textbf{面向低空智联网的无人机通感一体化波形设计}\par}
+  \vspace{0.3cm}
+  {\LARGE \textbf{与感知辅助通信资源管理研究}\par}
+  \vspace{0.8cm}
+  {\large \textit{Waveform Design and Sensing-Assisted Communication Resource}\par}
+  {\large \textit{Management for UAV-Enabled ISAC in Low-Altitude Internet of Things}\par}
+  \vfill
+  \begin{tabular}{ll}
+    \textbf{姓\qquad 名}： & 硕士研究生 \\
+    \textbf{学\qquad 号}： & 2408540201 \\
+    \textbf{学\qquad 院}： & 信息与通信工程学院 \\
+    \textbf{专业领域}：   & 电子信息（专业代码：085402 通信工程） \\
+    \textbf{研究方向}：   & 低空移动通信与通感融合信号处理 \\
+    \textbf{指导教师}：   & 教授 \\
+  \end{tabular}
+  \vspace{1.2cm}
+  \par
+  {\large \textbf{二〇二六年九月}\par}
+\end{titlepage}
+
+% 中英文摘要与目录 (前言采用罗马数字页码)
+\pagenumbering{Roman}
+\setcounter{page}{1}
+
+% 原创性声明与使用授权说明
+\chapter*{北京邮电大学学位论文原创性声明与使用授权说明}
+\thispagestyle{empty}
+\noindent 本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工作所取得的成果。除文中已经注明引用的内容外，本论文不含任何其他个人或集体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。本人完全意识到本声明的法律结果由本人承担。
+
+\vspace{1.5cm}
+\begin{flushright}
+  学位论文作者签名：\underline{\hspace{3cm}} \qquad
+  签字日期：\qquad 年\quad 月\quad 日
+\end{flushright}
+\newpage
+
+% 中文摘要
+\chapter*{摘\quad 要}
+\addcontentsline{toc}{chapter}{摘要}
+
+随着低空经济上升为国家战略性新兴产业，低空智联网（LA-IoT）作为保障海量低空飞行器安全巡航、协同调度与数据交互的关键数字化基础设施，其网络感知与通信能力面临着前所未有的严苛挑战。低空空域飞行器具有低空、慢速、小雷达截面等特征，加之复杂低空环境下的严重建筑物物理遮挡与高动态空地多普勒扩展，传统分立的通信基站与雷达站架构面临部署成本高昂、空域盲区广泛以及频谱冲突加剧的现实瓶颈。
+
+通感一体化（ISAC）技术通过频谱共享、硬件复用与基带联合信号处理，为低空智联网构建了全域感知与高效传输深度融合的新途径。针对低空复杂信道环境下的通感资源竞争、强多普勒扩展以及空间非凸轨迹耦合问题，本文深入开展面向低空无人机系统的通感一体化波形优化与感知先验辅助资源管理技术研究，主要研究成果包括：
+\begin{enumerate}
+  \item \textbf{构建空地多载波通感一体化全维度系统模型}：结合低空几何多径信道、莱斯衰落与飞行运动学特征，形式化推导出多用户下行通信信干噪比与雷达目标多参数估计的克拉美罗下界（CRB）闭式矩阵。
+  \item \textbf{提出基于 CRB 与互信息量的 Pareto 最优波形预编码设计架构}：揭示了双功能波形在正交频域子载波上的功率分配规律，通过半正定松弛（SDR）与矩阵提升技术将非凸波形设计转化为易于求解的凸近似子问题。
+  \item \textbf{建立感知先验引导的无人机动态轨迹与主动波束跟踪机制}：利用雷达回波扩展卡尔曼滤波输出的后验运动学状态，大幅压缩通信波束对准搜索空间，在满足无人机物理动力学与空间防撞硬约束下实现了通感协同效用最大化。
+  \item \textbf{设计基于 SCA-BCD 的低复杂度交替迭代求解算法并完成理论收敛性证明}：在数学上严格证明了算法目标函数序列的单调非减性，分析了多项式计算复杂度边界，并建立了标准化学术脚手架评测基准。
+\end{enumerate}
+
+\vspace{0.6cm}
+\noindent \textbf{关键词}：低空智联网；无人机通信；通感一体化 (ISAC)；波形设计；克拉美罗界 (CRB)；交替优化
+\newpage
+
+% 英文摘要
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT}
+
+Driven by the strategic expansion of the low-altitude economy, the Low-Altitude Internet of Things (LA-IoT) serves as an essential digital foundation to guarantee safe airspace operation, autonomous coordination, and reliable high-rate data transmission for massive unmanned aerial vehicles (UAVs). However, low-altitude aircraft typically exhibit low-altitude, slow-speed, and small-size (LSS) physical characteristics. Compounded by severe electromagnetic blockage in urban canyons and substantial Doppler shifts induced by high mobility, conventional disjoint communication and radar infrastructures suffer from prohibitive deployment costs, extensive sensing blind zones, and severe spectrum scarcity.
+
+Integrated Sensing and Communication (ISAC) presents a transformative paradigm to overcome these bottlenecks by sharing hardware platforms, radio frequency front-ends, and wireless spectrum resources. To address the critical trade-offs between communication throughput and sensing precision in low-altitude scenarios, this thesis conducts systematic research on joint waveform optimization and sensing-assisted dynamic resource management for UAV-enabled ISAC networks. The main contributions are summarized as follows:
+\begin{enumerate}
+  \item \textbf{Comprehensive Modeling of Air-to-Ground Multicarrier ISAC Systems}: Integrating three-dimensional spatial geometry, Rician fading channels, and Doppler effects, we derive rigorous closed-form expressions for downlink communication SINR and the estimation Cramér-Rao Bound (CRB) matrix for radar sensing.
+  \item \textbf{Pareto-Optimal Waveform Precoding Framework}: We uncover the fundamental power allocation trade-offs across orthogonal subcarriers and employ Semidefinite Relaxation (SDR) with matrix lifting to formulate tractable convex approximations for non-convex waveform synthesis.
+  \item \textbf{Sensing-Assisted Proactive Beam Tracking and Dynamic Trajectory Coordination}: Leveraging posterior kinematic state estimates from extended Kalman filtering, we substantially compress the beam alignment overhead and maximize overall network utility under kinematics and collision avoidance constraints.
+  \item \textbf{Low-Complexity SCA-BCD Optimization Algorithm with Convergence Guarantee}: We rigorously prove that the generated objective function sequence converges monotonically to a stationary point satisfying first-order KKT optimality conditions, establish polynomial complexity bounds, and construct a standardized scaffold benchmark.
+\end{enumerate}
+
+\vspace{0.6cm}
+\noindent \textbf{Keywords}: Low-Altitude Internet of Things; UAV Communications; Integrated Sensing and Communication (ISAC); Waveform Design; Cramér-Rao Bound (CRB); Alternating Optimization
+\newpage
+
+% 目录
+\tableofcontents
+\newpage
+
+% 图目录与表目录
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% 主要符号对照表
+\chapter*{主要符号对照表}
+\addcontentsline{toc}{chapter}{主要符号对照表}
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  \textbf{符号} & \textbf{含义说明} \\
+  \midrule
+  $\mathbf{X}$ & 发射通感一体化预编码基带波形矩阵 \\
+  $\mathbf{H}_c$ & 通信下行多输入多输出（MIMO）等效信道矩阵 \\
+  $\mathbf{H}_s$ & 感知目标回波散射空间信道矩阵 \\
+  $\mathrm{CRB}$ & 目标运动与位置参数估计的克拉美罗界矩阵 \\
+  $\mathbf{J}$ & 费雪信息矩阵（Fisher Information Matrix, FIM） \\
+  $\mathrm{SINR}_k$ & 第 $k$ 个通信用户的接收信干噪比 \\
+  $\sigma_c^2$ & 通信接收机加性复高斯白噪声方差 \\
+  $\sigma_s^2$ & 感知接收机加性复高斯白噪声方差 \\
+  $\mathbf{q}_u$ & 第 $u$ 架无人机的三维空间位置坐标向量 \\
+  $V_{\max}$ & 无人机最大水平巡航线速度 \\
+  $P_{\max}$ & 系统发射总功率预算 \\
+  $\Delta f$ & OFDM 子载波间隔 \\
+  $M$ & OFDM 正交子载波总数 \\
+  $N_t$ & 基站/无人机发射天线数 \\
+  $N_r$ & 感知接收天线数 \\
+  $K$ & 通信移动用户总数 \\
+  $U$ & 协同无人机总数 \\
+  $\mathbf{W}$ & 下行多用户通信预编码矩阵 \\
+  $\mathbf{w}_s$ & 感知定向探测波束赋形向量 \\
+  $\alpha_k$ & 目标雷达散射截面积（RCS）及复反射系数 \\
+  $\theta_k$ & 目标相对于天线阵列的到达角（AoA） \\
+  $\tau_k$ & 目标信号往返传播时延 \\
+  $f_{D,k}$ & 目标运动引起的多普勒频移 \\
+  $R_{\mathrm{sum}}$ & 通信下行加权和速率 \\
+  $\Gamma_{\mathrm{th}}$ & 通信接收最低 SINR 门限要求 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+\newpage
+
+% 正文部分 (阿拉伯数字页码)
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/chap01_intro.tex}
+\input{chapters/chap02_related_work.tex}
+\input{chapters/chap03_methodology.tex}
+\input{chapters/chap04_experiments.tex}
+\input{chapters/chap05_conclusion.tex}
+
+% 参考文献列表 (严格对齐 GB/T 7714-2015 格式)
+\input{chapters/references.tex}
+
+% 致谢 (Acknowledgments)
+\chapter*{致\quad 谢}
+\addcontentsline{toc}{chapter}{致谢}
+\TODO{感谢北京邮电大学信息与通信工程学院各位导师的悉心指导，感谢课题组同学在科研与仿真工作中的大力协助，感谢家人的理解与支持。}
+\newpage
+
+% 攻读学位期间研究成果 (Academic Achievements)
+\chapter*{攻读学位期间发表的学术论文与研究成果}
+\addcontentsline{toc}{chapter}{攻读学位期间研究成果}
+\begin{enumerate}
+  \item \TODO{待填入攻读硕士学位期间发表/在审的学术论文、专利与科研奖励清单。}
+\end{enumerate}
+
+\end{document}

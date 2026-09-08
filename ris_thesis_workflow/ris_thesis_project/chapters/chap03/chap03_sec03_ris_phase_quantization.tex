@@ -1,0 +1,76 @@
+% -*- coding: utf-8 -*-
+\section{基于正交 DFT 码本的低开销级联信道估计协议}
+\label{sec:channel_estimation}
+
+前述主被动协同波束赋形算法的最优性严格依赖于基站端获取精确的信道状态信息（CSI）。然而，由于无源 RIS 不具备基带解码与射频处理单元，基站与用户之间无法分别直接测量独立的“基站-表面”信道 $\bm{G}$ 与“表面-用户”信道 $\bm{h}_{r,k}^H$。收发机仅能观测到两者的级联响应矩阵 $\bm{H}_{\mathrm{casc},k} = \mathrm{diag}(\bm{h}_{r,k}^H)\bm{G} \in \mathbb{C}^{N \times M}$ 以及直连信道 $\bm{h}_{d,k}^H \in \mathbb{C}^{1 \times M}$。本节设计一种基于时域正交导频与离散傅里叶变换（DFT）反射码本的低开销信道估计协议。
+
+\subsection{上行导频传输与级联信道矩阵向量化}
+基于时分双工（TDD）系统的信道互易性定理，下行级联 CSI 可通过上行导频训练进行高效获取。假定在相干时隙的训练阶段，各用户并发发送相互正交的导频序列 $\bm{S}_p \in \mathbb{C}^{K \times \tau_p}$，满足：
+\begin{equation}
+  \bm{S}_p \bm{S}_p^H = \tau_p \bm{I}_K
+  \label{eq:pilot_orthogonality}
+\end{equation}
+其中 $\tau_p \ge K$ 为单次导频块符号长度。基站通过乘以各用户的匹配滤波矩阵 $\bm{S}_p^H$，可完全无失真解耦不同用户间的导频响应。对于用户 $k$，在第 $p$ 个导频子时隙（对应 RIS 反射相移配置为 $\bm{v}_p \in \mathbb{C}^{N \times 1}$）下，基站接收的解耦后上行信号矩阵 $\bm{Y}_{k,p} \in \mathbb{C}^{M \times 1}$ 满足：
+\begin{equation}
+  \bm{y}_{k,p} = \bm{h}_{d,k} + \bm{G}^H \mathrm{diag}(\bm{v}_p) \bm{h}_{r,k} + \bar{\bm{n}}_{k,p}
+  \label{eq:uplink_pilot_received}
+\end{equation}
+其中 $\bar{\bm{n}}_{k,p} \sim \mathcal{CN}(\bm{0}, \frac{\sigma^2}{\tau_p}\bm{I}_M)$ 为经过匹配滤波后的等效高斯白噪声。
+
+利用代数恒等式 $\mathrm{diag}(\bm{v}_p)\bm{h}_{r,k} = \mathrm{diag}(\bm{h}_{r,k})\bm{v}_p$，式~\eqref{eq:uplink_pilot_received}中级联链路项可重写为：
+\begin{equation}
+  \bm{G}^H \mathrm{diag}(\bm{v}_p) \bm{h}_{r,k} = \bm{H}_{\mathrm{casc},k}^H \bm{v}_p = \left( \bm{v}_p^T \otimes \bm{I}_M \right) \mathrm{vec}(\bm{H}_{\mathrm{casc},k}^H)
+  \label{eq:kronecker_vectorization}
+\end{equation}
+其中 $\otimes$ 表示 Kronecker 积，$\mathrm{vec}(\cdot)$ 表示矩阵按列向量化算子。
+
+定义全级联信道聚合向量为：
+\begin{equation}
+  \bar{\bm{h}}_k \triangleq \begin{bmatrix} \bm{h}_{d,k} \\ \mathrm{vec}(\bm{H}_{\mathrm{casc},k}^H) \end{bmatrix} \in \mathbb{C}^{(N+1)M \times 1}
+  \label{eq:aggregated_channel_vector}
+\end{equation}
+在 $P$ 个连续训练子时隙内，RIS 依次变换 $P$ 组不同的反射相移图案 $\bm{v}_1, \bm{v}_2, \dots, \bm{v}_P$。构建 RIS 导频反射设计矩阵：
+\begin{equation}
+  \bm{\Phi} \triangleq \begin{bmatrix}
+    1 & \bm{v}_1^T \\
+    1 & \bm{v}_2^T \\
+    \vdots & \vdots \\
+    1 & \bm{v}_P^T
+  \end{bmatrix} \in \mathbb{C}^{P \times (N+1)}
+  \label{eq:ris_pilot_matrix_phi}
+\end{equation}
+将所有 $P$ 个时隙的基站接收信号级联堆叠，可得紧凑的观测线性模型：
+\begin{equation}
+  \bar{\bm{y}}_k \triangleq \begin{bmatrix} \bm{y}_{k,1} \\ \bm{y}_{k,2} \\ \vdots \\ \bm{y}_{k,P} \end{bmatrix} = \left( \bm{\Phi} \otimes \bm{I}_M \right) \bar{\bm{h}}_k + \bar{\bm{n}}_k
+  \label{eq:compact_observation_model}
+\end{equation}
+其中 $\bar{\bm{n}}_k \in \mathbb{C}^{PM \times 1}$ 为综合噪声向量，协方差矩阵为 $\bm{R}_n = \frac{\sigma^2}{\tau_p}\bm{I}_{PM}$。
+
+\subsection{基于正交 DFT 反射码本的最小二乘解耦估计}
+由观测方程~\eqref{eq:compact_observation_model}可知，要保证未知信道向量 $\bar{\bm{h}}_k$ 具有唯一确定解，观测矩阵必须满足列满秩条件，即必需且仅需训练子时隙数 $P \ge N+1$。
+
+为了最小化噪声放大效应并达到最小估计均方误差（MSE），RIS 导频反射矩阵 $\bm{\Phi}$ 的列向量之间必须保持严格的正交性。为此，本节构造基于截断离散傅里叶变换（DFT）的正交码本：
+令 $\bm{F}_{P} \in \mathbb{C}^{P \times P}$ 表示标准 $P$ 阶归一化 DFT 矩阵，其第 $(p, q)$ 项元素定义为：
+\begin{equation}
+  [\bm{F}_P]_{p, q} = \frac{1}{\sqrt{P}} \exp\left( -j \frac{2\pi (p-1)(q-1)}{P} \right), \quad 1 \le p, q \le P
+  \label{eq:dft_matrix_element}
+\end{equation}
+选取 $P = N+1$（或当 $N+1$ 非 2 的幂次时选取 $P = 2^{\lceil \log_2(N+1) \rceil}$），直接令导频设计矩阵 $\bm{\Phi}$ 由 $\bm{F}_P$ 的前 $N+1$ 列构成：
+\begin{equation}
+  \bm{\Phi} = \sqrt{P} [\bm{F}_P]_{:, 1:(N+1)}
+  \label{eq:optimal_dft_codebook}
+\end{equation}
+显然，该设计天然满足行恒模物理条件 $|[\bm{\Phi}]_{p, n+1}| = 1$，且满足完美列正交性：
+\begin{equation}
+  \bm{\Phi}^H \bm{\Phi} = P \bm{I}_{N+1}
+  \label{eq:phi_column_orthogonality}
+\end{equation}
+
+在式~\eqref{eq:phi_column_orthogonality}的列正交性保障下，基站端可采用计算复杂度极低的最小二乘（LS）解析估计器直接闭式恢复全信道：
+\begin{equation}
+  \hat{\bar{\bm{h}}}_k^{\mathrm{LS}} = \left( (\bm{\Phi}^H \bm{\Phi})^{-1}\bm{\Phi}^H \otimes \bm{I}_M \right) \bar{\bm{y}}_k = \frac{1}{P} \left( \bm{\Phi}^H \otimes \bm{I}_M \right) \bar{\bm{y}}_k
+  \label{eq:ls_closed_form_estimator}
+\end{equation}
+计算过程完全避免了高维矩阵求逆运算，单用户信道重构复杂度仅为 $\mathcal{O}(PM)$。
+从重构向量 $\hat{\bar{\bm{h}}}_k^{\mathrm{LS}}$ 中，前 $M$ 个分量直接提取出基站至用户 $k$ 的直连信道估计 $\hat{\bm{h}}_{d,k}$；后 $NM$ 个分量经逆向量化反折叠，即刻精确恢复出级联信道矩阵 $\hat{\bm{H}}_{\mathrm{casc},k}$。
+整个估计协议仅需 $P = N+1$ 个时隙即可同时完成直连链路与级联反射链路的完全正交解耦估计，导频开销达到理论下界。

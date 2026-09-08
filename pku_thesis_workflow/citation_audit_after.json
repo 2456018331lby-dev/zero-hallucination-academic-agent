@@ -1,0 +1,216 @@
+{
+  "project": "C:\\Users\\24560\\Desktop\\study\\pidemo\\pku_thesis_workflow\\pku_thesis_project",
+  "timestamp": "2026-09-06 22:12:42",
+  "mode": "online",
+  "stats": {
+    "total_entries": 12,
+    "fail": 0,
+    "warn": 1,
+    "ok": 12,
+    "dangling_cites": [],
+    "uncited_entries": [],
+    "dual_reference_source": true
+  },
+  "entries": [
+    {
+      "key": "xie2021deep",
+      "origin": "references.bib",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/tsp.2021.3071210",
+      "entry_title": "Deep Learning Enabled Semantic Communication Systems"
+    },
+    {
+      "key": "dai2022nonlinear",
+      "origin": "references.bib",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2022.3180802",
+      "entry_title": "Nonlinear Transform Source-Channel Coding for Semantic Communications"
+    },
+    {
+      "key": "huang2025d2",
+      "origin": "references.bib",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2025.3531546",
+      "entry_title": "D²-JSCC: Digital Deep Joint Source-Channel Coding for Semantic Communications"
+    },
+    {
+      "key": "lyu2024semantic",
+      "origin": "references.bib",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/twc.2023.3349330",
+      "entry_title": "Semantic Communications for Image Recovery and Classification via Deep Joint Source and Channel Coding"
+    },
+    {
+      "key": "wang2023wireless",
+      "origin": "references.bib",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2022.3221977",
+      "entry_title": "Wireless Deep Video Semantic Transmission"
+    },
+    {
+      "key": "nguyen2025survey",
+      "origin": "references.bib",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/comst.2025.3616973",
+      "entry_title": "A Contemporary Survey on Semantic Communications: Theory of Mind, Generative AI, and Deep Joint Source-Channel Coding"
+    },
+    {
+      "key": "xie2021deep",
+      "origin": "references.tex",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/tsp.2021.3071210",
+      "entry_title": "Deep learning enabled semantic communication systems"
+    },
+    {
+      "key": "dai2022nonlinear",
+      "origin": "references.tex",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2022.3180802",
+      "entry_title": "Nonlinear transform source-channel coding for semantic communications"
+    },
+    {
+      "key": "huang2025d2",
+      "origin": "references.tex",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2025.3531546",
+      "entry_title": "D²-JSCC: Digital deep joint source-channel coding for semantic communications"
+    },
+    {
+      "key": "lyu2024semantic",
+      "origin": "references.tex",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/twc.2023.3349330",
+      "entry_title": "Semantic communications for image recovery and classification via deep joint source and channel coding"
+    },
+    {
+      "key": "wang2023wireless",
+      "origin": "references.tex",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2022.3221977",
+      "entry_title": "Wireless deep video semantic transmission"
+    },
+    {
+      "key": "nguyen2025survey",
+      "origin": "references.tex",
+      "status": "OK",
+      "problems": [],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/comst.2025.3616973",
+      "entry_title": "A contemporary survey on semantic communications: Theory of mind, generative AI, and deep joint source-channel coding"
+    }
+  ]
+}

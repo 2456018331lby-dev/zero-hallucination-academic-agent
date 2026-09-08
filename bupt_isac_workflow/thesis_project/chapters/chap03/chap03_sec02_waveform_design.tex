@@ -1,0 +1,33 @@
+% -*- coding: utf-8 -*-
+\section{基于 CRB 与互信息量的通感一体波形优化}
+\label{sec:waveform_design}
+
+在传统通信系统设计中，香农信道容量的极值解遵循经典注水定理，能量倾向于汇聚在信道增益优良的子载波或空间特征模态上；而在雷达探测体系中，估计精度（CRB 极小化）则要求信号在频带边缘注入更大能量以展宽均方根（RMS）带宽。本节建立二者联合权衡的优化数学规划模型。
+
+\subsection{多载波 OFDM 频域波形参数化}
+设系统配置 $M$ 个正交子载波，子载波间隔为 $\Delta f$。在第 $m \in \{1, \dots, M\}$ 个子载波上，下行通信发射功率记为 $p_{c,m}$，专用雷达探测功率记为 $p_{s,m}$。根据双基地雷达测距测角理论，时延估计误差界与子载波二阶矩密切相关：
+\begin{equation}
+  \mathrm{CRB}(\tau) \propto \frac{\sigma_s^2}{\sum_{m=1}^M m^2 (p_{c,m} + p_{s,m})}
+\end{equation}
+由此可知，感知时延 CRB 对频带两端的“高频边缘子载波”（即大 $m$）具有极强的能量亲和性；而通信互信息量则满足：
+\begin{equation}
+  \mathcal{I}(X; Y_c) = \sum_{m=1}^M \log_2\left(1 + \frac{p_{c,m}|h_{c,m}|^2}{p_{s,m}|h_{c,m}|^2 + \sigma_c^2}\right)
+\end{equation}
+式中感知波形对通信接收构成共信道干扰，若不施加空域波束正交化设计，将严重压缩通信信道容量。
+
+\subsection{通感一体预编码联合优化问题建模}
+为了在空间域与频域彻底消除感知对通信用户的互干扰，同时最大化全网通信下行和速率并保障空域探测能量覆盖，构建如下联合波束赋形优化问题 $(\mathcal{P}_1)$：
+\begin{align}
+  (\mathcal{P}_1): \max_{\mathbf{W}, \mathbf{w}_s} \quad & R_{\mathrm{sum}} = \sum_{k=1}^K \log_2(1 + \mathrm{SINR}_k) \\
+  \text{s.t.} \quad & \mathrm{SINR}_k \ge \Gamma_{\mathrm{th}}, \quad \forall k \in \{1, \dots, K\} \\
+  & \mathbf{a}^H(\theta_i)(\mathbf{W}\mathbf{W}^H + \mathbf{w}_s \mathbf{w}_s^H)\mathbf{a}(\theta_i) \ge \Gamma_s, \quad \forall i \in \{1, \dots, I\} \\
+  & \sum_{k=1}^K \|\mathbf{w}_k\|^2 + \|\mathbf{w}_s\|^2 \le P_{\max}
+\end{align}
+其中 $\Gamma_{\mathrm{th}}$ 为用户通信最低服务质量（QoS）门限，$\Gamma_s$ 为在第 $i$ 个感知目标方位角 $\theta_i$ 处的最低定向辐射功率门限，$I$ 为待探测的目标空域总数。
+
+\subsection{矩阵提升与半正定松弛（SDR）重构}
+问题 $(\mathcal{P}_1)$ 的目标函数与非凸二次约束使得原规划属于 NP-hard 问题。为此，引入矩阵提升（Matrix Lifting）技术，定义高维半正定矩阵变量：
+\begin{equation}
+  \mathbf{W}_k = \mathbf{w}_k \mathbf{w}_k^H, \quad \mathbf{W}_s = \mathbf{w}_s \mathbf{w}_s^H
+\end{equation}
+显然，$\mathbf{W}_k \succeq \mathbf{0}, \mathbf{W}_s \succeq \mathbf{0}$，且满足隐式秩一约束 $\mathrm{Rank}(\mathbf{W}_k) = 1, \mathrm{Rank}(\mathbf{W}_s) = 1$。通过松弛该非凸秩一约束，问题 $(\mathcal{P}_1)$ 转化为关于 $\{\mathbf{W}_k\}$ 与 $\mathbf{W}_s$ 的凸半正定规划（SDP）子结构，为多项式复杂度求解奠定了坚实理论基础。

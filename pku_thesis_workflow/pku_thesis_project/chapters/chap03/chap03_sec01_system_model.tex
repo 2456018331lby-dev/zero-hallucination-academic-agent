@@ -1,0 +1,96 @@
+% -*- coding: utf-8 -*-
+\section{时变衰落通信系统物理层形式化数学建模}
+\label{sec:3_1_system_model}
+
+在经典点对点无线通信系统中，传输链路的理论建模通常建立于平稳、遍历且码长趋于无穷大的渐进假设之上。然而在面向第六代移动通信系统（6G）的车联网（V2X）与超视距无人机高速通信场景下，收发终端的高速相对位移引发了剧烈的多普勒频移扩展，导致信道呈现显著的非平稳、快时变衰落特性。本节严格遵循《GB/T 3102.11-1993》物理科学数学符号规范及全局记号契约，构建完整的端到端语义通信系统物理层数学模型。
+
+\subsection{信源流形与非线性深度特征映射}
+令发送端输入的原始信源图像张量记为 $\bm{x} \in \mathbb{R}^{C \times H \times W}$，其中 $C$ 表示通道数（对于 RGB 彩色图像，$C=3$），$H$ 与 $W$ 分别表示图像的垂直高度与水平宽度像素分辨率。假定信源样本服从紧致流形上的高维概率分布 $p_{\bm{x}}(\bm{x})$。
+
+发送端部署由参数为 $\bm{\theta}$ 构成的深度编码神经网络 $f_{\bm{\theta}}: \mathbb{R}^{C \times H \times W} \to \mathbb{R}^K$。该网络由若干级残差非线性卷积块（Residual Blocks）与空间自注意力机制组合而成，其本质是将高维像素流形非线性投影至紧凑的低维潜在语义特征空间：
+\begin{equation}
+  \bm{z} = f_{\bm{\theta}}(\bm{x}) = [z_1, z_2, \dots, z_K]^T \in \mathbb{R}^K
+  \label{eq:encoder_mapping_deep}
+\end{equation}
+其中 $K \in \mathbb{Z}^+$ 为编码后输出的信道传输符号总维数。
+
+为严格量化通信系统的空口带宽开销，定义传输带宽压缩比（Bandwidth Compression Ratio, BCR，记为 $\rho$）如下：
+\begin{equation}
+  \rho = \frac{K}{C \cdot H \cdot W} \quad (\text{维度/像素})
+  \label{eq:bandwidth_ratio}
+\end{equation}
+在物理通信系统中，$\rho$ 的数值直接对应每个源像素平均占用的信道复数/实数物理符号数。当 $\rho < 0.1$ 时，系统处于超低码率极致压缩状态。
+
+\subsection{物理层发射功率归一化约束}
+在无线射频物理层传输中，发射天线受限于功率放大器（PA）的线性工作区间与电池储能，必须满足严格的平均发射功率约束。设发射端允许的最大平均单符号发射功率为 $P$（在无量纲化系统仿真中默认归一化为 $P = 1\text{ W}$）。
+
+深度编码器直接输出的潜在特征向量 $\bm{z}$ 具有随机的能量分布，不能直接馈送至射频模拟前端。为此，在发射前必须通过能量归一化算子 $\mathcal{P}(\cdot)$ 进行投影变换：
+\begin{equation}
+  \tilde{\bm{z}} = \mathcal{P}(\bm{z}) = \sqrt{K P} \cdot \frac{\bm{z}}{\|\bm{z}\|_2} = \sqrt{K P} \cdot \frac{\bm{z}}{\sqrt{\sum_{k=1}^K z_k^2}}
+  \label{eq:power_normalization_rigorous}
+\end{equation}
+易证归一化后的符号向量 $\tilde{\bm{z}} \in \mathbb{R}^K$ 恒等满足欧氏范数与平均功率守恒条件：
+\begin{equation}
+  \frac{1}{K} \|\tilde{\bm{z}}\|_2^2 = \frac{1}{K} \cdot \left( \sqrt{K P} \frac{\|\bm{z}\|_2}{\|\bm{z}\|_2} \right)^2 = P
+  \label{eq:power_proof}
+\end{equation}
+经此处理，每个发送符号的平均物理辐射能量被严格限定在 $P$ 以内，防止大尺度特征突发冲击导致功放非线性失真。
+
+\subsection{3GPP TDL-D 高速时变多径信道物理模型}
+无线传输媒介被严格建模为具有多径时延扩展与多普勒频移的时变衰落信道。依据 3GPP TR 38.901 标准规范，本系统采用适用于高速移动与非视距（NLOS）车载环境的 \textbf{TDL-D（Tapped Delay Line-D）} 衰落模型。
+
+设多径分量数为 $L_p$，第 $l$ 条传播路径的时延记为 $\tau_l$，复信道增益记为 $c_l(t)$。在时域连续响应下，物理信道的冲激响应函数表达为：
+\begin{equation}
+  h(t, \tau) = \sum_{l=1}^{L_p} c_l(t) \delta(\tau - \tau_l)
+  \label{eq:channel_impulse_response}
+\end{equation}
+由于车辆与基站存在高速相对移动，相对移动速度为 $v$，无线载波中心频率为 $f_c$，光速为 $c_0 \approx 3 \times 10^8\text{ m/s}$。最大多普勒频移扩展 $f_d$ 由物理运动学定理决定：
+\begin{equation}
+  f_d = \frac{v}{c_0} f_c
+  \label{eq:doppler_freq}
+\end{equation}
+例如，当载波频率 $f_c = 3.5\text{ GHz}$、相对车速 $v = 120\text{ km/h} \approx 33.33\text{ m/s}$ 时，最大多普勒扩展高达：
+\begin{equation}
+  f_d = \frac{33.33}{3 \times 10^8} \times 3.5 \times 10^9 \approx 388.89\text{ Hz}
+\end{equation}
+
+根据 Jakes 各向同性多散射体模型假定，时变信道各径增益 $c_l(t)$ 服从广义平稳不相关散射（WSSUS）随机过程，其时间自相关函数满足经典零阶第一类贝塞尔函数形式：
+\begin{equation}
+  R_{c_l}(\Delta t) = \mathbb{E}[c_l(t) c_l^*(t + \Delta t)] = \sigma_l^2 J_0(2\pi f_d \Delta t)
+  \label{eq:bessel_autocorrelation}
+\end{equation}
+其中 $\sigma_l^2$ 为第 $l$ 径的平均归一化功率（满足 $\sum_{l=1}^{L_p} \sigma_l^2 = 1$），$J_0(\cdot)$ 为零阶第一类贝塞尔函数。
+
+在离散化系统表征中，信道作用于发射符号向量 $\tilde{\bm{z}}$。令 $\bm{h} = [h_1, h_2, \dots, h_K]^T \in \mathbb{C}^K$ 表示与传输符号对齐的信道衰落复系数向量，信道加性复高斯白噪声向量记为 $\bm{n} \in \mathbb{C}^K$，且服从独立同分布：
+\begin{equation}
+  \bm{n} \sim \mathcal{CN}(0, \sigma_n^2 \bm{I}_K)
+  \label{eq:noise_distribution}
+\end{equation}
+其中 $\sigma_n^2$ 为每个物理维度的噪声功率方差。则接收端射频前端所采集到的基带离散接收信号 $\bm{y} \in \mathbb{C}^K$ 表示为：
+\begin{equation}
+  \bm{y} = \bm{h} \odot \tilde{\bm{z}} + \bm{n}
+  \label{eq:received_signal_model}
+\end{equation}
+式中 $\odot$ 表示向量间的逐元素哈达玛积（Hadamard Product）。
+
+由此，瞬时接收信噪比（Signal-to-Noise Ratio, 记为 $\gamma$）以分贝（dB）形式定义为：
+\begin{equation}
+  \gamma = 10 \log_{10} \left( \frac{P}{\sigma_n^2} \right) \quad (\text{dB})
+  \label{eq:snr_definition}
+\end{equation}
+在高速公路场景下，由于建筑物的遮挡与多径深衰落的快速干涉，$\gamma$ 会在数毫秒的极短时间内发生超过 $15\text{ dB}$ 的剧烈跌落，构成对传统固定结构神经网络的严峻考验。
+
+\subsection{非理想 CSI 条件下的解码端重构逆映射}
+在接收端，基带处理单元通过插入导频序列完成信道估计，获得受估计误差污染的信道状态信息（Channel State Information, CSI），记为 $\hat{\bm{h}}$：
+\begin{equation}
+  \hat{\bm{h}} = \bm{h} + \bm{e}_{\text{csi}}
+  \label{eq:imperfect_csi}
+\end{equation}
+其中 $\bm{e}_{\text{csi}} \sim \mathcal{CN}(0, \sigma_{\text{csi}}^2 \bm{I}_K)$ 为高斯信道估计误差向量。
+
+接收端部署深度语义解码网络 $g_{\bm{\phi}}$（参数集记为 $\bm{\phi}$）。解码器同时接收受污染的信号 $\bm{y}$ 与估计的信道状态 $\hat{\bm{h}}$，通过多尺度逆卷积神经网络重建对原始信源图像的估计值 $\hat{\bm{x}}$：
+\begin{equation}
+  \hat{\bm{x}} = g_{\bm{\phi}}(\bm{y}, \hat{\bm{h}}) \in \mathbb{R}^{C \times H \times W}
+  \label{eq:decoder_reconstruction_deep}
+\end{equation}
+整个通信传输链条构成了由信源输入 $\bm{x}$ 经编码 $f_{\bm{\theta}}$、物理信道过渡 $(\bm{h}, \bm{n})$ 至解码重构 $\hat{\bm{x}}$ 的完整端到端可微分图模型计算流图。

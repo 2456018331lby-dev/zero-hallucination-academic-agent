@@ -1,0 +1,208 @@
+% -*- coding: utf-8 -*-
+% =============================================================================
+% 北京大学研究生学位论文 LaTeX 模板工程 (符合 GB/T 7713.1-2006 规范)
+% 专业领域：电子信息（专业代码：085402 通信工程）
+% 研究方向：面向 6G 的端到端信源信道联合语义通信技术
+% =============================================================================
+
+\documentclass[12pt,a4paper,openany,UTF8]{ctexrep}
+
+% -----------------------------------------------------------------------------
+% 页面尺寸与版面几何布局 (Peking University Thesis Layout)
+% -----------------------------------------------------------------------------
+\usepackage{geometry}
+\geometry{
+  top=3.0cm,
+  bottom=2.5cm,
+  left=2.6cm,
+  right=2.6cm,
+  headheight=15pt,
+  headsep=18pt,
+  footskip=25pt
+}
+
+% -----------------------------------------------------------------------------
+% 数学公式与符号支持
+% -----------------------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsfonts,amsthm,bm}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{definition}{定义}[chapter]
+
+% -----------------------------------------------------------------------------
+% 图表与三线表支持 (GB/T 7713 规范禁用双竖线，强制 booktabs)
+% -----------------------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup{font={small},labelfont={bf},skip=6pt}
+
+% 页眉页脚排版
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small 北京大学硕士学位论文：\leftmark}
+\fancyfoot[C]{\small \thepage}
+\renewcommand{\headrulewidth}{0.75pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% -----------------------------------------------------------------------------
+% 超链接与交叉引用美化
+% -----------------------------------------------------------------------------
+\usepackage{xcolor}
+\providecommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black,
+  pdfauthor={北京大学硕士研究生},
+  pdftitle={面向高速时变信道的轻量化自适应信源信道联合语义通信机制研究}
+}
+
+% -----------------------------------------------------------------------------
+% 正文开始
+% -----------------------------------------------------------------------------
+\begin{document}
+
+% 论文封面 (Title Page)
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+  {\Huge \textbf{北\quad 京\quad 大\quad 学}\par}
+  \vspace{0.6cm}
+  {\Large \textbf{PEKING UNIVERSITY}\par}
+  \vspace{1.5cm}
+  {\Large \textbf{硕\quad 士\quad 学\quad 位\quad 论\quad 文}\par}
+  \vspace{2.0cm}
+  {\LARGE \textbf{面向高速时变信道的轻量化自适应}\par}
+  \vspace{0.3cm}
+  {\LARGE \textbf{信源信道联合语义通信机制研究}\par}
+  \vspace{0.8cm}
+  {\large \textit{Research on Lightweight Adaptive Deep Joint Source-Channel}\par}
+  {\large \textit{Semantic Communications for High-Speed Time-Varying Channels}\par}
+  \vfill
+  \begin{tabular}{ll}
+    \textbf{姓\qquad 名}： & 研究生 \\
+    \textbf{学\qquad 号}： & 2401210854 \\
+    \textbf{院\qquad 系}： & 信息科学技术学院 / 电子学院 \\
+    \textbf{专业领域}：   & 电子信息（085402 通信工程） \\
+    \textbf{研究方向}：   & 6G 移动通信与无线传输 \\
+    \textbf{指导教师}：   & 教授 \\
+  \end{tabular}
+  \vspace{1.5cm}
+  \par
+  {\large \textbf{二〇二六年九月}\par}
+\end{titlepage}
+
+% 中英文摘要与目录 (前言采用罗马数字页码)
+\pagenumbering{Roman}
+\setcounter{page}{1}
+
+% 原创性声明与使用授权说明
+\chapter*{北京大学学位论文原创性声明与使用授权说明}
+\thispagestyle{empty}
+\noindent 本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工作所取得的成果。除文中已经注明引用的内容外，本论文不含任何其他个人或集体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。本人完全意识到本声明的法律结果由本人承担。
+
+\vspace{1.5cm}
+\begin{flushright}
+  学位论文作者签名：\underline{\hspace{3cm}} \qquad
+  签字日期：\qquad 年\quad 月\quad 日
+\end{flushright}
+\newpage
+
+% 中文摘要
+\chapter*{摘\quad 要}
+\addcontentsline{toc}{chapter}{摘要}
+随着第六代移动通信系统（6G）向智能互联与具身智能场景的纵深拓展，面向车联网与超视距遥操作的高可靠、低时延传输需求对传统物理层架构提出了严峻挑战。经典无线通信系统严格遵循香农分离定理，将系统划分为信源压缩与信道编码两个独立环节。然而在有限码长约束下，分离定理渐进最优性不再成立；同时，数字通信固有的“信道悬崖效应”使得接收端在恶劣信道下极易发生通信中断。
+
+深度信源信道联合语义通信（Deep JSCC）通过端到端神经网络将信源特征直接映射为信道传输符号，突破了香农分离边界。然而现有工作普遍存在两大关键瓶颈：其一，固定网络在面对高速移动引发的多普勒频移及信噪比剧烈跳变时，存在严重的信噪比失配退化；其二，网络计算复杂度高，难以满足毫秒级低时延物理层硬件约束。
+
+针对上述难题，本文以北京大学 085402 通信工程专业研究方向为立足点，系统开展了面向高速时变信道的轻量化自适应 Deep JSCC 理论与架构设计。本文主要工作与贡献如下：
+(1) 构建了信噪比驱动的动态神经门控特征剪枝模型，实现了传输维度的微秒级自适应调节；
+(2) 提出了离散可微分量化收发机结构，全面兼容商用 QAM 数字基带射频硬件；
+(3) 搭建了系统级仿真基准与软硬件验证原型，证实了所提机制在高速时变场景下的平滑退化与鲁棒增益。
+
+\vspace{0.6cm}
+\noindent \textbf{关键词}：6G 移动通信；语义通信；深度联合信源信道编码 (Deep JSCC)；时变信道；轻量化网络
+
+\newpage
+
+% 英文摘要 (English Abstract)
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+With the deep integration of the sixth-generation (6G) wireless mobile communication systems into connected vehicular networks and embodied intelligence scenarios, high-reliability and low-latency physical layer transmission under rapidly time-varying wireless channels has become an urgent challenge. Traditional wireless communication architectures, strictly constrained by Shannon's separation theorem, experience severe performance degradation due to the "cliff effect" when operating over hostile fast fading channels.
+
+Deep Joint Source-Channel Coding (Deep JSCC) breaks the separation boundary by mapping source content directly into complex channel symbols via end-to-end neural networks. However, existing architectures suffer from severe signal-to-noise ratio (SNR) mismatch degradation in high mobility environments, and their prohibitive computational complexity impedes real-time deployment on commercial hardware.
+
+To address these challenges, this thesis proposes a lightweight adaptive Deep JSCC framework designed for high-speed time-varying channels:
+(1) A signal-to-noise ratio-driven dynamic channel gating unit (DCGU) is developed for microsecond-level adaptive feature pruning;
+(2) An end-to-end discrete differentiable quantization (DDQ) architecture is established to achieve physical layer compatibility with commercial digital QAM baseband transceivers;
+(3) A reproducible system-level simulation benchmark and evaluation framework are constructed to validate graceful degradation and robustness under 3GPP TDL-D channel conditions.
+
+\vspace{0.6cm}
+\noindent \textbf{Keywords}: 6G Mobile Communications; Semantic Communications; Deep Joint Source-Channel Coding (Deep JSCC); Time-Varying Channels; Lightweight Neural Network
+
+\newpage
+
+% 目录
+\tableofcontents
+\newpage
+
+% 图目录与表目录
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% 主要符号对照表
+\chapter*{主要符号对照表}
+\addcontentsline{toc}{chapter}{主要符号对照表}
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  \textbf{符号} & \textbf{含义说明} \\
+  \midrule
+  $\bm{x}$ & 发送端输入原始图像/语义信号 \\
+  $\hat{\bm{x}}$ & 接收端重构输出图像/语义信号 \\
+  $\bm{z}$ & 编码器提取的潜在语义特征向量 \\
+  $\bm{m}$ & 动态通道门控掩码向量 \\
+  $\gamma$ & 瞬时信道信噪比 (SNR) \\
+  $\bm{H}$ & 时变信道传输矩阵 \\
+  $\mathcal{S}_M$ & $M$-QAM 离散星座点集合 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+\newpage
+
+% 正文部分 (阿拉伯数字页码)
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/chap01_intro.tex}
+\input{chapters/chap02_related_work.tex}
+\input{chapters/chap03_methodology.tex}
+\input{chapters/chap04_experiments.tex}
+\input{chapters/chap05_conclusion.tex}
+
+% 参考文献列表 (严格对齐 GB/T 7714-2015 格式)
+\input{chapters/references.tex}
+
+% 致谢 (Acknowledgments)
+\chapter*{致谢}
+\addcontentsline{toc}{chapter}{致谢}
+\TODO{感谢导师的悉心指导，感谢实验室同门的帮助与支持，感谢家人的理解与陪伴。}
+\newpage
+
+% 攻读学位期间研究成果 (Academic Achievements)
+\chapter*{攻读学位期间发表的学术论文与研究成果}
+\addcontentsline{toc}{chapter}{攻读学位期间研究成果}
+\begin{enumerate}
+  \item \TODO{待填入已录用或在审学术论文清单与专利成果。}
+\end{enumerate}
+
+\end{document}

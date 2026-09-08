@@ -1,0 +1,55 @@
+% -*- coding: utf-8 -*-
+\section{系统模型与空地无线信道表征}
+\label{sec:system_model}
+
+考虑如图所示的低空智联网多无人机协同通感一体化系统。系统由一个部署于地面且配置 $N_t$ 根均匀线阵（ULA）发射天线与 $N_r$ 根接收天线的基站（BS）、$K$ 个单天线地面移动通信用户以及 $U$ 架协同巡航无人机组成。基站发射统一的双功能雷达通信（DFRC）基带信号矩阵 $\mathbf{X} \in \mathbb{C}^{N_t \times N_s}$，在为一个或多个低空区域执行非合作目标连续监视与参数估计的同时，向下行移动通信用户提供高品质宽带数据服务。
+
+\subsection{发射信号与空域预编码架构}
+设基带发射信号由下行多用户通信信息流与专用雷达探测波形复用构成：
+\begin{equation}
+  \mathbf{X} = \mathbf{W}\mathbf{S}_c + \mathbf{w}_s \mathbf{s}_s^T
+\end{equation}
+其中 $\mathbf{W} = [\mathbf{w}_1, \dots, \mathbf{w}_K] \in \mathbb{C}^{N_t \times K}$ 为下行多用户通信数字预编码矩阵，$\mathbf{w}_k \in \mathbb{C}^{N_t \times 1}$ 表示面向第 $k$ 个通信用户的波束赋形向量；$\mathbf{S}_c \in \mathbb{C}^{K \times N_s}$ 表示经调制后的正交归一化通信数据符号矩阵，满足统计正交性 $\mathbb{E}[\mathbf{S}_c \mathbf{S}_c^H] = \mathbf{I}_K$；$\mathbf{w}_s \in \mathbb{C}^{N_t \times 1}$ 为专用雷达探测波束赋形向量，$\mathbf{s}_s \in \mathbb{C}^{N_s \times 1}$ 为相互独立的伪随机雷达探测序列，满足 $\mathbb{E}[\mathbf{s}_s \mathbf{s}_s^H] = \mathbf{I}_{N_s}$ 且 $\mathbb{E}[\mathbf{S}_c \mathbf{s}_s^*] = \mathbf{0}$。
+
+发射基带信号的样本空间协方差矩阵定义为：
+\begin{equation}
+  \mathbf{R}_x = \frac{1}{N_s}\mathbf{X}\mathbf{X}^H = \sum_{k=1}^K \mathbf{w}_k \mathbf{w}_k^H + \mathbf{w}_s \mathbf{w}_s^H = \mathbf{W}\mathbf{W}^H + \mathbf{w}_s \mathbf{w}_s^H
+\end{equation}
+系统总发射功率受限于功放线性区最大功率预算 $P_{\max}$，即：
+\begin{equation}
+  \mathrm{Tr}(\mathbf{R}_x) = \sum_{k=1}^K \|\mathbf{w}_k\|^2 + \|\mathbf{w}_s\|^2 \le P_{\max}
+\end{equation}
+
+\subsection{空地多输入多输出通信接收模型}
+设基站至第 $k$ 个移动通信用户的等效下行信道向量为 $\mathbf{h}_{c,k} \in \mathbb{C}^{N_t \times 1}$，全网综合通信信道矩阵记为 $\mathbf{H}_c = [\mathbf{h}_{c,1}, \dots, \mathbf{h}_{c,K}]^H \in \mathbb{C}^{K \times N_t}$。第 $k$ 个用户处的下行接收信号可表示为：
+\begin{equation}
+  y_{c,k} = \mathbf{h}_{c,k}^H \mathbf{w}_k s_{c,k} + \sum_{j \ne k}^K \mathbf{h}_{c,k}^H \mathbf{w}_j s_{c,j} + \mathbf{h}_{c,k}^H \mathbf{w}_s s_s + n_{c,k}
+\end{equation}
+其中 $n_{c,k} \sim \mathcal{CN}(0, \sigma_c^2)$ 为用户接收端均值为零、方差为 $\sigma_c^2$ 的加性复高斯白噪声。
+
+在该信号模型下，第 $k$ 个通信用户的接收信干噪比（SINR）可严格形式化表征为：
+\begin{equation}
+  \mathrm{SINR}_k = \frac{|\mathbf{h}_{c,k}^H \mathbf{w}_k|^2}{\sum_{j \ne k}^K |\mathbf{h}_{c,k}^H \mathbf{w}_j|^2 + |\mathbf{h}_{c,k}^H \mathbf{w}_s|^2 + \sigma_c^2}
+\end{equation}
+整个系统的加权下行通信和速率定义为：
+\begin{equation}
+  R_{\mathrm{sum}} = \sum_{k=1}^K \mu_k \log_2(1 + \mathrm{SINR}_k)
+\end{equation}
+其中 $\mu_k \ge 0$ 为不同业务优先级的加权比例因子。
+
+\subsection{雷达目标回波与克拉美罗下界矩阵}
+假设空域存在一个或多个待探测低空目标。目标相对于基站阵列的方位角为 $\theta$，雷达散射截面积（RCS）及复回波系数记为 $\alpha_k$。基站接收阵列接收到的目标回波信号矩阵 $\mathbf{Y}_s \in \mathbb{C}^{N_r \times N_s}$ 满足：
+\begin{equation}
+  \mathbf{Y}_s = \alpha_k \mathbf{b}(\theta)\mathbf{a}^H(\theta)\mathbf{X} + \mathbf{N}_s = \mathbf{H}_s \mathbf{X} + \mathbf{N}_s
+\end{equation}
+其中 $\mathbf{a}(\theta) \in \mathbb{C}^{N_t \times 1}$ 与 $\mathbf{b}(\theta) \in \mathbb{C}^{N_r \times 1}$ 分别为基站发射阵列与接收阵列的阵列导向矢量；$\mathbf{H}_s = \alpha_k \mathbf{b}(\theta)\mathbf{a}^H(\theta) \in \mathbb{C}^{N_r \times N_t}$ 为等效感知空间信道矩阵；$\mathbf{N}_s$ 为感知接收机热噪声矩阵，其各列相互独立且服从 $\mathcal{CN}(\mathbf{0}, \sigma_s^2 \mathbf{I}_{N_r})$。
+
+为了客观刻画雷达无偏估计精度的理论物理极限，引入费雪信息矩阵（Fisher Information Matrix, FIM）$\mathbf{J}$。对于待估计参数向量 $\boldsymbol{\xi} = [\theta, \tau, f_D]^T$（分别对应目标的方位角、时延与多普勒频移），其无偏估计误差协方差矩阵下界由克拉美罗界（CRB）确定：
+\begin{equation}
+  \mathbb{E}\left[(\hat{\boldsymbol{\xi}} - \boldsymbol{\xi})(\hat{\boldsymbol{\xi}} - \boldsymbol{\xi})^T\right] \succeq \mathbf{J}^{-1} \triangleq \mathrm{CRB}(\boldsymbol{\xi})
+\end{equation}
+特别地，针对目标角度估计，对应的克拉美罗下界具有显式表达式：
+\begin{equation}
+  \mathrm{CRB}(\theta) = \frac{\sigma_s^2}{2 |\alpha_k|^2 N_s \|\dot{\mathbf{a}}(\theta)\|^2 \mathbf{a}^H(\theta)\mathbf{R}_x \mathbf{a}(\theta)}
+\end{equation}
+其中 $\dot{\mathbf{a}}(\theta) = \frac{\partial \mathbf{a}(\theta)}{\partial \theta}$ 表示阵列导向矢量的角域导数。由上式可见，感知精度指标直接取决于发射协方差矩阵 $\mathbf{R}_x$ 在期望探测方向 $\mathbf{a}(\theta)$ 上的能量投影强度。

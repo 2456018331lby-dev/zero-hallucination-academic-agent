@@ -1,0 +1,397 @@
+\documentclass[aspectratio=169, 10pt]{ctexbeamer}
+
+% ----------------------------------------------------
+% Packages & Theme Configuration
+% ----------------------------------------------------
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{cite}
+\usepackage{xcolor}
+
+% BUPT Classic Blue Theme Color
+\definecolor{buptblue}{RGB}{0, 63, 136}
+\definecolor{buptlight}{RGB}{232, 240, 254}
+\definecolor{evidencegray}{RGB}{90, 95, 105}
+
+\setbeamercolor{palette primary}{bg=buptblue,fg=white}
+\setbeamercolor{palette secondary}{bg=buptblue!85,fg=white}
+\setbeamercolor{palette tertiary}{bg=buptblue!70,fg=white}
+\setbeamercolor{structure}{fg=buptblue}
+\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{block title}{bg=buptblue,fg=white}
+\setbeamercolor{block body}{bg=buptlight,fg=black}
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Custom footline with slide numbers
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\hspace*{2ex}北京邮电大学 · 电子信息（085402）
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}ISAC 前沿进展：波形设计与感知性能界
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+% ----------------------------------------------------
+% Title Metadata
+% ----------------------------------------------------
+\title[ISAC 前沿进展：波形设计与感知性能界]{面向低空智联网的无人机通感一体化（ISAC）\\波形设计与感知性能界}
+\subtitle{周度学术文献精读与理论演进汇报}
+\author[硕士研究生]{汇报人：硕士研究生（085402 通信工程）}
+\institute[BUPT]{北京邮电大学 信息与通信工程学院}
+\date{\today}
+
+\begin{document}
+
+% ----------------------------------------------------
+% Slide 1: Title Page
+% ----------------------------------------------------
+\begin{frame}
+  \titlepage
+  \note{各位老师、同门大家好！今天由我汇报本周的前沿文献精读进展。汇报的主题是面向低空智联网的无人机通感一体化波形设计与感知性能界分析。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 2: Outline
+% ----------------------------------------------------
+\begin{frame}{报告提纲与文献梳理脉络}
+  \tableofcontents
+  \note{本次汇报分为四个主要部分：首先介绍低空智联网背景与无人机通感一体化的业务动机；接着重点拆解本周精读的三篇顶刊与前沿预印本文献，涵盖多机协同、双基地波形与抗高多普勒波形；随后给出8维前沿技术横向对比矩阵；最后汇报下一阶段实验与硕士论文研究规划。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 3: Background & Motivation
+% ----------------------------------------------------
+\section{研究背景与低空智联网业务演进}
+\begin{frame}{研究背景与低空智联网业务演进}
+  \begin{itemize}
+    \item \textbf{低空经济战略需求与空域立体化}：
+    低空空域（$H < 1000$\,m）正快速走向立体网格化运行，无人机（UAV）物流、巡检、应急保障对通信与感知的综合需求爆发。
+    \item \textbf{低空空域感知面临的现实挑战}：
+    \begin{itemize}
+      \item 低空“低慢小”（LSS）非合作飞行器密集，传统地面雷达盲区多、架设成本昂贵；
+      \item 高度动态移动导致多径丰富，空地直达径（LoS）与多径散射并存；
+      \item 频谱资源日益枯竭，雷达探测频段与蜂窝通信频段重叠冲突加剧。
+    \end{itemize}
+    \item \textbf{通感一体化（ISAC）核心使能价值}：
+    通过同一硬件平台、共享射频前端与联合基带信号，以频谱复用与硬件共享实现高精度目标探测与高速数据传输协同。
+  \end{itemize}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：Ruixing Ren et al., ``Integrated Sensing and Communication for Low-Altitude Security'', IEEE Network, 2026, pp. 1--3.}
+  \end{block}
+  \note{低空经济已被列入国家战略性新兴产业。相比于高空民航，低空空域飞行器具有低慢小、低空盲区多、非合作黑飞多等特点。ISAC技术能够复用通信蜂窝基础设施，为低空空域构建低成本、大覆盖的感知监视网络。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 4: Three Paradigms of ISAC
+% ----------------------------------------------------
+\begin{frame}{通感一体化（ISAC）三大演进范式与设计折中}
+  \begin{columns}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{三大系统演进范式}
+        \begin{enumerate}
+          \item \textbf{通信优先感知（Comm-Centric）}：
+          基于现有 5G-A/6G 标准波形（OFDM/PRS），在保障高通信速率前提下提取信道状态信息或匹配滤波回波。
+          \item \textbf{雷达优先通信（Radar-Centric）}：
+          基于调频连续波（FMCW）或步进频雷达，通过脉冲间隔或相位调制嵌入通信数据。
+          \item \textbf{双功能通感一体（DFRC）}：
+          从基础信息论出发，从波形合成与预编码矩阵层联合优化互信息量与克拉美罗界（CRB）。
+        \end{enumerate}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{核心理论矛盾与技术折中}
+        \begin{itemize}
+          \item \textbf{空间自由度竞争}：波束赋形主瓣需对准通信用户，同时需扫描未知空域感知目标；
+          \item \textbf{峰均功率比（PAPR）限制}：雷达要求低 PAPR 恒模信号以提升功放效率，而多载波通信调制导致高 PAPR；
+          \item \textbf{信干噪比与克拉美罗界（CRB）}：通信追求容量对数和，感知追求均方误差倒数。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：Shiyu Bai et al., ``MIMO OFDM-Enabled ISAC for Low-Altitude Non-Cooperative UAV Surveillance'', 2026, pp. 1--4.}
+  \end{block}
+  \note{ISAC系统的三大设计范式决定了波形设计的优化空间。对于蜂窝使能的低空无人机系统，双功能雷达通信（DFRC）波形联合优化是目前学术界公认的最前沿方向。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 5: UAV Channel & Doppler Challenges
+% ----------------------------------------------------
+\begin{frame}{低空无人机信道特性与高动态多普勒瓶颈}
+  \begin{itemize}
+    \item \textbf{低空空地（A2G）信道特征}：
+    \begin{equation*}
+      \mathbf{h}(t) = \sqrt{\frac{K_R}{K_R + 1}}\mathbf{h}_{\mathrm{LoS}}(t) + \sqrt{\frac{1}{K_R + 1}}\mathbf{h}_{\mathrm{NLoS}}(t)
+    \end{equation*}
+    随飞行高度与建筑遮挡动态变化的 Rician $K_R$ 因子；无人机螺旋桨引起的微多普勒频移干扰。
+    \item \textbf{高机动带来的载波间干扰（ICI）}：
+    无人机航速 $v_{\mathrm{uav}} \in [10, 30]$\,m/s，多普勒频移 $f_D = \frac{v}{\lambda}\cos\theta$ 在毫米波频段达数千赫兹，严重破坏传统 OFDM 子载波正交性。
+    \item \textbf{几何拓扑动态时变性}：
+    无人机机动轨迹使基站视角下的大尺度路径损耗与三维角度（AoA/AoD）呈强非线性时变。
+  \end{itemize}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：Yi Tao et al., ``UW-OCDM for Low-Altitude UAV Communication and Cooperative Sensing'', JSAC, 2026, pp. 1--3.}
+  \end{block}
+  \note{低空信道的一个核心物理难点在于高动态飞行带来的强多普勒频移。如果直接采用传统OFDM，载波间干扰（ICI）会导致误码率急剧上升，雷达多普勒测速出现虚假目标与模糊。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 6: Deep Dive 1 - Wang 2026 Multi-UAV PCRB
+% ----------------------------------------------------
+\section{核心精读文献与理论机理深入}
+\begin{frame}{核心精读一：多无人机协同后验克拉美罗界（Wang et al., 2026）}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{论文题目}：ISAC-Enabled Multi-UAV Collaborative Target Sensing for Low-Altitude Economy\\
+      \textbf{作者与单位}：Rui Wang, Kaitao Meng, Deshi Li, Liang Xu (武汉大学 / 曼彻斯特大学)
+      \begin{itemize}
+        \item \textbf{系统模型}：多无人机在固定高度 $H$ 协同监视低空动态移动目标，基站高度 $H_B$；
+        \item \textbf{感知指标}：后验克拉美罗界（PCRB, Posterior Cramér-Rao Bound），联合界定二维位置与运动速度的均方估计误差理论下界：
+        \begin{equation*}
+          \mathbb{E}\left[(\hat{\mathbf{x}}_n - \mathbf{x}_n)(\hat{\mathbf{x}}_n - \mathbf{x}_n)^T\right] \succeq \mathbf{J}_n^{-1} \triangleq \mathbf{C}_{\mathrm{PCRB}, n}
+        \end{equation*}
+        \item \textbf{通信约束}：每个基站服务链路满足下行通信接收 $\mathrm{SINR}_k \ge \gamma_{\mathrm{th}}$。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{核心贡献与突破}
+        \begin{itemize}
+          \item 证明了目标与多无人机几何拓扑正交性直接决定 PCRB 空间下界；
+          \item 将多机协同轨迹规划与动态频带分配（Bandwidth Allocation）纳入统一时序优化；
+          \item 避免了单机雷达盲区并大幅抑制滤波发散。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：[02]\_ISAC-Enabled\_Multi-UAV\_Collaborative\_Target\_Sensin\_2026.pdf, pp. 1--4.}
+  \end{block}
+  \note{第一篇精读是武汉大学团队最新提出的多无人机协同ISAC架构。该文最大的亮点是将卡尔曼滤波的后验信息阵与多无人机动态机动轨迹和通信带宽分配联合，以最小化后验克拉美罗界PCRB为目标函数。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 7: Deep Dive 1 In-depth - Algorithm & Convergence
+% ----------------------------------------------------
+\begin{frame}{核心精读一机理深入：交替优化（AO）与轨迹闭环求解}
+  \begin{itemize}
+    \item \textbf{非凸耦合优化问题表征}：
+    \begin{equation*}
+      \min_{\{\mathbf{q}_u[n], \boldsymbol{\eta}_u[n], \mathbf{a}[n]\}} \sum_{n=1}^N \mathrm{Tr}\left(\mathbf{J}_n^{-1}\right) \quad \text{s.t.} \quad \mathrm{SINR}_{k}[n] \ge \gamma_{\mathrm{th}}, \quad \|\mathbf{q}_u[n] - \mathbf{q}_u[n-1]\| \le V_{\max}\Delta t
+    \end{equation*}
+    \item \textbf{分块分解与近似求解策略}：
+    \begin{enumerate}
+      \item \textbf{带宽分配子问题}：固定无人机轨迹 $\mathbf{q}_u$，目标函数关于带宽分配比 $\boldsymbol{\eta}_u$ 呈现凸结构，通过拉格朗日对偶与 KKT 条件求得最优注水式带宽比；
+      \item \textbf{轨迹规划子问题}：轨迹变量在 PCRB 距离四次方非线性分母中高度非凸，采用逐次凸逼近（SCA）在局部展开一阶泰勒界，转化为二阶锥规划（SOCP）；
+      \item \textbf{交替迭代框架（AO）}：在内层通过下降方向搜索保证单调非增，整体收敛于 KKT 稳定驻点。
+    \end{enumerate}
+  \end{itemize}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：[02]\_ISAC-Enabled\_Multi-UAV\_Collaborative\_Target\_Sensin\_2026.pdf, pp. 3--5.}
+  \end{block}
+  \note{在求解机制上，该文将原本高维非凸的耦合问题解耦为轨迹子问题和带宽子问题。通过SCA泰勒展开和下降方向搜索，实现了兼顾多机防撞约束与通信SINR硬指标的快速收敛。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 8: Deep Dive 2 - Du 2026 Bistatic OFDM
+% ----------------------------------------------------
+\begin{frame}{核心精读二：双基地 OFDM 波形子载波与功率联合分配（Du et al., 2026）}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{论文题目}：OFDM Waveform Optimization for Bistatic Integrated Sensing and Communications\\
+      \textbf{作者与单位}：Ruolin Du, Zhiqiang Wei, Zai Yang, Ya-Feng Liu, Bingpeng Zhou, Derrick Wing Kwan Ng (西安交大 / 北邮 / 中山大学 / 新南威尔士大学)
+      \begin{itemize}
+        \item \textbf{系统架构}：发射节点发射单组 OFDM 信号，同时支持多用户下行通信与双基地接收机时延参数估计；
+        \item \textbf{子载波总数}：$M = 1024$ 个正交子载波；
+        \item \textbf{时延估计 CRB 下界}：
+        \begin{equation*}
+          \mathrm{CRB}(\tau) = \frac{\sigma_s^2}{8\pi^2 \Delta f^2 \sum_{m \in \mathcal{S}} m^2 p_m |\alpha|^2}
+        \end{equation*}
+        其中子载波序号二次方 $m^2$ 与功率 $p_m$ 乘积直接决定感知精度。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{核心结论与创新}
+        \begin{itemize}
+          \item 揭示了双基地感知 CRB 对“边缘子载波”（大 $m$）的天然偏好；
+          \item 相比于传统通信注水算法（集中在中频带信道良好子载波），通感一体波形呈现“两端高、中间平”的双峰功率分布；
+          \item 提出了基于块坐标下降（BCD）与凸松弛的快速多项式复杂度算法。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：[04]\_OFDM\_Waveform\_Optimization\_for\_Bistatic\_Integrated\_2026.pdf, pp. 1--4.}
+  \end{block}
+  \note{第二篇精读是来自西安交大与我们北邮刘亚锋老师团队合作的双基地OFDM波形设计。该论文从数学上严格推导了双基地时延CRB与子载波序号m平方的正比关系，指出了雷达感知天然倾向于将功率分配给频带两端的子载波以增大有效带宽。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 9: Deep Dive 2 In-depth - CRB vs Mutual Information
+% ----------------------------------------------------
+\begin{frame}{核心精读二机理深入：CRB 与通信互信息量的本质博弈}
+  \begin{itemize}
+    \item \textbf{Pareto 最优边界的数学表征}：
+    \begin{equation*}
+      \max_{\{p_m, s_m\}} \sum_{m=1}^M s_m \log_2\left(1 + \frac{p_m |h_m|^2}{\sigma_c^2}\right) \quad \text{s.t.} \quad \sum_{m \in \mathcal{S}} m^2 p_m \ge \Gamma_{\mathrm{sensing}}, \quad \sum_{m=1}^M p_m \le P_{\mathrm{total}}
+    \end{equation*}
+    \item \textbf{资源竞争物理机制剖析}：
+    \begin{itemize}
+      \item \textbf{通信互信息最大化}：信道衰落深的地方少分功率，信道优的地方多分配（香农经典水注定理）；
+      \item \textbf{感知时延 CRB 最小化}：无论信道衰落如何，必须在边缘子载波 $m=1, M$ 注入足够大功率以展宽等效均方根带宽（RMS Bandwidth）；
+      \item \textbf{折中临界拐点}：当感知门限 $\Gamma_{\mathrm{sensing}}$ 提高至某临界值后，通信容量出现剧烈陡降崖壁效应。
+    \end{itemize}
+  \end{itemize}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：[04]\_OFDM\_Waveform\_Optimization\_for\_Bistatic\_Integrated\_2026.pdf, pp. 4--6.}
+  \end{block}
+  \note{从这张幻灯片可以看出CRB与互信息量的根本博弈。感知看重的是有效带宽展宽，而通信看重的是在信道增益高的频点获取信噪比增益。理解这一博弈是本课题后续推导通感容量界限的核心切入点。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 10: Deep Dive 3 - Tao 2026 UW-OCDM
+% ----------------------------------------------------
+\begin{frame}{核心精读三：正交调频多分复用（UW-OCDM）抗高多普勒波形（Tao et al., 2026）}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \textbf{论文题目}：UW-OCDM for Low-Altitude UAV Communication and Cooperative Sensing\\
+      \textbf{作者与单位}：Yi Tao, Zhen Gao, Ziwei Wan, Yuezu Lv, Hua Wang, Kaibin Huang, Sheng Chen (北理工 / 港大 / 南安普敦大学)
+      \begin{itemize}
+        \item \textbf{技术方案}：将唯一字（Unique Word, UW）时域序列嵌入正交线性调频多分复用（OCDM）波形，替代传统循环前缀（CP）；
+        \item \textbf{系统参数}：载波频率 $f_c = 5$\,GHz，模拟信号带宽 $B = 40$\,MHz；
+        \item \textbf{优势突破}：在 Fresnel 变换域实现抗强时变双选择性衰落，将高速机动下的多普勒扩展在分数阶变换域聚焦为线谱，彻底消解了载波间干扰（ICI）。
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{感知与通信协同增益}
+        \begin{itemize}
+          \item UW 既作为通信帧同步与信道估计导频，又作为多基站到达时间差（TDOA）定位的高相关测距码；
+          \item 引入运动学速度平滑滤波算法，在低 SNR 恶劣环境下实现厘米级三维轨迹平滑跟踪。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：[06]\_UW-OCDM\_for\_Low-Altitude\_UAV\_Communication\_and\_Coo\_2026.pdf, pp. 1--3, 10--14.}
+  \end{block}
+  \note{第三篇精读聚焦波形底层调制体制革新。针对无人机高机动场景，传统OFDM在强多普勒下性能严重受损。该文提出UW-OCDM方案，利用啁啾调频的强抗多普勒特性，并在波形中嵌入时域UW序列，兼具抗ICI通信与高分辨感知测距能力。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 11: Cross Comparison Matrix
+% ----------------------------------------------------
+\section{前沿技术横向对比与开放性挑战}
+\begin{frame}{8 篇精读前沿技术横向对比矩阵}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lp{3.5cm}llllp{4.5cm}}
+    \toprule
+    \textbf{第一作者 (年份)} & \textbf{发表期刊/出处} & \textbf{系统架构} & \textbf{波形类型} & \textbf{感知指标} & \textbf{通信指标} & \textbf{核心折中机制} \\
+    \midrule
+    Ren (2026) & IEEE Network & 地空多基站协同网络 & 多载波/OFDM & 感知覆盖率/虚警率 & 时延/吞吐量 & 全域无盲区覆盖 vs 信令与回程开销 \\
+    Wang (2026) & IEEE Trans. (Sub.) & 多无人机协同基站 & 多载波 OFDM & 位置/速度 PCRB & 接收 SINR & 跟踪估计精度 (PCRB) vs 飞行能耗/带宽 \\
+    Bai (2026) & IEEE COMST (Sub.) & 多基站监视网络 & MIMO-OFDM/PRS & 模糊函数/CRLB & 频谱效率/BER & 雷达模糊度副瓣抑制 vs 多用户接入 \\
+    Du (2026) & IEEE TWC (Sub.) & 双基地通感系统 & OFDM 子载波优化 & 时延估计 CRB & 互信息量 (MI) & 边缘子载波 CRB 极小化 vs 信道注水容量 \\
+    Liu (2026) & IEEE WCL (Sub.) & 基站+无人机安全 & 预编码+人工噪声 & 感知回波 SNR & 安全保密速率 & 物理层保密容量 vs 感知探测灵敏度 \\
+    Tao (2026) & IEEE JSAC & 空地协同作业系统 & UW-OCDM 啁啾 & 定位 RMSE/多普勒 & 接收 SNR/BLER & 抗高机动多普勒 ICI vs TDOA 测距精度 \\
+    Zhou (2025) & IEEE TCOM & 3D 全维 MIMO 基站 & 零资源开销 OFDM & 感知 SNR/立体角 & 多用户 SINR & 零额外开销下波束主瓣 vs 感知方向泄漏 \\
+    Li (2025) & IEEE TWC (Sub.) & 多地面站协同网络 & 协同联合波束赋形 & 感知 SINR & 加权和速率 & 多基站协同波束增益 vs 跨区通信干扰 \\
+    \bottomrule
+  \end{tabular}%
+  }
+
+  \begin{block}{本地文献证据链}
+    \footnotesize \textcolor{evidencegray}{出处：详见文献池对比矩阵 bupt\_isac\_workflow/survey/literature\_comparison\_matrix.md 16维全量清单。}
+  \end{block}
+  \note{这张大表提炼了我们精读的8篇权威文献的核心要素。从波形上看，涵盖了OFDM、PRS、OCDM等体制；从感知指标看，覆盖了CRB、PCRB、SINR及模糊函数；清晰展现了不同系统架构下的多维折中。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 12: Open Challenges & Bottlenecks
+% ----------------------------------------------------
+\begin{frame}{开放性挑战与低空场景工程瓶颈}
+  \begin{columns}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{理论与算法层面瓶颈}
+        \begin{itemize}
+          \item \textbf{三维强非凸全局最优性}：无人机三维轨迹与波束赋形强耦合，SCA 算法仅能收敛到局部次优点；
+          \item \textbf{信道状态信息（CSI）时滞}：低空信道相干时间短，感知辅助通信的反馈闭环易受时延累积误差劣化；
+          \item \textbf{多目标微弱回波掩盖}：地面强杂波环境下，低空微小型无人机雷达散射截面积（RCS $\le 0.01\,\text{m}^2$）极易被强回波淹没。
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{工程落地与硬件制约}
+        \begin{itemize}
+          \item \textbf{机载功耗与载荷受限}：消费级/轻型工业无人机机载算力有限，高维矩阵求逆无法在线实时运行；
+          \item \textbf{自干扰抑制（Full-Duplex SIC）}：单机一体化收发全双工自干扰隔离度需超过 100\,dB；
+          \item \textbf{多站时间/频率精确同步}：多基站分布式协作感知对纳秒级时钟抖动极其敏感。
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \note{目前该领域的工程瓶颈非常突出。首先是轻型无人机机载算力严重受限，复杂的非凸优化算法无法在毫秒级内完成计算；其次是全双工自干扰抑制与分布式微秒级同步难题。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 13: Research Plan & Next Steps
+% ----------------------------------------------------
+\section{下一步研究计划与硕士论文推进}
+\begin{frame}{下一步研究计划与硕士论文推进}
+  \begin{itemize}
+    \item \textbf{理论推导模块（未来 2 周）}：
+    \begin{itemize}
+      \item 基于 Du et al. 与 Wang et al. 成果，构建《面向低空无人机的三维波形预编码与时延-角域 Cramér-Rao 界》形式化数学模型；
+      \item 推导通信速率约束下的克拉美罗界闭式下界，建立理论 Pareto 前沿方程。
+    \end{itemize}
+    \item \textbf{算法设计与数值验证模块（第 3--4 周）}：
+    \begin{itemize}
+      \item 设计基于交替方向乘子法（ADMM）的快速分布式子载波与波束协同分配算法，降低机载计算复杂度；
+      \item 基于真实无人机信道环境，完成多无人机机动轨迹与通信吞吐量 Monte Carlo 仿真对比。
+    \end{itemize}
+    \item \textbf{毕业论文撰写模块（同步推进）}：
+    \begin{itemize}
+      \item 完成毕业论文第 1--3 章的规范化起草，建立严格的数学符号契约（Notation Contract）与四道质量门禁审计。
+    \end{itemize}
+  \end{itemize}
+  \note{针对上述瓶颈，我的下一步计划是在 Du 和 Wang 老师的工作基础上，推导更贴合低空三维信道特征的通感折中闭式界，并开发面向轻量级机载计算的快速求解算法，同时稳步推进毕业论文脚手架的撰写。}
+\end{frame}
+
+% ----------------------------------------------------
+% Slide 14: References & Grounding Evidence Chain
+% ----------------------------------------------------
+\begin{frame}[allowframebreaks]{参考文献与本地证据链（Strictly Grounded）}
+  \footnotesize
+  \begin{enumerate}
+    \item R. Wang, K. Meng, D. Li, and L. Xu, ``ISAC-enabled multi-UAV collaborative target sensing for low-altitude economy,'' \emph{arXiv:2603.01258}, 2026. [本地文献: \texttt{[02]\_ISAC-Enabled...2026.pdf}]
+    \item R. Du, Z. Wei, Z. Yang, Y.-F. Liu, B. Zhou, and D. W. K. Ng, ``OFDM waveform optimization for bistatic integrated sensing and communications,'' \emph{arXiv:2603.01358}, 2026. [本地文献: \texttt{[04]\_OFDM\_Waveform...2026.pdf}]
+    \item Y. Tao, Z. Gao, Z. Wan, Y. Lv, H. Wang, K. Huang, and S. Chen, ``UW-OCDM for low-altitude UAV communication and cooperative sensing,'' \emph{IEEE JSAC}, 2026. [本地文献: \texttt{[06]\_UW-OCDM...2026.pdf}]
+    \item R. Ren et al., ``Integrated sensing and communication for low-altitude security,'' \emph{IEEE Network}, 2026. [本地文献: \texttt{[01]\_Integrated...2026.pdf}]
+    \item S. Bai et al., ``MIMO OFDM-enabled ISAC for low-altitude non-cooperative UAV surveillance: A survey,'' \emph{IEEE COMST}, 2026. [本地文献: \texttt{[03]\_MIMO...2026.pdf}]
+    \item M. Liu, Y. Fang, and Z. Zhou, ``Security in low-altitude ISAC with coupled communication and sensing information leakage,'' \emph{IEEE WCL}, 2026. [本地文献: \texttt{[05]\_Security...2026.pdf}]
+    \item Z. Zhou, Y. Zeng, C. Li, F. Yang, Y. Chen, and J. Joung, ``Full-dimensional beamforming for multi-user MIMO-OFDM ISAC for low-altitude UAV with zero sensing resource allocation,'' \emph{IEEE TCOM}, 2025. [本地文献: \texttt{[08]\_Full-Dimensional...2025.pdf}]
+    \item F. Li, Z. Ren, C. Pan, H. Ren, J. Jin, Q. Wang, and J. Wang, ``Cooperative sensing and communication beamforming design for low-altitude economy,'' \emph{arXiv:2506.20244}, 2025. [本地文献: \texttt{[11]\_Cooperative...2025.pdf}]
+  \end{enumerate}
+  \note{以上是本周汇报精读的文献列表与本地PDF证据链映射。谢谢各位老师和同学们的聆听，请批评指正！}
+\end{frame}
+
+\end{document}

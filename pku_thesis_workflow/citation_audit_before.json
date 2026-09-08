@@ -1,0 +1,256 @@
+{
+  "project": "C:\\Users\\24560\\Desktop\\study\\pidemo\\pku_thesis_workflow\\pku_thesis_project",
+  "timestamp": "2026-09-06 22:02:40",
+  "mode": "offline",
+  "stats": {
+    "total_entries": 12,
+    "fail": 11,
+    "warn": 2,
+    "ok": 0,
+    "dangling_cites": [],
+    "uncited_entries": [],
+    "dual_reference_source": true
+  },
+  "entries": [
+    {
+      "key": "xie2021deep",
+      "origin": "references.bib",
+      "status": "FAIL",
+      "problems": [
+        "第1作者名不匹配：条目='Hao-Tian' vs Crossref='Huiqiang'"
+      ],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/tsp.2021.3071210",
+      "entry_title": "Deep Learning Enabled Semantic Communication Systems"
+    },
+    {
+      "key": "dai2022nonlinear",
+      "origin": "references.bib",
+      "status": "FAIL",
+      "problems": [
+        "第4作者名不匹配：条目='Zheng-Kun' vs Crossref='Zhongwei'",
+        "第5作者名不匹配：条目='Xiao-Dong' vs Crossref='Xiaoqi'"
+      ],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2022.3180802",
+      "entry_title": "Nonlinear Transform Source-Channel Coding for Semantic Communications"
+    },
+    {
+      "key": "zhang2025d2",
+      "origin": "references.bib",
+      "status": "FAIL",
+      "problems": [
+        "第一作者姓不匹配：条目='Zhang' vs Crossref='Huang'（疑似张冠李戴）",
+        "期不匹配：条目='2' vs Crossref='4'",
+        "页码不匹配：条目='480--495' vs Crossref='1246-1261'"
+      ],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2025.3531546",
+      "entry_title": "D²-JSCC: Digital Deep Joint Source-Channel Coding for Semantic Communications"
+    },
+    {
+      "key": "kang2024semantic",
+      "origin": "references.bib",
+      "status": "FAIL",
+      "problems": [
+        "第一作者姓不匹配：条目='Kang' vs Crossref='Lyu'（疑似张冠李戴）",
+        "期不匹配：条目='7' vs Crossref='8'",
+        "页码不匹配：条目='7412--7427' vs Crossref='8388-8404'"
+      ],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/twc.2023.3349330",
+      "entry_title": "Semantic Communications for Image Recovery and Classification via Deep Joint Source and Channel Coding"
+    },
+    {
+      "key": "wang2022wireless",
+      "origin": "references.bib",
+      "status": "FAIL",
+      "problems": [
+        "第3作者名不匹配：条目='Zhi-Peng' vs Crossref='Zijian'",
+        "第5作者名不匹配：条目='Ping' vs Crossref='Zhongwei'",
+        "年份不匹配：条目=2022 vs Crossref=2023",
+        "卷不匹配：条目='40' vs Crossref='41'",
+        "期不匹配：条目='11' vs Crossref='1'",
+        "页码不匹配：条目='3202--3218' vs Crossref='214-229'"
+      ],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2022.3221977",
+      "entry_title": "Wireless Deep Video Semantic Transmission"
+    },
+    {
+      "key": "nguyen2025survey",
+      "origin": "references.bib",
+      "status": "FAIL",
+      "problems": [
+        "Crossref 无此 DOI（DOI 本身虚构或转录错误）: 10.1109/comst.2025.10850231"
+      ],
+      "warns": [],
+      "checked": [
+        "doi"
+      ],
+      "resolved_doi": null,
+      "entry_title": "A Contemporary Survey on Semantic Communications: Theory of Mind, Generative AI, and Deep Joint Source-Channel Coding"
+    },
+    {
+      "key": "xie2021deep",
+      "origin": "references.tex",
+      "status": "FAIL",
+      "problems": [
+        "年份不匹配：条目=2021 vs Crossref=2025"
+      ],
+      "warns": [
+        "条目或 Crossref 缺少作者数据，作者维度未核验",
+        "卷单侧缺失（Crossref 无 卷 数据）",
+        "页码单侧缺失（Crossref 无 页码 数据）"
+      ],
+      "checked": [
+        "title",
+        "authors",
+        "year"
+      ],
+      "resolved_doi": "10.1002/9781394306268.fmatter",
+      "entry_title": "Deep learning enabled semantic communication systems"
+    },
+    {
+      "key": "dai2022nonlinear",
+      "origin": "references.tex",
+      "status": "WARN",
+      "problems": [],
+      "warns": [
+        "第1作者名缩写数多于官方名 token（'J C' vs 'Jincheng'），可能为合法双名缩写约定，请人工确认",
+        "第2作者名缩写数多于官方名 token（'S X' vs 'Sixian'），可能为合法双名缩写约定，请人工确认",
+        "第3作者名缩写数多于官方名 token（'K M' vs 'Kailin'），可能为合法双名缩写约定，请人工确认"
+      ],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2022.3180802",
+      "entry_title": "Nonlinear transform source-channel coding for semantic communications"
+    },
+    {
+      "key": "zhang2025d2",
+      "origin": "references.tex",
+      "status": "FAIL",
+      "problems": [
+        "第一作者姓不匹配：条目='ZHANG' vs Crossref='Huang'（疑似张冠李戴）",
+        "期不匹配：条目='2' vs Crossref='4'",
+        "页码不匹配：条目='480--495' vs Crossref='1246-1261'"
+      ],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/jsac.2025.3531546",
+      "entry_title": "D²-JSCC: Digital deep joint source-channel coding for semantic communications"
+    },
+    {
+      "key": "kang2024semantic",
+      "origin": "references.tex",
+      "status": "FAIL",
+      "problems": [
+        "第一作者姓不匹配：条目='KANG' vs Crossref='Lyu'（疑似张冠李戴）",
+        "期不匹配：条目='7' vs Crossref='8'",
+        "页码不匹配：条目='7412--7427' vs Crossref='8388-8404'"
+      ],
+      "warns": [],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "issue",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/twc.2023.3349330",
+      "entry_title": "Semantic communications for image recovery and classification via deep joint source and channel coding"
+    },
+    {
+      "key": "wang2022wireless",
+      "origin": "references.tex",
+      "status": "FAIL",
+      "problems": [
+        "无 DOI 且按标题检索 Crossref 无命中（疑似虚构文献）"
+      ],
+      "warns": [],
+      "checked": [
+        "doi",
+        "title"
+      ],
+      "resolved_doi": null,
+      "entry_title": "Wireless deep video semantic transmission"
+    },
+    {
+      "key": "nguyen2025survey",
+      "origin": "references.tex",
+      "status": "FAIL",
+      "problems": [
+        "第2作者名缩写首字母不符：条目='Avi'姓作者名缩写 'D T' vs 官方名 'Avi Deb'（首字母 ['A', 'D']）",
+        "第3作者名缩写首字母不符：条目='Pyae'姓作者名缩写 'X F' vs 官方名 'Pyae Sone'（首字母 ['P', 'S']）",
+        "年份不匹配：条目=2025 vs Crossref=2026",
+        "卷不匹配：条目='27' vs Crossref='28'",
+        "页码不匹配：条目='112--156' vs Crossref='2377-2417'"
+      ],
+      "warns": [
+        "期单侧缺失（Crossref 无 期 数据）"
+      ],
+      "checked": [
+        "title",
+        "authors",
+        "year",
+        "volume",
+        "pages"
+      ],
+      "resolved_doi": "10.1109/comst.2025.3616973",
+      "entry_title": "A contemporary survey on semantic communications: Theory of mind, generative AI, and deep joint source-channel coding"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+% -*- coding: utf-8 -*-
+\section{离散可微分量化收发机与商用基带硬件协同架构}
+\label{sec:3_3_differentiable_quantization}
+
+当前学术界在深度联合信源信道编码领域的绝大多数开拓性工作（如经典 Deep JSCC 与 NTSCC），均假定物理层为空口连续模拟传输系统（Continuous Analog Transmission）。在该假定下，神经网络输出的任意实数特征被直接当作物理波形的同相（I）和正交（Q）连续电压分量发射。
+
+然而，在产业界工程实践中，从 4G、5G 到演进中的 6G 移动通信设备，其底层物理层收发机一律基于离散正交幅度调制（Quadrature Amplitude Modulation, QAM）与正交频分复用（OFDM）数字信号处理体系。模拟语义波形在商用射频前端遭遇无法克服的产业落地死结：
+\begin{enumerate}
+  \item \textbf{硬件兼容性缺失}：现有的商用数字基带数字信号处理器（DSP）与现场可编程门阵列（FPGA）无法直接处理连续浮点波形，迫切需要对齐至离散数字星座点；
+  \item \textbf{射频放大器非线性失真}：连续波形拥有极高的峰值平均功率比（PAPR），极易诱发功率放大器（PA）进入饱和非线性失真区，导致带外频谱泄露严重超标；
+  \item \textbf{信道补偿失真}：数字体制依靠标准的格雷映射与硬判决准则具备极佳的抗相偏能力，而模拟语义系统对残余频偏极其敏感。
+\end{enumerate}
+
+为化解这一理论与工程之间的尖锐矛盾，本节构建了一套面向标准 QAM 星座图映射的\textbf{端到端离散可微分量化（Discrete Differentiable Quantization, DDQ）收发机架构}。
+
+\subsection{标准 QAM 星座点离散欧氏距离映射机制}
+设通信系统采用 $M$ 阶正交幅度调制（$M$-QAM，例如 16-QAM 或 64-QAM），标准已归一化的星座点离散集合记为：
+\begin{equation}
+  \mathcal{S}_M = \{s_1, s_2, \dots, s_M\} \subset \mathbb{C}
+  \label{eq:qam_constellation_set}
+\end{equation}
+其中平均星座能量满足标准归一化条件：$\frac{1}{M} \sum_{i=1}^M |s_i|^2 = P$。
+
+将经剪枝与功率归一化后的连续发送符号向量 $\tilde{\bm{z}} \in \mathbb{R}^K$ 划分为同相分量与正交分量构成的复数符号向量 $\bm{c} \in \mathbb{C}^{K/2}$：
+\begin{equation}
+  c_k = \tilde{z}_{2k-1} + j \cdot \tilde{z}_{2k}, \quad k = 1, 2, \dots, K/2
+  \label{eq:iq_complex_representation}
+\end{equation}
+
+在物理前向传输阶段，量化器 $\mathcal{Q}(\cdot)$ 执行最近邻欧氏距离最小化判决，将连续复特征 $c_k$ 映射至离散星座集合 $\mathcal{S}_M$ 中几何距离最近的标准网格星座点 $\hat{s}_k$：
+\begin{equation}
+  \hat{s}_k = \mathcal{Q}(c_k) = \arg\min_{s \in \mathcal{S}_M} \|c_k - s\|_2^2
+  \label{eq:nearest_neighbor_quantization}
+\end{equation}
+经此离散化映射，发送端的连续神经符号被完全转化为符合 3GPP 协议规范的标准数字 QAM 调制波形，可直接输入商用数字上变频器（DUC）与数模转换器（DAC），实现与现存 5G/6G 商用基带射频硬件的 $100\%$ 无缝物理层对齐。
+
+\subsection{直通估计器 (STE) 与退火 Softmax 连续松弛反向传播}
+公式~(\ref{eq:nearest_neighbor_quantization}) 所定义的最近邻量化映射在数学上属于分段常数阶梯算子。其关于输入变量 $c_k$ 的雅可比导数在分界面处不存在，在其余开集内几乎处处为零（$\frac{\partial \hat{s}_k}{\partial c_k} = 0 \text{ a.e.}$）。若直接将其嵌入深度神经网络，反向传播算法的梯度流将在量化层彻底阻断，导致底层特征编码器 $f_{\bm{\theta}}$ 的权重无法进行端到端随机梯度更新。
+
+为解决前向判决离散化与后向梯度连续化之间的不可导悖论，本文提出\textbf{直通估计器（Straight-Through Estimator, STE）与温度退火（Temperature Annealing）协同梯度回传机制}。
+
+在前向计算图构建中，引入停止梯度算子（Stop-Gradient Operator，记为 $\text{sg}[\cdot]$）：
+\begin{equation}
+  s_k^{\text{tx}} = c_k + \text{sg}[\hat{s}_k - c_k]
+  \label{eq:ste_forward_formulation}
+\end{equation}
+在计算图前向传播阶段：
+\begin{equation}
+  s_k^{\text{tx}} = c_k + (\hat{s}_k - c_k) = \hat{s}_k = \mathcal{Q}(c_k)
+\end{equation}
+网络以 $100\%$ 的离散星座点 $\hat{s}_k$ 发送物理信号；而在反向传播阶段，由于 $\text{sg}[\cdot]$ 算子在自动微分引擎中将内部梯度的雅可比矩阵强制置零，导数被完全等效替换为恒等映射算子：
+\begin{equation}
+  \frac{\partial s_k^{\text{tx}}}{\partial c_k} = \frac{\partial c_k}{\partial c_k} + \mathbf{0} = \bm{I}
+  \label{eq:ste_backward_identity}
+\end{equation}
+
+进一步地，为了消除朴素 STE 估计在复杂高阶星座图（如 64-QAM）下引起的梯度方向偏差震荡，在训练初中期引入基于温度系数 $\tau$ 的连续软松弛概率映射：
+\begin{equation}
+  p(s_j \mid c_k) = \frac{\exp\left( - \frac{\|c_k - s_j\|_2^2}{2\tau} \right)}{\sum_{l=1}^M \exp\left( - \frac{\|c_k - s_l\|_2^2}{2\tau} \right)}
+  \label{eq:softmax_relaxation}
+\end{equation}
+软化重构特征向量表示为加权期望：
+\begin{equation}
+  \bar{s}_k = \sum_{j=1}^M p(s_j \mid c_k) \cdot s_j
+  \label{eq:soft_expected_symbol}
+\end{equation}
+设定自适应退火衰减时间表，令训练轮次为 $e$，最大轮次为 $E_{\text{max}}$：
+\begin{equation}
+  \tau(e) = \tau_{\text{end}} + (\tau_{\text{start}} - \tau_{\text{end}}) \cdot \left( 1 - \frac{e}{E_{\text{max}}} \right)^2
+  \label{eq:temperature_annealing_schedule}
+\end{equation}
+其中初始高温设为 $\tau_{\text{start}} = 1.0$，终态低温设为 $\tau_{\text{end}} = 0.05$。
+
+\begin{itemize}
+  \item \textbf{训练初期（高温 $\tau \to 1.0$）}：Softmax 分布较为平缓，梯度能够宽广探索所有候选星座点的几何邻域，防止模型过早陷入局部次优星座凹陷；
+  \item \textbf{训练后期（低温 $\tau \to 0.05$）}：Softmax 分布趋向于独热分布（One-Hot Dirac 分布），软松弛表征 $\bar{s}_k$ 自然无缝逼近离散硬判决值 $\hat{s}_k$，使网络在最终收敛时完全适应商用离散硬件环境，消除了软硬模式切换带来的测试性能损耗。
+\end{itemize}

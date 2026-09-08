@@ -1,0 +1,24 @@
+===========================================================================
+[*] Literature Survey Grounding Verification Gate
+[*] Matrix File    : C:\Users\24560\Desktop\study\pidemo\bupt_isac_workflow\survey\literature_comparison_matrix.md
+[*] Literature Pool: C:\Users\24560\Desktop\study\pidemo\bupt_isac_workflow\literature
+[*] Engine         : PyMuPDF (fitz) Genuine Physical Verification
+===========================================================================
+[+] Found 11 local PDF files in literature pool.
+[+] Detected matrix table format (8 rows, 16 columns).
+
+===========================================================================
+[*] Physical Grounding Audit Detailed Records (8 verified):
+    [PASS] Row 1: [01]_Integrated_Sensing_and_Communi | pp. 1-7 (of 7) | 8 tokens matched
+    [PASS] Row 2: [02]_ISAC-Enabled_Multi-UAV_Collabo | pp. 1-6 (of 6) | 11 tokens matched
+    [PASS] Row 3: [03]_MIMO_OFDM-Enabled_ISAC_for_Low | pp. 1-8 (of 24) | 12 tokens matched
+    [PASS] Row 4: [04]_OFDM_Waveform_Optimization_for | pp. 1-6 (of 6) | 16 tokens matched
+    [PASS] Row 5: [05]_Security_in_Low-Altitude_ISAC_ | pp. 1-6 (of 6) | 14 tokens matched
+    [PASS] Row 6: [06]_UW-OCDM_for_Low-Altitude_UAV_C | pp. 1-15 (of 17) | 12 tokens matched
+    [PASS] Row 7: [08]_Full-Dimensional_Beamforming_f | pp. 1-13 (of 13) | 18 tokens matched
+    [PASS] Row 8: [11]_Cooperative_Sensing_and_Commun | pp. 1-14 (of 14) | 15 tokens matched
+---------------------------------------------------------------------------
+[*] Summary: 0 FAILURES, 0 WARNINGS.
+===========================================================================
+
+[OK] Grounding Gate PASSED: All matrix papers physically grounded with verifiable pages.

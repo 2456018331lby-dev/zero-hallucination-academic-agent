@@ -1,0 +1,85 @@
+% -*- coding: utf-8 -*-
+\section{系统模型与问题形式化表征}
+\label{sec:system_model}
+
+考虑如图所示的典型下行多用户单小区多天线无线通信系统。基站（BS）部署有 $M$ 根均匀线阵（ULA）全向发射天线，服务区域内随机分布着 $K$ 个单天线移动通信用户，记为集合 $\mathcal{K} = \{1, 2, \dots, K\}$。由于建筑物密集体、植被遮挡或人体阻隔，基站至部分移动用户之间的视距（LoS）直接链路可能发生严重衰落或完全阻断。为此，在基站视线良好的建筑物外立面部署一块配备 $N$ 个亚波长无源反射单元的可重构智能表面（RIS），通过自适应协同重构空间电磁波反射路径，为主覆盖盲区用户提供高品质虚拟直射通道。
+
+\subsection{传输信号与信道传播模型}
+基站向 $K$ 个用户并发传输下行独立数据符号。令 $s_k \in \mathbb{C}$ 表示基站发送给第 $k$ 个用户的归一化信息数据符号，满足统计独立假设：
+\begin{equation}
+  \mathbb{E}[|s_k|^2] = 1, \quad \mathbb{E}[s_k s_j^*] = 0, \quad \forall k \neq j
+  \label{eq:data_symbol_property}
+\end{equation}
+基站端采用线性数字预编码技术，令 $\bm{w}_k \in \mathbb{C}^{M \times 1}$ 表示面向用户 $k$ 的有源发射波束赋形向量，则基站发射的时域复基带信号向量 $\bm{x} \in \mathbb{C}^{M \times 1}$ 可表征为：
+\begin{equation}
+  \bm{x} = \sum_{k=1}^K \bm{w}_k s_k = \bm{W} \bm{s}
+  \label{eq:bs_transmit_signal}
+\end{equation}
+其中 $\bm{W} = [\bm{w}_1, \bm{w}_2, \dots, \bm{w}_K] \in \mathbb{C}^{M \times K}$ 为基站联合发射预编码矩阵，$\bm{s} = [s_1, s_2, \dots, s_K]^T \in \mathbb{C}^{K \times 1}$ 为多用户数据向量。受限于基站射频功率放大器（HPA）的线性动态范围与能耗预算，发射信号必须满足最大总发射功率约束：
+\begin{equation}
+  \mathbb{E}[\|\bm{x}\|^2] = \mathrm{Tr}(\bm{W}\bm{W}^H) = \sum_{k=1}^K \|\bm{w}_k\|^2 \le P_{\max}
+  \label{eq:power_constraint}
+\end{equation}
+其中 $P_{\max} > 0$ 为基站额定发射功率上界。
+
+令 $\bm{h}_{d,k}^H \in \mathbb{C}^{1 \times M}$ 表示基站至用户 $k$ 的直接下行信道向量；$\bm{G} \in \mathbb{C}^{N \times M}$ 表示基站至 RIS 的多输入多输出无线信道矩阵；$\bm{h}_{r,k}^H \in \mathbb{C}^{1 \times N}$ 表示 RIS 至用户 $k$ 的反射无线信道响应向量。各反射单元对入射信号施加独立的相移与幅度衰减，RIS 整体电磁反射响应由对角矩阵 $\bm{\Theta} \in \mathbb{C}^{N \times N}$ 描述：
+\begin{equation}
+  \bm{\Theta} = \mathrm{diag}\left( \beta_1 e^{j\theta_1}, \beta_2 e^{j\theta_2}, \dots, \beta_N e^{j\theta_N} \right)
+  \label{eq:ris_theta_matrix}
+\end{equation}
+其中 $\theta_n \in [0, 2\pi)$ 表示第 $n$ 个反射单元的相移控制角，$\beta_n \in [0, 1]$ 为其幅度反射系数。在无源理想超表面设计中，为实现入射电磁能量的最大化无损反射，通常设置理想全反射状态，即 $\beta_n = 1, \forall n=1,\dots,N$。
+
+\subsection{多用户接收信号与复合级联信道表示}
+经由直连路径与 RIS 反射路径叠加后，第 $k$ 个移动用户处的接收信号 $y_k \in \mathbb{C}$ 可建模为：
+\begin{equation}
+  y_k = \left( \bm{h}_{d,k}^H + \bm{h}_{r,k}^H \bm{\Theta} \bm{G} \right) \bm{x} + n_k
+  \label{eq:user_received_signal}
+\end{equation}
+其中 $n_k \sim \mathcal{CN}(0, \sigma_k^2)$ 为用户 $k$ 接收机处服从均值为零、方差为 $\sigma_k^2$ 的加性独立复高斯白噪声。
+
+定义 RIS 的无源等效反射波束向量为 $\bm{v} = [v_1, v_2, \dots, v_N]^H \in \mathbb{C}^{1 \times N}$，其中 $v_n = \beta_n e^{-j\theta_n}$，则有：
+\begin{equation}
+  \bm{h}_{r,k}^H \bm{\Theta} \bm{G} = \bm{v}^H \mathrm{diag}(\bm{h}_{r,k}^H) \bm{G}
+  \label{eq:cascaded_algebraic_identity}
+\end{equation}
+定义基站经 RIS 反射至用户 $k$ 的复合级联信道矩阵为：
+\begin{equation}
+  \bm{H}_{\mathrm{casc},k} \triangleq \mathrm{diag}(\bm{h}_{r,k}^H) \bm{G} \in \mathbb{C}^{N \times M}
+  \label{eq:cascaded_channel_def}
+\end{equation}
+则基站到用户 $k$ 的全等效复合信道向量 $\bm{h}_k^H(\bm{v}) \in \mathbb{C}^{1 \times M}$ 可紧凑表示为关于反射向量 $\bm{v}$ 的线性函数：
+\begin{equation}
+  \bm{h}_k^H(\bm{v}) \triangleq \bm{h}_{d,k}^H + \bm{v}^H \bm{H}_{\mathrm{casc},k}
+  \label{eq:equivalent_composite_channel}
+\end{equation}
+
+将式~\eqref{eq:bs_transmit_signal}与式~\eqref{eq:equivalent_composite_channel}代入式~\eqref{eq:user_received_signal}，用户 $k$ 的接收信号进一步展开为：
+\begin{equation}
+  y_k = \bm{h}_k^H(\bm{v})\bm{w}_k s_k + \sum_{j \neq k}^K \bm{h}_k^H(\bm{v})\bm{w}_j s_j + n_k
+  \label{eq:signal_interference_decomposition}
+\end{equation}
+其中第一项为用户 $k$ 期望的有效信号分量，第二项为其他多用户间的共道多址干扰（Multi-User Interference, MUI），第三项为热噪声。
+
+\subsection{瞬时信干噪比与和速率优化问题形式化}
+根据式~\eqref{eq:signal_interference_decomposition}，用户 $k$ 处的瞬时接收信号与干扰加噪声比（SINR）可精确表征为：
+\begin{equation}
+  \gamma_k(\bm{W}, \bm{v}) = \frac{|\bm{h}_k^H(\bm{v})\bm{w}_k|^2}{\sum_{j \neq k}^K |\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2}
+  \label{eq:sinr_formulation}
+\end{equation}
+假设系统采用高斯信码，根据香农信息论，多用户下行信道的可达加权总和速率（Sum Rate, 单位：$\mathrm{bps/Hz}$）为：
+\begin{equation}
+  R_{\mathrm{sum}}(\bm{W}, \bm{v}) = \sum_{k=1}^K \log_2\left( 1 + \gamma_k(\bm{W}, \bm{v}) \right)
+  \label{eq:sum_rate_def}
+\end{equation}
+
+本论文的核心目标是在满足基站发射功率限制与 RIS 各单元物理恒模相移约束下，联合优化基站有源预编码矩阵 $\bm{W}$ 与 RIS 无源反射相移向量 $\bm{v}$，以最大化系统下行总和速率。该主被动联合波束赋形问题形式化表述为：
+\begin{subequations}
+  \label{prob:joint_beamforming_p1}
+  \begin{align}
+    \max_{\bm{W}, \bm{v}} \quad & \sum_{k=1}^K \log_2\left( 1 + \frac{|\bm{h}_k^H(\bm{v})\bm{w}_k|^2}{\sum_{j \neq k}^K |\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2} \right) \label{prob:p1_obj} \\
+    \text{s.t.} \quad & \sum_{k=1}^K \|\bm{w}_k\|^2 \le P_{\max}, \label{prob:p1_power} \\
+                      & |v_n| = 1, \quad \forall n = 1, 2, \dots, N \label{prob:p1_unimodular}
+  \end{align}
+\end{subequations}
+
+优化问题~\eqref{prob:joint_beamforming_p1}呈现出极高的数学求解复杂性：一方面，目标函数~\eqref{prob:p1_obj}由多用户非凸对数分式求和构成，变量 $\bm{W}$ 与 $\bm{v}$ 在分子与分母中深度强耦合；另一方面，约束条件~\eqref{prob:p1_unimodular}施加了严格的单位圆单位模非凸等式约束。直接对其进行凸松弛往往会导致严重的维度灾难与次优极值陷阱。

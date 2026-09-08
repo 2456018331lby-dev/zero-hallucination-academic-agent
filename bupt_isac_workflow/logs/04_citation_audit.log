@@ -1,0 +1,70 @@
+========================================================================
+[citation-auditor] 2026-09-08 12:47:23  mode=offline
+[*] 鏉＄洰 32 鏉★細FAIL=0  WARN=1  OK=32
+========================================================================
+[ OK ] gu2024papr  (references.bib)  {PAPR-Aware Joint Waveform Design of UAV-Enabled Integrated Sensing and Communication}
+        verified: title, authors, year, pages
+[ OK ] zuo2025robust  (references.bib)  {Robust Waveform Design for Integrated Communication and Sensing}
+        verified: title, authors, year
+[ OK ] luo2024integrated  (references.bib)  {Integrated sensing and communications waveform design: Fundamentals, applications, challenges}
+        verified: title, authors, year, volume, pages
+[ OK ] zhao2025covert  (references.bib)  {Covert Waveform Design for Integrated Sensing and Communication System in Clutter Environment}
+        verified: title, authors, year, pages
+[ OK ] xiong2022overview  (references.bib)  {An Overview of Waveform Design for Integrated Sensing and Communication}
+        verified: title, authors, year, pages
+[ OK ] wan2024orthogonal  (references.bib)  {Orthogonal Chirp Division Multiplexing Waveform Design for 6G mmWave UAV Integrated Sensing and Communication}
+        verified: title, authors, year, pages
+[ OK ] qi2023based  (references.bib)  {DL-based Joint Waveform and Beamforming Design for Integrated Sensing and Communication}
+        verified: title, authors, year, pages
+[ OK ] huo2024waveform  (references.bib)  {Waveform Design with Detection Probability Maximization for MIMO-OFDM Integrated Sensing and Communication System}
+        verified: title, authors, year, pages
+[ OK ] zhang2025waveform  (references.bib)  {Waveform Design for Vital Signs Detection in Integrated Sensing and Communication System}
+        verified: title, authors, year, pages
+[ OK ] zhong2022constant  (references.bib)  {Constant Modulus Waveform Design for Integrated Sensing and Communication Systems}
+        verified: title, authors, year, pages
+[ OK ] fu2024joint  (references.bib)  {Joint Beamforming and Trajectory Design for UAV-aided Integrated Sensing and Communication}
+        verified: title, authors, year, pages
+[ OK ] yin2026papr  (references.bib)  {Low-PAPR OFDM Waveform Design without Spectral Efficiency Loss for Underwater Acoustic Integrated Sensing and Communica
+        verified: title, authors, year, pages
+[ OK ] zhang2022joint  (references.bib)  {Joint Waveform and Phase Shift Design for RIS-Assisted Integrated Sensing and Communication Based on Mutual Information
+        verified: title, authors, year, volume, issue, pages
+[ OK ] yu2024integrated  (references.bib)  {Integrated Sensing and Communication Waveform Design for mmWave Vehicular Networks: A Subcarrier Classified Modulation 
+        verified: title, authors, year, pages
+[ OK ] wu2025symbol  (references.bib)  {Symbol-Level Precoding-Based Waveform Design for Low-PAPR Multi-User MIMO-OFDM Integrated Sensing and Communication Sys
+        verified: title, authors, year, pages
+[ OK ] zhou2024trade  (references.bib)  {Trade-off between Radar Sensing and Energy Consumption in Integrated Sensing, Computing, and Communication UAV Network}
+        verified: title, authors, year, pages
+[ OK ] gu2024papr  (references.tex)  PAPR-Aware Joint Waveform Design of UAV-Enabled Integrated Sensing and Communication
+        verified: title, authors, year, pages
+[ OK ] zuo2025robust  (references.tex)  Robust Waveform Design for Integrated Communication and Sensing
+        verified: title, authors, year
+[ OK ] luo2024integrated  (references.tex)  Integrated sensing and communications waveform design: Fundamentals, applications, challenges
+        verified: title, authors, year, volume
+[ OK ] zhao2025covert  (references.tex)  Covert Waveform Design for Integrated Sensing and Communication System in Clutter Environment
+        verified: title, authors, year, pages
+[ OK ] xiong2022overview  (references.tex)  An Overview of Waveform Design for Integrated Sensing and Communication
+        verified: title, authors, year, pages
+[ OK ] wan2024orthogonal  (references.tex)  Orthogonal Chirp Division Multiplexing Waveform Design for 6G mmWave UAV Integrated Sensing and Communication
+        verified: title, authors, year, pages
+[ OK ] qi2023based  (references.tex)  DL-based Joint Waveform and Beamforming Design for Integrated Sensing and Communication
+        verified: title, authors, year, pages
+[ OK ] huo2024waveform  (references.tex)  Waveform Design with Detection Probability Maximization for MIMO-OFDM Integrated Sensing and Communication System
+        verified: title, authors, year, pages
+[ OK ] zhang2025waveform  (references.tex)  Waveform Design for Vital Signs Detection in Integrated Sensing and Communication System
+        verified: title, authors, year, pages
+[ OK ] zhong2022constant  (references.tex)  Constant Modulus Waveform Design for Integrated Sensing and Communication Systems
+        verified: title, authors, year, pages
+[ OK ] fu2024joint  (references.tex)  Joint Beamforming and Trajectory Design for UAV-aided Integrated Sensing and Communication
+        verified: title, authors, year, pages
+[ OK ] yin2026papr  (references.tex)  Low-PAPR OFDM Waveform Design without Spectral Efficiency Loss for Underwater Acoustic Integrated Sensing and Communicat
+        verified: title, authors, year, pages
+[ OK ] zhang2022joint  (references.tex)  Joint Waveform and Phase Shift Design for RIS-Assisted Integrated Sensing and Communication Based on Mutual Information
+        verified: title, authors, year, volume, issue, pages
+[ OK ] yu2024integrated  (references.tex)  Integrated Sensing and Communication Waveform Design for mmWave Vehicular Networks: A Subcarrier Classified Modulation A
+        verified: title, authors, year, pages
+[ OK ] wu2025symbol  (references.tex)  Symbol-Level Precoding-Based Waveform Design for Low-PAPR Multi-User MIMO-OFDM Integrated Sensing and Communication Syst
+        verified: title, authors, year, pages
+[ OK ] zhou2024trade  (references.tex)  Trade-off between Radar Sensing and Energy Consumption in Integrated Sensing, Computing, and Communication UAV Network
+        verified: title, authors, year, pages
+[WARN] 鍚屾椂瀛樺湪 .bib 涓?thebibliography 鍙屽弬鑰冩簮锛屽簲淇濇寔鍗曚竴浜嬪疄婧?
+========================================================================

@@ -1,0 +1,8 @@
+{
+  "reviewer": "北京大学研究生 / 导师复核组 [AI 自签无效占位]",
+  "review_date": "2026-09-07 10:00:00",
+  "status": "PENDING_HUMAN_CONFIRMATION",
+  "chapters_confirmed": [],
+  "chapter_hashes": {},
+  "comments": "Demo placeholder review record. AI self-signing is forbidden. Real human sign-off required via terminal: python run_quality_gates.py <project_dir> --confirm-review --reviewer <YourName>"
+}

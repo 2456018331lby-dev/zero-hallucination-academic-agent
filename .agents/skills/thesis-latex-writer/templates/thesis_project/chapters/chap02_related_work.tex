@@ -1,0 +1,81 @@
+% -*- coding: utf-8 -*-
+\chapter{国内外研究现状与理论基础}
+\label{chap:related_work}
+
+本章针对 6G 语义通信与深度信源信道联合编码（Deep JSCC）的理论基础与最新前沿进展展开系统述评。首先梳理该技术从经典香农分立范式向端到端智能通信演进的历史脉络，接着对当前三大主流技术流派进行深入机理剖析，随后采用标准学术三线表形式开展定量与定性横向对比，最后指明当前学术界公认尚未解决的深层死结，从而引出本文的研究动机。
+
+\section{语义通信的演进历程与理论根基}
+早在 1949 年，Warren Weaver 在香农理论的基础上，系统性地提出了通信系统的三层技术模型：
+\begin{itemize}
+  \item \textbf{技术层级 A（Level A，技术问题）}：通信符号如何从发送端精准无误地复制传输至接收端？（即经典香农比特层通信所解决的核心问题）；
+  \item \textbf{语义层级 B（Level B，语义问题）}：传输符号所承载的精确含义如何精确被接收方理解？
+  \item \textbf{有效性层级 C（Level C，效果问题）}：接收到的含义如何以期望的方式促使接收端采取有效行动或做出准确决策？
+\end{itemize}
+
+过去七十余年间，通信工程界主要致力于逼近 Level A 的香农极限。然而，随着深度神经网络在复杂多模态特征抽取与流形映射领域的突破，学术界开始实质性探索 Level B 与 Level C 的实现路径。
+
+\section{主流技术流派分类剖析}
+结合国际权威期刊（如 IEEE JSAC, IEEE TSP, IEEE TWC）的最新研究，当前主流 Deep JSCC 技术可系统归纳为以下三大技术流派：
+
+\subsection{基于连续模拟映射的端到端联合编解码 (Continuous Deep JSCC)}
+该技术流派的核心思想在于彻底摒弃传统的离散标量/矢量量化步骤，将深度编码器输出的连续潜在特征直接作为信道物理波形的同相（I）和正交（Q）模拟分量发送。
+代表性工作如 Xie 等人~\cite{xie2021deep} 提出的面向短文本传输的端到端收发机，以及 Dai 等人~\cite{dai2022nonlinear} 提出的非线性变换自适应传输架构（NTSCC）。
+\begin{itemize}
+  \item \textbf{本质优势}：由于跳过了非线性量化带来的截断误差，在衰落信道下天然具备极佳的平滑降级（Graceful Degradation）特性，从根本上消除了数字通信系统的瞬断悬崖效应；
+  \item \textbf{核心缺陷}：连续模拟符号与现存的商用数字调制基带芯片（如 64-QAM / 256-QAM 硬件架构）无法兼容，难以依托现有射频芯片硬件直接落地。
+\end{itemize}
+
+\subsection{面向现存数字硬件架构的可微分数字通信 (Digital D²-JSCC)}
+为了打破上述理论与商用硬件之间的鸿沟，以 Huang 等人~\cite{huang2025d2} 为代表的研究团队提出了数字深度联合信源信道编码架构（$D^2$-JSCC）。该方案在神经网络中引入可微分近似量化层（如直通估计器 STE 或退火 Gumbel-Softmax），迫使潜在特征自适应对齐至标准正交幅度调制（QAM）星座点。
+\begin{itemize}
+  \item \textbf{本质优势}：能够无缝兼容现有的数字通信射频前端与物理层收发协议，具备极高的产业工程转化价值；
+  \item \textbf{核心缺陷}：星座点量化在信噪比急剧恶化时仍会产生一定的量化阶跃噪声，其对抗极端恶劣信道的平滑降级弹性略低于纯模拟系统。
+\end{itemize}
+
+\subsection{面向特定控制与感知任务的解耦式传输 (Task-Oriented JSCC)}
+Lyu 等人~\cite{lyu2024semantic} 等学者针对车联网协同决策、无人机图传等特定业务场景，提出了将语义特征解耦为主观视觉重建分支与客观决策特征分支的架构。
+\begin{itemize}
+  \item \textbf{本质优势}：针对自动驾驶汽车分类与测距等纯机器决策场景，仅传输极低维度的任务特征即可满足要求，信道带宽开销可降低 70\% 以上；
+  \item \textbf{核心缺陷}：高度依赖先验任务场景，一旦下游任务目标发生动态切换，系统需重新联合训练，灵活性受限。
+\end{itemize}
+
+\section{核心代表性文献多维属性横向对比}
+表~\ref{tab:lit_comparison_full} 系统归纳了当前领域内六项最具代表性学术工作的核心参数、复杂度特征与学术定位。
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{面向 6G 语义通信的核心代表性文献属性与性能系统对比表}
+  \label{tab:lit_comparison_full}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{c l l p{4.5cm} c p{4.2cm} c}
+    \toprule
+    \textbf{序号} & \textbf{代表文献} & \textbf{发表期刊/会议} & \textbf{核心技术机制} & \textbf{传输模态} & \textbf{核心量化增益} & \textbf{硬件兼容性} \\
+    \midrule
+    1 & Xie et al.~\cite{xie2021deep}       & 2021 IEEE TSP  & Transformer 端到端自编码 & 短文本语义 & 低 SNR 下 BLEU 提 40\% & 模拟/不兼容 \\
+    2 & Dai et al.~\cite{dai2022nonlinear}  & 2022 IEEE JSAC & 变分非线性流形变换自编码 & 高清图像   & 彻底消灭断崖, PSNR 提 3.8dB & 模拟/不兼容 \\
+    3 & Huang et al.~\cite{huang2025d2}     & 2025 IEEE JSAC & 离散可微分量化数字调制   & 潜在特征   & 兼容商用 QAM, 时延降低 58\% & \textbf{兼容商用硬件} \\
+    4 & Lyu et al.~\cite{lyu2024semantic}   & 2024 IEEE TWC  & 任务决策与感知重建解耦   & 智能多任务 & 传输信道带宽开销节省 75\% & 部分兼容 \\
+    5 & Wang et al.~\cite{wang2023wireless} & 2023 IEEE JSAC & 时空残差光流递归神经编码 & 连续视频流 & 码率节省 42\%, 消灭视频马赛克 & 模拟/不兼容 \\
+    6 & Nguyen et al.~\cite{nguyen2025survey}& 2026 IEEE COMST& 四维 RDPC 统一理论框架   & 全模态综述 & 梳理语义容量理论边界空白 & 理论指导 \\
+    \bottomrule
+  \end{tabular}%
+  }
+  \vspace{0.15cm}\par
+  \noindent\footnotesize{
+    \textbf{注}：表中未列出的具体多径时延扩展以及底层训练超参数，在正文中均按“文献未说明”严肃处理。
+  }
+\end{table}
+
+\section{当前学术界悬而未决的深层技术死结}
+尽管上述文献在实验室理想平稳信道下取得了令人瞩目的性能提升，但深入审视其物理机理，仍存在三大制约其走向实际工程应用的致命瓶颈：
+\begin{enumerate}
+  \item \textbf{高速时变移动场景下的信噪比严重失配（SNR Mismatch）}：
+  现有网络通常在固定的特定信噪比（如 10dB）下离线收敛。然而在车载高速移动（时速 120km/h 以上）场景中，剧烈的多普勒频移导致多径信道快速时变，信噪比可能在数毫秒内跳变达 15dB 以上。固定参数神经网络在信噪比突发跳变时表现出灾难性的性能坍塌；
+  \item \textbf{微秒级物理层处理与千亿级 FLOPs 计算复杂度的剧烈冲突}：
+  目前绝大多数顶刊提出的非线性深度网络单帧编解码耗时在数十毫秒级别，完全无法满足 6G 超可靠低时延通信（URLLC）中对空口单向传输时延低于 1ms 的严苛物理定律约束；
+  \item \textbf{信息论公理体系中连续非线性语义容量证明的缺失}：
+  绝大多数工作均停留在实证驱动，缺乏对非线性连续映射下语义信道容量上界的严格数学解析闭式解。
+\end{enumerate}
+
+上述深层矛盾，正是本论文立项开展“面向高速时变信道的轻量化自适应 Deep JSCC”研究的根本学术依据。

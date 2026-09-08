@@ -1,0 +1,75 @@
+===================================================================================================================
+  ACADEMIC QUALITY GATES ADVERSARIAL REGRESSION TEST SUITE (SELFTEST)
+  Execution Time : 2026-09-08 12:24:25
+  Python Runtime : 3.12.10 (C:\Users\24560\AppData\Local\Programs\Python\Python312\python.exe)
+  Suite Target   : 8 DoD Adversarial Attack Vectors (Gate 1 - Gate 4 + Filter + Grounding)
+===================================================================================================================
+===========================================================================
+[*] Literature Survey Grounding Verification Gate
+[*] Matrix File    : C:\Users\24560\AppData\Local\Temp\gate_test_24zf43hn\matrix_fake_pdf.md
+[*] Literature Pool: C:\Users\24560\Desktop\study\pidemo\ris_thesis_workflow\literature
+[*] Engine         : PyMuPDF (fitz) Genuine Physical Verification
+===========================================================================
+[+] Found 5 local PDF files in literature pool.
+[+] Detected matrix table format (1 rows, 6 columns).
+
+===========================================================================
+[*] Physical Grounding Audit Detailed Records (0 verified):
+---------------------------------------------------------------------------
+[*] Summary: 1 FAILURES, 0 WARNINGS.
+  [FAIL] Row 1 [Nonexistent Study On Ghost Signals]: Physical PDF file not found in pool for evidence '`[99]_Nonexistent_Paper_2024.pdf`, pp. 1-10'!
+===========================================================================
+===========================================================================
+[*] Literature Survey Grounding Verification Gate
+[*] Matrix File    : C:\Users\24560\AppData\Local\Temp\gate_test_24zf43hn\matrix_oob.md
+[*] Literature Pool: C:\Users\24560\Desktop\study\pidemo\ris_thesis_workflow\literature
+[*] Engine         : PyMuPDF (fitz) Genuine Physical Verification
+===========================================================================
+[+] Found 5 local PDF files in literature pool.
+[+] Detected matrix table format (1 rows, 6 columns).
+
+===========================================================================
+[*] Physical Grounding Audit Detailed Records (0 verified):
+---------------------------------------------------------------------------
+[*] Summary: 1 FAILURES, 0 WARNINGS.
+  [FAIL] Row 1 [Deep Reinforcement Learning-Based I]: Evidence claims page range pp. 1-999, but physical PDF '[11]_Deep_Reinforcement_Learning-Based_Intelligent_Refl_2020.pdf' only has 14 pages! (Physical Grounding Violation)
+===========================================================================
+===========================================================================
+[*] Academic Thesis Compliance Scan finished.
+[*] Results: 6 ERROR(s), 4 WARNING(s).
+===========================================================================
+[ERROR  ] main.tex:L3                      | Markdown Residue         | Detected literal '**' markdown syntax: 'This is an unescaped **markdown bold** residue.'. Use '\textbf{...}' in LaTeX.
+[ERROR  ] main.tex:L4                      | Placeholder Leak         | Detected uncompleted draft token 'TODO': 'And here is a placeholder: TODO: fill experimental figures.'. Strictly forbidden in final submission!
+[ERROR  ] main.tex:L1                      | Resource Integrity       | Total figure count is 0! Degree thesis must contain figures/visualizations.
+[ERROR  ] main.tex:L1                      | Front/Back Matter Checklist | Missing required front/back matter: '英文摘要 (English Abstract)'. Required for defense submission.
+[ERROR  ] main.tex:L1                      | Front/Back Matter Checklist | Missing required front/back matter: '致谢 (Acknowledgments)'. Required for defense submission.
+[ERROR  ] main.tex:L1                      | Front/Back Matter Checklist | Missing required front/back matter: '原创性/授权声明 (Declaration)'. Required for defense submission.
+[WARNING] main.tex:L1                      | Front/Back Matter Checklist | Missing required front/back matter: '图表清单/目录 (LOF/LOT)'. Required for defense submission.
+[WARNING] main.tex:L1                      | Front/Back Matter Checklist | Missing required front/back matter: '主要符号对照表 (Notation Table)'. Required for defense submission.
+[WARNING] main.tex:L1                      | Front/Back Matter Checklist | Missing required front/back matter: '攻读学位期间研究成果 (Achievements)'. Required for defense submission.
+[WARNING] references.bib:L1                | Bibliography Count       | Total references count is 0 (< threshold 60). Master thesis typically requires >= 60 entries.
+===========================================================================
++------+----------------------------------+------------------------+------------------+------------+----------+
+|  ID  | Test Case Name                   | Target Gate / Linter   | Expected Intercept | Elapsed(s) |  Status  |
++------+----------------------------------+------------------------+------------------+------------+----------+
+|  1   | Gate 1 Fake DOI Rejection        | Gate 1: Citation Gate  | FAIL (Crossref 4 |   6.341    |  [PASS]  |
+|  2   | Gate 1 Metadata Tamper Rejection | Gate 1: Citation Gate  | FAIL (Title Mism |   5.037    |  [PASS]  |
+|  3   | Gate 4 Hash Tamper Detection     | Gate 4: Human Sign-Off | FAIL (Hash Misma |   0.023    |  [PASS]  |
+|  4   | Gate 4 Placeholder Rejection     | Gate 4: Human Sign-Off | FAIL (Defense) / |   0.020    |  [PASS]  |
+|  5   | Gate 2 Ungrounded Claims Catch   | Gate 2: Data Provenanc | FAIL (Dual Regex |   0.005    |  [PASS]  |
+|  6   | Grounding Page Out-of-Bounds     | Grounding Gate         | FAIL (Physical V |   0.007    |  [PASS]  |
+|  7   | Download Filter 4 Circuit Breake | PDF Landing Filter     | REJECT All 4 Cas |   0.078    |  [PASS]  |
+|  8   | Gate 3 Markdown & TODO Rejection | Gate 3: Compliance     | FAIL (Exit code  |   0.005    |  [PASS]  |
++------+----------------------------------+------------------------+------------------+------------+----------+
+
+[*] Summary: 8/8 adversarial regression test cases PASSED.
+[*] Total Benchmark Duration: 11.517s
+[OK] ALL ADVERSARIAL GATES EFFECTIVELY INTERCEPTED! System defense integrity verified.
+
+
+--- STDERR ---
+
+[-] Grounding Gate FAILED: Physical page grounding verification failed!
+
+[-] Grounding Gate FAILED: Physical page grounding verification failed!
+[-] [����ȱʧ] ����У�鲻���� (UNVERIFIED: PyMuPDF not installed, fail-closed policy enforced)

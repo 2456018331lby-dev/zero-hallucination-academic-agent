@@ -1,0 +1,53 @@
+% -*- coding: utf-8 -*-
+\section{基于 SCA-BCD 的交替求解算法与收敛性分析}
+\label{sec:algorithm_and_convergence}
+
+由于多无人机三维机动航迹变量 $\{\mathbf{q}_u[n]\}$ 与空间发射预编码矩阵 $\mathbf{W}, \mathbf{w}_s$ 相互耦合，且目标函数关于三维欧氏距离呈高度非凸非线性，直接全局求解在数学上难以实现。为此，本节提出一种基于块坐标下降（BCD）与逐次凸逼近（SCA）的高效交替迭代算法，并给出收敛性与计算复杂度证明。
+
+\subsection{算法迭代解耦架构}
+在所提交替框架中，整体非凸问题被分解为两个易于求解的凸近似子问题：
+\begin{enumerate}
+  \item \textbf{波束赋形子问题}：固定无人机当前航迹 $\{\mathbf{q}_u^{(l)}[n]\}$，将原问题转化为关于高维矩阵变量 $\{\mathbf{W}_k, \mathbf{W}_s\}$ 的半正定规划。引入二次变换分式规划（Fractional Programming, FP），目标函数被重新参数化为双仿射凹函数，采用标准内点法在多项式时间内求得全局最优预编码解。
+  \item \textbf{轨迹规划子问题}：固定发射预编码矩阵，通过在当前迭代局部参考点 $\mathbf{q}_u^{(l)}[n]$ 处对非凸几何距离函数执行一阶泰勒展开，构建全局下界凹代理函数，将防撞非凸约束与速率约束转化为二阶锥规划（SOCP），进而利用凸优化工具箱高效求解。
+\end{enumerate}
+
+\begin{algorithm}[H]
+  \caption{基于 SCA-BCD 的通感一体波束赋形与航迹协同优化算法}
+  \label{alg:ao_sca}
+  \begin{algorithmic}[1]
+    \REQUIRE 预置信道衰落参数、系统功率上限 $P_{\max}$、通信门限 $\Gamma_{\mathrm{th}}$、收敛容限 $\epsilon$、最大迭代次数 $L_{\max}$；
+    \STATE 初始化迭代计数器 $l = 0$，生成满足动力学约束的初始无人机航迹 $\{\mathbf{q}_u^{(0)}[n]\}$；
+    \REPEAT
+      \STATE 固定航迹 $\{\mathbf{q}_u^{(l)}[n]\}$，求解半正定松弛预编码子问题，获得最优波束赋形解 $\{\mathbf{W}_k^{(l+1)}, \mathbf{W}_s^{(l+1)}\}$；
+      \STATE 若松弛解不满足秩一约束，采用高斯随机化技术重构秩一波束赋形向量 $\mathbf{w}_k^{(l+1)}, \mathbf{w}_s^{(l+1)}$；
+      \STATE 固定波束赋形解，构建关于航迹的一阶泰勒下界近似，求解二阶锥规划更新航迹 $\{\mathbf{q}_u^{(l+1)}[n]\}$；
+      \STATE 计算目标和速率差值 $\Delta = |R_{\mathrm{sum}}^{(l+1)} - R_{\mathrm{sum}}^{(l)}|$；
+      \STATE 更新迭代步数 $l \leftarrow l + 1$；
+    \UNTIL $\Delta < \epsilon$ 或 $l \ge L_{\max}$
+    \ENSURE 优化后的通感一体发射预编码矩阵 $\mathbf{W}^*, \mathbf{w}_s^*$ 与协同航迹 $\{\mathbf{q}_u^*[n]\}$。
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{算法理论收敛性证明}
+\begin{theorem}
+  由算法~\ref{alg:ao_sca} 生成的目标函数值序列 $\{R_{\mathrm{sum}}^{(l)}\}_{l=1}^\infty$ 单调非减且存在理论上界，因而序列保证确定性收敛至局部稳定驻点，满足原问题的 Karush-Kuhn-Tucker (KKT) 一阶必要极值条件。
+\end{theorem}
+
+\begin{proof}
+  定义 $f(\mathbf{W}, \mathbf{w}_s, \mathbf{q})$ 为原优化问题的目标函数。在第 $l$ 次迭代的步骤 3 中，由于波束赋形子问题在矩阵提升后为严格凸规划，全局最优解必定使得目标函数值不低于前一步结果：
+  \begin{equation}
+    f(\mathbf{W}^{(l+1)}, \mathbf{w}_s^{(l+1)}, \mathbf{q}^{(l)}) \ge f(\mathbf{W}^{(l)}, \mathbf{w}_s^{(l)}, \mathbf{q}^{(l)})
+  \end{equation}
+  在步骤 5 中，由于逐次凸逼近采用的局部一阶泰勒展开式处处严格位于原凹函数下方且在参考点处取等号，因此求解凸替代子问题获得的解在原非凸问题上满足单调上升性质：
+  \begin{equation}
+    f(\mathbf{W}^{(l+1)}, \mathbf{w}_s^{(l+1)}, \mathbf{q}^{(l+1)}) \ge f(\mathbf{W}^{(l+1)}, \mathbf{w}_s^{(l+1)}, \mathbf{q}^{(l)})
+  \end{equation}
+  综合上述两式可知，对于任意迭代步 $l$，恒有：
+  \begin{equation}
+    f(\mathbf{W}^{(l+1)}, \mathbf{w}_s^{(l+1)}, \mathbf{q}^{(l+1)}) \ge f(\mathbf{W}^{(l)}, \mathbf{w}_s^{(l)}, \mathbf{q}^{(l)})
+  \end{equation}
+  即目标函数值序列呈单调非减。此外，由于系统总发射功率严格受限于 $P_{\max}$，信道噪声方差 $\sigma_c^2 > 0$，通信和速率受限于有限输入功率下的香农容量上界，即 $\exists M_{\max} < +\infty$，使得 $f(\mathbf{W}, \mathbf{w}_s, \mathbf{q}) \le M_{\max}$。根据单调有界收敛准则，序列必定收敛。由于各子问题解空间满足非空紧集与正则性条件，极限点必然满足一阶 KKT 驻点条件。
+\end{proof}
+
+\subsection{计算复杂度分析}
+算法的计算开销主要来源于波束赋形 SDP 求解与轨迹 SOCP 求解。对于波束赋形子问题，求解 $K$ 个大小为 $N_t \times N_t$ 的半正定矩阵规划，其内点法迭代计算复杂度约为 $\mathcal{O}(K^{3.5} N_t^{3.5})$；对于航迹子问题，优化变量维度为 $3UN$，二阶锥约束数量为 $\mathcal{O}(UN + U^2 N)$，其内点法计算复杂度为 $\mathcal{O}((UN)^{3.5})$。因此，算法单次交替迭代的总计算复杂度为 $\mathcal{O}\left(K^{3.5} N_t^{3.5} + (UN)^{3.5}\right)$。在实际低空无人机系统参数配置下，该复杂度为关于变量维度的低阶多项式级别，具备在工程机载处理器上离线规划或近实时在线解算的可行性。

@@ -1,0 +1,38 @@
+[
+  {
+    "file": "reading_plan.md",
+    "path": "c:\\Users\\24560\\Desktop\\study\\pidemo\\pku_thesis_workflow\\literature\\reading_plan.md",
+    "pages": 1,
+    "title": "文献检索与精读分流计划：semantic communications deep joint source channel coding",
+    "authors": "文献未说明",
+    "year": "文献未说明",
+    "venue": "文献未说明",
+    "abstract": "# 文献检索与精读分流计划：semantic communications deep joint source channel coding **检索时间**：2026-09-06 19:56:47 **筛选总量**：12 篇 ｜ **已自动下载 OA 全文**：2 篇 ｜ **需校园网补充**：10 篇 ## 一、已就绪的开源全文文献 (Directly Ingestible) | 序号 | 论文题目 | 作者 | 年份 | 期刊/会议 | 被引频次 | 影响分 | 本地文件 | | :---: | :--- | :--- | :---: | :--- | :---: | :---: | :--- | | 1 | Review of deep learning: concepts, CNN architectures, challenges, applications, future directions | Laith Alzubaidi et al. | 2021 | Journal Of Big Data | 7858 | 4.88 | `[01]_Review_of_deep_learning_concepts_CNN_architectures_2021.pdf` | | 6 | A Contemporary Survey on Semantic Communications: Theory of Mind, Generative AI, and Deep Joint Source-Channel Coding | Loc X. Nguyen et al. | 2025 | IEEE Communications Surveys & Tutorials | 37 | 3.84 | `[06]_A_Contemporary_Survey_on_Semanti",
+    "sections": [],
+    "status": "ok"
+  },
+  {
+    "file": "[01]_Review_of_deep_learning_concepts_CNN_architectures_2021.pdf",
+    "path": "c:\\Users\\24560\\Desktop\\study\\pidemo\\pku_thesis_workflow\\literature\\[01]_Review_of_deep_learning_concepts_CNN_architectures_2021.pdf",
+    "pages": 1,
+    "title": "Client Challenge",
+    "authors": "",
+    "year": "文献未说明",
+    "venue": "文献未说明",
+    "abstract": "[image] JavaScript is disabled in your browser. Please enable JavaScript to proceed.",
+    "sections": [],
+    "status": "ok"
+  },
+  {
+    "file": "[06]_A_Contemporary_Survey_on_Semantic_Communications_T_2025.pdf",
+    "path": "c:\\Users\\24560\\Desktop\\study\\pidemo\\pku_thesis_workflow\\literature\\[06]_A_Contemporary_Survey_on_Semantic_Communications_T_2025.pdf",
+    "pages": 34,
+    "title": "A Contemporary Survey on Semantic Communications:Theory of Mind, Generative AI, and Deep Joint Source-Channel Coding",
+    "authors": "Loc X. Nguyen; Avi Deb Raha; Pyae Sone Aung; Dusit Niyato; Zhu Han; Choong Seon Hong",
+    "year": "2021",
+    "venue": "acl",
+    "abstract": "—Semantic communication is emerging as the next pillar in wireless communication technology due to its transfor- mative capabilities in reducing communication overhead, enhanc- ing robustness, and enabling intelligent information exchange. Despite its promising potential, semantic communication still faces several critical challenges that must be addressed before real-world deployment. The most significant obstacle lies in the lack of standardization across various research directions, leading to inconsistencies in interpretation, objectives, and eval- uation. In this survey, we provide an in-depth overview of three leading directions in semantic communication, namely Theory of Mind-based semantic communication, Generative AI-driven semantic communication, and Deep Joint Source-Channel Coding (DJSCC)-based semantic communication. These directions have been extensively studied and developed by research institutes worldwide, and their effectiveness continues to improve alongside advances in communication and computing technologies. We first introduce the fundamental concepts and theoretical background of each direction. The Theory of Mind-based semantic commu- nication enables commun",
+    "sections": [],
+    "status": "ok"
+  }
+]

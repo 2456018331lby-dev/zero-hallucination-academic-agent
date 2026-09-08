@@ -1,0 +1,78 @@
+% -*- coding: utf-8 -*-
+\chapter{系统仿真评估与基准对比}
+\label{chap:experiments}
+
+\TODO{本章当前处于纯脚手架架构模式（Scaffold Draft Mode）。所有表格均采用 GB/T 7713 规范标准三线表，实验指标以待注入占位符规范呈现，杜绝任何未经验证的虚构数据。}
+
+\section{仿真实验环境与系统参数设置}
+为了对本文所提出的面向低空智联网的无人机通感一体化波形优化与感知辅助资源管理机制进行全方位定量评估，本节构建标准三维空间多无人机仿真测试平台。基站位于空间坐标原点，多架协同巡航无人机分布于低空空域，地面离散分布多个移动通信用户。表~\ref{tab:sim_parameters} 列出了系统核心仿真参数的标称扫描空间。
+
+\begin{table}[htbp]
+  \centering
+  \caption{低空智联网无人机通感一体化系统仿真参数配置表}
+  \label{tab:sim_parameters}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{参数符号} & \textbf{参数物理含义} & \textbf{标称取值 / 扫描范围} \\
+    \midrule
+    $f_c$ & 载波中心频率 & 28\,GHz (毫米波频段) \\
+    $B$ & 系统信号总带宽 & 100\,MHz \\
+    $\Delta f$ & OFDM 子载波间隔 & 120\,kHz \\
+    $M$ & 正交子载波总数 & 1024 \\
+    $N_t$ & 基站发射天线数 & 32 (均匀线阵) \\
+    $N_r$ & 感知接收天线数 & 16 (均匀线阵) \\
+    $K$ & 地面移动通信用户数 & 4 \\
+    $U$ & 协同巡航无人机总数 & 2 \\
+    $P_{\max}$ & 基站最大发射功率预算 & 30\,dBm -- 40\,dBm \\
+    $\sigma_c^2, \sigma_s^2$ & 接收机等效白噪声功率 & -94\,dBm \\
+    $V_{\max}$ & 无人机最大水平飞行速度 & 25\,m/s \\
+    $H$ & 无人机固定巡航飞行高度 & 100\,m \\
+    $d_{\min}$ & 无人机间安全防撞间距 & 10\,m \\
+    $\Gamma_{\mathrm{th}}$ & 通信用户最低 SINR 服务门限 & 5\,dB -- 15\,dB \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{通感性能折中边界（Pareto 前沿）分析}
+在双功能雷达通信系统中，通信和速率与雷达感知克拉美罗下界之间的权衡边界构成了系统设计的理论物理极限。图~\ref{fig:pareto_curve} 给出了在不同发射功率预算与天线维度下，由所提算法求解得到的通信和速率关于感知精度倒数 $1/\mathrm{CRB}$ 的 Pareto 折中前沿曲线。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/fig_isac_pareto_curve.pdf}
+  \caption{通感一体化系统通信容量与雷达感知精度理论 Pareto 折中边界曲线}
+  \label{fig:pareto_curve}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \caption{通感一体化波形在不同工作点下的基准性能对比表（脚手架）}
+  \label{tab:scaffold_benchmarks}
+  \small
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lllll}
+    \toprule
+    \textbf{算法与方案名称} & \textbf{平均下行和速率} & \textbf{感知测角 CRB} & \textbf{波形 PAPR} & \textbf{单步求解耗时} \\
+    \midrule
+    传统时分复用基准 (Time-Sharing) & \TODO{待填真实数据} & \TODO{待填真实数据} & \TODO{待填} & \TODO{待测} \\
+    通信优先迫零预编码基准 (Comm-Centric) & \TODO{待填真实数据} & \TODO{待填真实数据} & \TODO{待填} & \TODO{待测} \\
+    雷达优先波束赋形基准 (Radar-Centric) & \TODO{待填真实数据} & \TODO{待填真实数据} & \TODO{待填} & \TODO{待测} \\
+    本文所提 SCA-BCD 联合优化方案 & \TODO{待填真实数据} & \TODO{待填真实数据} & \TODO{待填} & \TODO{待测} \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+\section{多无人机机动轨迹与协同跟踪性能评估}
+图~\ref{fig:uav_trajectory} 展示了在低空目标动态飞行工况下，多架协同无人机基于扩展卡尔曼滤波先验导引执行主动空间包围与协同感知的三维航迹仿真结果。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/fig_uav_trajectory_pcrb.pdf}
+  \caption{多无人机协同动态目标跟踪与立体包围机动轨迹示意图}
+  \label{fig:uav_trajectory}
+\end{figure}
+
+\TODO{待后续结合实测信道数据或 Monte Carlo 真实 CSV 实验日志，将表~\ref{tab:scaffold_benchmarks} 中的占位符整体替换为真实评测数值。}
+
+\section{本章小结}
+本章严格遵循学术规范化脚手架框架，详细定义了低空智联网无人机通感一体化仿真测试平台的参数空间与拓扑结构，绘制了理论 Pareto 折中曲线与多机协同机动轨迹图，并建立了规范的标准三线对比表脚手架，为后续实证数据的无缝注入提供了可靠标准接口。

@@ -1,0 +1,15 @@
+# 学术工作流平台技能依赖声明 (Academic Workflow Skills Requirements)
+# 运行环境: Python >= 3.10
+# 适用技能: citation-auditor, thesis-latex-writer, phd-literature-survey, academic-paper-discovery
+
+# PDF 文本抽取、元数据校验与物理页码溯源审计 (phd-literature-survey / academic-paper-discovery)
+pymupdf>=1.24.0
+
+# 学术手稿与开题报告 Word (.docx) 规范化导出与批注水印 (thesis-latex-writer)
+python-docx>=1.1.0
+
+# 实验数据可视化与科研三线图生成 (thesis-latex-writer)
+matplotlib>=3.8.0
+
+# 数组与矩阵数值计算、实验指标统计校验 (thesis-latex-writer / math-reviewer)
+numpy>=1.26.0

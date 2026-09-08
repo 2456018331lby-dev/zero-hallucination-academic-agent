@@ -1,0 +1,34 @@
+% -*- coding: utf-8 -*-
+\section{感知先验辅助的动态资源管理与波束跟踪}
+\label{sec:sensing_assisted_comm}
+
+在传统高动态移动通信系统中，由于飞行器高速机动与信道相干时间极短，获取精确的信道状态信息（CSI）需要消耗海量的导频开销与耗时的全角度波束扫描。通感一体化系统的独特优势在于：雷达感知功能所获取的目标运动学状态先验（包括目标空间三维坐标、航向角与瞬时径向速度），可直接反哺于通信物理层，实现开环快速对准与先验自适应波束预测。
+
+\subsection{多无人机协同三维空间机动运动学模型}
+考虑由 $U$ 架无人机组成的低空立体协同网络。离散化飞行时域划分为 $N$ 个持续时间为 $\Delta t$ 的时隙。在时隙 $n \in \{1, \dots, N\}$，第 $u \in \{1, \dots, U\}$ 架无人机的三维空间几何坐标表示为：
+\begin{equation}
+  \mathbf{q}_u[n] = [x_u[n], y_u[n], z_u[n]]^T \in \mathbb{R}^{3 \times 1}
+\end{equation}
+受限于无人机物理动力学推进能力，相邻时隙间的最大飞行位移满足位移约束：
+\begin{equation}
+  \|\mathbf{q}_u[n] - \mathbf{q}_u[n-1]\| \le V_{\max} \Delta t, \quad \forall n \in \{2, \dots, N\}
+\end{equation}
+其中 $V_{\max}$ 为无人机最大水平巡航速度。此外，为保障空中编队安全，任意两架无人机在同一时隙的间距必须大于最小安全防撞距离 $d_{\min}$：
+\begin{equation}
+  \|\mathbf{q}_u[n] - \mathbf{q}_j[n]\| \ge d_{\min}, \quad \forall u \ne j
+\end{equation}
+
+\subsection{卡尔曼滤波目标状态后验演进与波束跟踪}
+设移动通信目标在第 $n$ 时隙的状态向量为 $\mathbf{s}_t[n] = [\mathbf{p}_t^T[n], \mathbf{v}_t^T[n]]^T$，其中 $\mathbf{p}_t[n]$ 与 $\mathbf{v}_t[n]$ 分别代表目标的三维空间位置与三维瞬时速度。系统状态空间方程遵循线性高斯马尔可夫演进过程：
+\begin{equation}
+  \mathbf{s}_t[n] = \mathbf{F} \mathbf{s}_t[n-1] + \mathbf{u}_t[n]
+\end{equation}
+其中 $\mathbf{F}$ 为状态转移矩阵，$\mathbf{u}_t[n] \sim \mathcal{CN}(\mathbf{0}, \mathbf{Q}_w)$ 为过程状态激励噪声。
+
+当一体化雷达接收机在时隙 $n$ 接收到回波信号并完成匹配滤波后，获取关于目标的距离、方位角与多普勒频移观测值 $\mathbf{z}[n]$：
+\begin{equation}
+  \mathbf{z}[n] = \mathbf{h}(\mathbf{s}_t[n], \mathbf{q}_u[n]) + \mathbf{v}_s[n]
+\end{equation}
+通过扩展卡尔曼滤波（EKF）的一步状态预测与协方差更新，基站与协同无人机获得时隙 $n+1$ 目标空间位置的后验均方误差估计 $\hat{\mathbf{p}}_t[n+1|n]$ 与后验协方差矩阵 $\mathbf{P}[n+1|n]$。
+
+基于该先验信息，基站可预测目标在下一时隙的到达角范围 $[\hat{\theta}[n+1] - \Delta \theta, \hat{\theta}[n+1] + \Delta \theta]$。相比于传统的 360 度盲搜扫描，感知辅助机制将通信波束扫描空间压缩了两个数量级以上，彻底消除了周期性信令中断，显著降低了信道反馈时延开销。

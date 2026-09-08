@@ -1,0 +1,10 @@
+======================================================================
+[-] Pandoc binary was not found in PATH or standard directories.
+    Tip: To enable native Pandoc LaTeX->Docx AST compilation, run:
+         winget install JohnMacFarlane.Pandoc
+[*] Gracefully falling back to native Python GB/T docx engine...
+======================================================================
+[*] Executing native Python fallback exporter...
+[OK] Generated Word Thesis: C:\Users\24560\Desktop\study\pidemo\ris_thesis_workflow\ris_thesis_project\thesis.docx
+
+[OK] Fallback docx generated successfully: C:\Users\24560\Desktop\study\pidemo\ris_thesis_workflow\ris_thesis_project\thesis.docx

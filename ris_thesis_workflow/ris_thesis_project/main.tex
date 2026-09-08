@@ -1,0 +1,223 @@
+% -*- coding: utf-8 -*-
+% =============================================================================
+% 北京大学研究生学位论文 LaTeX 模板工程 (符合 GB/T 7713.1-2006 规范)
+% 专业领域：电子信息（专业代码：085402 通信工程）
+% 研究方向：面向 6G 的 RIS 辅助通信波束赋形与信道估计研究
+% =============================================================================
+
+\documentclass[12pt,a4paper,openany,UTF8]{ctexrep}
+
+% -----------------------------------------------------------------------------
+% 页面尺寸与版面几何布局 (Peking University Thesis Layout)
+% -----------------------------------------------------------------------------
+\usepackage{geometry}
+\geometry{
+  top=3.0cm,
+  bottom=2.5cm,
+  left=2.6cm,
+  right=2.6cm,
+  headheight=15pt,
+  headsep=18pt,
+  footskip=25pt
+}
+
+% -----------------------------------------------------------------------------
+% 数学公式与符号支持
+% -----------------------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsfonts,amsthm,bm}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{definition}{定义}[chapter]
+
+% -----------------------------------------------------------------------------
+% 图表与三线表支持 (GB/T 7713 规范禁用双竖线，强制 booktabs)
+% -----------------------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup{font={small},labelfont={bf},skip=6pt}
+
+% 页眉页脚排版
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small 北京大学硕士学位论文：\leftmark}
+\fancyfoot[C]{\small \thepage}
+\renewcommand{\headrulewidth}{0.75pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% -----------------------------------------------------------------------------
+% 超链接与交叉引用美化
+% -----------------------------------------------------------------------------
+\usepackage{xcolor}
+\providecommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black,
+  pdfauthor={北京大学硕士研究生},
+  pdftitle={面向 6G 的 RIS 辅助通信波束赋形与信道估计研究}
+}
+\pdfstringdefDisableCommands{\def\bm#1{#1}}
+
+% -----------------------------------------------------------------------------
+% 正文开始
+% -----------------------------------------------------------------------------
+\begin{document}
+
+% 论文封面 (Title Page)
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+  {\Huge \textbf{北\quad 京\quad 大\quad 学}\par}
+  \vspace{0.6cm}
+  {\Large \textbf{PEKING UNIVERSITY}\par}
+  \vspace{1.5cm}
+  {\Large \textbf{硕\quad 士\quad 学\quad 位\quad 论\quad 文}\par}
+  \vspace{2.0cm}
+  {\LARGE \textbf{面向 6G 的 RIS 辅助通信波束赋形}\par}
+  \vspace{0.3cm}
+  {\LARGE \textbf{与信道估计关键技术研究}\par}
+  \vspace{0.8cm}
+  {\large \textit{Research on Beamforming and Channel Estimation for}\par}
+  {\large \textit{RIS-Assisted 6G Wireless Communications}\par}
+  \vfill
+  \begin{tabular}{ll}
+    \textbf{姓\qquad 名}： & 研究生 \\
+    \textbf{学\qquad 号}： & 2401210854 \\
+    \textbf{院\qquad 系}： & 信息科学技术学院 / 电子学院 \\
+    \textbf{专业领域}：   & 电子信息（085402 通信工程） \\
+    \textbf{研究方向}：   & 6G 移动通信与无线传输 \\
+    \textbf{指导教师}：   & 教授 \\
+  \end{tabular}
+  \vspace{1.5cm}
+  \par
+  {\large \textbf{二〇二六年九月}\par}
+\end{titlepage}
+
+% 中英文摘要与目录 (前言采用罗马数字页码)
+\pagenumbering{Roman}
+\setcounter{page}{1}
+
+% 原创性声明与使用授权说明
+\chapter*{北京大学学位论文原创性声明与使用授权说明}
+\thispagestyle{empty}
+\noindent 本人郑重声明：所呈交的学位论文，是本人在导师的指导下，独立进行研究工作所取得的成果。除文中已经注明引用的内容外，本论文不含任何其他个人或集体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。本人完全意识到本声明的法律结果由本人承担。
+
+\vspace{1.5cm}
+\begin{flushright}
+  学位论文作者签名：\underline{\hspace{3cm}} \qquad
+  签字日期：\qquad 年\quad 月\quad 日
+\end{flushright}
+\newpage
+
+% 中文摘要
+\chapter*{摘\quad 要}
+\addcontentsline{toc}{chapter}{摘要}
+
+面向第六代移动通信系统（6G）超高传输速率、极致能效以及全场景无缝覆盖的严苛需求，毫米波（mmWave）与太赫兹（THz）高频通信成为关键物理层使能技术。然而，高频无线电波空间路径衰减剧烈、穿透损耗大且绕射能力极差，极易遭受建筑物与人体的物理阻挡形成通信盲区。近年来，可重构智能表面（Reconfigurable Intelligent Surface, RIS）作为一种颠覆性超材料天线架构，通过低成本、低功耗的无源超表面微元阵列动态调控入射电磁波的幅相响应，突破了传统无线通信被动适应恶劣信道的物理限制，实现了对无线传播环境的主动重塑。
+
+尽管 RIS 在提升频谱与能量效率方面展现出巨大潜力，但在实际多用户 MISO 通信系统中，如何实现基站有源波束与 RIS 无源反射波束的高维非凸非线性联合优化，以及如何在 RIS 缺乏射频处理链的前提下以极低导频开销精准重构级联信道状态信息（CSI），是当前学术界与工业界面临的两大核心理论与工程挑战。
+
+针对上述瓶颈，本论文深入研究面向 6G 的 RIS 辅助多用户通信系统的主被动联合波束赋形与低开销级联信道估计关键技术，主要研究内容与理论贡献包括：
+\begin{enumerate}
+  \item \textbf{建立 BS-RIS-User 多径几何级联信道与信号传输严格系统模型}：基于电磁超材料散射参数分析，形式化表征直连链路与级联反射链路复合传输矩阵，推导出基于空间相关性的复合信噪比与多用户和速率闭式表达式。
+  \item \textbf{提出基于交替优化 (AO) 与分式规划的主被动协同波束赋形机制}：将原非凸和速率最大化问题解耦为基站发射预编码子问题与 RIS 单位模约束相移子问题。针对基站预编码引入二次变换分式规划实现闭式更新；针对 RIS 连续相移采用流形优化与半正定松弛（SDR）高效求解。
+  \item \textbf{提出基于正交导频设计的低开销级联信道估计算法}：利用级联信道矩阵在角域与时域的低秩稀疏结构，提出基于离散傅里叶变换（DFT）反射相移码本的信道分解协议，将导频开销从传统全采样维度大幅压缩，并在理论上推导了其克拉美罗下界（CRLB）。
+  \item \textbf{构建全流程标准脚手架仿真验证基准}：设计了面向第四章系统级数值仿真评估的预置标准三线表与参数范围矩阵，明确标注了未填充真实实验数据前的占位规范，为后续算法实测验证提供了严谨的标准范式。
+\end{enumerate}
+
+\vspace{0.6cm}
+\noindent \textbf{关键词}：6G 移动通信；可重构智能表面 (RIS)；波束赋形；级联信道估计；交替优化；分式规划
+
+\newpage
+
+% 英文摘要
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT}
+
+To satisfy the stringent requirements of the sixth-generation (6G) wireless communications—including ultra-high transmission rates, extreme energy efficiency, and seamless global coverage—millimeter-wave (mmWave) and terahertz (THz) high-frequency bands have emerged as indispensable physical-layer enabling technologies. Nonetheless, high-frequency electromagnetic waves suffer from severe free-space path loss, heavy penetration attenuation, and poor diffraction capabilities, leading to frequent line-of-sight (LoS) blockage and severe communication dead zones. Recently, Reconfigurable Intelligent Surfaces (RISs)—composed of large arrays of low-cost, low-power sub-wavelength passive reflecting metamaterial elements—have revolutionized wireless communications by proactively reconfiguring the wireless propagation environment rather than passively adapting to fading channels.
+
+Despite their profound advantages, two fundamental challenges remain unsolved in practical multiuser MISO systems: (i) the high-dimensional non-convex non-linear coupling optimization between the active digital precoding at the base station (BS) and the passive continuous phase shifts at the RIS; and (ii) the excessive pilot overhead required to acquire cascaded channel state information (CSI) due to the absence of active RF chains at the passive RIS.
+
+To address these challenges, this thesis investigates key technologies in joint active and passive beamforming as well as low-overhead cascaded channel estimation for RIS-assisted 6G communications. The primary contributions are summarized as follows:
+\begin{enumerate}
+  \item \textbf{Rigorous Formal Modeling of BS-RIS-User Cascaded Wireless Channels}: Based on electromagnetic scattering parameter network analysis, we construct a rigorous multi-antenna MISO system model. We formulate closed-form expressions for the composite received signal-to-interference-plus-noise ratio (SINR) and the sum rate over spatially correlated fading channels.
+  \item \textbf{Joint Beamforming Framework via Alternating Optimization (AO) and Fractional Programming}: We decouple the joint optimization problem into a BS transmit precoding subproblem and an RIS unimodular phase-shift subproblem. The active precoder is optimized in closed form using quadratic-transform fractional programming, while the non-convex unit-modulus RIS phase vector is addressed via Riemannian manifold optimization and Semidefinite Relaxation (SDR).
+  \item \textbf{Low-Overhead Cascaded Channel Estimation Protocol}: Exploiting the inherent low-rank and angular sparsity of the cascaded channel matrix, we propose an orthogonal pilot transmission protocol based on Discrete Fourier Transform (DFT) phase-shift codebooks. This scheme significantly compresses pilot duration compared to conventional brute-force schemes, with its estimation error lower-bounded by the theoretical Cramér-Rao Lower Bound (CRLB).
+  \item \textbf{Standardized Scaffold Benchmark and Traceability Architecture}: We establish standard booktabs three-line benchmark tables with rigorous parameter ranges and explicit TODO annotations, providing an indisputable methodological foundation for future experimental injections.
+\end{enumerate}
+
+\vspace{0.6cm}
+\noindent \textbf{Keywords}: 6G Mobile Communications; Reconfigurable Intelligent Surface (RIS); Beamforming; Cascaded Channel Estimation; Alternating Optimization; Fractional Programming
+
+\newpage
+
+% 目录
+\tableofcontents
+\newpage
+
+% 图目录与表目录
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% 主要符号对照表
+\chapter*{主要符号对照表}
+\addcontentsline{toc}{chapter}{主要符号对照表}
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  \textbf{符号} & \textbf{含义说明} \\
+  \midrule
+  $M$ & 基站 (BS) 发射天线数 \\
+  $N$ & 可重构智能表面 (RIS) 反射微元总数 \\
+  $K$ & 接收端单天线移动用户总数 \\
+  $P_{\max}$ & 基站最大发射功率预算 \\
+  $\sigma_k^2$ & 用户 $k$ 处的加性复高斯白噪声方差 \\
+  $\gamma_k$ & 用户 $k$ 处的接收信号与干扰加噪声比 (SINR) \\
+  $\bm{w}_k$ & 基站面向用户 $k$ 的有源发射波束赋形向量 \\
+  $\bm{h}_{d,k}^H$ & 基站至用户 $k$ 的直连信道响应向量 \\
+  $\bm{G}$ & 基站至 RIS 的多径无线信道矩阵 \\
+  $\bm{h}_{r,k}^H$ & RIS 至用户 $k$ 的反射无线信道响应向量 \\
+  $\bm{\Theta}$ & RIS 相移调控对角矩阵 $\mathrm{diag}(e^{j\theta_1}, \dots, e^{j\theta_N})$ \\
+  $\bm{H}_{\mathrm{casc},k}$ & 基站经 RIS 至用户 $k$ 的级联信道矩阵 $\mathrm{diag}(\bm{h}_{r,k}^H)\bm{G}$ \\
+  $\tau$ & 信道估计导频符号持续时间 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+\newpage
+
+% 正文部分 (阿拉伯数字页码)
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/chap01_intro.tex}
+\input{chapters/chap02_related_work.tex}
+\input{chapters/chap03_methodology.tex}
+\input{chapters/chap04_experiments.tex}
+\input{chapters/chap05_conclusion.tex}
+
+% 参考文献列表 (严格对齐 GB/T 7714-2015 格式)
+\input{chapters/references.tex}
+
+% 致谢 (Acknowledgments)
+\chapter*{致谢}
+\addcontentsline{toc}{chapter}{致谢}
+\TODO{感谢导师的悉心指导，感谢实验室同门的帮助与支持，感谢家人的理解与陪伴。}
+\newpage
+
+% 攻读学位期间研究成果 (Academic Achievements)
+\chapter*{攻读学位期间发表的学术论文与研究成果}
+\addcontentsline{toc}{chapter}{攻读学位期间研究成果}
+\begin{enumerate}
+  \item \TODO{待填入已录用或在审学术论文清单与专利成果。}
+\end{enumerate}
+
+\end{document}

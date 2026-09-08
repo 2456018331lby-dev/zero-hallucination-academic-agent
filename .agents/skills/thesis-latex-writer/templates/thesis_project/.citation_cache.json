@@ -1,0 +1,4812 @@
+{
+ "https://api.crossref.org/works/10.1109/tsp.2021.3071210": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      9,
+      5
+     ]
+    ],
+    "date-time": "2026-09-05T16:34:34Z",
+    "timestamp": 1788626074016,
+    "version": "build-2803163510"
+   },
+   "reference-count": 38,
+   "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2021,
+        1,
+        1
+       ]
+      ],
+      "date-time": "2021-01-01T00:00:00Z",
+      "timestamp": 1609459200000
+     },
+     "content-version": "vor",
+     "delay-in-days": 0,
+     "URL": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    }
+   ],
+   "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+   },
+   "short-container-title": [
+    "IEEE Trans. Signal Process."
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2021
+     ]
+    ]
+   },
+   "DOI": "10.1109/tsp.2021.3071210",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2021,
+      4,
+      7
+     ]
+    ],
+    "date-time": "2021-04-07T15:41:45Z",
+    "timestamp": 1617810105000
+   },
+   "page": "2663-2675",
+   "source": "Crossref",
+   "is-referenced-by-count": 1557,
+   "title": [
+    "Deep Learning Enabled Semantic Communication Systems"
+   ],
+   "prefix": "10.1109",
+   "volume": "69",
+   "author": [
+    {
+     "ORCID": "https://orcid.org/0000-0001-9905-6319",
+     "authenticated-orcid": false,
+     "given": "Huiqiang",
+     "family": "Xie",
+     "sequence": "first",
+     "affiliation": [],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-8507-3975",
+     "authenticated-orcid": false,
+     "given": "Zhijin",
+     "family": "Qin",
+     "sequence": "additional",
+     "affiliation": [],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-7894-2415",
+     "authenticated-orcid": false,
+     "given": "Geoffrey Ye",
+     "family": "Li",
+     "sequence": "additional",
+     "affiliation": [],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-5773-5679",
+     "authenticated-orcid": false,
+     "given": "Biing-Hwang",
+     "family": "Juang",
+     "sequence": "additional",
+     "affiliation": [],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "263",
+   "reference": [
+    {
+     "key": "ref38",
+     "article-title": "Semantic communications for speech signals",
+     "author": "weng",
+     "year": "0",
+     "journal-title": "Proc IEEE Int Conf Commun ICC"
+    },
+    {
+     "key": "ref33",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3115/1073083.1073135"
+    },
+    {
+     "key": "ref32",
+     "first-page": "531",
+     "article-title": "Mutual information neural estimation",
+     "author": "belghazi",
+     "year": "0",
+     "journal-title": "Proc Int Conf Mach Learn"
+    },
+    {
+     "key": "ref31",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3115/v1/P14-1062"
+    },
+    {
+     "key": "ref30",
+     "article-title": "Generating sequences with recurrent neural networks",
+     "author": "graves",
+     "year": "2013"
+    },
+    {
+     "key": "ref37",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2020.3036968"
+    },
+    {
+     "key": "ref36",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1137/0108018"
+    },
+    {
+     "key": "ref35",
+     "volume": "476",
+     "author": "heegard",
+     "year": "2013",
+     "journal-title": "Turbo Coding"
+    },
+    {
+     "key": "ref34",
+     "first-page": "79",
+     "article-title": "Europarl: A Parallel Corpus for Statistical Machine Translation",
+     "volume": "5",
+     "author": "koehn",
+     "year": "2005",
+     "journal-title": "MT Summit"
+    },
+    {
+     "key": "ref10",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2018.2872596"
+    },
+    {
+     "key": "ref11",
+     "article-title": "Neural machine translation by jointly learning to align and translate",
+     "author": "bahdanau",
+     "year": "0",
+     "journal-title": "Proc Int Conf Learn Representations ICLR"
+    },
+    {
+     "key": "ref12",
+     "first-page": "48",
+     "article-title": "Jumping NLP curves: A review of natural language processing research",
+     "volume": "9",
+     "author": "cambria",
+     "year": "2014",
+     "journal-title": "Review Journal Article"
+    },
+    {
+     "key": "ref13",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TSP.2018.2868322"
+    },
+    {
+     "key": "ref14",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TSP.2020.2976585"
+    },
+    {
+     "key": "ref15",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TSP.2018.2866382"
+    },
+    {
+     "key": "ref16",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.2019.1800601"
+    },
+    {
+     "key": "ref17",
+     "first-page": "5998",
+     "article-title": "Attention is all you need",
+     "author": "vaswani",
+     "year": "0",
+     "journal-title": "Proc Adv Neural Inf Process Syst"
+    },
+    {
+     "key": "ref18",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2017.2758370"
+    },
+    {
+     "key": "ref19",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2017.2784180"
+    },
+    {
+     "key": "ref28",
+     "first-page": "4171",
+     "article-title": "BERT: Pre-training of deep bidirectional transformers for language understanding",
+     "author": "devlin",
+     "year": "0",
+     "journal-title": "Proc North Amer Chapter Assoc Comput Linguistics Hum Lang Tech"
+    },
+    {
+     "key": "ref4",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.comnet.2010.05.010"
+    },
+    {
+     "key": "ref27",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.18653/v1/N18-1202"
+    },
+    {
+     "key": "ref3",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1017/CBO9780511807213"
+    },
+    {
+     "key": "ref6",
+     "article-title": "An outline of a theory of semantic information",
+     "author": "carnap",
+     "year": "1952"
+    },
+    {
+     "key": "ref29",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/78.650093"
+    },
+    {
+     "key": "ref5",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.2019.1800522"
+    },
+    {
+     "key": "ref8",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MSP.2011.941134"
+    },
+    {
+     "key": "ref7",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/NSW.2011.6004632"
+    },
+    {
+     "key": "ref2",
+     "article-title": "The Mathematical Theory of Communication. The University of Illinois Press",
+     "author": "shannon",
+     "year": "1949"
+    },
+    {
+     "key": "ref9",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.pmcj.2013.07.013"
+    },
+    {
+     "key": "ref1",
+     "first-page": "1",
+     "article-title": "Deep learning based semantic communications: An initial investigation",
+     "author": "xie",
+     "year": "2020",
+     "journal-title": "Proc IEEE Global Comm Conf"
+    },
+    {
+     "key": "ref20",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2019.2933891"
+    },
+    {
+     "key": "ref22",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/SPAWC48557.2020.9154322"
+    },
+    {
+     "key": "ref21",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2020.2970707"
+    },
+    {
+     "key": "ref24",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2019.2919300"
+    },
+    {
+     "key": "ref23",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP.2018.8461983"
+    },
+    {
+     "key": "ref26",
+     "article-title": "Efficient estimation of word representations in vector space",
+     "author": "mikolov",
+     "year": "0",
+     "journal-title": "Proc Int Conf Learn Representations"
+    },
+    {
+     "key": "ref25",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP.1995.479394"
+    }
+   ],
+   "container-title": [
+    "IEEE Transactions on Signal Processing"
+   ],
+   "original-title": [],
+   "link": [
+    {
+     "URL": "http://xplorestaging.ieee.org/ielx7/78/9307529/09398576.pdf?arnumber=9398576",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2021,
+      12,
+      17
+     ]
+    ],
+    "date-time": "2021-12-17T15:02:33Z",
+    "timestamp": 1639753353000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://ieeexplore.ieee.org/document/9398576/"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2021
+     ]
+    ]
+   },
+   "references-count": 38,
+   "URL": "https://doi.org/10.1109/tsp.2021.3071210",
+   "relation": {},
+   "ISSN": [
+    "1053-587X",
+    "1941-0476"
+   ],
+   "issn-type": [
+    {
+     "value": "1053-587X",
+     "type": "print"
+    },
+    {
+     "value": "1941-0476",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2021
+     ]
+    ]
+   }
+  }
+ },
+ "https://api.crossref.org/works/10.1109/jsac.2022.3180802": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      9,
+      5
+     ]
+    ],
+    "date-time": "2026-09-05T20:28:53Z",
+    "timestamp": 1788640133189,
+    "version": "build-2803163510"
+   },
+   "reference-count": 45,
+   "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+   "issue": "8",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2022,
+        8,
+        1
+       ]
+      ],
+      "date-time": "2022-08-01T00:00:00Z",
+      "timestamp": 1659312000000
+     },
+     "content-version": "vor",
+     "delay-in-days": 0,
+     "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2022,
+        8,
+        1
+       ]
+      ],
+      "date-time": "2022-08-01T00:00:00Z",
+      "timestamp": 1659312000000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-029"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2022,
+        8,
+        1
+       ]
+      ],
+      "date-time": "2022-08-01T00:00:00Z",
+      "timestamp": 1659312000000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-037"
+    }
+   ],
+   "funder": [
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "92067202"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "92067202"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "62001049"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "62001049"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "62071058"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "62071058"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "61971062"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "61971062"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100004826",
+     "name": "Beijing Natural Science Foundation",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "4222012"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "4222012"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100004826",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "name": "Major Key Project of PCL",
+     "award": [
+      "PCL2021A15"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "PCL2021A15"
+       ]
+      }
+     ]
+    }
+   ],
+   "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+   },
+   "short-container-title": [
+    "IEEE J. Select. Areas Commun."
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2022,
+      8
+     ]
+    ]
+   },
+   "DOI": "10.1109/jsac.2022.3180802",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2022,
+      6,
+      8
+     ]
+    ],
+    "date-time": "2022-06-08T15:33:16Z",
+    "timestamp": 1654702396000
+   },
+   "page": "2300-2316",
+   "source": "Crossref",
+   "is-referenced-by-count": 359,
+   "title": [
+    "Nonlinear Transform Source-Channel Coding for Semantic Communications"
+   ],
+   "prefix": "10.1109",
+   "volume": "40",
+   "author": [
+    {
+     "ORCID": "https://orcid.org/0000-0002-0310-568X",
+     "authenticated-orcid": false,
+     "given": "Jincheng",
+     "family": "Dai",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-0621-1285",
+     "authenticated-orcid": false,
+     "given": "Sixian",
+     "family": "Wang",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "given": "Kailin",
+     "family": "Tan",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-8286-2872",
+     "authenticated-orcid": false,
+     "given": "Zhongwei",
+     "family": "Si",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-5788-0657",
+     "authenticated-orcid": false,
+     "given": "Xiaoqi",
+     "family": "Qin",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "State Key Laboratory of Networking and Switching Technology, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-8076-1867",
+     "authenticated-orcid": false,
+     "given": "Kai",
+     "family": "Niu",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-0269-104X",
+     "authenticated-orcid": false,
+     "given": "Ping",
+     "family": "Zhang",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "State Key Laboratory of Networking and Switching Technology, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "263",
+   "reference": [
+    {
+     "key": "ref1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.eng.2021.11.003"
+    },
+    {
+     "key": "ref2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/j.1538-7305.1948.tb01338.x"
+    },
+    {
+     "key": "ref3",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MSP.2010.938080"
+    },
+    {
+     "key": "ref4",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/49.947033"
+    },
+    {
+     "key": "ref5",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1155/2007/47517"
+    },
+    {
+     "key": "ref6",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2018.2814603"
+    },
+    {
+     "key": "ref7",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP.2018.8461983"
+    },
+    {
+     "key": "ref8",
+     "first-page": "1182",
+     "article-title": "Neural joint source-channel coding",
+     "volume-title": "Proc. Int. Conf. Mach. Learn.",
+     "author": "Choi"
+    },
+    {
+     "key": "ref9",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2019.2919300"
+    },
+    {
+     "key": "ref10",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAIT.2020.2987203"
+    },
+    {
+     "key": "ref11",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2021.3090048"
+    },
+    {
+     "key": "ref12",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2020.3036955"
+    },
+    {
+     "key": "ref13",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCSVT.2021.3082521"
+    },
+    {
+     "key": "ref14",
+     "article-title": "Learning multiple layers of features from tiny images",
+     "author": "Krizhevsky",
+     "year": "2009"
+    },
+    {
+     "key": "ref15",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2020.3034501"
+    },
+    {
+     "key": "ref16",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR.2018.00068"
+    },
+    {
+     "key": "ref17",
+     "article-title": "Auto-encoding variational Bayes",
+     "author": "Kingma",
+     "year": "2013",
+     "journal-title": "arXiv:1312.6114"
+    },
+    {
+     "key": "ref18",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2021.3078489"
+    },
+    {
+     "key": "ref19",
+     "article-title": "End-to-end optimized image compression",
+     "author": "Ballé",
+     "year": "2016",
+     "journal-title": "arXiv:1611.01704"
+    },
+    {
+     "key": "ref20",
+     "article-title": "Variational image compression with a scale hyperprior",
+     "author": "Ballé",
+     "year": "2018",
+     "journal-title": "arXiv:1802.01436"
+    },
+    {
+     "key": "ref21",
+     "first-page": "11913",
+     "article-title": "High-fidelity generative image compression",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "volume": "33",
+     "author": "Mentzer"
+    },
+    {
+     "key": "ref22",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TPAMI.2020.2988453"
+    },
+    {
+     "key": "ref23",
+     "article-title": "Deep contextual video compression",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "volume": "34",
+     "author": "Li"
+    },
+    {
+     "key": "ref24",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1145/214762.214771"
+    },
+    {
+     "key": "ref25",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/0471219282.eot142"
+    },
+    {
+     "key": "ref26",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1093/oso/9780198503682.001.0001"
+    },
+    {
+     "key": "ref27",
+     "first-page": "10771",
+     "article-title": "Joint autoregressive and hierarchical priors for learned image compression",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "author": "Minnen"
+    },
+    {
+     "key": "ref28",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.2018.1700839"
+    },
+    {
+     "key": "ref29",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.2009.2021379"
+    },
+    {
+     "key": "ref30",
+     "article-title": "An image is worth $16\\times16$\n words: Transformers for image recognition at scale",
+     "author": "Dosovitskiy",
+     "year": "2020",
+     "journal-title": "arXiv:2010.11929"
+    },
+    {
+     "key": "ref31",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCV48922.2021.00986"
+    },
+    {
+     "key": "ref32",
+     "article-title": "Layer normalization",
+     "author": "Lei Ba",
+     "year": "2016",
+     "journal-title": "arXiv:1607.06450"
+    },
+    {
+     "issue": "140",
+     "key": "ref33",
+     "first-page": "1",
+     "article-title": "Exploring the limits of transfer learning with a unified text-to-text transformer",
+     "volume": "21",
+     "author": "Raffel",
+     "year": "2020",
+     "journal-title": "J. Mach. Learn. Res."
+    },
+    {
+     "key": "ref34",
+     "article-title": "Gaussian error linear units (GELUs)",
+     "author": "Hendrycks",
+     "year": "2016",
+     "journal-title": "arXiv:1606.08415"
+    },
+    {
+     "key": "ref35",
+     "volume-title": "CLIC 2021: Challenge on Learned Image Compression",
+     "year": "2021"
+    },
+    {
+     "key": "ref36",
+     "article-title": "Dynamic neural networks: A survey",
+     "author": "Han",
+     "year": "2021",
+     "journal-title": "arXiv:2102.04906"
+    },
+    {
+     "key": "ref37",
+     "volume-title": "Kodak PhotoCD Dataset",
+     "year": "1993"
+    },
+    {
+     "key": "ref38",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11263-020-01316-z"
+    },
+    {
+     "key": "ref39",
+     "volume-title": "BPG Image Format",
+     "author": "Bellard",
+     "year": "2018"
+    },
+    {
+     "key": "ref40",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ACSSC.2003.1292216"
+    },
+    {
+     "key": "ref41",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11263-020-01419-7"
+    },
+    {
+     "key": "ref42",
+     "article-title": "Conditional generative adversarial nets",
+     "author": "Mirza",
+     "year": "2014",
+     "journal-title": "arXiv:1411.1784"
+    },
+    {
+     "key": "ref43",
+     "article-title": "Adam: A method for stochastic optimization",
+     "author": "Kingma",
+     "year": "2014",
+     "journal-title": "arXiv:1412.6980"
+    },
+    {
+     "key": "ref44",
+     "first-page": "8026",
+     "article-title": "PyTorch: An imperative style, high-performance deep learning library",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "volume": "32",
+     "author": "Paszke"
+    },
+    {
+     "key": "ref45",
+     "article-title": "Calculation of average PSNR differences between RD-curves",
+     "volume-title": "Proc. VCEG-M33",
+     "author": "Bjontegaard"
+    }
+   ],
+   "container-title": [
+    "IEEE Journal on Selected Areas in Communications"
+   ],
+   "original-title": [],
+   "link": [
+    {
+     "URL": "http://xplorestaging.ieee.org/ielx7/49/9830856/09791398.pdf?arnumber=9791398",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2024,
+      1,
+      31
+     ]
+    ],
+    "date-time": "2024-01-31T21:51:42Z",
+    "timestamp": 1706737902000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://ieeexplore.ieee.org/document/9791398/"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2022,
+      8
+     ]
+    ]
+   },
+   "references-count": 45,
+   "journal-issue": {
+    "issue": "8"
+   },
+   "URL": "https://doi.org/10.1109/jsac.2022.3180802",
+   "relation": {},
+   "ISSN": [
+    "0733-8716",
+    "1558-0008"
+   ],
+   "issn-type": [
+    {
+     "value": "0733-8716",
+     "type": "print"
+    },
+    {
+     "value": "1558-0008",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2022,
+      8
+     ]
+    ]
+   }
+  }
+ },
+ "https://api.crossref.org/works/10.1109/jsac.2025.3531546": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      9,
+      1
+     ]
+    ],
+    "date-time": "2026-09-01T15:15:42Z",
+    "timestamp": 1788275742680,
+    "version": "build-2803163510"
+   },
+   "reference-count": 43,
+   "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+   "issue": "4",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2025,
+        4,
+        1
+       ]
+      ],
+      "date-time": "2025-04-01T00:00:00Z",
+      "timestamp": 1743465600000
+     },
+     "content-version": "vor",
+     "delay-in-days": 0,
+     "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2025,
+        4,
+        1
+       ]
+      ],
+      "date-time": "2025-04-01T00:00:00Z",
+      "timestamp": 1743465600000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-029"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2025,
+        4,
+        1
+       ]
+      ],
+      "date-time": "2025-04-01T00:00:00Z",
+      "timestamp": 1743465600000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-037"
+    }
+   ],
+   "funder": [
+    {
+     "name": "Research Grants Council of the Hong Kong Special Administrative Region, China, through a fellowship",
+     "award": [
+      "HKU RFS2122-7S04"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "HKU RFS2122-7S04"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Areas of Excellence Scheme",
+     "award": [
+      "AoE/E-601/22-R"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "AoE/E-601/22-R"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Collaborative Research Fund",
+     "award": [
+      "C1009-22G"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "C1009-22G"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Collaborative Research Fund",
+     "award": [
+      "17212423"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "17212423"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Jockey Club STEM (JC STEM) Laboratory of Robotics for Soft Materials"
+    },
+    {
+     "name": "The Hong Kong Jockey Club Charities Trust"
+    }
+   ],
+   "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+   },
+   "short-container-title": [
+    "IEEE J. Sel. Areas Commun."
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2025,
+      4
+     ]
+    ]
+   },
+   "DOI": "10.1109/jsac.2025.3531546",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2025,
+      1,
+      20
+     ]
+    ],
+    "date-time": "2025-01-20T13:52:48Z",
+    "timestamp": 1737381168000
+   },
+   "page": "1246-1261",
+   "source": "Crossref",
+   "is-referenced-by-count": 62,
+   "title": [
+    "D²-JSCC: Digital Deep Joint Source-Channel Coding for Semantic Communications"
+   ],
+   "prefix": "10.1109",
+   "volume": "43",
+   "author": [
+    {
+     "given": "Jianhao",
+     "family": "Huang",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "Department of Electrical and Electronic Engineering, The University of Hong Kong, Pokfulam, Hong Kong"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0009-0001-7135-0708",
+     "authenticated-orcid": false,
+     "given": "Kai",
+     "family": "Yuan",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0001-5965-0823",
+     "authenticated-orcid": false,
+     "given": "Chuan",
+     "family": "Huang",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0001-8773-4629",
+     "authenticated-orcid": false,
+     "given": "Kaibin",
+     "family": "Huang",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Department of Electrical and Electronic Engineering, The University of Hong Kong, Pokfulam, Hong Kong"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "263",
+   "reference": [
+    {
+     "key": "ref1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.001.1900287"
+    },
+    {
+     "key": "ref2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.001.1900103"
+    },
+    {
+     "key": "ref3",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.2019.1900271"
+    },
+    {
+     "key": "ref4",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.eng.2021.11.003"
+    },
+    {
+     "key": "ref5",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3223408"
+    },
+    {
+     "key": "ref6",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2023.3288242"
+    },
+    {
+     "key": "ref7",
+     "article-title": "Semantic communications: Principles and challenges",
+     "volume-title": "arXiv:2201.01389",
+     "author": "Qin",
+     "year": "2021"
+    },
+    {
+     "issue": "1",
+     "key": "ref8",
+     "first-page": "114",
+     "article-title": "Shannon mappings for robust communication",
+     "volume": "98",
+     "author": "Ramstad",
+     "year": "2002",
+     "journal-title": "Telektronikk"
+    },
+    {
+     "key": "ref9",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.2023.3297962"
+    },
+    {
+     "key": "ref10",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MSP.2010.938080"
+    },
+    {
+     "key": "ref11",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/18.53739"
+    },
+    {
+     "key": "ref12",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2003.809256"
+    },
+    {
+     "key": "ref13",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MSP.2005.1550192"
+    },
+    {
+     "key": "ref14",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2023.3239189"
+    },
+    {
+     "key": "ref15",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3180802"
+    },
+    {
+     "key": "ref16",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2019.2919300"
+    },
+    {
+     "key": "ref17",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TSP.2021.3071210"
+    },
+    {
+     "key": "ref18",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAIT.2022.3231042"
+    },
+    {
+     "key": "ref19",
+     "article-title": "Joint coding-modulation for digital semantic communications via variational autoencoder",
+     "volume-title": "arXiv:2310.06690",
+     "author": "Bo",
+     "year": "2023"
+    },
+    {
+     "key": "ref20",
+     "article-title": "Rate-adaptive coding mechanism for semantic communications with multi-modal data",
+     "volume-title": "arXiv:2305.10773",
+     "author": "He",
+     "year": "2023"
+    },
+    {
+     "key": "ref21",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2024.3397862"
+    },
+    {
+     "key": "ref22",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/nature14539"
+    },
+    {
+     "key": "ref23",
+     "first-page": "1",
+     "article-title": "Variational image compression with a scale hyperprior",
+     "volume-title": "Proc. Int. Conf. Learn. Repres. (ICLR)",
+     "author": "Ballé"
+    },
+    {
+     "key": "ref24",
+     "first-page": "1",
+     "article-title": "End-to-end optimized image compression",
+     "volume-title": "Proc. Int. Conf. Learn. Repres. (ICLR)",
+     "author": "Ballé"
+    },
+    {
+     "key": "ref25",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2020.3034501"
+    },
+    {
+     "key": "ref26",
+     "first-page": "1",
+     "article-title": "Towards empirical sandwich bounds on the rate-distortion function",
+     "volume-title": "Proc. Int. Conf. Learn. Represent. (ICLR)",
+     "author": "Yang"
+    },
+    {
+     "key": "ref27",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1145/214762.214771"
+    },
+    {
+     "key": "ref28",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.2010.2043769"
+    },
+    {
+     "key": "ref29",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1017/CBO9780511807213"
+    },
+    {
+     "key": "ref30",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR52729.2023.01383"
+    },
+    {
+     "key": "ref31",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11263-020-01316-z"
+    },
+    {
+     "key": "ref32",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2017.2758370"
+    },
+    {
+     "key": "ref33",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s10994-020-05929-w"
+    },
+    {
+     "issue": "70",
+     "key": "ref34",
+     "first-page": "2079",
+     "article-title": "On over-fitting in model selection and subsequent selection bias in performance evaluation",
+     "volume": "11",
+     "author": "Cawley",
+     "year": "2010",
+     "journal-title": "J. Mach. Learn. Res."
+    },
+    {
+     "key": "ref35",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.2009.2021379"
+    },
+    {
+     "key": "ref36",
+     "volume-title": "Kodak Photocd Dataset",
+     "year": "1993"
+    },
+    {
+     "key": "ref37",
+     "volume-title": "Clic 2021: Challenge on Learned Image Compression",
+     "year": "2021"
+    },
+    {
+     "key": "ref38",
+     "article-title": "Adam: A method for stochastic optimization",
+     "volume-title": "arXiv:1412.6980",
+     "author": "Kingma",
+     "year": "2014"
+    },
+    {
+     "key": "ref39",
+     "first-page": "1",
+     "article-title": "PyTorch: An imperative style, high-performance deep learning library",
+     "volume-title": "Proc. Adv. neural inf. process. sys.",
+     "volume": "32",
+     "author": "Paszke"
+    },
+    {
+     "key": "ref40",
+     "doi-asserted-by": "crossref",
+     "DOI": "10.1016/j.softx.2019.100345",
+     "article-title": "AFF3CT: A fast forward error correction toolbox!",
+     "volume": "10",
+     "author": "Cassagne",
+     "year": "2019",
+     "journal-title": "SoftwareX"
+    },
+    {
+     "key": "ref41",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/978-3-7091-2945-6"
+    },
+    {
+     "key": "ref42",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ACSSC.2003.1292216"
+    },
+    {
+     "key": "ref43",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/SERIES1345"
+    }
+   ],
+   "container-title": [
+    "IEEE Journal on Selected Areas in Communications"
+   ],
+   "original-title": [],
+   "link": [
+    {
+     "URL": "http://xplorestaging.ieee.org/ielx8/49/10931143/10845799.pdf?arnumber=10845799",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2025,
+      11,
+      18
+     ]
+    ],
+    "date-time": "2025-11-18T18:46:00Z",
+    "timestamp": 1763491560000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://ieeexplore.ieee.org/document/10845799/"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2025,
+      4
+     ]
+    ]
+   },
+   "references-count": 43,
+   "journal-issue": {
+    "issue": "4"
+   },
+   "URL": "https://doi.org/10.1109/jsac.2025.3531546",
+   "relation": {},
+   "ISSN": [
+    "1558-0008",
+    "0733-8716"
+   ],
+   "issn-type": [
+    {
+     "value": "1558-0008",
+     "type": "electronic"
+    },
+    {
+     "value": "0733-8716",
+     "type": "print"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2025,
+      4
+     ]
+    ]
+   }
+  }
+ },
+ "https://api.crossref.org/works/10.1109/twc.2023.3349330": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      9,
+      3
+     ]
+    ],
+    "date-time": "2026-09-03T15:43:04Z",
+    "timestamp": 1788450184883,
+    "version": "build-2803163510"
+   },
+   "reference-count": 38,
+   "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+   "issue": "8",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2024,
+        8,
+        1
+       ]
+      ],
+      "date-time": "2024-08-01T00:00:00Z",
+      "timestamp": 1722470400000
+     },
+     "content-version": "vor",
+     "delay-in-days": 0,
+     "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2024,
+        8,
+        1
+       ]
+      ],
+      "date-time": "2024-08-01T00:00:00Z",
+      "timestamp": 1722470400000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-029"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2024,
+        8,
+        1
+       ]
+      ],
+      "date-time": "2024-08-01T00:00:00Z",
+      "timestamp": 1722470400000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-037"
+    }
+   ],
+   "funder": [
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "U2001208"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "U2001208"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "92267202"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "92267202"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "62293482"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "62293482"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "62001310"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "62001310"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "62221001"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "62221001"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "name": "Basic Research Project of Hetao Shenzhen-HK S&T Cooperation Zone",
+     "award": [
+      "HZQB-KCZYZ-2021067"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "HZQB-KCZYZ-2021067"
+       ]
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100017607",
+     "name": "Shenzhen Municipal Fundamental Research Program",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "JCYJ20210324133405015"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "JCYJ20210324133405015"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100017607",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "name": "National Key Research and Development Program of China",
+     "award": [
+      "2018YFB1800800"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2018YFB1800800"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Shenzhen Outstanding Talents Training Fund",
+     "award": [
+      "202002"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "202002"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Guangdong Research Projects",
+     "award": [
+      "2017ZT07X152"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2017ZT07X152"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Guangdong Research Projects",
+     "award": [
+      "2019CX01X104"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2019CX01X104"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Guangdong Provincial Key Laboratory of Future Networks of Intelligence",
+     "award": [
+      "2022B1212010001"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2022B1212010001"
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Shenzhen Key Laboratory of Big Data and Artificial Intelligence",
+     "award": [
+      "ZDSYS201707251409055"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "ZDSYS201707251409055"
+       ]
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100015956",
+     "name": "Special Project for Research and Development in Key areas of Guangdong Province",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "2018B030338001"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2018B030338001"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100015956",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "name": "Major Key Project of Peng Cheng Laboratory",
+     "award": [
+      "PCL2023AS1-2"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "PCL2023AS1-2"
+       ]
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100021171",
+     "name": "Basic and Applied Basic Research Foundation of Guangdong Province",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "2022A1515010109"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2022A1515010109"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100021171",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "name": "Internal Project Fund from Shenzhen Research Institute of Big Data",
+     "award": [
+      "J00120230001"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "J00120230001"
+       ]
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100012166",
+     "name": "National Key Research and Development Program of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "2021YFB2900301"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2021YFB2900301"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100012166",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100012166",
+     "name": "National Key Research and Development Program of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "2020YFB1806604"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2020YFB1806604"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100012166",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100012166",
+     "name": "National Key Research and Development Program of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "2021YFB3901302"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2021YFB3901302"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100012166",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100012226",
+     "name": "Fundamental Research Funds for the Central Universities",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "2022JBQY004"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2022JBQY004"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100012226",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100012226",
+     "name": "Fundamental Research Funds for the Central Universities",
+     "doi-asserted-by": "crossref",
+     "award": [
+      "2022JBXT001"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "2022JBXT001"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100012226",
+       "id-type": "DOI",
+       "asserted-by": "crossref"
+      }
+     ]
+    }
+   ],
+   "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+   },
+   "short-container-title": [
+    "IEEE Trans. Wireless Commun."
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2024,
+      8
+     ]
+    ]
+   },
+   "DOI": "10.1109/twc.2023.3349330",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2024,
+      1,
+      10
+     ]
+    ],
+    "date-time": "2024-01-10T15:22:40Z",
+    "timestamp": 1704900160000
+   },
+   "page": "8388-8404",
+   "source": "Crossref",
+   "is-referenced-by-count": 134,
+   "title": [
+    "Semantic Communications for Image Recovery and Classification via Deep Joint Source and Channel Coding"
+   ],
+   "prefix": "10.1109",
+   "volume": "23",
+   "author": [
+    {
+     "ORCID": "https://orcid.org/0000-0002-0980-1395",
+     "authenticated-orcid": false,
+     "given": "Zhonghao",
+     "family": "Lyu",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "Future Network of Intelligence Institute (FNii) and the School of Science and Engineering (SSE), The Chinese University of Hong Kong (Shenzhen), Shenzhen, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0001-9532-9201",
+     "authenticated-orcid": false,
+     "given": "Guangxu",
+     "family": "Zhu",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Shenzhen Research Institute of Big Data, Shenzhen, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-4854-8839",
+     "authenticated-orcid": false,
+     "given": "Jie",
+     "family": "Xu",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "School of Science and Engineering (SSE), Future Network of Intelligence Institute (FNii), The Chinese University of Hong Kong (Shenzhen), Shenzhen, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0001-6850-0595",
+     "authenticated-orcid": false,
+     "given": "Bo",
+     "family": "Ai",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "State Key Laboratory of Advanced Rail Autonomous Operation and the School of Electronic and Information Engineering, Beijing Jiaotong University, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0003-2608-775X",
+     "authenticated-orcid": false,
+     "given": "Shuguang",
+     "family": "Cui",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "School of Science and Engineering (SSE), Future Network of Intelligence Institute (FNii), The Chinese University of Hong Kong (Shenzhen), Shenzhen, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "263",
+   "reference": [
+    {
+     "key": "ref1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GCWkshps58843.2023.10464706"
+    },
+    {
+     "key": "ref2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JIOT.2021.3103320"
+    },
+    {
+     "key": "ref3",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2021.3126076"
+    },
+    {
+     "key": "ref4",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11432-022-3652-2"
+    },
+    {
+     "key": "ref5",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.comnet.2021.107930"
+    },
+    {
+     "key": "ref6",
+     "article-title": "A theory for semantic communications",
+     "author": "Ma",
+     "year": "2023",
+     "journal-title": "arXiv:2303.05181"
+    },
+    {
+     "key": "ref7",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3223408"
+    },
+    {
+     "key": "ref8",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2022.3226836"
+    },
+    {
+     "key": "ref9",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1145/584091.584093"
+    },
+    {
+     "key": "ref10",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221991"
+    },
+    {
+     "key": "ref11",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2019.2919300"
+    },
+    {
+     "key": "ref12",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCC52777.2021.9580301"
+    },
+    {
+     "key": "ref13",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221999"
+    },
+    {
+     "key": "ref14",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3180802"
+    },
+    {
+     "key": "ref15",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TSP.2021.3071210"
+    },
+    {
+     "key": "ref16",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2021.3087240"
+    },
+    {
+     "key": "ref17",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2023.3288231"
+    },
+    {
+     "key": "ref18",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIP.2003.819861"
+    },
+    {
+     "key": "ref19",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2020.3036955"
+    },
+    {
+     "key": "ref20",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2021.3126087"
+    },
+    {
+     "key": "ref21",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2022.3191118"
+    },
+    {
+     "key": "ref22",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LWC.2021.3136045"
+    },
+    {
+     "key": "ref23",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICRA46639.2022.9811825"
+    },
+    {
+     "key": "ref24",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GLOBECOM48099.2022.10000850"
+    },
+    {
+     "key": "ref25",
+     "article-title": "A unified multi-task semantic communication system for multimodal data",
+     "author": "Zhang",
+     "year": "2022",
+     "journal-title": "arXiv:2209.07689"
+    },
+    {
+     "key": "ref26",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TPAMI.2007.1085"
+    },
+    {
+     "key": "ref27",
+     "first-page": "9422",
+     "article-title": "Learning diverse and discriminative representations via the principle of maximal coding rate reduction",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "volume": "33",
+     "author": "Yu"
+    },
+    {
+     "key": "ref28",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3390/e24040456"
+    },
+    {
+     "key": "ref29",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2020.2970707"
+    },
+    {
+     "key": "ref30",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/0471200611"
+    },
+    {
+     "key": "ref31",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3390/technologies9010002"
+    },
+    {
+     "key": "ref32",
+     "first-page": "24851",
+     "article-title": "Investigating why contrastive learning benefits robustness against label noise",
+     "volume-title": "Proc. Int. Conf. Mach. Learn. (ICML)",
+     "author": "Xue"
+    },
+    {
+     "key": "ref33",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR.2019.00939"
+    },
+    {
+     "key": "ref34",
+     "volume-title": "Deep Learning",
+     "author": "Goodfellow",
+     "year": "2016"
+    },
+    {
+     "key": "ref35",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPRW.2018.00143"
+    },
+    {
+     "key": "ref36",
+     "volume-title": "The MNIST Database of Handwritten Digits",
+     "author": "LeCun"
+    },
+    {
+     "key": "ref37",
+     "article-title": "Learning multiple layers of features from tiny images",
+     "author": "Krizhevsky",
+     "year": "2009"
+    },
+    {
+     "key": "ref38",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR.2016.90"
+    }
+   ],
+   "container-title": [
+    "IEEE Transactions on Wireless Communications"
+   ],
+   "original-title": [],
+   "link": [
+    {
+     "URL": "http://xplorestaging.ieee.org/ielx7/7693/10634832/10388062.pdf?arnumber=10388062",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2024,
+      8,
+      14
+     ]
+    ],
+    "date-time": "2024-08-14T13:45:05Z",
+    "timestamp": 1723643105000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://ieeexplore.ieee.org/document/10388062/"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2024,
+      8
+     ]
+    ]
+   },
+   "references-count": 38,
+   "journal-issue": {
+    "issue": "8"
+   },
+   "URL": "https://doi.org/10.1109/twc.2023.3349330",
+   "relation": {},
+   "ISSN": [
+    "1536-1276",
+    "1558-2248"
+   ],
+   "issn-type": [
+    {
+     "value": "1536-1276",
+     "type": "print"
+    },
+    {
+     "value": "1558-2248",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2024,
+      8
+     ]
+    ]
+   }
+  }
+ },
+ "https://api.crossref.org/works/10.1109/jsac.2022.3221977": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      9,
+      5
+     ]
+    ],
+    "date-time": "2026-09-05T16:54:47Z",
+    "timestamp": 1788627287126,
+    "version": "build-2803163510"
+   },
+   "reference-count": 49,
+   "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+   "issue": "1",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2023,
+        1,
+        1
+       ]
+      ],
+      "date-time": "2023-01-01T00:00:00Z",
+      "timestamp": 1672531200000
+     },
+     "content-version": "vor",
+     "delay-in-days": 0,
+     "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2023,
+        1,
+        1
+       ]
+      ],
+      "date-time": "2023-01-01T00:00:00Z",
+      "timestamp": 1672531200000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-029"
+    },
+    {
+     "start": {
+      "date-parts": [
+       [
+        2023,
+        1,
+        1
+       ]
+      ],
+      "date-time": "2023-01-01T00:00:00Z",
+      "timestamp": 1672531200000
+     },
+     "content-version": "stm-asf",
+     "delay-in-days": 0,
+     "URL": "https://doi.org/10.15223/policy-037"
+    }
+   ],
+   "funder": [
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "92067202"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "92067202"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "62001049"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "62001049"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "62071058"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "62071058"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100001809",
+     "name": "National Natural Science Foundation of China",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "61971062"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "61971062"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100001809",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    },
+    {
+     "DOI": "10.13039/501100004826",
+     "name": "Beijing Natural Science Foundation",
+     "doi-asserted-by": "publisher",
+     "award": [
+      "4222012"
+     ],
+     "award-info": [
+      {
+       "award-number": [
+        "4222012"
+       ]
+      }
+     ],
+     "id": [
+      {
+       "id": "10.13039/501100004826",
+       "id-type": "DOI",
+       "asserted-by": "publisher"
+      }
+     ]
+    }
+   ],
+   "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+   },
+   "short-container-title": [
+    "IEEE J. Select. Areas Commun."
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2023,
+      1
+     ]
+    ]
+   },
+   "DOI": "10.1109/jsac.2022.3221977",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2022,
+      11,
+      16
+     ]
+    ],
+    "date-time": "2022-11-16T15:38:13Z",
+    "timestamp": 1668613093000
+   },
+   "page": "214-229",
+   "source": "Crossref",
+   "is-referenced-by-count": 264,
+   "title": [
+    "Wireless Deep Video Semantic Transmission"
+   ],
+   "prefix": "10.1109",
+   "volume": "41",
+   "author": [
+    {
+     "ORCID": "https://orcid.org/0000-0002-0621-1285",
+     "authenticated-orcid": false,
+     "given": "Sixian",
+     "family": "Wang",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-0310-568X",
+     "authenticated-orcid": false,
+     "given": "Jincheng",
+     "family": "Dai",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "given": "Zijian",
+     "family": "Liang",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-8076-1867",
+     "authenticated-orcid": false,
+     "given": "Kai",
+     "family": "Niu",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-8286-2872",
+     "authenticated-orcid": false,
+     "given": "Zhongwei",
+     "family": "Si",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-4922-7762",
+     "authenticated-orcid": false,
+     "given": "Chao",
+     "family": "Dong",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Key Laboratory of Universal Wireless Communications, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-5788-0657",
+     "authenticated-orcid": false,
+     "given": "Xiaoqi",
+     "family": "Qin",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "State Key Laboratory of Networking and Switching Technology, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-0269-104X",
+     "authenticated-orcid": false,
+     "given": "Ping",
+     "family": "Zhang",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "State Key Laboratory of Networking and Switching Technology, Beijing University of Posts and Telecommunications, Beijing, China"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "263",
+   "reference": [
+    {
+     "key": "ref39",
+     "first-page": "1398",
+     "article-title": "Multiscale structural similarity for image quality assessment",
+     "volume": "2",
+     "author": "wang",
+     "year": "2004",
+     "journal-title": "Proc 37th Asilomar Conf Signals Syst Comput"
+    },
+    {
+     "key": "ref38",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3191354"
+    },
+    {
+     "key": "ref33",
+     "article-title": "Spatial transformer networks",
+     "volume": "28",
+     "author": "jaderberg",
+     "year": "2015",
+     "journal-title": "Advances in neural information processing systems"
+    },
+    {
+     "key": "ref32",
+     "first-page": "1",
+     "article-title": "Density modeling of images using a generalized normalization transformation",
+     "author": "ballé",
+     "year": "2016",
+     "journal-title": "Proc Int Conf Learn Represent"
+    },
+    {
+     "key": "ref31",
+     "first-page": "11913",
+     "article-title": "High-fidelity generative image compression",
+     "volume": "33",
+     "author": "mentzer",
+     "year": "2020",
+     "journal-title": "Proc Adv Neural Inf Process Syst"
+    },
+    {
+     "key": "ref30",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR.2017.291"
+    },
+    {
+     "key": "ref37",
+     "volume": "12",
+     "author": "bossen",
+     "year": "2013",
+     "journal-title": "Common Test Conditions and Software Reference Configurations"
+    },
+    {
+     "key": "ref36",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11263-018-01144-2"
+    },
+    {
+     "key": "ref35",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCV48922.2021.00986"
+    },
+    {
+     "key": "ref34",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIP.2020.3016485"
+    },
+    {
+     "key": "ref28",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAIT.2020.2987203"
+    },
+    {
+     "key": "ref27",
+     "first-page": "1",
+     "article-title": "Deep contextual video compression",
+     "volume": "34",
+     "author": "li",
+     "year": "2021",
+     "journal-title": "Proc Adv Neural Inf Process Syst"
+    },
+    {
+     "key": "ref29",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR.2019.01126"
+    },
+    {
+     "key": "ref2",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.1981.1056282"
+    },
+    {
+     "key": "ref1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/j.1538-7305.1948.tb01338.x"
+    },
+    {
+     "key": "ref20",
+     "article-title": "Learning multiple layers of features from tiny images",
+     "author": "krizhevsky",
+     "year": "2009"
+    },
+    {
+     "key": "ref22",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/PCS.2018.8456272"
+    },
+    {
+     "key": "ref21",
+     "first-page": "1",
+     "article-title": "End-to-end optimized image compression",
+     "author": "ballé",
+     "year": "2017",
+     "journal-title": "Proc Int Conf Learn Represent"
+    },
+    {
+     "key": "ref24",
+     "first-page": "1",
+     "article-title": "Joint autoregressive and hierarchical priors for learned image compression",
+     "volume": "31",
+     "author": "minnen",
+     "year": "2018",
+     "journal-title": "Proc Adv Neural Inf Process Syst"
+    },
+    {
+     "key": "ref23",
+     "first-page": "1",
+     "article-title": "Variational image compression with a scale hyperprior",
+     "author": "ballé",
+     "year": "2018",
+     "journal-title": "Proc Int Conf Learn Represent"
+    },
+    {
+     "key": "ref26",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.2018.1700839"
+    },
+    {
+     "key": "ref25",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2020.3034501"
+    },
+    {
+     "key": "ref10",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.001.2200099"
+    },
+    {
+     "key": "ref11",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MSP.2010.938080"
+    },
+    {
+     "key": "ref40",
+     "article-title": "Adam: A method for stochastic optimization",
+     "author": "kingma",
+     "year": "2014",
+     "journal-title": "arXiv 1412 6980"
+    },
+    {
+     "key": "ref12",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/49.947033"
+    },
+    {
+     "key": "ref13",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1155/2007/47517"
+    },
+    {
+     "key": "ref14",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2018.2814603"
+    },
+    {
+     "key": "ref15",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP.2018.8461983"
+    },
+    {
+     "key": "ref16",
+     "first-page": "1182",
+     "article-title": "Neural joint source-channel coding",
+     "author": "choi",
+     "year": "2019",
+     "journal-title": "Proc 36th Int Conf Mach Learn"
+    },
+    {
+     "key": "ref17",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2019.2919300"
+    },
+    {
+     "key": "ref18",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2021.3090048"
+    },
+    {
+     "key": "ref19",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2020.3036955"
+    },
+    {
+     "key": "ref4",
+     "doi-asserted-by": "crossref",
+     "first-page": "60",
+     "DOI": "10.1016/j.eng.2021.11.003",
+     "article-title": "Toward wisdom-evolutionary and primitive-concise 6G: A new paradigm of semantic communication networks",
+     "volume": "8",
+     "author": "zhang",
+     "year": "2022",
+     "journal-title": "Engineering"
+    },
+    {
+     "key": "ref3",
+     "first-page": "1",
+     "article-title": "Integer networks for data compression with latent-variable models",
+     "author": "ballé",
+     "year": "2018",
+     "journal-title": "Proc Int Conf Learn Represent"
+    },
+    {
+     "key": "ref6",
+     "article-title": "Semantic communications: Principles and challenges",
+     "author": "qin",
+     "year": "2021",
+     "journal-title": "arXiv 2201 01389"
+    },
+    {
+     "key": "ref5",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TSP.2021.3071210"
+    },
+    {
+     "key": "ref8",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.017.2100705"
+    },
+    {
+     "key": "ref49",
+     "first-page": "1",
+     "article-title": "Training deep neural networks on noisy labels with bootstrapping",
+     "author": "reed",
+     "year": "2015",
+     "journal-title": "Proc Int Conf Learn Represent (Workshop)"
+    },
+    {
+     "key": "ref7",
+     "article-title": "Semantics-native communication with contextual reasoning",
+     "author": "seo",
+     "year": "2021",
+     "journal-title": "arXiv 2108 05681"
+    },
+    {
+     "key": "ref9",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3180802"
+    },
+    {
+     "key": "ref46",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR46437.2021.00405"
+    },
+    {
+     "key": "ref45",
+     "author": "bjontegaard",
+     "year": "2001",
+     "journal-title": "Calculation of Average PSNR Differences Between RD-Curves"
+    },
+    {
+     "key": "ref48",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.patrec.2008.04.005"
+    },
+    {
+     "key": "ref47",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/978-3-540-88682-2_5"
+    },
+    {
+     "key": "ref42",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCSVT.2012.2221191"
+    },
+    {
+     "key": "ref41",
+     "doi-asserted-by": "crossref",
+     "first-page": "560",
+     "DOI": "10.1109/TCSVT.2003.815165",
+     "article-title": "overview of the h.264/avc video coding standard",
+     "volume": "13",
+     "author": "wiegand",
+     "year": "2003",
+     "journal-title": "IEEE Transactions on Circuits and Systems for Video Technology"
+    },
+    {
+     "key": "ref44",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TPAMI.2020.2988453"
+    },
+    {
+     "key": "ref43",
+     "article-title": "Sionna: An open-source library for next-generation physical layer research",
+     "author": "hoydis",
+     "year": "2022",
+     "journal-title": "arXiv 2203 11854"
+    }
+   ],
+   "container-title": [
+    "IEEE Journal on Selected Areas in Communications"
+   ],
+   "original-title": [],
+   "link": [
+    {
+     "URL": "http://xplorestaging.ieee.org/ielx7/49/9991040/09953110.pdf?arnumber=9953110",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2023,
+      1,
+      16
+     ]
+    ],
+    "date-time": "2023-01-16T14:22:24Z",
+    "timestamp": 1673878944000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://ieeexplore.ieee.org/document/9953110/"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2023,
+      1
+     ]
+    ]
+   },
+   "references-count": 49,
+   "journal-issue": {
+    "issue": "1"
+   },
+   "URL": "https://doi.org/10.1109/jsac.2022.3221977",
+   "relation": {},
+   "ISSN": [
+    "0733-8716",
+    "1558-0008"
+   ],
+   "issn-type": [
+    {
+     "value": "0733-8716",
+     "type": "print"
+    },
+    {
+     "value": "1558-0008",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2023,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "https://api.crossref.org/works/10.1109/comst.2025.3616973": {
+  "status": "ok",
+  "message-type": "work",
+  "message-version": "1.0.0",
+  "message": {
+   "indexed": {
+    "date-parts": [
+     [
+      2026,
+      9,
+      3
+     ]
+    ],
+    "date-time": "2026-09-03T16:15:41Z",
+    "timestamp": 1788452141295,
+    "version": "build-2803163510"
+   },
+   "reference-count": 241,
+   "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+   "license": [
+    {
+     "start": {
+      "date-parts": [
+       [
+        2026,
+        1,
+        1
+       ]
+      ],
+      "date-time": "2026-01-01T00:00:00Z",
+      "timestamp": 1767225600000
+     },
+     "content-version": "vor",
+     "delay-in-days": 0,
+     "URL": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    }
+   ],
+   "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+   },
+   "short-container-title": [
+    "IEEE Commun. Surv. Tutorials"
+   ],
+   "published-print": {
+    "date-parts": [
+     [
+      2026
+     ]
+    ]
+   },
+   "DOI": "10.1109/comst.2025.3616973",
+   "type": "journal-article",
+   "created": {
+    "date-parts": [
+     [
+      2025,
+      10,
+      3
+     ]
+    ],
+    "date-time": "2025-10-03T17:28:08Z",
+    "timestamp": 1759512488000
+   },
+   "page": "2377-2417",
+   "source": "Crossref",
+   "is-referenced-by-count": 44,
+   "title": [
+    "A Contemporary Survey on Semantic Communications: Theory of Mind, Generative AI, and Deep Joint Source-Channel Coding"
+   ],
+   "prefix": "10.1109",
+   "volume": "28",
+   "author": [
+    {
+     "ORCID": "https://orcid.org/0000-0001-5911-5847",
+     "authenticated-orcid": false,
+     "given": "Loc X.",
+     "family": "Nguyen",
+     "sequence": "first",
+     "affiliation": [
+      {
+       "name": "Department of Computer Science and Engineering, Kyung Hee University, Yongin-si, Gyeonggi-do, Republic of Korea"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0003-0240-1214",
+     "authenticated-orcid": false,
+     "given": "Avi Deb",
+     "family": "Raha",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Department of Computer Science and Engineering, Kyung Hee University, Yongin-si, Gyeonggi-do, Republic of Korea"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0001-8331-6729",
+     "authenticated-orcid": false,
+     "given": "Pyae Sone",
+     "family": "Aung",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Department of Computer Science and Engineering, Kyung Hee University, Yongin-si, Gyeonggi-do, Republic of Korea"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-7442-7416",
+     "authenticated-orcid": false,
+     "given": "Dusit",
+     "family": "Niyato",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "College of Computing and Data Science, Nanyang Technological University, Jurong West, Singapore"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0002-6606-5822",
+     "authenticated-orcid": false,
+     "given": "Zhu",
+     "family": "Han",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Department of Electrical and Computer Engineering, University of Houston, Houston, TX, USA"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    },
+    {
+     "ORCID": "https://orcid.org/0000-0003-3484-7333",
+     "authenticated-orcid": false,
+     "given": "Choong Seon",
+     "family": "Hong",
+     "sequence": "additional",
+     "affiliation": [
+      {
+       "name": "Department of Computer Science and Engineering, Kyung Hee University, Yongin-si, Gyeonggi-do, Republic of Korea"
+      }
+     ],
+     "role": [
+      {
+       "vocabulary": "crossref",
+       "role": "author"
+      }
+     ]
+    }
+   ],
+   "member": "263",
+   "reference": [
+    {
+     "key": "ref1",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/j.1538-7305.1948.tb01338.x"
+    },
+    {
+     "issue": "4",
+     "key": "ref2",
+     "first-page": "261",
+     "article-title": "Recent contributions to the mathematical theory of communication",
+     "volume": "10",
+     "author": "Weaver",
+     "year": "1953",
+     "journal-title": "ETC, Rev. Gen. Semantics"
+    },
+    {
+     "key": "ref3",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JRPROC.1952.273898"
+    },
+    {
+     "key": "ref4",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.1966.1053907"
+    },
+    {
+     "key": "ref5",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1147/rd.232.0149"
+    },
+    {
+     "key": "ref6",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/18.119733"
+    },
+    {
+     "key": "ref7",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/j.1538-7305.1950.tb00463.x"
+    },
+    {
+     "key": "ref8",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1137/0108018"
+    },
+    {
+     "key": "ref9",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.1962.1057683"
+    },
+    {
+     "key": "ref10",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.1975.1055349"
+    },
+    {
+     "key": "ref11",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC.1993.397441"
+    },
+    {
+     "key": "ref12",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.2009.2021379"
+    },
+    {
+     "key": "ref13",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/comst.2024.3516819"
+    },
+    {
+     "key": "ref14",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/COMST.2024.3412852"
+    },
+    {
+     "key": "ref15",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1360/nso/20230029"
+    },
+    {
+     "key": "ref16",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.jnca.2025.104181"
+    },
+    {
+     "key": "ref17",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/COMST.2024.3443193"
+    },
+    {
+     "key": "ref18",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/COMST.2022.3223224"
+    },
+    {
+     "key": "ref19",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ACCESS.2024.3381967"
+    },
+    {
+     "key": "ref20",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ACCESS.2023.3269848"
+    },
+    {
+     "key": "ref21",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2024.3435524"
+    },
+    {
+     "key": "ref22",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ACCESS.2025.3532797"
+    },
+    {
+     "key": "ref23",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/COMST.2024.3416309"
+    },
+    {
+     "key": "ref24",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/COMST.2024.3471685"
+    },
+    {
+     "key": "ref25",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/COMST.2023.3333342"
+    },
+    {
+     "key": "ref26",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.cub.2005.08.041"
+    },
+    {
+     "key": "ref27",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2023.3319981"
+    },
+    {
+     "key": "ref28",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TMC.2024.3449645"
+    },
+    {
+     "key": "ref29",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.003.2300351"
+    },
+    {
+     "key": "ref30",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2019.2919300"
+    },
+    {
+     "key": "ref31",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/mwc.016.2300547"
+    },
+    {
+     "key": "ref32",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/s41586-023-05881-4"
+    },
+    {
+     "key": "ref33",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.002.2300460"
+    },
+    {
+     "key": "ref34",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/SECON58729.2023.10287475"
+    },
+    {
+     "key": "ref35",
+     "article-title": "Convolutional networks for images, speech, and time series",
+     "volume-title": "The Handbook of Brain Theory and Neural Networks",
+     "volume": "3361",
+     "author": "LeCun",
+     "year": "1995"
+    },
+    {
+     "key": "ref36",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR.2016.90"
+    },
+    {
+     "key": "ref37",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.48550/ARXIV.1706.03762"
+    },
+    {
+     "key": "ref38",
+     "first-page": "1",
+     "article-title": "An image is worth 16×16 words: Transformers for image recognition at scale",
+     "volume-title": "Proc. Int. Conf. Learn. Represent.",
+     "author": "Dosovitskiy"
+    },
+    {
+     "key": "ref39",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2023.3300509"
+    },
+    {
+     "key": "ref40",
+     "volume-title": "Thinking, Fast and Slow",
+     "author": "Kahneman",
+     "year": "2011"
+    },
+    {
+     "key": "ref41",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2023.3250206"
+    },
+    {
+     "key": "ref42",
+     "volume-title": "The Meaning of Meaning: A Study of the Influence of Thought and of the Science of Symbolism",
+     "author": "Ogden",
+     "year": "1923"
+    },
+    {
+     "key": "ref43",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCWorkshops53468.2022.9814575"
+    },
+    {
+     "key": "ref44",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2023.3236671"
+    },
+    {
+     "key": "ref45",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GLOBECOM48099.2022.10001097"
+    },
+    {
+     "key": "ref46",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CCNC51664.2024.10454639"
+    },
+    {
+     "key": "ref47",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAIT.2023.3336538"
+    },
+    {
+     "key": "ref48",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GLOBECOM54140.2023.10437371"
+    },
+    {
+     "key": "ref49",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/WCNC61545.2025.10978707"
+    },
+    {
+     "key": "ref50",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2023.3288268"
+    },
+    {
+     "key": "ref51",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCWorkshops53468.2022.9814604"
+    },
+    {
+     "key": "ref52",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2023.3312115"
+    },
+    {
+     "key": "ref53",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/EuCNC/6GSummit60053.2024.10597087"
+    },
+    {
+     "key": "ref54",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC45855.2022.9838470"
+    },
+    {
+     "key": "ref55",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2023.3318605"
+    },
+    {
+     "key": "ref56",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2024.3427313"
+    },
+    {
+     "key": "ref57",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LWC.2024.3369864"
+    },
+    {
+     "key": "ref58",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LCOMM.2023.3274562"
+    },
+    {
+     "key": "ref59",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/VTC2022-Fall57202.2022.10012860"
+    },
+    {
+     "key": "ref60",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/tccn.2025.3543834"
+    },
+    {
+     "key": "ref61",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1145/3776745"
+    },
+    {
+     "key": "ref62",
+     "article-title": "Auto-encoding variational Bayes",
+     "volume-title": "Proc. Int. Conf. Learn. Represent.",
+     "author": "Kingma"
+    },
+    {
+     "key": "ref63",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.5555/2969033.2969125"
+    },
+    {
+     "key": "ref64",
+     "first-page": "2256",
+     "article-title": "Deep unsupervised learning using non-equilibrium thermodynamics",
+     "volume-title": "Proc. Int. Conf. Mach. Learn.",
+     "author": "Sohl-Dickstein"
+    },
+    {
+     "key": "ref65",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1080/08874417.2023.2261010"
+    },
+    {
+     "key": "ref66",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TKDE.2024.3361474"
+    },
+    {
+     "key": "ref67",
+     "first-page": "6840",
+     "article-title": "Denoising diffusion probabilistic models",
+     "volume-title": "Proc. NIPS",
+     "author": "Ho"
+    },
+    {
+     "key": "ref68",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2023.3287547"
+    },
+    {
+     "key": "ref69",
+     "article-title": "Generative semantic communication: Diffusion models beyond bit recovery",
+     "author": "Grassucci",
+     "year": "2023",
+     "journal-title": "arXiv:2306.04321"
+    },
+    {
+     "key": "ref70",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JIOT.2023.3317629"
+    },
+    {
+     "key": "ref71",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TMC.2024.3493375"
+    },
+    {
+     "key": "ref72",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2023.3321539"
+    },
+    {
+     "key": "ref73",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/OJCS.2023.3260732"
+    },
+    {
+     "key": "ref74",
+     "article-title": "Goal-oriented semantic communications for metaverse construction via generative AI and optimal transport",
+     "author": "Wang",
+     "year": "2024",
+     "journal-title": "arXiv:2411.16187"
+    },
+    {
+     "key": "ref75",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TMC.2024.3396860"
+    },
+    {
+     "key": "ref76",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LCOMM.2024.3365158"
+    },
+    {
+     "key": "ref77",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.23919/JCIN.2021.9663101"
+    },
+    {
+     "key": "ref78",
+     "article-title": "Semantic communications: Principles and challenges",
+     "author": "Qin",
+     "year": "2021",
+     "journal-title": "arXiv:2201.01389"
+    },
+    {
+     "key": "ref79",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICUFN61752.2024.10625026"
+    },
+    {
+     "key": "ref80",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s11277-022-10111-7"
+    },
+    {
+     "key": "ref81",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICSP58490.2023.10248874"
+    },
+    {
+     "key": "ref82",
+     "article-title": "Semantic edge computing and semantic communications in 6G networks: A unifying survey and research challenges",
+     "author": "Zhang",
+     "year": "2024",
+     "journal-title": "arXiv:2411.18199"
+    },
+    {
+     "key": "ref83",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/OJCOMS.2024.3425314"
+    },
+    {
+     "key": "ref84",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICAIIC64266.2025.10920807"
+    },
+    {
+     "key": "ref85",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ACCESS.2023.3243065"
+    },
+    {
+     "key": "ref86",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.icte.2024.06.001"
+    },
+    {
+     "key": "ref87",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3390/e26020102"
+    },
+    {
+     "key": "ref88",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP48485.2024.10448235"
+    },
+    {
+     "key": "ref89",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/s10922-025-09927-y"
+    },
+    {
+     "key": "ref90",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JPROC.2024.3520707"
+    },
+    {
+     "key": "ref91",
+     "first-page": "1",
+     "article-title": "Hard prompts made easy: Gradient-based discrete optimization for prompt tuning and discovery",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "author": "Wen"
+    },
+    {
+     "key": "ref92",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/OJCOMS.2021.3071496"
+    },
+    {
+     "key": "ref93",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/OJCOMS.2021.3057679"
+    },
+    {
+     "key": "ref94",
+     "article-title": "A comprehensive survey of large AI models for future communications: Foundations, applications and challenges",
+     "author": "Jiang",
+     "year": "2025",
+     "journal-title": "arXiv:2505.03556"
+    },
+    {
+     "key": "ref95",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/comst.2025.3564333"
+    },
+    {
+     "key": "ref96",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSTSP.2020.3034501"
+    },
+    {
+     "key": "ref97",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/tvt.2025.3566488"
+    },
+    {
+     "key": "ref98",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.003.2300568"
+    },
+    {
+     "key": "ref99",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JIOT.2024.3522191"
+    },
+    {
+     "key": "ref100",
+     "article-title": "Retrieval-augmented generation for GenAI-enabled semantic communications",
+     "author": "Tang",
+     "year": "2024",
+     "journal-title": "arXiv:2412.19494"
+    },
+    {
+     "key": "ref101",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/icassp48485.2024.10447237"
+    },
+    {
+     "key": "ref102",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GCWkshp64532.2024.11100549"
+    },
+    {
+     "key": "ref103",
+     "article-title": "Semantic feature decomposition based semantic communication system of images with large-scale visual generation models",
+     "author": "Fan",
+     "year": "2024",
+     "journal-title": "arXiv:2410.20126"
+    },
+    {
+     "key": "ref104",
+     "first-page": "1",
+     "article-title": "Denoising diffusion implicit models",
+     "volume-title": "Proc. Int. Conf. Learn. Represent.",
+     "author": "Song"
+    },
+    {
+     "key": "ref105",
+     "first-page": "1",
+     "article-title": "BLIP: Bootstrapping language-image pre-training for unified vision-language understanding and generation",
+     "volume-title": "Proc. 39th Int. Conf. Mach. Learn. (ICML)",
+     "author": "Li"
+    },
+    {
+     "key": "ref106",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCV51070.2023.00355"
+    },
+    {
+     "key": "ref107",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221953"
+    },
+    {
+     "key": "ref108",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC51166.2024.10622487"
+    },
+    {
+     "key": "ref109",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP48485.2024.10447612"
+    },
+    {
+     "key": "ref110",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GCWkshp64532.2024.11101684"
+    },
+    {
+     "key": "ref111",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LCOMM.2023.3293805"
+    },
+    {
+     "key": "ref112",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1145/3394171.3413532"
+    },
+    {
+     "key": "ref113",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2024.3352917"
+    },
+    {
+     "key": "ref114",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2024.3391767"
+    },
+    {
+     "key": "ref115",
+     "article-title": "Generative AI-driven semantic communication framework for NextG wireless network",
+     "author": "Raha",
+     "year": "2023",
+     "journal-title": "arXiv:2310.09021"
+    },
+    {
+     "key": "ref116",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/CVPR.2017.632"
+    },
+    {
+     "key": "ref117",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICOIN56518.2023.10049005"
+    },
+    {
+     "key": "ref118",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2024.3379244"
+    },
+    {
+     "key": "ref119",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/COMST.2024.3400011"
+    },
+    {
+     "key": "ref120",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.001.2300346"
+    },
+    {
+     "key": "ref121",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.001.2300575"
+    },
+    {
+     "key": "ref122",
+     "article-title": "Large generative model assisted 3D semantic communication",
+     "author": "Jiang",
+     "year": "2024",
+     "journal-title": "arXiv:2403.05783"
+    },
+    {
+     "key": "ref123",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/mwc.002.2400332"
+    },
+    {
+     "key": "ref124",
+     "article-title": "Generative AI meets semantic communication: Evolution and revolution of communication tasks",
+     "author": "Grassucci",
+     "year": "2024",
+     "journal-title": "arXiv:2401.06803"
+    },
+    {
+     "key": "ref125",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2025.3535714"
+    },
+    {
+     "key": "ref126",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3390/app15137227"
+    },
+    {
+     "key": "ref127",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.34133/research.0342"
+    },
+    {
+     "key": "ref128",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MSP.2007.914710"
+    },
+    {
+     "key": "ref129",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/30.125072"
+    },
+    {
+     "key": "ref130",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/978-1-4615-0799-4"
+    },
+    {
+     "key": "ref131",
+     "author": "Bellard",
+     "year": "2014",
+     "journal-title": "Better Portable Graphics"
+    },
+    {
+     "key": "ref132",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/49.608"
+    },
+    {
+     "key": "ref133",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/93.388209"
+    },
+    {
+     "issue": "12",
+     "key": "ref134",
+     "first-page": "4",
+     "article-title": "Overview of MPEG audio: Current and future standards for low-bit-rate audio coding",
+     "volume": "45",
+     "author": "Brandenburg",
+     "year": "1997",
+     "journal-title": "J. Audio Eng. Soc."
+    },
+    {
+     "key": "ref135",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCSVT.2003.815165"
+    },
+    {
+     "key": "ref136",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCSVT.2012.2221191"
+    },
+    {
+     "key": "ref137",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICME.2011.6012227"
+    },
+    {
+     "key": "ref138",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1002/047174882x"
+    },
+    {
+     "key": "ref139",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TIT.2006.878212"
+    },
+    {
+     "key": "ref140",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1017/CBO9780511841224"
+    },
+    {
+     "key": "ref141",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOM.1979.1094335"
+    },
+    {
+     "key": "ref142",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/978-3-7091-2945-6"
+    },
+    {
+     "key": "ref143",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC42927.2021.9500996"
+    },
+    {
+     "key": "ref144",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2019.2933891"
+    },
+    {
+     "key": "ref145",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2022.3151935"
+    },
+    {
+     "key": "ref146",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2020.2970707"
+    },
+    {
+     "key": "ref147",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2021.3061464"
+    },
+    {
+     "key": "ref148",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/VTC2022-Fall57202.2022.10012843"
+    },
+    {
+     "key": "ref149",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2023.3265201"
+    },
+    {
+     "key": "ref150",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2023.3288252"
+    },
+    {
+     "key": "ref151",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3180802"
+    },
+    {
+     "key": "ref152",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCWorkshops49005.2020.9145068"
+    },
+    {
+     "key": "ref153",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2021.3090048"
+    },
+    {
+     "key": "ref154",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP43922.2022.9746335"
+    },
+    {
+     "key": "ref155",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2023.3234408"
+    },
+    {
+     "key": "ref156",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAIT.2022.3231042"
+    },
+    {
+     "key": "ref157",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC52391.2025.11162089"
+    },
+    {
+     "key": "ref158",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221990"
+    },
+    {
+     "key": "ref159",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2022.3182325"
+    },
+    {
+     "key": "ref160",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2023.3274145"
+    },
+    {
+     "key": "ref161",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221948"
+    },
+    {
+     "key": "ref162",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2023.3288243"
+    },
+    {
+     "key": "ref163",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP49357.2023.10094735"
+    },
+    {
+     "key": "ref164",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2023.3306852"
+    },
+    {
+     "key": "ref165",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ACCESS.2023.3266656"
+    },
+    {
+     "key": "ref166",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221999"
+    },
+    {
+     "key": "ref167",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TVT.2024.3362328"
+    },
+    {
+     "key": "ref168",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LCOMM.2024.3499956"
+    },
+    {
+     "key": "ref169",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TSP.2021.3071210"
+    },
+    {
+     "key": "ref170",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2020.3036968"
+    },
+    {
+     "key": "ref171",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LWC.2022.3170849"
+    },
+    {
+     "key": "ref172",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2022.3180997"
+    },
+    {
+     "key": "ref173",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3222000"
+    },
+    {
+     "key": "ref174",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC42927.2021.9500590"
+    },
+    {
+     "key": "ref175",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2021.3087240"
+    },
+    {
+     "key": "ref176",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GLOBECOM48099.2022.10001043"
+    },
+    {
+     "key": "ref177",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221952"
+    },
+    {
+     "key": "ref178",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.3389/frcmn.2021.734402"
+    },
+    {
+     "key": "ref179",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JIOT.2024.3378779"
+    },
+    {
+     "key": "ref180",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCCN.2023.3345858"
+    },
+    {
+     "key": "ref181",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICASSP49357.2023.10094680"
+    },
+    {
+     "key": "ref182",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3191354"
+    },
+    {
+     "key": "ref183",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3221977"
+    },
+    {
+     "key": "ref184",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/VTC2023-Fall60731.2023.10333553"
+    },
+    {
+     "key": "ref185",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GCWkshps58843.2023.10464432"
+    },
+    {
+     "key": "ref186",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JIOT.2024.3464614"
+    },
+    {
+     "key": "ref187",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2025.3559115"
+    },
+    {
+     "key": "ref188",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2025.3559160"
+    },
+    {
+     "key": "ref189",
+     "article-title": "Multi-modal fusion-based multi-task semantic communication system",
+     "author": "Zhu",
+     "year": "2024",
+     "journal-title": "arXiv:2407.00964"
+    },
+    {
+     "key": "ref190",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/EIT63098.2024.10762270"
+    },
+    {
+     "key": "ref191",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JIOT.2024.3416253"
+    },
+    {
+     "key": "ref192",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MLSP58920.2024.10734744"
+    },
+    {
+     "key": "ref193",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LWC.2021.3136045"
+    },
+    {
+     "key": "ref194",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.008.2200180"
+    },
+    {
+     "key": "ref195",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2022.3191326"
+    },
+    {
+     "key": "ref196",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/WCSP58612.2023.10404655"
+    },
+    {
+     "key": "ref197",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1016/j.future.2022.10.036"
+    },
+    {
+     "key": "ref198",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TWC.2025.3534995"
+    },
+    {
+     "key": "ref199",
+     "article-title": "Multimodal trustworthy semantic communication for audio-visual event localization",
+     "author": "Li",
+     "year": "2024",
+     "journal-title": "arXiv:2411.01991"
+    },
+    {
+     "key": "ref200",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TGCN.2024.3374700"
+    },
+    {
+     "key": "ref201",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.001.2300155"
+    },
+    {
+     "key": "ref202",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2024.3364990"
+    },
+    {
+     "key": "ref203",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/wcnc57260.2024.10570632"
+    },
+    {
+     "key": "ref204",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/GLOBECOM54140.2023.10437917"
+    },
+    {
+     "key": "ref205",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC51166.2024.10622767"
+    },
+    {
+     "key": "ref206",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2023.3335977"
+    },
+    {
+     "key": "ref207",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2024.3435038"
+    },
+    {
+     "key": "ref208",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/twc.2025.3578010"
+    },
+    {
+     "key": "ref209",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICCC57788.2023.10233481"
+    },
+    {
+     "key": "ref210",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/JSAC.2023.3280966"
+    },
+    {
+     "key": "ref211",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TVT.2024.3435754"
+    },
+    {
+     "key": "ref212",
+     "article-title": "Joint semantic communication and target sensing for 6G communication system",
+     "author": "Yang",
+     "year": "2024",
+     "journal-title": "arXiv:2401.17108"
+    },
+    {
+     "key": "ref213",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/tvt.2025.3573711"
+    },
+    {
+     "key": "ref214",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/infocom53939.2023.10228870"
+    },
+    {
+     "key": "ref215",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MCOM.004.2400105"
+    },
+    {
+     "key": "ref216",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2024.3354264"
+    },
+    {
+     "key": "ref217",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/ICC45855.2022.9839122"
+    },
+    {
+     "key": "ref218",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TVT.2024.3401140"
+    },
+    {
+     "key": "ref219",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TMC.2024.3438285"
+    },
+    {
+     "key": "ref220",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TPAMI.2024.3357847"
+    },
+    {
+     "key": "ref221",
+     "first-page": "25981",
+     "article-title": "Avatar: Optimizing LLM agents for tool usage via contrastive reasoning",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "author": "Wu"
+    },
+    {
+     "key": "ref222",
+     "first-page": "24824",
+     "article-title": "Chain-of-thought prompting elicits reasoning in large language models",
+     "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+     "author": "Lee"
+    },
+    {
+     "key": "ref223",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.18653/v1/2020.emnlp-main.496"
+    },
+    {
+     "key": "ref224",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.52202/079017-0105"
+    },
+    {
+     "key": "ref225",
+     "first-page": "1",
+     "article-title": "Rethinking optimization and architecture for tiny language models",
+     "volume-title": "Proc. Int. Conf. Mach. Learn. (ICML)",
+     "author": "Tang"
+    },
+    {
+     "key": "ref226",
+     "article-title": "Multi-modal generative embedding model",
+     "author": "Ma",
+     "year": "2024",
+     "journal-title": "arXiv:2405.19333"
+    },
+    {
+     "key": "ref227",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1609/aaai.v31i1.10952"
+    },
+    {
+     "key": "ref228",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/tnnls.2025.3584944"
+    },
+    {
+     "key": "ref229",
+     "article-title": "Improving text embeddings with large language models",
+     "author": "Wang",
+     "year": "2023",
+     "journal-title": "arXiv:2401.00368"
+    },
+    {
+     "key": "ref230",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1073/pnas.1611835114"
+    },
+    {
+     "key": "ref231",
+     "first-page": "1",
+     "article-title": "LoRA: Low-rank adaptation of large language models",
+     "volume-title": "Proc. Int. Conf. Learn. Represent.",
+     "author": "Hu"
+    },
+    {
+     "key": "ref232",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1038/nature23474"
+    },
+    {
+     "key": "ref233",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.002.2200613"
+    },
+    {
+     "key": "ref234",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2024.3408814"
+    },
+    {
+     "key": "ref235",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/SPAWC60668.2024.10694659"
+    },
+    {
+     "key": "ref236",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/LCOMM.2024.3361852"
+    },
+    {
+     "key": "ref237",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MWC.007.2300503"
+    },
+    {
+     "key": "ref238",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/MNET.2023.3328892"
+    },
+    {
+     "key": "ref239",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1007/978-3-540-71050-9"
+    },
+    {
+     "key": "ref240",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TCOMM.2020.2978071"
+    },
+    {
+     "key": "ref241",
+     "doi-asserted-by": "publisher",
+     "DOI": "10.1109/TQE.2022.3221029"
+    }
+   ],
+   "container-title": [
+    "IEEE Communications Surveys &amp; Tutorials"
+   ],
+   "original-title": [],
+   "link": [
+    {
+     "URL": "http://xplorestaging.ieee.org/ielx8/9739/11321210/11192484.pdf?arnumber=11192484",
+     "content-type": "unspecified",
+     "content-version": "vor",
+     "intended-application": "similarity-checking"
+    }
+   ],
+   "deposited": {
+    "date-parts": [
+     [
+      2026,
+      1,
+      2
+     ]
+    ],
+    "date-time": "2026-01-02T05:45:12Z",
+    "timestamp": 1767332712000
+   },
+   "score": 1,
+   "resource": {
+    "primary": {
+     "URL": "https://ieeexplore.ieee.org/document/11192484/"
+    }
+   },
+   "subtitle": [],
+   "short-title": [],
+   "issued": {
+    "date-parts": [
+     [
+      2026
+     ]
+    ]
+   },
+   "references-count": 241,
+   "URL": "https://doi.org/10.1109/comst.2025.3616973",
+   "relation": {},
+   "ISSN": [
+    "1553-877X",
+    "2373-745X"
+   ],
+   "issn-type": [
+    {
+     "value": "1553-877X",
+     "type": "electronic"
+    },
+    {
+     "value": "2373-745X",
+     "type": "electronic"
+    }
+   ],
+   "subject": [],
+   "published": {
+    "date-parts": [
+     [
+      2026
+     ]
+    ]
+   }
+  }
+ }
+}
