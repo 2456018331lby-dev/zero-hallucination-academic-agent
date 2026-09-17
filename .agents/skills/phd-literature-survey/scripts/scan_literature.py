@@ -43,8 +43,13 @@ def extract_pdf_metadata(pdf_path):
             entry["authors"] = meta["author"].strip()
             
         first_pages_text = ""
-        for i in range(min(3, len(doc))):
-            first_pages_text += doc[i].get_text() + "\n"
+        try:
+            from academic_extractor import deinterleave_page_blocks
+            for i in range(min(3, len(doc))):
+                first_pages_text += deinterleave_page_blocks(doc[i]) + "\n\n"
+        except Exception:
+            for i in range(min(3, len(doc))):
+                first_pages_text += doc[i].get_text() + "\n"
         doc.close()
         
         lines = [l.strip() for l in first_pages_text.splitlines() if l.strip()]

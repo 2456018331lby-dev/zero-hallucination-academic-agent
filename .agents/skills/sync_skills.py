@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-sync_skills.py - Multi-Platform 4-Replica Skills Synchronization Engine
+sync_skills.py - Multi-Platform 5-Replica Skills Synchronization Engine
 
 Sole source of truth:
     c:\\Users\\24560\\Desktop\\study\\pidemo\\.agents\\skills\\
@@ -10,6 +10,7 @@ Mirror targets:
     1. C:\\Users\\24560\\.gemini\\skills\\
     2. C:\\Users\\24560\\.codex\\skills\\
     3. C:\\Users\\24560\\.claude\\skills\\
+    4. C:\\Users\\24560\\.pi\\agent\\skills\\
 
 Rules:
 - Scans all skill folders (directories containing SKILL.md) in source.
@@ -42,6 +43,7 @@ DEFAULT_TARGETS = [
     os.path.expandvars(r"C:\Users\24560\.gemini\skills"),
     os.path.expandvars(r"C:\Users\24560\.codex\skills"),
     os.path.expandvars(r"C:\Users\24560\.claude\skills"),
+    os.path.expandvars(r"C:\Users\24560\.pi\agent\skills"),
 ]
 
 IGNORE_NAMES = {".git", "__pycache__", ".DS_Store", "*.pyc"}
@@ -159,7 +161,7 @@ def sync_all(dry_run=False, targets=None):
     target_dirs = targets or DEFAULT_TARGETS
 
     print("=" * 75)
-    print(f"[*] Multi-Platform Skills Sync Engine (4-Replica Mirror)")
+    print(f"[*] Multi-Platform Skills Sync Engine ({len(target_dirs)}-Replica Mirror)")
     print(f"[*] Source (Sole Truth): {source_dir}")
     print(f"[*] Mode: {'DRY RUN (Diff Report Only)' if dry_run else 'APPLY MIRROR SYNC'}")
     print("=" * 75)
@@ -269,7 +271,7 @@ def sync_all(dry_run=False, targets=None):
     print("\n" + "=" * 75)
     print(f"[*] Summary: added={total_added}, updated={total_updated}, removed={total_removed}")
     if all_ok:
-        print(f"[OK] 4-replica synchronization successful and verified identical!")
+        print(f"[OK] {len(target_dirs)}-replica synchronization successful and verified identical!")
     else:
         print(f"[-] Synchronization completed with errors.", file=sys.stderr)
     print("=" * 75)
