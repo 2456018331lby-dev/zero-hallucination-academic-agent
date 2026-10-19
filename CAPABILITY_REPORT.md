@@ -7,7 +7,7 @@
 - 仓库：`C:\Users\24560\Desktop\study\pidemo`
 - 基线 commit：`14c00d7`（本报告随改进提交一起入库）
 - 环境：Windows / Python 3.12.10 / PyMuPDF 1.28.2 / MiKTeX xelatex
-- 入口：`zhaw`（22 个子命令），`pip install -e .` 后可直接调用
+- 入口：`zhaw`（29 个子命令），`pip install -e .` 后可直接调用
 
 ---
 
@@ -26,7 +26,7 @@
 | 对抗自测用例 | **14 / 14 PASS，0.41 s** | §2 |
 | 真实工程门禁 | **3 个工程全部 Overall PASS** | §3 |
 | 接地门禁（PDF 物理页码核验） | **11 篇 PDF / 8 行矩阵 / 0 FAIL / 0 WARN** | §4 |
-| CLI 子命令 | **22 个，全部实测可用** | §5 |
+| CLI 子命令 | **29 个，全部实测可用** | §5 |
 | 学位论文编译 | **32 页 / 375.6 KB / 0 错误** | §5.1 |
 | 组会 PPT | **16 页 / 243.0 KB** | §5.5 |
 | 答辩 PPT | **9 页 / 82.1 KB + 讲稿 + 13 问 Q&A** | §5.6 |
@@ -97,7 +97,7 @@ zhaw grounding bupt_isac_workflow\survey\literature_comparison_matrix.md ^
 
 ---
 
-## 5. 全生命周期实测（22 个子命令）
+## 5. 全生命周期实测（29 个子命令）
 
 `zhaw --help` 注册的全部命令，逐个在本机跑过。
 
@@ -191,6 +191,42 @@ zhaw proposal _cold\d\proposal --check
 > 对比：`_demo\demo_proposal`（空模板）会被诚实地判 10 条缺口并 exit 1。
 > 同一个检查器，对空模板严、对真内容放——这正是它该有的行为。
 
+### 5.11 从 0 写论文的剧本层（`zhaw flow` / `read` / `submit` / `review` / `rebuttal` / `midterm` / `weekly`）
+
+零散命令回答「有没有这个能力」，`flow` 回答「**顺序是什么、哪一步不能跳**」。
+
+**11 个剧本**（步骤数 / 其中必须人工）：
+
+| 剧本 | 用途 | 步骤 | 人工 |
+|---|---|---|---|
+| `lit` | 老师给一批 PDF，先读懂 | 6 | 2 |
+| `group` | 组会文献汇报 | 4 | 2 |
+| `proposal` | 开题报告 | 7 | 1 |
+| `paper` | 从 0 写一篇论文 | 11 | 1 |
+| `submit` | 投稿前 | 5 | 1 |
+| `revision` | 返修 | 5 | 1 |
+| `defense` | 答辩 | 3 | 2 |
+| `blind` | 盲审版交付 | 4 | 1 |
+| `midterm` | 中期检查 | 3 | 1 |
+| `weekly` | 周报 | 2 | 1 |
+| `archive` | 归档 | 1 | 0 |
+
+实测（`bupt_isac_workflow/thesis_project` 真实工程）：
+
+| 命令 | 实测结果 |
+|---|---|
+| `zhaw flow` | 11 个剧本表；`flow show paper` 打印 11 步 SOP；`flow run paper` 生成 runbook md |
+| `zhaw flow status paper` | **产物完成 5/6（83%）**，下一步指向 `zhaw read`——按文件是否存在算，不按 AI 自称 |
+| `zhaw read <PDF目录>` | 3 篇 PDF → 3 张阅读卡 + 对比矩阵 + `gaps.md` + `index.json`；标题走 PDF 元数据，章节/局限走启发式（残余少量噪声，已在报告里标注） |
+| `zhaw midterm` | 27.2%（8,171 / 30,000 汉字）；缺 **21,829 汉字 / 44 条文献 / 11 个图件**；18 处占位符 |
+| `zhaw weekly` | 周报 md + `snapshots/<date>.json`；本次 8 次提交，首次运行记为基线 |
+| `zhaw submit --venue ieee-tvt` | **FAIL**：16 条文献 < 30、18 处 TODO 未清；产出 cover letter + 11 项 checklist |
+| `zhaw review --venue ieee-tvt` | **5 MAJOR / 1 MINOR**：TODO 18、文献不足、`chap01_intro.tex:9/:34` 定性断言无数字、无消融实验、无 `experiments/` |
+| `zhaw rebuttal` | 3 条审稿意见 → 按 `Reviewer N` 切分的逐条回复骨架 |
+
+> 设计铁律：`flow` 只产出 SOP、清单和骨架，**绝不代写正文**；`[人工]` 步骤永不自动标完成；
+> 完成度 = 产物文件真实存在，不是「AI 说完成了」。
+
 ---
 
 ## 6. 本轮新增的三项外部能力
@@ -256,7 +292,7 @@ zhaw archive  bupt_isac_workflow\thesis_project --out-dir _demo\archives --name 
 | 项 | 第一轮（`2c84fd6`） | 本轮 |
 |---|---|---|
 | 对抗用例 | 9 | **14** |
-| 子命令 | 10 | **22** |
+| 子命令 | 10 | **29** |
 | 端到端链路 | 门禁 + 编译 | **建工程→图→组会→开题→答辩→盲审→归档** |
 | 建工程 | 复制 bupt 工程（带入他人内容与旧校名） | **身份净化 + 「不是你的内容」告警 + `--school` 可选** |
 | 编译门禁 | 只跑两遍 xelatex，不跑 bibtex；natbib 未定义引文漏报 | **自动 bibtex + 认 `Package natbib Warning:`** |

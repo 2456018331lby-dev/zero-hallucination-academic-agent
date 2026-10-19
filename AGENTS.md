@@ -11,7 +11,7 @@
 
 - 它**不生成内容**，它**验证内容**：数字必须能追到 CSV 单元格，引文必须能追到 Crossref 记录，页码必须能在本地 PDF 里打开看到。
 - 它面向**中文学位论文**：GB/T 7713.1-2006 + GB/T 7714-2015，不是 IEEE/ACM 模板。
-- 它的主入口是 `zhaw` 命令行（22 个子命令），**不要绕过它直接调 `scripts/` 里的脚本**——除非你在改门禁本身。
+- 它的主入口是 `zhaw` 命令行（29 个子命令），**不要绕过它直接调 `scripts/` 里的脚本**——除非你在改门禁本身。
 
 一句话：**别的工具负责写得快，这个仓库负责写不假。**
 
@@ -36,7 +36,7 @@ zhaw selftest                          # 14 项对抗测试，应输出 14/14 PA
 
 | 路径 | 是什么 | AI 该不该动 |
 |---|---|---|
-| `zhaw/` | **唯一入口**，22 子命令的 CLI 实现 | ✅ 要改就改这里 |
+| `zhaw/` | **唯一入口**，29 子命令的 CLI 实现 | ✅ 要改就改这里 |
 | `.agents/skills/` | **核心资产**，8 个技能 + 14 项对抗测试 | ✅ 门禁逻辑在这里 |
 | `bupt_isac_workflow/` | 主力工程（北邮 085402 ISAC 双交付） | ⚠️ 只在用户要求时改内容 |
 | `ris_thesis_workflow/` | 验收夹具（证明门禁可复用） | ⚠️ 同上 |
@@ -58,7 +58,7 @@ zhaw selftest                          # 14 项对抗测试，应输出 14/14 PA
 
 ---
 
-## 3. 二十二个命令速查
+## 3. 二十九个命令速查
 
 ### 环境与自检
 ```powershell
@@ -97,12 +97,28 @@ zhaw anonymize <工程> --out <目录> --force     # 盲审版（去姓名/学�
 zhaw archive <工程> --out-dir <目录> --name <名>  # 归档 zip + sha256 manifest
 ```
 
+### 全流程剧本与周期汇报（从 0 写一篇论文用这组）
+```powershell
+zhaw flow                             # 列出 11 个场景剧本（lit/group/proposal/paper/submit/revision/defense/blind/midterm/weekly/archive）
+zhaw flow show paper                  # 看某个剧本的逐步 SOP（哪些能自动、哪些必须人工）
+zhaw flow run paper --project <工程> --out <目录>   # 生成该剧本的 runbook md
+zhaw flow status paper --project <工程>             # 按产物是否存在算完成度 + 下一步
+zhaw read <PDF目录> --out <目录> [--limit N] [--digest]   # 批量读 PDF → 阅读卡 + 矩阵 + gaps + 综述草稿
+zhaw submit <工程> --venue ieee-tvt --out <目录>    # 投稿前 11 项机检 + cover letter + checklist
+zhaw review <工程> [--venue ieee-tvt] --out <目录>  # 自审（MAJOR/MINOR）
+zhaw rebuttal <审稿意见.md> --out <目录>            # 按 Reviewer 切分 → 逐条回复骨架
+zhaw midterm <工程> --out <目录> [--target 30000]   # 中期检查报告（字数/文献/图件缺口）
+zhaw weekly <工程> --out <目录> [--days 7]          # 周报（git 提交 + 字数增量 + 门禁状态快照）
+```
+
+> `zhaw flow` 只给 SOP 和清单，**不代写正文**；标 `[人工]` 的步骤永远不会被自动标完成。
+
 > 三个等价写法：`zhaw xxx` = `py -3.12 -m zhaw xxx` = 直接调 `scripts/xxx.py`。
 > **优先用第一种**，因为只有 CLI 会统一处理退出码与编码。
 
 ---
 
-## 4. 四个典型任务剧本
+## 4. 五个典型任务剧本
 
 ### A. 用户说「我有一批 PDF，下周组会要汇报」
 
@@ -144,6 +160,20 @@ zhaw compile <目录>       # 应 0 错误
 zhaw audit   <目录> --offline --scaffold
 ```
 本科毕设只需改两处：模板换成本科版、`--min-bib 15`（硕士硬线是 60）。
+
+### E. 用户说「老师给了一批文献，我要从头写一篇论文」
+
+```powershell
+zhaw flow show paper                      # 先看 11 步 SOP，知道哪步是人工
+zhaw read <PDF目录> --out <目录> --digest  # 读文献 → 阅读卡/矩阵/gaps/综述草稿
+zhaw new <目录> --kind thesis --title ... # 建工程
+zhaw flow run paper --project <目录> --out <目录>   # 生成 runbook，按步执行
+zhaw midterm <目录> --out <目录>           # 中期：字数/文献/图件缺口
+zhaw weekly  <目录> --out <目录>           # 每周一次，记录增量
+zhaw submit  <目录> --venue ieee-tvt --out <目录>  # 投稿前机检
+zhaw review  <目录> --venue ieee-tvt --out <目录>  # 自审
+```
+**注意**：`flow` 只给清单和 SOP，正文、创新点、实验设计仍然只能人写；它保证的是「不漏步」和「每步有产物可查」。
 
 ---
 

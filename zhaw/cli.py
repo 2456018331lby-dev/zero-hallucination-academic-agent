@@ -530,6 +530,89 @@ def cmd_archive(args: argparse.Namespace) -> int:
     return OK
 
 
+def cmd_flow(args: argparse.Namespace) -> int:
+    from . import flow as flow_mod
+
+    words = list(getattr(args, "words", None) or [])
+    project = Path(args.project) if args.project else None
+    out = Path(args.out) if args.out else None
+
+    verb = ""
+    if words and words[0] in ("show", "run", "status"):
+        verb = words.pop(0)
+    name = words[0] if words else None
+    if args.status:
+        verb = "status"
+
+    if verb == "status":
+        if not name:
+            raise SystemExit("用法: zhaw flow status <剧本名> --project <工程目录>")
+        print(flow_mod.render_status(flow_mod.status(name, project)))
+        return OK
+    if not name:
+        print(flow_mod.render_list())
+        return OK
+    if verb == "show":
+        print(flow_mod.render_flow(name))
+        return OK
+
+    result = flow_mod.run(name, project, out)
+    print(flow_mod.render_flow(name))
+    print()
+    print(f"[OK] 剧本已落盘：{result['runbook']}")
+    return OK
+
+
+def cmd_read(args: argparse.Namespace) -> int:
+    from . import read as read_mod
+
+    result = read_mod.read_literature(
+        Path(args.pdf_dir), Path(args.out), limit=args.limit, digest=args.digest
+    )
+    print(read_mod.summary(result))
+    return OK if result["status"] == "PASS" else FAIL
+
+
+def cmd_submit(args: argparse.Namespace) -> int:
+    from . import review as review_mod
+
+    result = review_mod.submit(Path(args.project), args.venue, Path(args.out))
+    print(review_mod.summary_submit(result))
+    return OK if result["status"] == "PASS" else FAIL
+
+
+def cmd_review(args: argparse.Namespace) -> int:
+    from . import review as review_mod
+
+    result = review_mod.review(Path(args.project), args.venue, Path(args.out))
+    print(review_mod.summary_review(result))
+    return OK if result["major"] == 0 else FAIL
+
+
+def cmd_rebuttal(args: argparse.Namespace) -> int:
+    from . import review as review_mod
+
+    result = review_mod.rebuttal(Path(args.reviews), Path(args.out))
+    print(review_mod.summary_rebuttal(result))
+    return OK if result["status"] == "PASS" else FAIL
+
+
+def cmd_midterm(args: argparse.Namespace) -> int:
+    from . import reports as reports_mod
+
+    result = reports_mod.midterm(Path(args.project), Path(args.out), target_hanzi=args.target)
+    print(reports_mod.summary_midterm(result))
+    return OK
+
+
+def cmd_weekly(args: argparse.Namespace) -> int:
+    from . import reports as reports_mod
+
+    result = reports_mod.weekly(Path(args.project), Path(args.out), days=args.days)
+    print(reports_mod.summary_weekly(result))
+    return OK
+
+
 # --------------------------------------------------------------------------- #
 # parser
 # --------------------------------------------------------------------------- #
@@ -731,6 +814,53 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--out-dir", dest="out_dir")
     p.add_argument("--name")
     p.set_defaults(func=cmd_archive)
+
+    # ---- 场景剧本层：把「我该干什么」变成一条命令 -------------------------- #
+    p = sub.add_parser("flow", help="场景剧本：给定场景，给出有序步骤与人工卡点")
+    p.add_argument("words", nargs="*", help="[show|run|status] [lit|group|proposal|paper|submit|revision|defense|blind|midterm|weekly|archive]")
+    p.add_argument("--project", help="工程目录（用于判断哪些产物已存在）")
+    p.add_argument("--status", action="store_true", help="只看进度：哪些步骤已完成")
+    p.add_argument("--out", help="剧本落盘目录（默认 <project>/reports/flows）")
+    p.set_defaults(func=cmd_flow)
+
+    # ---- 老师给文献 -> 读 -> 总结 ------------------------------------------ #
+    p = sub.add_parser("read", help="批量读本地 PDF：阅读卡 + 对比矩阵 + 缺口清单")
+    p.add_argument("pdf_dir", help="装着 PDF 的目录（会递归找）")
+    p.add_argument("--out", "--out-dir", dest="out", required=True, help="输出目录（cards/ index.json comparison_matrix.md gaps.md）")
+    p.add_argument("--limit", type=int, help="只读前 N 篇（先试读用）")
+    p.add_argument("--digest", action="store_true", help="额外生成综述初稿骨架")
+    p.set_defaults(func=cmd_read)
+
+    # ---- 投稿 / 自审 / 回复审稿意见 ---------------------------------------- #
+    p = sub.add_parser("submit", help="投稿前检查 + cover letter + 投稿清单")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--venue", required=True, help="ieee-tvt|ieee-twc|ieee-tccn|ieee-comml|ieee-iotj|ieee-tap|ieee-access|arxiv|thesis")
+    p.add_argument("--out", "--out-dir", dest="out", default="submission", help="output directory (default: submission)")
+    p.set_defaults(func=cmd_submit)
+
+    p = sub.add_parser("review", help="投稿前自审：用审稿人视角找会被拒的地方")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--venue", default="ieee-tvt", help="venue profile (default: ieee-tvt)")
+    p.add_argument("--out", "--out-dir", dest="out", default="self_review", help="output directory (default: self_review)")
+    p.set_defaults(func=cmd_review)
+
+    p = sub.add_parser("rebuttal", help="把审稿意见拆成条目，生成逐条回复模板")
+    p.add_argument("reviews", help="审稿意见文本文件（.txt/.md）")
+    p.add_argument("--out", "--out-dir", dest="out", default="rebuttal", help="output directory (default: rebuttal)")
+    p.set_defaults(func=cmd_rebuttal)
+
+    # ---- 周期性汇报 -------------------------------------------------------- #
+    p = sub.add_parser("midterm", help="中期检查报告：进度实测 + 表格骨架")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--out", "--out-dir", dest="out", default="reports", help="output directory (default: reports)")
+    p.add_argument("--target", type=int, default=30000, help="total hanzi target (default 30000)")
+    p.set_defaults(func=cmd_midterm)
+
+    p = sub.add_parser("weekly", help="周报：字数/文献/图件的增量 + git 提交")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--out", "--out-dir", dest="out", default="reports", help="output directory (default: reports)")
+    p.add_argument("--days", type=int, default=7, help="look-back window (default 7)")
+    p.set_defaults(func=cmd_weekly)
 
     return parser
 

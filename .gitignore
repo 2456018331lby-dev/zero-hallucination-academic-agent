@@ -76,3 +76,6 @@ main.pdf.bak
 # 冷启动验证产物（含真实身份，绝不入库）
 _cold/
 
+# zhaw flow / weekly / midterm 生成的周期报告（含运行快照，按需重生成）
+**/reports/
+

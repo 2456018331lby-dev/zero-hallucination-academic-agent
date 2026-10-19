@@ -18,10 +18,10 @@ pip install -e . && zhaw doctor && zhaw selftest
 `zhaw selftest` 用 14 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.4 秒）。
 
 **这套东西现在到底能做到什么程度？** 见 [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：
-22 个子命令逐个实测、14/14 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译（13 处泄露全清、产物默认排除）。
+29 个子命令逐个实测、14/14 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译（13 处泄露全清、产物默认排除）。
 
 **你是 AI Agent、要接手这个仓库？** 直接读 [`AGENTS.md`](AGENTS.md)——那是给机器看的说明书：
-仓库地图（哪些能改哪些别碰）、22 个命令按场景速查、四个任务剧本、以及**绝对不能做的六件事**。
+仓库地图（哪些能改哪些别碰）、29 个命令按场景速查、四个任务剧本、以及**绝对不能做的六件事**。
 
 ---
 
@@ -190,6 +190,27 @@ zhaw archive  bupt_isac_workflow/thesis_project --out-dir _demo/archives    # zi
 zhaw math     bupt_isac_workflow/thesis_project                        # 符号契约 + sympy 恒等式验证
 zhaw docx     bupt_isac_workflow/thesis_project                        # 转 Word（无 pandoc 自动降级）
 ```
+
+### 8b. 从 0 写一篇论文的剧本层（`zhaw flow`）
+零散命令解决「有没有这个能力」，`flow` 解决「**顺序是什么、哪一步不能跳**」。
+11 个剧本覆盖读文献 → 组会 → 开题 → 写作 → 投稿 → 返修 → 答辩 → 盲审 → 中期 → 周报 → 归档：
+
+```bash
+zhaw flow                                   # 列出 11 个剧本（步骤数 / 其中必须人工几步）
+zhaw flow show paper                        # 看某个剧本的逐步 SOP
+zhaw flow run paper --project _demo/my_thesis --out _demo/flows   # 生成 runbook md
+zhaw flow status paper --project _demo/my_thesis                  # 按产物是否存在算完成度 + 下一步
+zhaw read  <PDF目录> --out _demo/read --digest                     # 批量读 PDF → 阅读卡/矩阵/gaps/综述草稿
+zhaw submit   _demo/my_thesis --venue ieee-tvt --out _demo/submission   # 投稿前 11 项机检
+zhaw review   _demo/my_thesis --venue ieee-tvt --out _demo/self_review  # 自审 MAJOR/MINOR
+zhaw rebuttal <审稿意见.md> --out _demo/rebuttal                   # 按 Reviewer 切分 → 逐条回复骨架
+zhaw midterm  _demo/my_thesis --out _demo/midterm                  # 中期检查报告
+zhaw weekly   _demo/my_thesis --out _demo/weekly                   # 周报 + 快照
+```
+
+> `flow` 只给 SOP、清单和骨架，**绝不代写正文**；标 `[人工]` 的步骤永远不会被自动标完成。
+> 完成度按「产物文件是否真实存在」计算，不按「AI 说完成了」计算。
+
 
 ### 9. 可选增强能力（装了就用，没装自动降级）
 | 能力 | 依赖 | 行为 |

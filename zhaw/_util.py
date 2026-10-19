@@ -71,9 +71,18 @@ def todo_count(text: str) -> int:
 
 
 def count_refs(bib_path: Path) -> int:
-    if not Path(bib_path).exists():
+    """Count BibTeX entries.
+
+    Accepts either the ``.bib`` file itself or the project directory that holds
+    ``references.bib`` — callers used to pass the directory and crashed with
+    ``PermissionError: [Errno 13]`` when ``read_text`` tried to open a folder.
+    """
+    path = Path(bib_path)
+    if path.is_dir():
+        path = path / "references.bib"
+    if not path.is_file():
         return 0
-    return len(re.findall(r"^\s*@\w+\s*\{", read_text(bib_path), re.MULTILINE))
+    return len(re.findall(r"^\s*@\w+\s*\{", read_text(path), re.MULTILINE))
 
 
 # ---------------------------------------------------------------------------
