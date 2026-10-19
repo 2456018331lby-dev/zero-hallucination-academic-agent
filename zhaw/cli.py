@@ -59,6 +59,19 @@ SURVEY = "academic-paper-discovery/scripts/search_papers.py"
 MATH = "math-reviewer/scripts/check_math.py"
 TEX_TO_DOCX = "thesis-latex-writer/scripts/tex_to_docx.py"
 EXPORT_WORD = "thesis-latex-writer/scripts/export_to_word.py"
+DESKTOP = "windows-computer-use/scripts/desktop_operator.py"
+
+# 8 个技能 -> 代表性脚本（None = 纯指令技能，没有可执行入口）
+SKILL_SCRIPTS: tuple[tuple[str, str | None], ...] = (
+    ("academic-paper-discovery", SURVEY),
+    ("citation-auditor", GATE1),
+    ("math-reviewer", MATH),
+    ("phd-literature-survey", GROUNDING),
+    ("thesis-latex-writer", GATE2_4),
+    ("tests", SELFTEST),
+    ("web-and-local-recon", None),
+    ("windows-computer-use", DESKTOP),
+)
 
 OK, FAIL, WARN = 0, 1, 2
 
@@ -116,6 +129,20 @@ def cmd_doctor(_args: argparse.Namespace) -> int:
             problems.append(f"missing {rel}")
         else:
             print(f"  [ok]      {label:<18} {path.relative_to(repo_root())}")
+
+    print()
+    print(f"skills ({len(SKILL_SCRIPTS)}):")
+    for name, rel in SKILL_SCRIPTS:
+        if rel is None:
+            print(f"  [no-script] {name:<26} 纯指令技能（SKILL.md 驱动，无需可执行入口）")
+            continue
+        try:
+            path = script(rel)
+        except SystemExit:
+            print(f"  [MISSING]   {name:<26} {rel}")
+            problems.append(f"missing skill script {rel}")
+        else:
+            print(f"  [ok]        {name:<26} {path.relative_to(repo_root())}")
 
     print()
     try:
