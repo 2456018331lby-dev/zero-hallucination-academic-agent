@@ -266,13 +266,13 @@ py -3.12 .agents\skills\tests\run_selftest.py
 
 1. **证据链断裂**：5 篇 PDF 被删未提交 → 接地门禁 FAIL（2 行矩阵页码越界）→ 交付物不可复现。
 2. **E2E 报告与工作区漂移**：`E2E_VERIFICATION_REPORT.md` 曾宣称"11 篇 OA PDF、16 维矩阵 0 FAIL / 0 WARN、16 篇 32 条 Crossref 全 OK"——这些数字在其所属 commit 上为真；后续 5 篇 PDF 被删，报告没有跟着更新，于是变成"实测 6 篇、2 行 FAIL"。**已重写为每个数字都带复现命令的可验证格式**，并注明 commit 与环境版本。
-3. **无 CI、无 `pyproject.toml`、`requirements.txt` 无锁**：`pymupdf>=1.24.0` 这种写法，换台机器就可能复现不了。四道门禁的结论依赖环境。
+3. ~~**无 CI、无 `pyproject.toml`、`requirements.txt` 无锁**~~ **（已修复）**：现在有 `pyproject.toml`（`name = "zhaw"`，`dependencies = ["pymupdf>=1.24.0"]`，可选 `full` extra 装 python-docx/matplotlib/numpy），以及 `.github/workflows/quality-gates.yml`——Ubuntu / Windows / macOS × Python 3.12 三平台矩阵，`pip install -e .` 后重跑 doctor + selftest + 四道门禁 + grounding，实测三平台全绿（17 s / 40 s / 20 s）。
 
 ### P1 · 工程卫生
 
 4. **50.7 MB vendored 依赖**曾进工作区（`newwork/libs/site-packages/`，pymupdf + pypdf + openpyxl）。**已删除**，改为可选路径 + 回退到已安装包。
 5. **根目录 18 项 untracked 残留**：Claude Desktop 汉化补丁（`install_windows.ps1` 167 KB、`patch_page.html` 43.7 KB、`latest_release.json`、三个 `*_contents.json`）、ADS 破解清理脚本与两份报告、`pelican-bike.html`（鹈鹕骑车 SVG 动画）、空 `err.txt` / `out.txt`。**已全部移入 `_attic/` 并被 .gitignore 忽略**，不再污染 `git status`。
-6. **`.citation_cache.json` 重复两份共 2.5 MB**（`bupt/literature/` 与 `bupt/thesis_project/` 各 1.25 MB）。
+6. ~~**`.citation_cache.json` 重复两份共 2.5 MB**~~ **（已修复）**：两份 SHA-256 完全相同，已删除 `bupt/literature/` 下那份，只保留 `thesis_project/` 的 1.25 MB。
 7. **技能副本漂移**：`sync_skills.py` 声称四副本 0 差异，但 `windows-computer-use/` 未提交、也未同步到 `~/.claude/skills`；`09_final_acceptance.log` 里出现的 `huashu-mac-use` 已不在源目录。历史日志不能当现状用。
 
 ### P2 · 设计与逻辑
@@ -344,13 +344,13 @@ py -3.12 .agents\skills\tests\run_selftest.py
 3. **重写 `E2E_VERIFICATION_REPORT.md`**：用真实数字（11 篇、实际页数、实际 FAIL 数），并加一行"本报告生成于 <commit>，环境 <python/xelatex 版本>" —— **已完成**
 4. **清根目录**：18 项残留移进 `_attic/`（或直接删），`pelican-bike.html` 之类根本不该在学术仓库（已完成）
 5. **删 `newwork/libs/site-packages/`**（50.7 MB），改成 `pip install -e .`（已完成）
-6. **补 `.gitignore`**：`libs/site-packages/`、`*.docx`（生成物）、`.citation_cache.json`（或保留但去重）
+6. ~~**补 `.gitignore`**~~ **（已完成）**：已重写，新增 `_attic/`、`.workbuddy/`、`newwork/libs/`、`newwork/examples/*/input/`、`newwork/examples/*/work/pdftext/`、`newwork/examples/*/deliverables/*.xlsx`、`.ruff_cache/`、`*.egg-info/`、`build/`、`dist/`；实测 146.9 MB PDF 全部被排除，untracked 总量仅 0.58 MB。
 7. **`git commit`**：提交前先确认 `_attic/`、`newwork/libs/`、`newwork/examples/*/input/` 都已被 .gitignore 排除，否则会把 146.9 MB PDF 塞进 git 对象库（实测会让 .git 从 70.9 MB 涨到 161.6 MB）
 
 ### 一周（工程化，让它能长期用）
 
-8. **加 `pyproject.toml` + 锁定版本**：`pymupdf==1.28.2` 这种，配 `uv.lock` 或 `requirements.lock`
-9. **抽成可安装包 `zhaw`**（Zero-Hallucination Academic Workflow）：
+8. ~~**加 `pyproject.toml` + 锁定版本**~~ **（部分完成）**：`pyproject.toml` 已建（`zhaw` 0.2.0，`requires-python>=3.10`），但仍未锁死补丁版本、没有 `uv.lock`/`requirements.lock`——这是下一步。
+9. ~~**抽成可安装包 `zhaw`**~~ **（已完成）**（Zero-Hallucination Academic Workflow）：
    ```
    pip install -e .
    zhaw gate1 <project>     # 引文
@@ -360,7 +360,7 @@ py -3.12 .agents\skills\tests\run_selftest.py
    zhaw survey <topic>      # 文献矩阵
    ```
    现在只能靠 `python scripts/xxx.py` 记住 8 个路径，这是复用的最大摩擦。
-10. **加 GitHub Actions**：三平台（ubuntu/macos/windows）× Python 3.12，跑 `run_selftest.py`。8 个对抗用例是现成的 CI 资产。
+10. ~~**加 GitHub Actions**~~ **（已完成）**：三平台（ubuntu/macos/windows）× Python 3.12，跑 `zhaw doctor` + `zhaw selftest`（9 个对抗用例）+ 四道门禁 + grounding，CI 徽章已进 README，首次运行 [39212688865](https://github.com/2456018331lby-dev/zero-hallucination-academic-agent/actions/runs/39212688865) 三平台全绿。
 11. **加 `pre-commit` hook**：commit 前自动跑 Gate1 + Gate3（快的两个），FAIL 就拦。
 12. **消架构债**：`newwork/skills/phd-literature-review/verify_grounding.py` 和 `.agents/skills/phd-literature-survey/scripts/verify_grounding.py` **合并成一个**，取增强版（newwork 那份含表模式 + 矩阵模式）。
 13. **Gate 2 升级**：正则 → 结构化断言。要求论文里的每个数字都能 `grep` 回 CSV 的某个 `(column, row)`，而不是靠正则猜。
@@ -507,7 +507,13 @@ py -3.12 -m zhaw compile bupt_isac_workflow\thesis_project
 自由漂浮断言，正是初号机"第四章数据编造"事故的残留。在非 scaffold 模式下这条会直接 **FAIL**。
 
 CI 在 `.github/workflows/quality-gates.yml`，Ubuntu / Windows / macOS × Python 3.12 三平台重跑同一套命令，
-任何一条红则 PR 红。
+任何一条红则 PR 红。首次运行 [run 39212688865](https://github.com/2456018331lby-dev/zero-hallucination-academic-agent/actions/runs/39212688865)
+实测三平台全绿：Ubuntu 17 s / Windows 40 s / macOS 20 s，三个 `gate-summary-*` artifact 均已上传。
+
+**本次改进的落点**：提交 `2c84fd6`（已推送 `origin/main`），工作区干净。
+新增 `zhaw` 包（`pyproject.toml` + `zhaw/{__init__,__main__,_paths,cli}.py`）、CI workflow、
+Gate 2 的 CSV 单元格级溯源与第 9 个对抗用例、`E2E_VERIFICATION_REPORT.md` 重写、
+`README.md` 的 CI 徽章 / 30 秒上手 / 真实成色、`PROJECT_AUDIT_REPORT.md`（本文件）全部数字对齐实测。
 
 ---
 
