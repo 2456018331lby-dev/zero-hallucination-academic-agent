@@ -31,15 +31,16 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e .
+          python -m pip install -e ".[full]"
 
       - name: Doctor (environment + gate scripts present)
         run: zhaw doctor
 
-      - name: Adversarial self-test (8 cases)
+      - name: Adversarial self-test (11 cases)
         # This is the load-bearing job: it proves the gates still intercept
-        # fabricated DOIs, tampered titles, forged sign-offs, and out-of-bounds
-        # page evidence. It needs no network (pre-seeded Crossref cache).
+        # fabricated DOIs, tampered titles, forged sign-offs, out-of-bounds
+        # page evidence, CSV-mismatched numbers, retracted papers, and broken
+        # symbolic identities. It needs no network (pre-seeded Crossref cache).
         run: zhaw selftest
 
       - name: Gate 1 — citations vs Crossref (offline cache)
@@ -62,6 +63,17 @@ jobs:
           zhaw grounding
           bupt_isac_workflow/survey/literature_comparison_matrix.md
           --pdf-dir bupt_isac_workflow/literature
+
+      - name: Lifecycle commands (no TeX installation needed)
+        # Proves the full-lifecycle subcommands work on a clean machine:
+        # scaffold → figures → audit → progress → blind-review anonymization.
+        run: |
+          zhaw new _ci_demo/thesis --kind thesis --title "CI Smoke" --author "CI Bot" --force
+          zhaw figures _ci_demo/thesis
+          zhaw audit _ci_demo/thesis --offline --scaffold
+          zhaw progress _ci_demo/thesis
+          zhaw anonymize bupt_isac_workflow/thesis_project --out _ci_blind --force
+          zhaw archive _ci_demo/thesis --out-dir _ci_archives --name ci_smoke
 
       - name: Upload gate summary
         if: always()
