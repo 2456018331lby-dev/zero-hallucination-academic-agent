@@ -31,6 +31,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, "thesis-latex-writer", "scripts"))
 sys.path.insert(0, os.path.join(BASE_DIR, "phd-literature-survey", "scripts"))
 sys.path.insert(0, os.path.join(BASE_DIR, "academic-paper-discovery", "scripts"))
 sys.path.insert(0, os.path.join(BASE_DIR, "math-reviewer", "scripts"))
+REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+sys.path.insert(0, REPO_ROOT)
 
 import check_citations
 import run_quality_gates
@@ -406,6 +408,44 @@ class TestQualityGatesAdversarial(unittest.TestCase):
         self.assertGreaterEqual(failed, 1, "A false equation must be caught")
         self.assertTrue(any(i["rule"] == "Symbolic Identity Mismatch" for i in issues))
         self.assertTrue(any(i["level"] == "FAIL" for i in issues))
+
+    # ---------------------------------------------------------------
+    # 12. Anonymize: compiled PDF must never reach the blind copy
+    # ---------------------------------------------------------------
+    def test_12_anonymize_excludes_build_products(self):
+        """A stale main.pdf carries the real name in text + metadata.
+
+        The blind-review copy must drop every build product that has a sibling
+        .tex, while keeping figure PDFs (which have no sibling .tex) so the
+        blind copy still compiles.
+        """
+        try:
+            from zhaw import anonymize
+        except Exception as exc:  # pragma: no cover - zhaw not installed
+            self.skipTest(f"zhaw package not importable: {exc}")
+
+        src = os.path.join(self.temp_dir, "thesis_leak")
+        os.makedirs(os.path.join(src, "figures"), exist_ok=True)
+        with open(os.path.join(src, "main.tex"), "w", encoding="utf-8") as f:
+            f.write("\\documentclass{ctexbook}\n\\begin{document}\n正文\n\\end{document}\n")
+        with open(os.path.join(src, "main.pdf"), "wb") as f:
+            f.write(b"%PDF-1.4 fake compiled output with real name")
+        with open(os.path.join(src, "figures", "curve.pdf"), "wb") as f:
+            f.write(b"%PDF-1.4 vector figure")
+
+        out = os.path.join(self.temp_dir, "thesis_blind")
+        report = anonymize.emit(src, out, force=True)
+
+        self.assertFalse(
+            os.path.exists(os.path.join(out, "main.pdf")),
+            "Compiled main.pdf must NOT be copied into the blind-review copy",
+        )
+        self.assertTrue(
+            os.path.exists(os.path.join(out, "figures", "curve.pdf")),
+            "Figure PDFs must be preserved so the blind copy still compiles",
+        )
+        self.assertIn("main.pdf", report.get("skipped_build_products", []))
+        self.assertTrue(os.path.exists(os.path.join(out, "LEAKS.md")))
 
 
 if __name__ == "__main__":

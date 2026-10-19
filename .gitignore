@@ -62,3 +62,8 @@ _demo/
 _attic/
 
 _ci_*/
+
+# 门禁运行产物
+audit_report.json
+audit_report.md
+LEAKS.md

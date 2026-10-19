@@ -15,10 +15,13 @@ pip install -e . && zhaw doctor && zhaw selftest
 ```
 
 `zhaw doctor` 打印环境体检（Python / PyMuPDF / XeLaTeX / 7 个门禁脚本）；
-`zhaw selftest` 用 11 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.35 秒）。
+`zhaw selftest` 用 12 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.35 秒）。
 
 **这套东西现在到底能做到什么程度？** 见 [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：
-22 个子命令逐个实测、11/11 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译。
+22 个子命令逐个实测、12/12 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译。
+
+**你是 AI Agent、要接手这个仓库？** 直接读 [`AGENTS.md`](AGENTS.md)——那是给机器看的说明书：
+仓库地图（哪些能改哪些别碰）、22 个命令按场景速查、四个任务剧本、以及**绝对不能做的六件事**。
 
 ---
 
@@ -132,7 +135,7 @@ zhaw doctor                         # Python / PyMuPDF / XeLaTeX / 7 个门禁�
 
 ### 3. 门禁自身对抗回归（11 个用例，零网络）
 ```bash
-zhaw selftest                       # 期望 11/11 PASS
+zhaw selftest                       # 期望 12/12 PASS
 ```
 
 ### 4. 四道门禁（一条命令，或分开跑）
@@ -207,3 +210,4 @@ pip install -e ".[full]"            # 一次装齐 scienceplots / sympy / python
 > **AGPL-3.0 / Artifex 商业双许可**。若你要把本项目打包成对外分发的软件，AGPL 的义务会传导到你，
 > 需要二选一：整体改用 AGPL-3.0 开源，或向 Artifex 购买商业许可。详见
 > [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md)。仅自己科研使用（不分发）没有这个义务。
+

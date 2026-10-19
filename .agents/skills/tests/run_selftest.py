@@ -3,7 +3,7 @@
 """
 run_selftest.py - Academic Quality Gates Adversarial Regression Test Runner
 
-Executes 11 core adversarial attack vectors, verifies that each DoD quality gate
+Executes 12 core adversarial attack vectors, verifies that each DoD quality gate
 correctly blocks adversarial attempts, and prints a structured benchmark table.
 """
 
@@ -103,6 +103,13 @@ TEST_SPECS = [
         "gate": "Math Reviewer",
         "input_desc": "True identity + '2 + 2 = 5' in display math",
         "expected": "FAIL (sympy diff != 0)",
+    },
+    {
+        "method": "test_12_anonymize_excludes_build_products",
+        "name": "Blind Review PDF Leak Rejection",
+        "gate": "Anonymizer",
+        "input_desc": "Stale main.pdf (real name inside) next to main.tex",
+        "expected": "PASS (PDF excluded, figures kept)",
     },
 ]
 

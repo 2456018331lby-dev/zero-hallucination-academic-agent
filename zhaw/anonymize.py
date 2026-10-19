@@ -33,6 +33,11 @@ SKIP_SUFFIXES = {
     ".synctex.gz", ".fls", ".fdb_latexmk", ".nav", ".snm", ".vrb", ".bcf", ".run.xml",
 }
 
+# 由 .tex 编译/导出而来的二进制成品（PDF/DOCX/PPTX）——**必须排除**：
+# 它们内嵌了真实姓名、学号与 PDF 元数据，复制进盲审版等于直接泄露。
+# 判定规则：同目录下存在同名 .tex 才算构建产物；figures/*.pdf 没有同名 .tex，予以保留。
+BUILD_PRODUCT_SUFFIXES = {".pdf", ".docx", ".pptx"}
+
 # 章节级：整块删除。标题里常有 \quad/\qquad 撑字距，所以先把排版命令剥掉再匹配。
 CHAPTER_TITLE_RE = re.compile(r"\\chapter\*?\{([^{}]*)\}")
 TITLE_NOISE_RE = re.compile(r"\\(?:quad|qquad|,|;|:|!| )|~|\s+")
@@ -256,6 +261,13 @@ def _anonymize_text(text: str, names: list[str]) -> str:
     return body
 
 
+def _is_build_product(src: Path) -> bool:
+    """同目录存在同名 .tex 的 PDF/DOCX/PPTX 是编译产物，含真实姓名，不可复制。"""
+    if src.suffix.lower() not in BUILD_PRODUCT_SUFFIXES:
+        return False
+    return src.with_suffix(".tex").exists()
+
+
 def emit(project: Path, out: Path, force: bool = False) -> dict:
     project = Path(project).resolve()
     out = Path(out).resolve()
@@ -269,12 +281,16 @@ def emit(project: Path, out: Path, force: bool = False) -> dict:
     out.mkdir(parents=True)
 
     copied = 0
+    skipped_build = []
     for src in sorted(project.rglob("*")):
         if src.is_dir():
             continue
         if any(part in SKIP_DIRS for part in src.parts):
             continue
         if src.suffix in SKIP_SUFFIXES or src.name.endswith(".synctex.gz"):
+            continue
+        if _is_build_product(src):
+            skipped_build.append(str(src.relative_to(project)))
             continue
         if src.resolve() == out or out in src.resolve().parents:
             continue
@@ -294,13 +310,19 @@ def emit(project: Path, out: Path, force: bool = False) -> dict:
                 "1. `\\author{}` → `\\author{匿名}`；2. 删除 `\\thanks{}`；3. 删除致谢章；",
                 "4. 删除攻读期间成果章；5. 删除基金声明；6. 姓名→「作者」；7. 邮箱/ORCID 打码。", "",
                 "## 必须人工再确认（机器管不了）", "",
+                "- **重新编译**：编译产物（PDF/DOCX）已全部排除，盲审版必须重新编译后再提交",
                 "- PDF 元数据里的作者名（xelatex 会写入 `\\author`）",
                 "- 图片/截图中的姓名、单位、水印",
                 "- 表格里的姓名列",
                 "- 参考文献中的自引（`[作者等, 2025]` 这种一眼能认出的）",
                 "- 正文叙述里的「我们实验室」「本课题组」等间接标识",
                 "- 致谢之外的章节里出现的导师姓名", "",
-                "## 泄露点清单", ""]
+                "## 已排除的编译产物（含真实姓名，禁止直接提交）", ""]
+    if skipped_build:
+        leaks_md += [f"- `{name}`" for name in skipped_build]
+    else:
+        leaks_md.append("无")
+    leaks_md += ["", "## 泄露点清单", ""]
     if result["leaks"]:
         leaks_md += ["| 文件 | 行 | 类型 | 内容 | 处理 |", "|---|---|---|---|---|"]
         for item in result["leaks"]:
@@ -317,6 +339,7 @@ def emit(project: Path, out: Path, force: bool = False) -> dict:
         "source": str(project),
         "output": str(out),
         "files_copied": copied,
+        "skipped_build_products": skipped_build,
         "leak_count": result["leak_count"],
         "kinds": result["kinds"],
         "author_names": names,

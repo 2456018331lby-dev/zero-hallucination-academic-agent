@@ -53,8 +53,11 @@
 | 9 | **CSV 数值与正文不一致（第 9 项，本轮新增）** | Gate 2 | PASS |
 | 10 | **引用已撤稿论文（本轮新增）** | Gate 1 | PASS |
 | 11 | **数学恒等式写错（本轮新增）** | Math Reviewer | PASS |
+| 12 | **盲审版 PDF 里残留真实姓名/学号（本轮新增）** | Anonymize | PASS |
 
-> 第 9 项是本轮把 Gate 2 从「有 CSV 就放行」升级为「逐单元格比对」后加的；第 10、11 项对应本轮新接入的撤稿检测与 sympy 符号验证。
+> 第 9 项是把 Gate 2 从「有 CSV 就放行」升级为「逐单元格比对」后加的；第 10、11 项对应撤稿检测与
+> sympy 符号验证；第 12 项对应盲审版 PDF 泄露——`anonymize` 现在默认排除所有编译产物，并在扫描阶段
+> 直接拦下带个人标识的 PDF/DOCX，而不是只在 `.tex` 里替换文本。
 
 ---
 
@@ -204,7 +207,7 @@ py -3.12 -m pip install -e .
 
 # 1) 环境与自测
 zhaw doctor
-zhaw selftest                          # 期望 11/11 PASS
+zhaw selftest                          # 期望 12/12 PASS
 
 # 2) 三工程门禁
 zhaw check bupt_isac_workflow\thesis_project        --scaffold --offline
@@ -232,7 +235,7 @@ zhaw archive  bupt_isac_workflow\thesis_project --out-dir _demo\archives --name 
 
 | 项 | 第一轮（`2c84fd6`） | 本轮 |
 |---|---|---|
-| 对抗用例 | 9 | **11** |
+| 对抗用例 | 9 | **12** |
 | 子命令 | 10 | **22** |
 | 端到端链路 | 门禁 + 编译 | **建工程→图→组会→开题→答辩→盲审→归档** |
 | 撤稿检测 | 无 | **有** |
@@ -249,3 +252,4 @@ zhaw archive  bupt_isac_workflow\thesis_project --out-dir _demo\archives --name 
 - 作为**写作辅助**：只到「脚手架 + 配额 + 缺口清单」这一层，正文得你自己写。
 - 作为**研究生科研基础设施**：组会（每 1–2 周）、开题、答辩、盲审、归档这五个高频场景都有命令覆盖；中期检查与投稿流程仍是空白。
 - 最大的剩余价值不在加功能，而在**把 bupt 那 8,547 字写成 30,000 字** —— 工具已经就位了。
+
