@@ -573,10 +573,22 @@ def cmd_read(args: argparse.Namespace) -> int:
     return OK if result["status"] == "PASS" else FAIL
 
 
+def _out_dir(args: argparse.Namespace, base: Path, default_name: str) -> Path:
+    """--out 未给时落到 <project>/<default_name>，不要写进调用者的 CWD。
+
+    历史 bug：默认值曾是裸 "submission"/"self_review"/"reports"，
+    相对路径按 CWD 解析 → 在仓库根跑一次就在仓库根堆出这些目录。
+    """
+    if getattr(args, "out", None):
+        return Path(args.out)
+    return Path(base) / default_name
+
+
 def cmd_submit(args: argparse.Namespace) -> int:
     from . import review as review_mod
 
-    result = review_mod.submit(Path(args.project), args.venue, Path(args.out))
+    project = Path(args.project)
+    result = review_mod.submit(project, args.venue, _out_dir(args, project, "submission"))
     print(review_mod.summary_submit(result))
     return OK if result["status"] == "PASS" else FAIL
 
@@ -584,7 +596,8 @@ def cmd_submit(args: argparse.Namespace) -> int:
 def cmd_review(args: argparse.Namespace) -> int:
     from . import review as review_mod
 
-    result = review_mod.review(Path(args.project), args.venue, Path(args.out))
+    project = Path(args.project)
+    result = review_mod.review(project, args.venue, _out_dir(args, project, "self_review"))
     print(review_mod.summary_review(result))
     return OK if result["major"] == 0 else FAIL
 
@@ -592,7 +605,8 @@ def cmd_review(args: argparse.Namespace) -> int:
 def cmd_rebuttal(args: argparse.Namespace) -> int:
     from . import review as review_mod
 
-    result = review_mod.rebuttal(Path(args.reviews), Path(args.out))
+    reviews = Path(args.reviews)
+    result = review_mod.rebuttal(reviews, _out_dir(args, reviews.parent, "rebuttal"))
     print(review_mod.summary_rebuttal(result))
     return OK if result["status"] == "PASS" else FAIL
 
@@ -600,7 +614,10 @@ def cmd_rebuttal(args: argparse.Namespace) -> int:
 def cmd_midterm(args: argparse.Namespace) -> int:
     from . import reports as reports_mod
 
-    result = reports_mod.midterm(Path(args.project), Path(args.out), target_hanzi=args.target)
+    project = Path(args.project)
+    result = reports_mod.midterm(
+        project, _out_dir(args, project, "reports"), target_hanzi=args.target
+    )
     print(reports_mod.summary_midterm(result))
     return OK
 
@@ -608,7 +625,8 @@ def cmd_midterm(args: argparse.Namespace) -> int:
 def cmd_weekly(args: argparse.Namespace) -> int:
     from . import reports as reports_mod
 
-    result = reports_mod.weekly(Path(args.project), Path(args.out), days=args.days)
+    project = Path(args.project)
+    result = reports_mod.weekly(project, _out_dir(args, project, "reports"), days=args.days)
     print(reports_mod.summary_weekly(result))
     return OK
 
@@ -835,30 +853,30 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("submit", help="投稿前检查 + cover letter + 投稿清单")
     p.add_argument("project", help="LaTeX project directory")
     p.add_argument("--venue", required=True, help="ieee-tvt|ieee-twc|ieee-tccn|ieee-comml|ieee-iotj|ieee-tap|ieee-access|arxiv|thesis")
-    p.add_argument("--out", "--out-dir", dest="out", default="submission", help="output directory (default: submission)")
+    p.add_argument("--out", "--out-dir", dest="out", default=None, help="output directory (default: <project>/submission)")
     p.set_defaults(func=cmd_submit)
 
     p = sub.add_parser("review", help="投稿前自审：用审稿人视角找会被拒的地方")
     p.add_argument("project", help="LaTeX project directory")
     p.add_argument("--venue", default="ieee-tvt", help="venue profile (default: ieee-tvt)")
-    p.add_argument("--out", "--out-dir", dest="out", default="self_review", help="output directory (default: self_review)")
+    p.add_argument("--out", "--out-dir", dest="out", default=None, help="output directory (default: <project>/self_review)")
     p.set_defaults(func=cmd_review)
 
     p = sub.add_parser("rebuttal", help="把审稿意见拆成条目，生成逐条回复模板")
     p.add_argument("reviews", help="审稿意见文本文件（.txt/.md）")
-    p.add_argument("--out", "--out-dir", dest="out", default="rebuttal", help="output directory (default: rebuttal)")
+    p.add_argument("--out", "--out-dir", dest="out", default=None, help="output directory (default: <project>/rebuttal)")
     p.set_defaults(func=cmd_rebuttal)
 
     # ---- 周期性汇报 -------------------------------------------------------- #
     p = sub.add_parser("midterm", help="中期检查报告：进度实测 + 表格骨架")
     p.add_argument("project", help="LaTeX project directory")
-    p.add_argument("--out", "--out-dir", dest="out", default="reports", help="output directory (default: reports)")
+    p.add_argument("--out", "--out-dir", dest="out", default=None, help="output directory (default: <project>/reports)")
     p.add_argument("--target", type=int, default=30000, help="total hanzi target (default 30000)")
     p.set_defaults(func=cmd_midterm)
 
     p = sub.add_parser("weekly", help="周报：字数/文献/图件的增量 + git 提交")
     p.add_argument("project", help="LaTeX project directory")
-    p.add_argument("--out", "--out-dir", dest="out", default="reports", help="output directory (default: reports)")
+    p.add_argument("--out", "--out-dir", dest="out", default=None, help="output directory (default: <project>/reports)")
     p.add_argument("--days", type=int, default=7, help="look-back window (default 7)")
     p.set_defaults(func=cmd_weekly)
 

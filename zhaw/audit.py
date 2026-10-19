@@ -8,6 +8,7 @@ numbers it observed.
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -188,11 +189,20 @@ def run_audit(
                     break
         grounding = _grounding(matrix_path, pdf_dir)
 
+    # 评分只数 DoD 的四道门（1/2/3/4）。`run_quality_gates.py` 一次跑 2-4 并写
+    # gate_summary.json，这里按组件拆开，避免把三道门折成一道、又把 Grounding 这个
+    # 诊断项算进分母（那会把 3/4 报成 2/4）。
+    component = gates234.get("gates") or {}
+
+    def _comp(key: str, fallback: str) -> str:
+        item = component.get(key) if isinstance(component, dict) else None
+        return item.get("status", fallback) if isinstance(item, dict) else fallback
+
     gate_status = {
         "Gate 1": gate1["status"],
-        "Gate 2-4": gates234["status"],
-        "Gate 3": gate3["status"],
-        "Grounding": grounding["status"],
+        "Gate 2": _comp("gate2_provenance", gates234["status"]),
+        "Gate 3": _comp("gate3_compliance", gate3["status"]),
+        "Gate 4": _comp("gate4_human_review", gates234["status"]),
     }
     readiness = _readiness(metrics, gate_status, signed)
 
@@ -212,10 +222,12 @@ def run_audit(
                           "pdf_dir": str(pdf_dir) if pdf_dir else None,
                           "tail": _tail(grounding["stdout"])},
         },
+        # DoD 四道门的逐项状态（评分与"差什么"都以它为准）
+        "gate_table": gate_status,
         "human_review": {"signed": signed, "reviewer": reviewer},
         "readiness": readiness,
     }
-    statuses = [v["status"] for v in report["gates"].values()]
+    statuses = list(gate_status.values()) + [grounding["status"]]
     report["overall"] = (
         "FAIL" if "FAIL" in statuses
         else "NOTICE" if any(s in ("NOTICE", "SKIP") for s in statuses)
@@ -253,7 +265,7 @@ def _render_markdown(report: dict) -> str:
         "",
         "| 维度 | 得分 | 权重 | 依据 |",
         "| --- | :---: | :---: | --- |",
-        f"| 门禁通过率 | {r['gate_score']} | {r['weights']['gates']} | {sum(1 for v in g.values() if v['status'] == 'PASS')}/4 项 PASS |",
+        f"| 门禁通过率 | {r['gate_score']} | {r['weights']['gates']} | {_dod_pass_text(report)} |",
         f"| 正文完成度 | {r['content_score']} | {r['weights']['content']} | {m['hanzi_total']} 汉字 / 目标 30,000 |",
         f"| 数据可溯源 | {r['data_score']} | {r['weights']['data']} | experiments/*.csv {'存在' if m['has_experiments_csv'] else '缺失'} |",
         f"| 参考文献量 | {r['refs_score']} | {r['weights']['refs']} | {m['refs']} 条 / 目标 60 |",
@@ -265,8 +277,9 @@ def _render_markdown(report: dict) -> str:
         "| 门禁 | 结果 | 观察到的证据 |",
         "| --- | :---: | --- |",
         f"| Gate 1 引文取证 | **{g['gate1']['status']}** | {_gate1_line(g['gate1'])} |",
-        f"| Gate 2-4 质量门禁 | **{g['gate2_4']['status']}** | {_gate234_line(g['gate2_4'])} |",
-        f"| Gate 3 国标合规 | **{g['gate3']['status']}** | {_last(g['gate3']['tail'])} |",
+        f"| Gate 2 数据溯源 | **{_dod_status(report, 'Gate 2')}** | {_gate234_evidence(g['gate2_4'], 'gate2_provenance')} |",
+        f"| Gate 3 国标合规 | **{_dod_status(report, 'Gate 3')}** | {_gate234_evidence(g['gate2_4'], 'gate3_compliance')} |",
+        f"| Gate 4 真人签署 | **{_dod_status(report, 'Gate 4')}** | {_gate234_evidence(g['gate2_4'], 'gate4_human_review')} |",
         f"| Grounding 页码取证 | **{g['grounding']['status']}** | {_last(g['grounding']['tail'])} |",
         "",
         "## 3. 手稿实测",
@@ -340,20 +353,85 @@ def _gate234_line(gate: dict) -> str:
     return _last(gate.get("tail", []))
 
 
+def _gate234_evidence(gate: dict, key: str) -> str:
+    """把某一道门自己的 details 摘要成一句，而不是把三/四道门串成一串。"""
+    gates = gate.get("gates") or {}
+    item = gates.get(key) if isinstance(gates, dict) else None
+    if not isinstance(item, dict):
+        return _last(gate.get("tail", []))
+    details = item.get("details")
+    if isinstance(details, list):
+        text = "；".join(str(d) for d in details if str(d).strip())
+    else:
+        text = str(details or "")
+    text = text.strip()
+    if not text:
+        # 有些门（如 Gate 3）不写 details，只把结论打在 stdout 里
+        picked: list[str] = []
+        for line in str(item.get("stdout") or "").splitlines():
+            flat = line.strip()
+            if not flat or _SEPARATOR_RE.match(flat):
+                continue
+            if "Results:" in flat or flat.startswith(("[WARNING]", "[ERROR]")):
+                picked.append(flat)
+            if len(picked) >= 3:
+                break
+        text = "；".join(picked) or "（无附加说明）"
+    return _cell(text, 160)
+
+
+def _dod_status(report: dict, name: str) -> str:
+    return (report.get("gate_table") or {}).get(name, "SKIP")
+
+
+def _dod_pass_text(report: dict) -> str:
+    table = report.get("gate_table") or {}
+    if not table:
+        return "（无门禁结果）"
+    ok = sum(1 for s in table.values() if s == "PASS")
+    failed = [n for n, s in table.items() if s not in ("PASS", "NOTICE")]
+    tail = f"，未过：{'、'.join(failed)}" if failed else ""
+    return f"{ok}/{len(table)} 项 PASS{tail}"
+
+
+def _cell(text: str, limit: int) -> str:
+    """Markdown 表格单元格里不能有裸 | 和换行。"""
+    flat = " ".join(str(text).split()).replace("|", "\\|")
+    return flat if len(flat) <= limit else flat[: limit - 1] + "…"
+
+
+_SEPARATOR_RE = re.compile(r"^[=\-*_~#]{8,}$")
+
+
 def _last(tail: list[str]) -> str:
-    return tail[-1].strip() if tail else "（无输出）"
+    for line in reversed(tail or []):
+        text = line.strip()
+        if text and not _SEPARATOR_RE.match(text):
+            return _cell(text, 160)
+    return "（无输出）"
 
 
 def _gaps(report: dict) -> list[str]:
     m = report["metrics"]
     g = report["gates"]
     gaps: list[str] = []
-    if g["gate1"]["status"] != "PASS":
-        gaps.append("**Gate 1 未过**：参考文献 author/卷期页与 Crossref 不一致，送审会被盲审抓。")
-    if g["gate2_4"]["status"] not in ("PASS", "NOTICE"):
-        gaps.append("**Gate 2 未过**：正文有 CSV 里找不到的定量断言，或国标合规失败。")
-    if g["gate3"]["status"] not in ("PASS", "NOTICE"):
-        gaps.append("**Gate 3 未过**：GB/T 7713.1-2006 / GB/T 7714-2015 合规检查未通过。")
+    table = report.get("gate_table") or {}
+    dod = {
+        "Gate 1": "**Gate 1 未过**：参考文献 author/卷期页与 Crossref 不一致，送审会被盲审抓。",
+        "Gate 2": "**Gate 2 未过**：正文有 CSV 里找不到的定量断言（数据溯源断了）。",
+        "Gate 3": "**Gate 3 未过**：GB/T 7713.1-2006 / GB/T 7714-2015 合规检查未通过。",
+        "Gate 4": "Gate 4 未签署 —— 这是设计如此，必须真人执行 `--confirm-review`。",
+    }
+    for name, message in dod.items():
+        status = table.get(name)
+        if status is None:
+            continue
+        if name == "Gate 4":
+            if not report["human_review"]["signed"]:
+                gaps.append(message)
+            continue
+        if status not in ("PASS", "NOTICE"):
+            gaps.append(message)
     if g["grounding"]["status"] == "FAIL":
         gaps.append("**Grounding 未过**：文献矩阵里的页码/特征词在本地 PDF 中核不到。")
     if not m["has_experiments_csv"]:
@@ -365,6 +443,4 @@ def _gaps(report: dict) -> list[str]:
         gaps.append(f"仍有 **{m['todo_total']}** 处 `\\TODO{{}}` 占位。")
     if m["refs"] < 60:
         gaps.append(f"参考文献 {m['refs']} 条，硕士论文常规要求 ≥60。")
-    if not report["human_review"]["signed"]:
-        gaps.append("Gate 4 未签署 —— 这是设计如此，必须真人执行 `--confirm-review`。")
     return gaps

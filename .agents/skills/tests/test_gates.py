@@ -551,5 +551,69 @@ class TestQualityGatesAdversarial(unittest.TestCase):
                          f"Correct [C] entry must not warn, got {right}")
 
 
+    def test_15_audit_gate_aggregation_is_honest(self):
+        """审计报告必须按 DoD 四道门逐项计数，不能把 3/4 报成 2/4。
+
+        历史 bug：gate_status 里放了 {"Gate 1", "Gate 2-4", "Gate 3", "Grounding"}，
+        run_quality_gates.py 一次跑完 Gate 2/3/4 只算一项，Grounding 又是 SKIP，
+        于是 3 道真门 PASS 被算成 2/4 = 50 分。
+        """
+        repo_root = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+        if repo_root not in sys.path:
+            sys.path.insert(0, repo_root)
+        try:
+            from zhaw import audit
+        except Exception as exc:  # pragma: no cover - packaging not installed
+            self.skipTest(f"zhaw not importable: {exc}")
+
+        metrics = {"hanzi_total": 30000, "has_experiments_csv": True,
+                   "todo_total": 0, "refs": 60}
+        table = {"Gate 1": "PASS", "Gate 2": "PASS", "Gate 3": "PASS", "Gate 4": "FAIL"}
+        readiness = audit._readiness(metrics, table, signed=False)
+        self.assertEqual(readiness["gate_score"], 75.0,
+                         f"3/4 PASS must score 75.0, got {readiness['gate_score']}")
+
+        text = audit._dod_pass_text({"gate_table": table})
+        self.assertIn("3/4 项 PASS", text)
+        self.assertIn("Gate 4", text)
+
+        # Gate 3 的 details 为空、只有 stdout 时，证据列不能输出一串 '=====' 分隔符
+        gate = {"gates": {"gate3_compliance": {
+            "status": "PASS",
+            "stdout": "=====\n[*] Results: 0 ERROR(s), 1 WARNING(s).\n=====\n",
+        }}}
+        evidence = audit._gate234_evidence(gate, "gate3_compliance")
+        self.assertIn("0 ERROR", evidence)
+        self.assertNotIn("=====", evidence, f"separator leaked into table: {evidence}")
+
+
+    def test_16_default_output_dir_stays_in_project(self):
+        """--out 不给时，产物必须落在 <project>/ 下，不能落到调用者的 CWD。
+
+        历史 bug：submit/review/rebuttal/midterm/weekly 的 --out 默认值是裸
+        "submission"/"self_review"/"reports"，相对路径按 CWD 解析 → 在仓库根
+        跑一次就在仓库根堆出这些目录（和 gate_summary.json 同一类 bug）。
+        """
+        repo_root = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+        if repo_root not in sys.path:
+            sys.path.insert(0, repo_root)
+        try:
+            from zhaw import cli
+        except Exception as exc:  # pragma: no cover
+            self.skipTest(f"zhaw not importable: {exc}")
+
+        class Args:
+            out = None
+
+        base = os.path.join(repo_root, "_demo", "scenario", "paper")
+        got = cli._out_dir(Args(), base, "submission")
+        self.assertEqual(os.path.abspath(str(got)),
+                         os.path.abspath(os.path.join(base, "submission")))
+
+        Args.out = "custom_dir"
+        got = cli._out_dir(Args(), base, "submission")
+        self.assertEqual(str(got), "custom_dir", "explicit --out must win verbatim")
+
+
 if __name__ == "__main__":
     unittest.main()

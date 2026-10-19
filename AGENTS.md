@@ -23,7 +23,7 @@
 cd <repo>
 py -3.12 -m pip install -e ".[full]"   # 首次
 zhaw doctor                            # 环境体检，应输出 RESULT: READY
-zhaw selftest                          # 14 项对抗测试，应输出 14/14 PASSED
+zhaw selftest                          # 16 项对抗测试，应输出 16/16 PASSED
 ```
 
 `selftest` 不过，说明**门禁本身坏了**，此时任何审计结论都不可信，先修门禁。
@@ -37,7 +37,7 @@ zhaw selftest                          # 14 项对抗测试，应输出 14/14 PA
 | 路径 | 是什么 | AI 该不该动 |
 |---|---|---|
 | `zhaw/` | **唯一入口**，29 子命令的 CLI 实现 | ✅ 要改就改这里 |
-| `.agents/skills/` | **核心资产**，8 个技能 + 14 项对抗测试 | ✅ 门禁逻辑在这里 |
+| `.agents/skills/` | **核心资产**，8 个技能 + 16 项对抗测试 | ✅ 门禁逻辑在这里 |
 | `bupt_isac_workflow/` | 主力工程（北邮 085402 ISAC 双交付） | ⚠️ 只在用户要求时改内容 |
 | `ris_thesis_workflow/` | 验收夹具（证明门禁可复用） | ⚠️ 同上 |
 | `pku_thesis_workflow/` | 初号机 / 反面教材（曾整体编造数据） | ❌ 当历史标本，别「修好」它 |
@@ -63,7 +63,7 @@ zhaw selftest                          # 14 项对抗测试，应输出 14/14 PA
 ### 环境与自检
 ```powershell
 zhaw doctor                     # 环境体检
-zhaw selftest                   # 14 项对抗测试
+zhaw selftest                   # 16 项对抗测试
 ```
 
 ### 四道门禁（可单独跑）

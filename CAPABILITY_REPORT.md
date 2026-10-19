@@ -57,11 +57,17 @@
 | 12 | 数学恒等式写错（sympy 反证 `2+2=5`） | Math Reviewer | PASS |
 | 13 | 盲审版里残留编译产物（PDF/DOCX 携带真名） | Anonymize | PASS |
 | 14 | 页眉/PDF 元数据/正文残留校名与学院名 | Anonymize | PASS |
+| 15 | 审计报告把 3/4 门禁 PASS 报成 2/4 | Audit Report | PASS |
+| 16 | `--out` 不给时产物写进调用者 CWD（污染仓库根） | CLI | PASS |
 
 > 第 4、5 项是把 Gate 2 从「有 CSV 就放行」升级为「逐单元格比对 + 认中文数字」后加的；
 > 第 11、12 项对应撤稿检测与 sympy 符号验证；第 13、14 项对应冷启动实测挖出的
 > 12 类盲审泄露——`anonymize` 现在默认排除所有编译产物，并清理页眉校名、PDF 元数据、
 > 封面机构名，产物落盘后还会自检复扫。
+> 第 15、16 项是**用自己写论文时暴露的两类聚合/默认值 bug**：门禁计数把
+> `Gate 2/3/4` 合成一项、Grounding SKIP 也算分母，导致 3 道真门 PASS 报成 2/4；
+> 以及 `submit/review/midterm/weekly` 的 `--out` 默认值是裸相对路径，
+> 在仓库根跑一次就在仓库根堆出 `submission/`、`self_review/`。
 
 ---
 
@@ -263,7 +269,7 @@ py -3.12 -m pip install -e .
 
 # 1) 环境与自测
 zhaw doctor
-zhaw selftest                          # 期望 14/14 PASS
+zhaw selftest                          # 期望 16/16 PASS
 
 # 2) 三工程门禁
 zhaw check bupt_isac_workflow\thesis_project        --scaffold --offline

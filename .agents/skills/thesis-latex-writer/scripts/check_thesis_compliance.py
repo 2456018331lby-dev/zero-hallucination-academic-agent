@@ -165,7 +165,20 @@ def check_thesis(project_dir, scaffold_mode=False, strict=False, min_bib=60, jso
                 })
 
             # (B) 占位符/脚手架泄漏检测
+            # 例外：宏定义行本身不算泄漏。`\providecommand{\TODO}[1]{...}` 只是定义
+            # 了占位符命令，真正该抓的是它的**调用**。若把定义行判为 ERROR，用户就只能
+            # 删掉宏定义——而宏定义恰恰是防止占位符被静默遗忘的机制，删掉反而更危险。
+            _defined_macros = set()
+            for _m in re.finditer(
+                r"\\(?:providecommand|newcommand|renewcommand|DeclareRobustCommand)\*?\s*\{\\([A-Za-z]+)\}",
+                stripped_code,
+            ):
+                _defined_macros.add(_m.group(1).lower())
+            for _m in re.finditer(r"\\def\s*\\([A-Za-z]+)", stripped_code):
+                _defined_macros.add(_m.group(1).lower())
             for pat in PLACEHOLDER_PATTERNS:
+                if pat.lower() in _defined_macros:
+                    continue
                 if re.search(pat, stripped_code, re.I):
                     lvl = "WARNING" if scaffold_mode else "ERROR"
                     issues.append({

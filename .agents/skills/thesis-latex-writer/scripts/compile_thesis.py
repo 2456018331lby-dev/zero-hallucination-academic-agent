@@ -14,6 +14,7 @@ Features:
 import os
 import re
 import sys
+import time
 import shutil
 import argparse
 import subprocess
@@ -119,12 +120,30 @@ def compile_pdf(tex_dir, tex_file="main.tex", strict=False):
                     break
         if bibtex:
             print("[*] Running BibTeX (bibliography detected)...")
-            bib = subprocess.run(
-                [bibtex, os.path.splitext(tex_file)[0]],
-                cwd=tex_dir, env=env, capture_output=True, text=True, errors="ignore",
-            )
-            bibtex_log = (bib.stdout or "") + (bib.stderr or "")
-            if "I found no \\citation" in bibtex_log or "error message" in bibtex_log.lower():
+            # MiKTeX 25.12 的 bibtex.exe 有一个非确定性的堆损坏 bug：完全相同的调用会随机
+            # 返回 rc=0（正常生成 .bbl）或 rc=3221226356 (0xC0000374 STATUS_HEAP_CORRUPTION)。
+            # 崩溃时 .bbl/.blg 都是 0 字节、stdout 全空 —— 表现成「bibtex 跑了但什么都没生成」，
+            # 随后所有 \cite 变成 undefined，而编译工具还以为一切正常。
+            # 实测同一条命令连跑三次：rc=0 / 崩溃 / rc=0。所以不能只跑一次，必须重试，
+            # 并以 .bbl 产物（存在且非空）作为成功判据，而不是只看返回码。
+            bbl_path = os.path.join(tex_dir, os.path.splitext(tex_file)[0] + ".bbl")
+            bib = None
+            for attempt in range(4):
+                bib = subprocess.run(
+                    [bibtex, os.path.splitext(tex_file)[0]],
+                    cwd=tex_dir, env=None, capture_output=True, text=True, errors="ignore",
+                )
+                if os.path.exists(bbl_path) and os.path.getsize(bbl_path) > 0:
+                    if attempt:
+                        print(f"    [~] BibTeX crashed {attempt} time(s) and succeeded on retry "
+                              f"(MiKTeX heap-corruption bug)")
+                    break
+                if attempt < 3:
+                    time.sleep(0.2)
+            bibtex_log = (bib.stdout or "") + (bib.stderr or "") if bib else ""
+            if not (os.path.exists(bbl_path) and os.path.getsize(bbl_path) > 0):
+                print("    [!] BibTeX failed after 4 attempts — .bbl is empty, citations will be undefined.")
+            elif "I found no \\citation" in bibtex_log or "error message" in bibtex_log.lower():
                 print("    [!] BibTeX reported a problem:")
                 print("    " + bibtex_log.strip().splitlines()[-1][:200])
         else:
@@ -163,6 +182,12 @@ def compile_pdf(tex_dir, tex_file="main.tex", strict=False):
 
     if os.path.exists(pdf_path):
         size_kb = os.path.getsize(pdf_path) / 1024
+        # 有 LaTeX 错误时 xelatex 仍会吐出一个（残缺的）PDF，早先这里只看 PDF 是否存在，
+        # 于是 2 个 LaTeX Error + 14 条未定义引文也照样打印 "Successfully compiled"。
+        # 现在把 errors 也算作失败信号：PDF 生成了不等于编译成功了。
+        if log_summary["errors"]:
+            print(f"[-] PDF produced but LaTeX reported {len(log_summary['errors'])} error(s): {pdf_path} ({size_kb:.1f} KB)")
+            return False
         print(f"[OK] Successfully compiled PDF: {pdf_path} ({size_kb:.1f} KB)")
         if strict and (log_summary["overfull"] or log_summary["undefined"]):
             print("[-] Strict mode failure: severe overfull boxes or undefined references present.", file=sys.stderr)

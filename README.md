@@ -18,7 +18,7 @@ pip install -e . && zhaw doctor && zhaw selftest
 `zhaw selftest` 用 14 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.4 秒）。
 
 **这套东西现在到底能做到什么程度？** 见 [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：
-29 个子命令逐个实测、14/14 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译（13 处泄露全清、产物默认排除）。
+29 个子命令逐个实测、16/16 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译（13 处泄露全清、产物默认排除）。
 
 **你是 AI Agent、要接手这个仓库？** 直接读 [`AGENTS.md`](AGENTS.md)——那是给机器看的说明书：
 仓库地图（哪些能改哪些别碰）、29 个命令按场景速查、四个任务剧本、以及**绝对不能做的六件事**。
@@ -137,7 +137,7 @@ zhaw doctor                         # Python / PyMuPDF / XeLaTeX / 7 个门禁�
 
 ### 3. 门禁自身对抗回归（14 个用例，零网络）
 ```bash
-zhaw selftest                       # 期望 14/14 PASS
+zhaw selftest                       # 期望 16/16 PASS
 ```
 
 ### 4. 四道门禁（一条命令，或分开跑）

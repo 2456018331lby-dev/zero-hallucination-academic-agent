@@ -3,7 +3,7 @@
 """
 run_selftest.py - Academic Quality Gates Adversarial Regression Test Runner
 
-Executes 14 core adversarial attack vectors, verifies that each DoD quality gate
+Executes 16 core adversarial attack vectors, verifies that each DoD quality gate
 correctly blocks adversarial attempts, and prints a structured benchmark table.
 """
 
@@ -124,6 +124,20 @@ TEST_SPECS = [
         "gate": "Gate 1: Citation Gate",
         "input_desc": "Conference paper (Crossref proceedings-article) recorded as [J]",
         "expected": "WARN (declared [J] != Crossref type)",
+    },
+    {
+        "method": "test_15_audit_gate_aggregation_is_honest",
+        "name": "Audit Gate Aggregation Honesty",
+        "gate": "Audit Report",
+        "input_desc": "3 of 4 DoD gates PASS + Gate 3 evidence only in stdout",
+        "expected": "PASS (scores 3/4 = 75.0, no separator junk in evidence column)",
+    },
+    {
+        "method": "test_16_default_output_dir_stays_in_project",
+        "name": "Default Output Dir Stays In Project",
+        "gate": "CLI",
+        "input_desc": "zhaw submit/review without --out",
+        "expected": "PASS (writes <project>/submission, never caller CWD)",
     },
 ]
 def run_all_selftests():
