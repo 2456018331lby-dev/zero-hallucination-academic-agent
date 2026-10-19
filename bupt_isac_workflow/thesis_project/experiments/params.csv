@@ -1,0 +1,2 @@
+fc_hz,bw_hz,df_hz,m_sc,n_t,n_r,k_user,u_uav,p_max_dbm,noise_dbm,noise_dbm_per_sc,v_max,h_uav,d_min,d_max,d_ref,theta_deg,alpha2,n_sym,rice_k_db,beta_edge,sigma2,p_max_w,user_angles_deg,user_dist_m,seed
+2.8e+10,1e+08,120000,1024,32,16,4,2,35,-94,-124.103,25,100,10,3000,500,25,9.5e-16,16,10,1.22942e-15,3.88777e-16,3.16228,-42.22;-29.67;4.14;28.61,1389.6;2885.8;2833.4;1073.0,20261019

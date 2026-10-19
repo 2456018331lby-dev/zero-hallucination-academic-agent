@@ -70,15 +70,44 @@ def todo_count(text: str) -> int:
     return len(re.findall(r"\\TODO\s*\{", text))
 
 
-def count_refs(bib_path: Path) -> int:
-    """Count BibTeX entries.
+_BIBITEM_RE = re.compile(r"^\s*\\bibitem(?:\[[^\]]*\])?\s*\{", re.MULTILINE)
 
-    Accepts either the ``.bib`` file itself or the project directory that holds
-    ``references.bib`` — callers used to pass the directory and crashed with
+
+def count_bibitems(project_dir: Path) -> int:
+    """Count ``\\bibitem`` entries in a hand-written ``thebibliography`` block."""
+    project_dir = Path(project_dir)
+    if not project_dir.is_dir():
+        return 0
+    for pattern in ("chapters/references.tex", "references.tex", "chapters/*.tex", "*.tex"):
+        total = 0
+        for p in sorted(project_dir.glob(pattern)):
+            if p.is_file():
+                total += len(_BIBITEM_RE.findall(read_text(p)))
+        if total:
+            return total
+    return 0
+
+
+def count_refs(bib_path: Path) -> int:
+    """Count the *effective* bibliography of a thesis project.
+
+    Two legitimate layouts exist and they must not be conflated:
+
+    * BibTeX layout — ``\\bibliography{references}`` plus ``references.bib``;
+    * hand-written layout — ``\\begin{thebibliography}`` with ``\\bibitem``.
+
+    Callers used to pass the project *directory* and crashed with
     ``PermissionError: [Errno 13]`` when ``read_text`` tried to open a folder.
+    They also silently read ``references.bib`` even when the thesis actually
+    printed a ``thebibliography`` block, so the reported reference count could
+    be wildly wrong (16 instead of 62 in one real project).  Prefer whichever
+    layout actually exists; only fall back to the ``.bib`` file.
     """
     path = Path(bib_path)
     if path.is_dir():
+        bibitems = count_bibitems(path)
+        if bibitems:
+            return bibitems
         path = path / "references.bib"
     if not path.is_file():
         return 0
@@ -121,7 +150,7 @@ def thesis_metrics(project_dir: Path) -> dict:
         "per_chapter": per_chapter,
         "hanzi_total": total_hanzi,
         "todo_total": total_todo,
-        "refs": count_refs(project_dir / "references.bib"),
+        "refs": count_refs(project_dir),
         "has_experiments_csv": any((project_dir / "experiments").glob("*.csv"))
         if (project_dir / "experiments").is_dir()
         else False,

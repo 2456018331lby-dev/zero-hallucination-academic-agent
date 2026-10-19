@@ -293,11 +293,18 @@ def check_thesis(project_dir, scaffold_mode=False, strict=False, min_bib=60, jso
                     rel_fig = os.path.relpath(full_p, project_dir).replace("\\", "/")
                     base_name = fn
                     base_no_ext = os.path.splitext(fn)[0]
+                    fig_stem = os.path.splitext(rel_fig)[0]
                     # 检查是否被引用
                     matched = False
                     for rg in referenced_graphics:
                         rg_norm = rg.replace("\\", "/")
                         if rg_norm in (rel_fig, base_name, base_no_ext, f"figures/{base_name}", f"figures/{base_no_ext}"):
+                            matched = True
+                            break
+                        # 同名不同扩展名视为同一图件：LaTeX 的 \includegraphics{figures/foo}
+                        # 不写扩展名时自动选 .pdf，而 figures/ 下并存 foo.pdf 与 foo.png
+                        # （.png 供人眼预览）。按 stem 比较可避免误报死文件。
+                        if os.path.splitext(rg_norm)[0] == fig_stem:
                             matched = True
                             break
                     if not matched:

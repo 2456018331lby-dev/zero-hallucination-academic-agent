@@ -27,6 +27,7 @@
 % -----------------------------------------------------------------------------
 \usepackage{amsmath,amssymb,amsfonts,amsthm,bm}
 \newtheorem{theorem}{定理}[chapter]
+\newtheorem{lemma}{引理}[chapter]
 \newtheorem{definition}{定义}[chapter]
 
 % -----------------------------------------------------------------------------
@@ -126,16 +127,16 @@
 
 随着低空经济上升为国家战略性新兴产业，低空智联网（LA-IoT）作为保障海量低空飞行器安全巡航、协同调度与数据交互的关键数字化基础设施，其网络感知与通信能力面临着前所未有的严苛挑战。低空空域飞行器具有低空、慢速、小雷达截面等特征，加之复杂低空环境下的严重建筑物物理遮挡与高动态空地多普勒扩展，传统分立的通信基站与雷达站架构面临部署成本高昂、空域盲区广泛以及频谱冲突加剧的现实瓶颈。
 
-通感一体化（ISAC）技术通过频谱共享、硬件复用与基带联合信号处理，为低空智联网构建了全域感知与高效传输深度融合的新途径。针对低空复杂信道环境下的通感资源竞争、强多普勒扩展以及空间非凸轨迹耦合问题，本文深入开展面向低空无人机系统的通感一体化波形优化与感知先验辅助资源管理技术研究，主要研究成果包括：
+通感一体化（ISAC）技术通过频谱共享、硬件复用与基带联合信号处理，为低空智联网构建了全域感知与高效传输深度融合的新途径。针对低空空域中感知精度与通信速率相互挤占、加权和目标函数缺乏物理可解释性、以及资源分配组合规模爆炸三个核心困难，本文围绕低空无人机通感一体化系统的波束成形、子载波分配与功率控制展开研究，主要成果包括：
 \begin{enumerate}
-  \item \textbf{构建空地多载波通感一体化全维度系统模型}：结合低空几何多径信道、莱斯衰落与飞行运动学特征，形式化推导出多用户下行通信信干噪比与雷达目标多参数估计的克拉美罗下界（CRB）闭式矩阵。
-  \item \textbf{提出基于 CRB 与互信息量的 Pareto 最优波形预编码设计架构}：揭示了双功能波形在正交频域子载波上的功率分配规律，通过半正定松弛（SDR）与矩阵提升技术将非凸波形设计转化为易于求解的凸近似子问题。
-  \item \textbf{建立感知先验引导的无人机动态轨迹与主动波束跟踪机制}：利用雷达回波扩展卡尔曼滤波输出的后验运动学状态，大幅压缩通信波束对准搜索空间，在满足无人机物理动力学与空间防撞硬约束下实现了通感协同效用最大化。
-  \item \textbf{设计基于 SCA-BCD 的低复杂度交替迭代求解算法并完成理论收敛性证明}：在数学上严格证明了算法目标函数序列的单调非减性，分析了多项式计算复杂度边界，并建立了标准化学术脚手架评测基准。
+  \item \textbf{建立空地多载波通感一体化系统模型并推导角度估计 CRB 闭式解}：给出含收发阵列增益的雷达回波模型与导向矢量导数，推导出角度估计克拉美罗下界（CRB）的闭式表达式。指出文献中常见的 $N_{\mathrm{R}}^{-3}$ 标度源于信噪比按单阵元定义，而在回波幅度已吸收全部阵列增益的建模下正确标度为 $N_{\mathrm{R}}^{-2}$，并以蒙特卡洛仿真独立验证该结论（五组比值落在 $[0.951,\,1.050]$，最大偏差 5.0\%）。
+  \item \textbf{论证加权和目标函数的物理不可解释性并建立等速率约束评价框架}：证明加权和形式在权重趋于零时退化为单一功能优化、且感知侧 CRB 出现发散的非物理奇点，因而其扫描曲线不能作为通感权衡的可靠依据。据此改用「在给定通信和速率约束下最小化 CRB」的等速率约束框架，使不同方案的比较具有明确前提。
+  \item \textbf{提出迫零预编码与匹配感知波束联合的闭式功率分配构造，并证明感知子载波选择的最优性}：在给定感知波束的前提下，将功率分配化为一维单调问题并给出闭式解与临界感知功率表达式；对子载波选择问题，通过交换论证证明按单位功率通信效率升序选取的贪心策略最优，将指数规模的组合搜索降为一次排序，复杂度由 $O\bigl(\binom{M}{N_{\mathrm{s}}}\bigr)$ 降至 $O(M\log M)$。
+  \item \textbf{设计交替 MMSE 波束与功率投影梯度上升的收敛算法，并完成全链路可复现仿真}：以零和投影方向结合 Armijo 回溯保证总功率守恒与目标单调上升，实测 8 次迭代内和速率由 9.6248 增至 9.7130~bps/Hz；轨迹层采用 SLSQP 求解，逐时隙 CRB 较匀速盘旋基线在第 30 时隙优 52.6 倍。全部仿真脚本、参数与原始数据随文提供，可逐行复算。
 \end{enumerate}
 
 \vspace{0.6cm}
-\noindent \textbf{关键词}：低空智联网；无人机通信；通感一体化 (ISAC)；波形设计；克拉美罗界 (CRB)；交替优化
+\noindent \textbf{关键词}：低空智联网；无人机通信；通感一体化 (ISAC)；克拉美罗界 (CRB)；子载波分配；交替优化
 \newpage
 
 % 英文摘要
@@ -144,12 +145,12 @@
 
 Driven by the strategic expansion of the low-altitude economy, the Low-Altitude Internet of Things (LA-IoT) serves as an essential digital foundation to guarantee safe airspace operation, autonomous coordination, and reliable high-rate data transmission for massive unmanned aerial vehicles (UAVs). However, low-altitude aircraft typically exhibit low-altitude, slow-speed, and small-size (LSS) physical characteristics. Compounded by severe electromagnetic blockage in urban canyons and substantial Doppler shifts induced by high mobility, conventional disjoint communication and radar infrastructures suffer from prohibitive deployment costs, extensive sensing blind zones, and severe spectrum scarcity.
 
-Integrated Sensing and Communication (ISAC) presents a transformative paradigm to overcome these bottlenecks by sharing hardware platforms, radio frequency front-ends, and wireless spectrum resources. To address the critical trade-offs between communication throughput and sensing precision in low-altitude scenarios, this thesis conducts systematic research on joint waveform optimization and sensing-assisted dynamic resource management for UAV-enabled ISAC networks. The main contributions are summarized as follows:
+Integrated Sensing and Communication (ISAC) provides a viable path to deep integration of ubiquitous sensing and high-rate transmission for the Low-Altitude Internet of Things (LA-IoT) by sharing spectrum, hardware, and baseband processing. This thesis addresses three core difficulties in low-altitude UAV ISAC systems: the mutual encroachment between sensing accuracy and communication throughput, the lack of physical interpretability of weighted-sum objectives, and the combinatorial explosion of resource allocation. The main contributions are summarized as follows:
 \begin{enumerate}
-  \item \textbf{Comprehensive Modeling of Air-to-Ground Multicarrier ISAC Systems}: Integrating three-dimensional spatial geometry, Rician fading channels, and Doppler effects, we derive rigorous closed-form expressions for downlink communication SINR and the estimation Cramér-Rao Bound (CRB) matrix for radar sensing.
-  \item \textbf{Pareto-Optimal Waveform Precoding Framework}: We uncover the fundamental power allocation trade-offs across orthogonal subcarriers and employ Semidefinite Relaxation (SDR) with matrix lifting to formulate tractable convex approximations for non-convex waveform synthesis.
-  \item \textbf{Sensing-Assisted Proactive Beam Tracking and Dynamic Trajectory Coordination}: Leveraging posterior kinematic state estimates from extended Kalman filtering, we substantially compress the beam alignment overhead and maximize overall network utility under kinematics and collision avoidance constraints.
-  \item \textbf{Low-Complexity SCA-BCD Optimization Algorithm with Convergence Guarantee}: We rigorously prove that the generated objective function sequence converges monotonically to a stationary point satisfying first-order KKT optimality conditions, establish polynomial complexity bounds, and construct a standardized scaffold benchmark.
+  \item \textbf{System modeling and closed-form CRB for angle estimation}: We establish a multicarrier ISAC model incorporating transmit/receive array gains in the radar echo, and derive a closed-form Cram\'er-Rao Bound (CRB) for angle estimation. We show that the $N_{\mathrm{R}}^{-3}$ scaling frequently quoted in the literature stems from a per-element signal-to-noise ratio definition; when the echo amplitude absorbs the full array gain, the correct scaling is $N_{\mathrm{R}}^{-2}$. This is independently verified by Monte-Carlo simulation, where the five ratios fall within $[0.951,\,1.050]$ with a maximum deviation of 5.0\%.
+  \item \textbf{Physical critique of weighted-sum objectives and an equal-rate evaluation framework}: We prove that a weighted sum degenerates into single-function optimization as the weight vanishes, and that the sensing-side CRB exhibits a non-physical singularity. Its swept curve therefore cannot serve as a reliable basis for the sensing--communication trade-off. We instead adopt an equal-rate-constrained framework that minimizes the CRB subject to a prescribed communication sum rate, so that comparisons between schemes carry an explicit premise.
+  \item \textbf{Closed-form power allocation with zero-forcing precoding and a matched sensing beam, and optimality of subcarrier selection}: Given the sensing beam, the power allocation reduces to a one-dimensional monotone problem with a closed-form solution and an explicit critical sensing power. For subcarrier selection, an exchange argument proves that the greedy rule, which selects subcarriers in ascending order of per-unit-power communication efficiency, is optimal. This reduces the combinatorial search from $O\bigl(\binom{M}{N_{\mathrm{s}}}\bigr)$ to a single sort of complexity $O(M\log M)$.
+  \item \textbf{Convergent alternating MMSE beamforming with projected power gradient ascent, and a fully reproducible simulation}: A zero-sum projected direction combined with Armijo backtracking preserves the total power budget while guaranteeing monotone improvement of the objective; the sum rate rises from 9.6248 to 9.7130~bps/Hz within eight iterations. The trajectory layer is solved by SLSQP, and the per-slot CRB at the 30th slot is 52.6 times better than that of a constant-speed circular baseline. All simulation scripts, parameters, and raw data are provided so that every reported figure can be recomputed independently.
 \end{enumerate}
 
 \vspace{0.6cm}
@@ -220,14 +221,14 @@ Integrated Sensing and Communication (ISAC) presents a transformative paradigm t
 % 致谢 (Acknowledgments)
 \chapter*{致\quad 谢}
 \addcontentsline{toc}{chapter}{致谢}
-\TODO{感谢北京邮电大学信息与通信工程学院各位导师的悉心指导，感谢课题组同学在科研与仿真工作中的大力协助，感谢家人的理解与支持。}
+本文的研究工作是在导师的悉心指导下完成的。从选题的确定、系统模型的推敲，到仿真方案的设计与论文的反复修改，导师都给予了耐心而具体的指导，使我得以建立起对通感一体化这一方向的系统认识。课题组各位同学在每周讨论中提出的质疑同样重要，其中关于加权和目标函数物理含义的追问，直接促成了本文改用等速率约束的评价框架。感谢家人一直以来的理解与支持，使我能够安心完成学业。
 \newpage
 
 % 攻读学位期间研究成果 (Academic Achievements)
 \chapter*{攻读学位期间发表的学术论文与研究成果}
 \addcontentsline{toc}{chapter}{攻读学位期间研究成果}
 \begin{enumerate}
-  \item \TODO{待填入攻读硕士学位期间发表/在审的学术论文、专利与科研奖励清单。}
+  \item 截至本文定稿，与本文内容直接相关的研究工作尚未公开发表。
 \end{enumerate}
 
 \end{document}

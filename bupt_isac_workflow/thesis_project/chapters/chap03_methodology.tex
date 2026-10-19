@@ -1,8 +1,460 @@
 % -*- coding: utf-8 -*-
-\chapter{面向低空无人机的通感一体化波形与资源管理}
+\chapter{等速率约束下的通感一体化波束赋形与资源分配}
 \label{chap:methodology}
 
-\input{chapters/chap03/chap03_sec01_system_model.tex}
-\input{chapters/chap03/chap03_sec02_waveform_design.tex}
-\input{chapters/chap03/chap03_sec03_sensing_assisted_comm.tex}
-\input{chapters/chap03/chap03_sec04_algorithm_and_convergence.tex}
+本章给出全文的理论主体。第~\ref{sec:model} 节建立低空无人机空地多载波通感一体化系统模型，并推导均匀线阵角度估计克拉美罗下界的闭式表达式；第~\ref{sec:problem} 节说明为何采用"等通信速率下最小化感知 CRB"的建模方式而非加权和目标，并给出问题形式化；第~\ref{sec:beamforming} 节给出波束赋形与功率分配的可行构造；第~\ref{sec:subcarrier} 节证明子载波选择的最优性；第~\ref{sec:trajectory} 节建立轨迹优化模型；第~\ref{sec:complexity} 节分析复杂度；第~\ref{sec:method_summary} 节小结。
+
+\section{系统模型}
+\label{sec:model}
+
+\subsection{场景与几何关系}
+\label{sec:scenario}
+
+考虑一个下行通感一体化基站同时服务 $K$ 个地面通信用户并感知 $U$ 架低空无人机目标。基站配置 $N_{\mathrm{T}}$ 根天线的均匀线阵（ULA），无人机目标与通信用户均为单天线。系统采用正交频分复用（OFDM）体制，子载波总数 $M$，子载波间隔 $\Delta f$，系统带宽 $B=M\Delta f$，一个感知帧包含 $N_{\mathrm{sym}}$ 个 OFDM 符号。
+
+记第 $k$ 个通信用户相对基站法向的到达角为 $\theta_k$，第 $u$ 架无人机目标相对基站法向的方位角为 $\theta_u$。以基站为原点建立三维直角坐标系，无人机水平位置记为 $\mathbf{q}_u=[x_u,y_u]^{\mathrm{T}}$，飞行高度 $H$，则基站到目标的距离为
+\begin{equation}
+  d_u=\sqrt{\lVert\mathbf{q}_u\rVert^{2}+H^{2}}.
+  \label{eq:distance}
+\end{equation}
+低空场景下目标与基站之间通常存在直射分量，同时受地面与建筑反射影响，信道采用莱斯衰落建模，莱斯因子记为 $K_{\mathrm{R}}$。
+
+\subsection{通信信道与可达速率}
+\label{sec:comm}
+
+第 $k$ 个用户在子载波 $m$ 上的下行信道建模为
+\begin{equation}
+  \mathbf{h}_{k,m}=\sqrt{\beta_k}\,\Bigl(\sqrt{\tfrac{K_{\mathrm{R}}}{K_{\mathrm{R}}+1}}\,\mathbf{a}(\theta_k)
+  +\sqrt{\tfrac{1}{K_{\mathrm{R}}+1}}\,\tilde{\mathbf{h}}_{k,m}\Bigr),
+  \label{eq:channel}
+\end{equation}
+其中 $\beta_k$ 为大尺度路损，$\mathbf{a}(\theta)\in\mathbb{C}^{N_{\mathrm{T}}\times 1}$ 为阵列导向矢量，$\tilde{\mathbf{h}}_{k,m}\sim\mathcal{CN}(\mathbf{0},\mathbf{I})$ 为散射分量。采用半波长均匀线阵时
+\begin{equation}
+  \mathbf{a}(\theta)=\frac{1}{\sqrt{N_{\mathrm{T}}}}\Bigl[1,\,e^{j\pi\sin\theta},\,\ldots,\,e^{j\pi(N_{\mathrm{T}}-1)\sin\theta}\Bigr]^{\mathrm{T}}.
+  \label{eq:ula}
+\end{equation}
+
+基站对每个用户采用线性预编码 $\mathbf{w}_{k,m}\in\mathbb{C}^{N_{\mathrm{T}}\times 1}$，功率为 $p_{k,m}$；对感知目标采用专用感知波束 $\mathbf{w}_{s}$，功率为 $p_{s}$。记子载波 $m$ 上的通信用户集合为 $\mathcal{K}_m$，则用户 $k$ 在子载波 $m$ 上的可达速率为
+\begin{equation}
+  R_{k,m}=\log_2\!\left(1+\frac{p_{k,m}\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{2}}
+  {\sigma^{2}+\sum_{j\in\mathcal{K}_m\setminus\{k\}}p_{j,m}\lvert\mathbf{h}_{k,m}\mathbf{w}_{j,m}\rvert^{2}
+  +p_{s}\lvert\mathbf{h}_{k,m}\mathbf{w}_{s}\rvert^{2}}\right),
+  \label{eq:rate}
+\end{equation}
+其中 $\sigma^{2}$ 为单子载波噪声功率。系统和速率为 $R_{\mathrm{sum}}=\sum_{m=1}^{M}\sum_{k\in\mathcal{K}_m}R_{k,m}$。
+
+需要强调的是，式~\eqref{eq:channel} 中 $\mathbf{h}_{k,m}$ 为\textbf{行向量}，即接收信号写作 $y=\mathbf{h}\mathbf{x}+n$。这一约定贯穿全文，后文所有增益一律写作 $\lvert\mathbf{h}\mathbf{w}\rvert^{2}$ 而非 $\lvert\mathbf{h}^{\mathrm{H}}\mathbf{w}\rvert^{2}$；两种写法在复信道上给出的数值完全不同，混淆会导致功率分配出现数量级错误。
+
+\subsection{感知回波与角度估计}
+\label{sec:sensing}
+
+基站发射的感知波束照射到无人机目标后产生回波。目标相对基站的方位角 $\theta$ 由回波的空域相位差决定。对单个快拍，阵列接收回波可写为
+\begin{equation}
+  \mathbf{y}=\alpha\,\mathbf{a}(\theta)s+\mathbf{n},
+  \label{eq:echo}
+\end{equation}
+其中 $s$ 为已知发射符号（满足 $\lvert s\rvert^{2}=p_{s}$），$\alpha$ 为包含双程路损与目标雷达散射截面积（RCS）的复幅度，$\mathbf{n}\sim\mathcal{CN}(\mathbf{0},\sigma^{2}\mathbf{I})$ 为噪声。
+
+按雷达方程，回波与发射功率之比为
+\begin{equation}
+  \frac{P_{\mathrm{r}}}{P_{\mathrm{t}}}=\frac{G_{\mathrm{t}}G_{\mathrm{r}}\lambda^{2}\varsigma}{(4\pi)^{3}d^{4}},
+  \label{eq:radar_eq}
+\end{equation}
+其中 $G_{\mathrm{t}},G_{\mathrm{r}}$ 为收发天线增益，$\lambda$ 为波长，$\varsigma$ 为目标 RCS，$d$ 为作用距离。式~\eqref{eq:radar_eq} 表明回波功率随距离呈\textbf{四次方}衰减，这是低空感知必须依靠大阵列增益与近距离飞行的根本原因。
+
+\subsection{角度估计 CRB 的闭式推导}
+\label{sec:crb}
+
+\begin{theorem}[角度估计克拉美罗下界]
+\label{thm:crb}
+在式~\eqref{eq:echo} 模型下，若目标角度 $\theta$ 未知而 $\alpha$ 为确定性未知复参数，则 $\theta$ 的无偏估计方差满足
+\begin{equation}
+  \mathrm{Var}(\hat{\theta})\ \ge\ \mathrm{CRB}(\theta)
+  =\frac{6\,\sigma^{2}}{\pi^{2}\cos^{2}\theta\,\bigl(N_{\mathrm{R}}^{2}-1\bigr)\lvert\alpha\rvert^{2}N_{\mathrm{sym}}\,G(\theta)},
+  \label{eq:crb_final}
+\end{equation}
+其中 $N_{\mathrm{R}}$ 为接收阵元数，$G(\theta)=\mathbf{a}^{\mathrm{H}}(\theta)\mathbf{R}_{x}\mathbf{a}(\theta)$ 为发射波形在目标方向上的感知增益，$\mathbf{R}_{x}$ 为发射协方差矩阵。
+\end{theorem}
+
+\begin{proof}[证明要点]
+对式~\eqref{eq:echo} 取对数似然并对 $(\theta,\alpha)$ 求 Fisher 信息矩阵。记 $\dot{\mathbf{a}}(\theta)=\partial\mathbf{a}(\theta)/\partial\theta$，则关于 $\theta$ 的 Fisher 信息为
+\begin{equation}
+  J_{\theta\theta}=\frac{2\lvert\alpha\rvert^{2}N_{\mathrm{sym}}}{\sigma^{2}}
+  \Bigl(\dot{\mathbf{a}}^{\mathrm{H}}\dot{\mathbf{a}}-\frac{\lvert\dot{\mathbf{a}}^{\mathrm{H}}\mathbf{a}\rvert^{2}}{\mathbf{a}^{\mathrm{H}}\mathbf{a}}\Bigr)G(\theta).
+  \label{eq:fisher}
+\end{equation}
+括号内即 $\dot{\mathbf{a}}$ 在 $\mathbf{a}$ 正交补上的投影能量，记作 $\Pi(\theta)$。对半波长 ULA 有 $\mathbf{a}^{\mathrm{H}}\mathbf{a}=1$，$\dot{\mathbf{a}}=j\pi\cos\theta\,\mathbf{D}\mathbf{a}$，其中 $\mathbf{D}=\mathrm{diag}(0,1,\ldots,N_{\mathrm{R}}-1)$，代入可得
+\begin{equation}
+  \Pi(\theta)=\pi^{2}\cos^{2}\theta\cdot\frac{N_{\mathrm{R}}^{2}-1}{12}.
+  \label{eq:perp}
+\end{equation}
+将式~\eqref{eq:perp} 代入式~\eqref{eq:fisher}，取倒数即得式~\eqref{eq:crb_final}。
+\end{proof}
+
+式~\eqref{eq:crb_final} 揭示了三条对系统设计具有直接指导意义的结论。
+
+\textbf{其一，CRB 随 $N_{\mathrm{R}}^{-2}$ 标度。} 由于 $\Pi(\theta)\propto N_{\mathrm{R}}^{2}-1$，阵元数加倍可使 CRB 降至约四分之一，等效于角度标准差减半。需要特别指出，文献中常见的"$\mathrm{CRB}\propto N^{-3}$"表述源于将信噪比定义为\textbf{单阵元}信噪比；本文 $\lvert\alpha\rvert^{2}$ 为包含全部阵列增益的总回波幅度，故正确标度为 $N_{\mathrm{R}}^{-2}$。第~\ref{sec:crb_verify} 节的蒙特卡洛实验对这一标度给出了数值确认：$N_{\mathrm{R}}$ 由 8 增至 32 时 CRB 标准差由 $1.916\times10^{-3}$ 降至 $4.755\times10^{-4}$，比值 4.03，与理论值 4 吻合。
+
+\textbf{其二，CRB 与感知增益 $G(\theta)$ 成反比。} 由于 $G(\theta)=\mathbf{a}^{\mathrm{H}}\mathbf{R}_{x}\mathbf{a}$ 是发射协方差在目标方向上的二次型，把功率集中到目标方向可线性降低 CRB，这正是匹配感知波束的依据。
+
+\textbf{其三，CRB 与 $\cos^{2}\theta$ 成反比。} 当目标接近阵列端射方向（$\theta\to\pm90^{\circ}$）时 CRB 急剧恶化，这是阵列孔径在端射方向投影变短的几何后果，也是低空场景需对端射方向目标增加观测时长的原因。
+
+\subsection{接收端信号处理与两类功能的解耦}
+\label{sec:receiver}
+
+发射端在空间域合成通信与感知两类波束后，接收端的处理决定了二者能否在同一时频资源上共存而不相互毁灭。对第 $m$ 个子载波，地面基站的接收信号可写为
+\begin{equation}
+  \mathbf{y}_{m} = \underbrace{\sum_{u=1}^{U}\alpha_{u,m}\mathbf{a}(\theta_u)\mathbf{a}^{\mathrm{T}}(\theta_u)\mathbf{x}_{m}}_{\text{目标回波}}
+  + \underbrace{\sum_{k=1}^{K}\beta_{k,m}\mathbf{a}(\phi_k)\mathbf{a}^{\mathrm{T}}(\phi_k)\mathbf{x}_{m}}_{\text{杂波与直达波泄露}}
+  + \mathbf{n}_{m},
+  \label{eq:rx}
+\end{equation}
+其中 $\alpha_{u,m}$ 与 $\beta_{k,m}$ 分别为目标与杂波源的双程复幅度，$\mathbf{n}_{m}$ 为加性高斯白噪声。式~\eqref{eq:rx} 揭示了一个关键事实：回波项与杂波项都正比于同一个发射信号 $\mathbf{x}_{m}$，因此无法通过在时域或频域上"避开"杂波来分离目标，只能在空间域上分离。
+
+本文采用与目标方向匹配的接收空域滤波器
+\begin{equation}
+  \mathbf{w}_{\mathrm{r}}(\theta_u) = \frac{\mathbf{a}(\theta_u)}{\|\mathbf{a}(\theta_u)\|} = \frac{\mathbf{a}(\theta_u)}{\sqrt{N_{\mathrm{R}}}},
+  \label{eq:rx_filter}
+\end{equation}
+经该滤波器后，目标回波被相干合并，增益为 $N_{\mathrm{R}}$；而来自其他方向的杂波被非相干抑制。这一处理与第三章后续的发射端匹配感知波束在数学形式上互为转置，体现了通感一体化中"发射聚焦、接收匹配"的对偶性。
+
+在通信侧，第 $k$ 个用户接收到的信号为 $\mathbf{h}_{k,m}^{\mathrm{T}}\mathbf{x}_{m}$，其可达速率由式~\eqref{eq:rate} 给出。需要说明的是，感知波束对通信用户构成干扰，这一干扰已显式计入式~\eqref{eq:rate} 的分母，而非被忽略。正是这一干扰项的存在，使感知功率与通信速率之间产生了不可回避的耦合：增加感知功率会同时提高感知增益 $G(\theta)$ 与通信干扰电平，二者的净效果取决于波束的空间分离度。
+
+本文在建模中作三项理想化假设：其一，假设基站已知目标的先验角度 $\theta$ 与通信用户的信道状态信息，即理想 CSI；其二，假设收发端严格同步，忽略定时与载波频偏；其三，假设目标在单个相干处理间隔内静止或匀速。这三项假设在第~\ref{sec:limitation} 节被明确列为适用边界。作出这些假设并非因为它们容易满足，而是因为它们把问题从"估计与优化的联合设计"简化为"给定信息下的资源分配"，从而使 CRB 这一精度下界可以被解析地优化。若放松假设，问题将退化为联合估计与优化，超出本文范围。
+
+\section{等速率 CRB 最小化问题建模}
+\label{sec:problem}
+
+\subsection{为何不采用加权和目标}
+\label{sec:why_not_weighted}
+
+通感一体化文献中广泛采用加权和目标
+\begin{equation}
+  \max\ \ \rho\,\frac{R_{\mathrm{sum}}}{R_{0}}-(1-\rho)\,\frac{\mathrm{CRB}}{\mathrm{CRB}_{0}},\qquad \rho\in[0,1],
+  \label{eq:weighted}
+\end{equation}
+以权重 $\rho$ 刻画通信与感知的偏好。本文不采用该形式，原因是它在物理上不可解释。
+
+当 $\rho\to0$ 时式~\eqref{eq:weighted} 退化为单纯最小化 CRB。此时最优解会把全部功率投入感知，通信速率趋于零；而 $\mathrm{CRB}$ 虽随功率单调下降，却在感知功率达到上限后饱和。更严重的是，若把 CRB 直接置于分母或取倒数构造效用，则在无回波功率（例如目标位于波束零陷）时 $\mathrm{CRB}\to\infty$，效用函数出现非物理的奇点，优化问题的解不连续。
+
+因此本文改用\textbf{等速率约束}：将通信速率固定为某一目标值 $R_{\mathrm{target}}$，在此前提下最小化感知 CRB。该建模有两个优点：其一，两个指标量纲独立、无需归一化权重，结论不受 $\rho$ 取值影响；其二，对比不同方案时可以保证它们\textbf{消耗相同的通信资源}，从而公平地比较感知性能。
+
+\subsection{问题形式化}
+\label{sec:p1}
+
+记 $\mathcal{M}_{s}$ 为分配给感知的子载波集合，$n_{s}=\lvert\mathcal{M}_{s}\rvert$，$\mathcal{M}_{c}=\mathcal{M}\setminus\mathcal{M}_{s}$ 为通信子载波集合。等速率 CRB 最小化问题可写为
+\begin{equation}
+  \begin{aligned}
+    \mathcal{P}_{1}:\quad \min_{\{\mathbf{w}_{k,m}\},\,\mathbf{w}_{s},\,\{p_{k,m}\},\,p_{s},\,\mathcal{M}_{s}}\ \ &
+    \mathrm{CRB}(\theta)\\
+    \text{s.t.}\quad & R_{\mathrm{sum}}\ \ge\ R_{\mathrm{target}},\\
+    & \sum_{m\in\mathcal{M}_{c}}\sum_{k\in\mathcal{K}_m}p_{k,m}+p_{s}\ \le\ P_{\max},\\
+    & p_{k,m}\ge0,\quad p_{s}\ge0,\\
+    & \lvert\mathcal{M}_{s}\rvert=n_{s}.
+  \end{aligned}
+  \label{eq:p1}
+\end{equation}
+
+问题 $\mathcal{P}_{1}$ 是非凸的：其一，速率约束式~\eqref{eq:rate} 关于波束与功率是分式形式，非凸；其二，子载波集合 $\mathcal{M}_{s}$ 是离散组合变量，可行域规模为 $\binom{M}{n_{s}}$；其三，CRB 通过 $G(\theta)$ 与波束耦合。若直接采用半正定松弛（SDR），需引入 $\mathbf{W}=\mathbf{w}\mathbf{w}^{\mathrm{H}}$ 并对秩一约束松弛，但松弛后的解需额外随机化才能恢复秩一，且随机化过程会破坏速率约束的可行性。
+
+本文不采用 SDR，而是构造一个\textbf{可行且可复现}的解：以迫零或最小均方误差波束固定空间自由度，以一维闭式解给出功率分配，以排序加交换论证确定子载波集合，再以序列二次规划求解轨迹。该构造不声称求解了 $\mathcal{P}_{1}$ 的全局最优，但在第~\ref{sec:exp_selection} 节将证明其在子载波维度上是最优的。
+
+\subsection{可行域结构与临界速率}
+\label{sec:feasibility}
+
+问题 $\mathcal{P}_{1}$ 的可行域并非总是非空。由迫零条件，第 $k$ 个用户在第 $m$ 个子载波上达到目标信干噪比 $\gamma$ 所需的最小功率为
+\begin{equation}
+  p_{k,m}^{\min} = \frac{\gamma\,\sigma^{2}}{\lvert\mathbf{h}_{k,m}^{\mathrm{T}}\mathbf{w}_{k,m}\rvert^{2}},
+  \label{eq:pmin}
+\end{equation}
+其中分母是迫零波束在用户方向上的等效信道增益。由于迫零波束把其他用户的干扰置零，分母仅取决于该用户自身的信道与波束，因此所需总功率
+\begin{equation}
+  P_{\mathrm{req}}(\gamma) = \sum_{m=1}^{M}\sum_{k=1}^{K} p_{k,m}^{\min}(\gamma)
+  \label{eq:preq_sum}
+\end{equation}
+是 $\gamma$ 的严格单调递增函数：$\gamma$ 每提高 3\,dB，$P_{\mathrm{req}}$ 约翻一倍。
+
+由此可得临界目标速率
+\begin{equation}
+  \gamma_{\max} = \max\left\{\gamma : P_{\mathrm{req}}(\gamma) + p_{s} \le P_{\max}\right\}.
+  \label{eq:gmax}
+\end{equation}
+当 $\gamma > \gamma_{\max}$ 时，可行域为空集，问题无解。这一结论并非数学上的技术性细节，而是第四章仿真中一个必须如实报告的现象：在 $P_{\max}=35$\,dBm、$M=1024$、$K=4$ 的配置下，$\gamma_{\max}$ 约为 6\,dB 至 8\,dB 之间，因此第四章的 Pareto 曲线止于 $\gamma = 6$\,dB，$\gamma = 8$\,dB 及其以上的点被判为不可行而未绘出。
+
+识别这一边界具有两重意义。其一，它说明"通感一体化可以任意提高速率而不损失感知"的说法在功率受限系统中不成立，存在硬性的物理上限。其二，它提示工程设计中子载波数与功率预算应当匹配：增大 $M$ 会按比例增大 $P_{\mathrm{req}}$（因为每个子载波都要满足速率约束），因此单纯增加带宽并不能无限提升可支持的目标速率。
+
+\subsection{问题的非凸性来源}
+\label{sec:nonconvex}
+
+$\mathcal{P}_{1}$ 是典型的非凸问题，其非凸性来自两个彼此独立的来源。
+
+\textbf{来源一：速率约束的对数行列式结构。} 多用户速率 $\sum_k \log_2(1+\mathrm{SINR}_k)$ 关于波束矩阵 $\mathbf{W}$ 既非凸也非凹。即使采用加权和速率这一经典形式，其全局最优解仍需借助 WMMSE 等迭代算法逼近，且不保证收敛到全局最优。
+
+\textbf{来源二：CRB 对波束的双线性依赖。} 感知增益 $G(\theta)=\mathbf{a}^{\mathrm{H}}(\theta)\mathbf{R}_{x}\mathbf{a}(\theta)$ 关于发射协方差矩阵 $\mathbf{R}_{x}$ 是线性的，但 $\mathbf{R}_{x}=\sum_{k}\mathbf{W}_{k}\mathbf{W}_{k}^{\mathrm{H}}$ 关于 $\mathbf{W}$ 是二次的。目标函数 $\mathrm{CRB}\propto 1/G(\theta)$ 是 $G$ 的凸减函数，复合后关于 $\mathbf{W}$ 既不凸也不凹。
+
+若把优化变量从波束矩阵 $\mathbf{W}$ 换成协方差矩阵 $\mathbf{R}_{x}$，则 CRB 目标变为凸的（因为 $1/G$ 是 $G$ 的凸函数而 $G$ 关于 $\mathbf{R}_{x}$ 线性），速率约束在引入辅助变量后可借助半正定松弛转为凸约束——这正是文献\cite{fu2024joint,zuo2025robust}采用的技术路线。但该路线需要额外的秩一恢复步骤，而随机化恢复会破坏速率约束的可行性。
+
+本文因此不采用"先松弛再恢复"的路线，而是直接构造满足全部约束的可行解：先由迫零或 MMSE 确定波束方向，再由闭式表达确定功率，最后由排序确定子载波集合。这一路线放弃了全局最优性保证，换取了三点确定性：解一定可行、一定可复现、每一步的物理含义都可解释。本文在第四章据此明确声明所报告的是"可行构造加局部最优"，而非 $\mathcal{P}_{1}$ 的全局最优。
+
+\section{波束赋形与功率分配}
+\label{sec:beamforming}
+
+\subsection{迫零通信波束}
+\label{sec:zf}
+
+记子载波 $m$ 上 $K$ 个用户的信道矩阵为 $\mathbf{H}_{m}=[\mathbf{h}_{1,m};\ldots;\mathbf{h}_{K,m}]\in\mathbb{C}^{K\times N_{\mathrm{T}}}$（按行堆叠）。迫零预编码取
+\begin{equation}
+  \mathbf{W}_{m}=\mathbf{H}_{m}^{\mathrm{H}}\bigl(\mathbf{H}_{m}\mathbf{H}_{m}^{\mathrm{H}}\bigr)^{-1},
+  \label{eq:zf}
+\end{equation}
+于是 $\mathbf{H}_{m}\mathbf{W}_{m}=\mathbf{I}_{K}$，即用户 $k$ 的单位功率波束满足 $\mathbf{h}_{k,m}\mathbf{w}_{k,m}=1$ 且对其他用户零陷。此时式~\eqref{eq:rate} 中的用户间干扰项为零，速率仅由本用户信号功率与感知波束泄漏决定。
+
+迫零的代价是损失部分阵列增益：当天线数 $N_{\mathrm{T}}$ 远大于用户数 $K$ 时，每用户有效增益约为 $(N_{\mathrm{T}}-K+1)/N_{\mathrm{T}}$，这是空间自由度被用于零陷的必然结果。仿真中 $N_{\mathrm{T}}=32$、$K=4$，实测 $\lvert\mathbf{h}\mathbf{w}\rvert^{2}/\beta$ 稳定在 0.93–1.00 区间，与理论一致。
+
+\subsection{最小均方误差波束}
+\label{sec:mmse}
+
+当干扰不可忽略时，迫零并非最优。最小均方误差（MMSE）波束由
+\begin{equation}
+  \mathbf{w}_{k,m}=\frac{\mathbf{R}_{k,m}^{-1}\mathbf{h}_{k,m}^{\mathrm{H}}}
+  {\lVert\mathbf{R}_{k,m}^{-1}\mathbf{h}_{k,m}^{\mathrm{H}}\rVert},
+  \qquad
+  \mathbf{R}_{k,m}=\sigma^{2}\mathbf{I}+\sum_{j\ne k}p_{j,m}\mathbf{h}_{j,m}^{\mathrm{H}}\mathbf{h}_{j,m}+p_{s}\mathbf{w}_{s}\mathbf{w}_{s}^{\mathrm{H}}
+  \label{eq:mmse}
+\end{equation}
+给出，其中 $\mathbf{R}_{k,m}$ 为干扰加噪声协方差。注意 $\mathbf{h}_{j,m}^{\mathrm{H}}\mathbf{h}_{j,m}$ 是一个 $N_{\mathrm{T}}\times N_{\mathrm{T}}$ 矩阵，由行向量 $\mathbf{h}_{j,m}$ 与其共轭转置的外积构成，不可写成 $\mathbf{h}_{j,m}\mathbf{h}_{j,m}^{\mathrm{H}}$（后者是标量）。
+
+MMSE 波束依赖功率分配，而功率分配又依赖波束，二者构成不动点问题。第~\ref{sec:exp_convergence} 节采用"固定功率求 MMSE 波束、固定波束沿和速率梯度调整功率"的交替迭代，实测 8 次迭代内和速率单调上升并趋于平台。
+
+\subsection{匹配感知波束}
+\label{sec:matched_beam}
+
+为最大化目标方向上的感知增益 $G(\theta)=\mathbf{a}^{\mathrm{H}}\mathbf{R}_{x}\mathbf{a}$，在感知功率 $p_{s}$ 给定时应将感知波束对准目标方向：
+\begin{equation}
+  \mathbf{w}_{s}=\frac{\mathbf{a}(\theta)}{\lVert\mathbf{a}(\theta)\rVert}=\mathbf{a}(\theta),
+  \label{eq:matched}
+\end{equation}
+最后一个等号利用了 $\lVert\mathbf{a}(\theta)\rVert=1$。此时 $G(\theta)=p_{s}\lvert\mathbf{a}^{\mathrm{H}}\mathbf{w}_{s}\rvert^{2}+\text{通信波束贡献}=p_{s}+\sum_{m}\sum_{k}p_{k,m}\lvert\mathbf{a}^{\mathrm{H}}\mathbf{w}_{k,m}\rvert^{2}$。
+
+匹配波束的物理含义是相干合并：全部 $N_{\mathrm{R}}$ 个阵元的回波同相叠加，接收信噪比获得 $N_{\mathrm{R}}$ 倍阵列增益，这正是定理~\ref{thm:crb} 中 $N_{\mathrm{R}}^{2}$ 因子的来源之一。
+
+\subsection{一维闭式功率分配}
+\label{sec:power}
+
+在波束固定后，功率分配问题降为一维。给定目标信干噪比 $\gamma$，迫零条件下满足速率要求的最小发射功率为
+\begin{equation}
+  p_{k,m}=\frac{\gamma\,\sigma^{2}}{\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{2}},
+  \qquad
+  \gamma=2^{R_{\mathrm{target}}/(KM)}-1,
+  \label{eq:min_power}
+\end{equation}
+其中感知波束泄漏已计入分母。于是给定感知功率 $p_{s}$ 时的最小总功率为
+\begin{equation}
+  P_{\mathrm{req}}(p_{s})=\sum_{m\in\mathcal{M}_{c}}\sum_{k\in\mathcal{K}_m}\frac{\gamma\,(\sigma^{2}+p_{s}\lvert\mathbf{h}_{k,m}\mathbf{w}_{s}\rvert^{2})}{\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{2}}.
+  \label{eq:preq}
+\end{equation}
+
+\begin{lemma}[可行感知功率区间]
+\label{lem:feasible}
+若式~\eqref{eq:preq} 中 $\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{2}>0$ 对所有 $(k,m)$ 成立，则 $P_{\mathrm{req}}(p_{s})$ 关于 $p_{s}$ 单调不减，且存在唯一的临界感知功率
+\begin{equation}
+  p_{s}^{\max}=\frac{P_{\max}-\gamma\sigma^{2}\sum_{m,k}\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{-2}}
+  {\gamma\sum_{m,k}\lvert\mathbf{h}_{k,m}\mathbf{w}_{s}\rvert^{2}/\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{2}},
+  \label{eq:ps_max}
+\end{equation}
+使 $P_{\mathrm{req}}(p_{s}^{\max})=P_{\max}$。当 $p_{s}^{\max}\le0$ 时问题不可行。
+\end{lemma}
+
+引理~\ref{lem:feasible} 给出了感知与通信功率竞争的直接判据：分母项 $\sum_{m,k}\lvert\mathbf{h}_{k,m}\mathbf{w}_{s}\rvert^{2}/\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{2}$ 度量了感知波束对通信用户的\textbf{泄漏强度}，泄漏越大，可用于感知的功率越少。第~\ref{sec:exp_tradeoff} 节的 Pareto 曲线即由该引理逐点计算得到。
+
+\subsection{时隙划分基线}
+\label{sec:timesharing}
+
+作为对照，时隙划分方案将一帧按占空比 $\eta$ 划分为感知时隙与通信时隙，两者分时工作、互不干扰。设感知时隙占空比为 $\mathrm{duty}=1-\eta$，则等效 CRB 为
+\begin{equation}
+  \mathrm{CRB}_{\mathrm{TS}}=\frac{\mathrm{CRB}\bigl(P_{\max}\bigr)}{\mathrm{duty}},
+  \label{eq:ts}
+\end{equation}
+即感知只在 $\mathrm{duty}$ 比例的时间内积累 Fisher 信息。该基线的优点是实现简单、无自干扰，缺点是同一时刻只能做一件事。第~\ref{sec:exp_tradeoff} 节将表明，在相同通信速率下联合优化方案的 CRB 始终低于时隙划分，这正是通感一体化的核心价值。
+
+\subsection{功率分配结构的最优性讨论}
+\label{sec:power_opt}
+
+前一小节给出的"通信功率取满足速率约束的最小值、剩余功率全部用于感知"这一结构，并非人为规定的启发式规则，而是可以证明的最优结构。下面给出论证。
+
+固定波束矩阵 $\mathbf{W}$ 与子载波集合后，问题退化为关于功率向量的优化：
+\begin{equation}
+  \begin{aligned}
+    \min_{\mathbf{p},\,p_{s}}\quad & \mathrm{CRB}(\mathbf{p},p_{s}) = \frac{6\sigma^{2}}{\pi^{2}\cos^{2}\theta\,(N_{\mathrm{R}}^{2}-1)\lvert\alpha\rvert^{2}N_{\mathrm{sym}}\,G(\theta)} \\
+    \text{s.t.}\quad & \textstyle\sum_{k}p_{k} + p_{s} \le P_{\max},\quad p_{k}\ge p_{k}^{\min},\quad p_{s}\ge 0,
+  \end{aligned}
+  \label{eq:power_opt}
+\end{equation}
+其中感知增益可展开为
+\begin{equation}
+  G(\theta) = \sum_{k}p_{k}\,\lvert\mathbf{a}^{\mathrm{H}}(\theta)\mathbf{w}_{k}\rvert^{2} + p_{s}\,\lvert\mathbf{a}^{\mathrm{H}}(\theta)\mathbf{w}_{s}\rvert^{2}.
+  \label{eq:G_expand}
+\end{equation}
+
+观察式~\eqref{eq:G_expand} 可见，$G(\theta)$ 关于每个 $p_{k}$ 与 $p_{s}$ 都是线性的，且系数非负。因此目标函数 $\mathrm{CRB}\propto 1/G$ 关于每个功率变量严格单调递减。这意味着：在总功率约束下，把任何一单位功率从通信转移到感知，只要不违反速率约束，就一定会降低 CRB。
+
+据此可分两步求解。第一步，把通信功率压到可行下界 $p_{k} = p_{k}^{\min}$，此时剩余功率为
+\begin{equation}
+  p_{s}^{\mathrm{opt}} = P_{\max} - \sum_{k}p_{k}^{\min}.
+  \label{eq:ps_opt}
+\end{equation}
+第二步，若 $p_{s}^{\mathrm{opt}} > 0$，则由单调性，最优解即为 $(p_{k}^{\min},\,p_{s}^{\mathrm{opt}})$；若 $p_{s}^{\mathrm{opt}} < 0$，则问题在给定 $\gamma$ 下不可行，需按第~\ref{sec:feasibility} 节降低 $\gamma$。
+
+上述两步只涉及一次求和与一次比较，复杂度为 $O(K)$，因此本文称之为"一维闭式功率分配"。它与穷举或内点法的区别不在于精度，而在于它利用了问题结构，把二维搜索降为零维闭式。需要强调的是，这一结构的最优性依赖于"感知增益关于功率线性"这一性质，而该性质又依赖于匹配感知波束固定不变。若允许感知波束随功率变化而重新优化，则线性性被破坏，闭式解不再成立——这是本文方法的一个明确边界。
+
+\section{子载波分配与最优性证明}
+\label{sec:subcarrier}
+
+\subsection{选择模型}
+\label{sec:selection}
+
+将 $M$ 个子载波划分为感知集合 $\mathcal{M}_{s}$ 与通信集合 $\mathcal{M}_{c}$。通信速率随通信子载波数增加而增加，感知 CRB 随感知子载波数增加而下降，二者构成频域权衡。
+
+对每个子载波 $m$，定义其在\textbf{单位功率}下的通信效率
+\begin{equation}
+  \mu_{m}=\frac{1}{K}\sum_{k=1}^{K}\log_2\!\Bigl(1+\frac{(P_{\max}/M)\lvert\mathbf{h}_{k,m}\mathbf{w}_{k,m}\rvert^{2}}{\sigma^{2}}\Bigr),
+  \label{eq:mu}
+\end{equation}
+并将子载波按 $\mu_{m}$ 升序排列。直观上，通信效率最低的子载波最"不值得"用于通信，应优先划给感知。
+
+\subsection{交换论证与最优性}
+\label{sec:exchange}
+
+\begin{theorem}[子载波选择的最优性]
+\label{thm:selection}
+若各子载波的感知贡献相同（即目标方向增益 $G$ 与子载波无关），则在给定感知子载波数 $n_{s}$ 时，使通信和速率最大的子载波划分是"按 $\mu_{m}$ 升序取前 $n_{s}$ 个作为感知子载波"。
+\end{theorem}
+
+\begin{proof}
+采用交换论证。设最优划分中存在 $i\in\mathcal{M}_{s}$、$j\in\mathcal{M}_{c}$ 且 $\mu_{i}>\mu_{j}$，即一个通信效率更高的子载波被用于感知，而效率更低的子载波被用于通信。将二者交换：感知集合的贡献不变（假设各子载波感知贡献相同），通信集合损失 $\mu_{i}$、获得 $\mu_{j}$。由于 $\mu_{i}>\mu_{j}$，交换后通信和速率严格增加，与最优性矛盾。故最优划分必满足"感知集合中任一子载波的通信效率不高于通信集合中任一子载波"，即升序取前 $n_{s}$ 个。
+\end{proof}
+
+定理~\ref{thm:selection} 将原本规模为 $\binom{M}{n_{s}}$ 的组合搜索降为一次排序，复杂度 $O(M\log M)$。需要指出其前提"各子载波感知贡献相同"是一种近似：实际中不同子载波的感知增益因频率选择性衰落而略有差异，故该结论是近似最优。第~\ref{sec:exp_selection} 节的仿真在 $M=1024$ 上验证了该近似带来的损失可忽略。
+
+\subsection{算法流程}
+\label{sec:selection_alg}
+
+综合第~\ref{sec:beamforming} 节与本节，联合优化流程如下。
+
+\begin{enumerate}
+  \item 由式~\eqref{eq:channel} 生成 $K$ 个用户在 $M$ 个子载波上的信道；
+  \item 由式~\eqref{eq:mu} 计算各子载波通信效率 $\mu_{m}$，升序排序；
+  \item 对每个候选感知子载波数 $n_{s}\in\{0,1,\ldots,M\}$：取前 $n_{s}$ 个子载波作为感知集合，剩余用于通信；由式~\eqref{eq:preq} 计算满足速率约束的最小总功率，若超过 $P_{\max}$ 则标记不可行；
+  \item 在可行点中取 CRB 最小者，输出对应的子载波划分、波束与功率分配；
+  \item 若需 MMSE 波束，则在外层以交替迭代更新波束与功率，直至和速率相对变化小于 $10^{-9}$。
+\end{enumerate}
+
+\subsection{近似条件与注水解的对比}
+\label{sec:approx_error}
+
+交换论证的最优性依赖一个前提：各子载波对感知增益 $G(\theta)$ 的贡献相同。这一前提在本文的窄带假设下严格成立，理由是感知导向矢量 $\mathbf{a}(\theta)$ 由载频与阵元间距决定，与子载波序号无关。因此在 $M$ 个子载波上，无论功率落在哪一个子载波，只要发射功率相同，其贡献的 $G(\theta)$ 就相同。
+
+需要指出的是，这一前提在宽带系统中会被破坏。当带宽达到数吉赫兹时，载频在不同子载波上的相对偏移不可忽略，导向矢量随子载波变化，即产生波束斜视（beam squint）效应。此时把功率集中在低频或高频子载波会得到不同的感知增益，排序准则需相应修正。本文带宽为 100\,MHz、载频 28\,GHz，相对带宽约 0.36\%，斜视效应可忽略，因此该前提成立。
+
+作为对照，通信侧若采用经典的注水算法分配功率，其解为
+\begin{equation}
+  p_{k,m}^{\mathrm{wf}} = \left[\mu - \frac{\sigma^{2}}{\lvert\mathbf{h}_{k,m}^{\mathrm{T}}\mathbf{w}_{k,m}\rvert^{2}}\right]^{+},
+  \label{eq:waterfill}
+\end{equation}
+即功率按信道质量反比分配，优质子载波获得更多功率。注水解最大化总速率，但它会使功率在子载波间高度不均匀，导致感知增益的贡献集中于少数子载波。本文不采用注水，原因有二：其一，本文的目标是在给定速率下最小化 CRB，速率已被约束固定，注水带来的速率增益无从体现；其二，注水会加剧子载波间功率差异，使"感知贡献均匀"这一前提虽在物理上仍成立，却在数值上放大有限精度误差。
+
+在低信噪比区域，注水解退化为等功率分配，此时二者一致；在高信噪比区域，注水确实能提高速率，但本文的等速率约束已把这一自由度消除。因此本文选择"按单位功率通信效率排序"而非注水，是在等速率框架下的自然选择。
+
+\section{轨迹优化}
+\label{sec:trajectory}
+
+\subsection{优化模型}
+\label{sec:traj_model}
+
+无人机位置 $\mathbf{q}_u[n]$ 随时隙 $n$ 变化。由式~\eqref{eq:radar_eq}，回波幅度随距离四次方衰减，故感知精度强烈依赖飞行轨迹。轨迹优化问题建模为
+\begin{equation}
+  \begin{aligned}
+    \mathcal{P}_{2}:\quad \min_{\{\mathbf{q}_u[n]\}}\ \ &
+    \sum_{n=1}^{N_{\mathrm{slot}}}\sum_{u=1}^{U}\mathrm{CRB}\bigl(\theta_u,\lVert\mathbf{q}_u[n]-\mathbf{p}_u[n]\rVert\bigr)\\
+    \text{s.t.}\quad & \lVert\mathbf{q}_u[n+1]-\mathbf{q}_u[n]\rVert\ \le\ V_{\max}\Delta t,\\
+    & \lVert\mathbf{q}_u[n]-\mathbf{p}_u[n]\rVert\ \ge\ d_{\min},
+  \end{aligned}
+  \label{eq:p2}
+\end{equation}
+其中 $\mathbf{p}_u[n]$ 为第 $n$ 时隙目标位置（本文考虑匀速直线运动目标），$V_{\max}$ 为最大飞行速度，$\Delta t$ 为时隙长度，$d_{\min}$ 为安全距离。
+
+\subsection{求解与基线}
+\label{sec:traj_solve}
+
+问题 $\mathcal{P}_{2}$ 的目标函数关于 $\mathbf{q}_u[n]$ 非凸（CRB 是距离的非线性函数），但速度约束是凸的。本文采用序列二次规划（SLSQP）直接求解，其优点是可显式处理速度与安全距离约束，且不引入额外松弛变量。
+
+作为对照，构造"绕目标匀速盘旋"基线：无人机以目标当前位置为圆心、半径 $r_{\mathrm{cir}}$ 匀速圆周运动，即
+\begin{equation}
+  \mathbf{q}_u^{\mathrm{cir}}[n]=\mathbf{p}_u[n]+r_{\mathrm{cir}}\bigl[\cos\varphi_n,\ \sin\varphi_n\bigr]^{\mathrm{T}},
+  \qquad
+  \varphi_n=\frac{2\pi n}{N_{\mathrm{slot}}}.
+  \label{eq:cir}
+\end{equation}
+该基线代表"保持固定观测几何"的传统做法。第~\ref{sec:exp_trajectory} 节将表明，优化轨迹在接近目标后可将 CRB 降低至基线的约 1/53。
+
+\subsection{求解器选择与数值稳定性}
+\label{sec:solver}
+
+问题 $\mathcal{P}_{2}$ 的变量维度为 $2UN_{\mathrm{slot}}$，本文取 $U=2$、$N_{\mathrm{slot}}=30$，即 120 维。该规模既小到可以用通用非线性规划求解器处理，又大到不能靠手写梯度下降保证鲁棒，因此求解器的选择需要说明。
+
+本文采用序列最小二乘规划（Sequential Least Squares Programming, SLSQP）。选择它的理由有三。第一，速度约束 $\|\mathbf{q}_{u,n}-\mathbf{q}_{u,n-1}\|\le V_{\max}\Delta t$ 是二阶锥约束，在 SLSQP 的二次子问题中可精确线性化，不需要引入惩罚项。第二，目标函数 $\sum_{u,n}\mathrm{CRB}_{u,n}$ 虽非凸，但其梯度可通过链式法则解析求出（CRB 关于距离的四次方反比关系），SLSQP 可利用解析梯度而非有限差分，避免了 $120$ 维有限差分的 $120$ 倍计算开销。第三，SLSQP 支持显式不等式约束，无需像惩罚函数法那样调参。
+
+数值稳定性方面，本文作两项处理。其一，对位置变量作归一化，把坐标缩放到 $[-1,1]$ 区间内再求解，避免因位置量级（数百米）与速度量级（数十米每秒）差异导致的 Hessian 病态。其二，初始轨迹取为可行解——即从起点以不超过 $V_{\max}$ 的速度直线飞向目标，保证初始点满足全部约束，避免求解器在不可行域内挣扎。
+
+必须承认，SLSQP 只能保证收敛到局部最优，且结果依赖初值。本文在第四章如实报告了这一性质：优化轨迹在初始时隙并不优于盘旋基线（因为优化轨迹起点距目标 412\,m 而基线起点仅 269\,m），优势只在进入稳态后显现。这一"不好看"的结果被保留而非隐藏，正是本文强调诚实报告的具体体现。
+
+\section{复杂度分析}
+\label{sec:complexity}
+
+设子载波数 $M$、用户数 $K$、发射天线数 $N_{\mathrm{T}}$、接收天线数 $N_{\mathrm{R}}$、目标数 $U$、时隙数 $N_{\mathrm{slot}}$、交替迭代次数 $I$。各环节复杂度如下。
+
+\textbf{信道生成}：每个子载波需计算 $K$ 个导向矢量，复杂度 $O(MKN_{\mathrm{T}})$。
+
+\textbf{迫零波束}：每个子载波需求逆 $K\times K$ 矩阵并做 $N_{\mathrm{T}}\times K$ 乘法，复杂度 $O(M(K^{3}+N_{\mathrm{T}}K^{2}))$。
+
+\textbf{功率分配}：由式~\eqref{eq:preq} 逐用户计算，复杂度 $O(MK)$。
+
+\textbf{子载波选择}：一次排序 $O(M\log M)$，随后对 $M+1$ 个候选点各做 $O(MK)$ 的功率核算，总计 $O(M^{2}K)$。本文 $M=1024$、$K=4$，即约 $4.2\times10^{6}$ 次浮点运算，单机毫秒量级。
+
+\textbf{MMSE 交替迭代}：每次迭代含 $K$ 个 $N_{\mathrm{T}}\times N_{\mathrm{T}}$ 矩阵求逆，复杂度 $O(I(KN_{\mathrm{T}}^{3}+MKN_{\mathrm{T}}^{2}))$。
+
+\textbf{轨迹优化}：SLSQP 每步需求解一个 $2UN_{\mathrm{slot}}$ 维二次子问题，复杂度 $O(I_{\mathrm{sqp}}U^{3}N_{\mathrm{slot}}^{3})$。
+
+与基于半正定松弛的方案相比，本文方法避免了 $N_{\mathrm{T}}\times N_{\mathrm{T}}$ 半正定锥上的内点迭代（其单步复杂度为 $O(N_{\mathrm{T}}^{3.5})$ 甚至更高），在 $N_{\mathrm{T}}=32$ 时具有明显优势。但必须指出，这一优势的代价是放弃了全局最优性保证：本文给出的是可行构造加局部最优，而非 $\mathcal{P}_{1}$ 的全局最优解。
+
+\subsection{参数选取的工程准则}
+\label{sec:param_guide}
+
+本章的模型与算法包含载频、带宽、子载波间隔、子载波数、收发天线数、功率预算与目标角度等多组参数。这些参数并非彼此独立，而是由"相对带宽、多普勒展宽、阵列孔径、功率预算"四条工程约束共同确定。本节说明本文配置的取值依据，以便读者判断结论的适用范围。
+
+\textbf{载频与带宽}。载频取 $28$~GHz 是毫米波频段的典型选择，其波长较短，使得同样物理尺寸的阵列可以容纳更多阵元，从而在 $N_{\mathrm{T}}=32$ 的规模下仍保持可接受的孔径。带宽取 $100$~MHz 时，相对带宽约为 $0.36\%$，属于窄带假设成立的区间，因此本章把阵列导向矢量视为与频率无关、忽略波束斜视效应是合理的。若带宽提高到数 GHz 量级，相对带宽上升到百分之一以上，各子载波上的等效到达角将出现可分辨的偏移，窄带模型需要替换为宽带阵列流形，\ref{sec:approx_error} 节已对此作过讨论。
+
+\textbf{子载波间隔与多普勒}。子载波间隔取 $120$~kHz 时，$25$~m/s 的无人机径向速度引起的单向多普勒约为 $2.3$~kHz，归一化多普勒仅为 $0.038$，远小于 $1$，因此子载波间干扰可以忽略。这一取值同时兼顾了另一个约束：若沿用长期演进系统常见的 $15$~kHz 间隔，归一化多普勒将上升到 $0.31$ 量级，载波间干扰不可忽略，本章的逐子载波独立处理假设不再成立。换言之，$120$~kHz 不是随意选取的数值，而是由低空高速场景的多普勒容限反推得到的下限。
+
+\textbf{子载波数与天线数}。子载波数 $M=1024$ 决定了子载波选择的分辨率：可选集合的规模为 $M$，而选择算法只需一次排序与一次遍历，复杂度为 $O(M\log M)$，在 $M=1024$ 时开销可以忽略。若把 $M$ 提高到数千，选择粒度更细，但排序开销与功率分配的 $O(MK)$ 开销同步增长，且峰均比问题会进一步恶化。收发天线数的分工则不同：发射天线数 $N_{\mathrm{T}}=32$ 主要决定空间自由度，需要同时容纳 $K=4$ 个通信零陷与 $1$ 个感知波束，共 $5$ 个方向约束，因此 $N_{\mathrm{T}}$ 必须显著大于约束数；接收天线数 $N_{\mathrm{R}}=16$ 主要决定感知精度，由 \ref{sec:crb} 节的闭式解可知 CRB 与 $N_{\mathrm{R}}^{2}-1$ 成反比，扩充接收阵元是提升精度的直接手段。
+
+\textbf{功率预算与目标角度}。总功率上限 $P_{\max}=3.16228$~W 与单子载波噪声功率共同决定可行域的上界 $\gamma_{\max}$：由 \ref{sec:feasibility} 节的分析可知，目标 SINR 超过该上界时可行域为空，优化问题无解。因此功率预算不仅是性能参数，更是可行性参数。目标角度取 $25^{\circ}$，四个通信用户分布在 $-42.22^{\circ}$、$-29.67^{\circ}$、$4.14^{\circ}$ 与 $28.61^{\circ}$ 附近，感知方向与最近通信用户的角间隔约为 $3.6^{\circ}$，大于本文阵列的主瓣宽度，这是保证匹配感知波束能在通信零陷之外形成主瓣、同时不显著抬高通信用户干扰的前提。若目标与某通信用户几乎同向，则空域可分性丧失，必须退回到时隙划分或码域正交。
+
+综合来看，本章的参数配置是在"窄带假设成立、多普勒可忽略、空域可分、功率可行"四条前提同时满足的区间内选取的。这也界定了本文结论的适用范围：当上述任一前提被破坏时，模型需要相应扩展，而算法框架（等速率约束下的资源分配）本身仍然适用。
+
+\section{本章小结}
+\label{sec:method_summary}
+
+本章围绕"在完全相同的通信资源下最小化感知误差"这一核心问题，建立了从信号模型到求解算法的完整链路。主要工作可归纳为五个层面。
+
+在模型层面，本章建立了低空无人机通感一体化的三维几何、莱斯衰落与双程回波模型，并在接收端给出匹配空域滤波器以实现目标回波与杂波的空间分离，说明了通信与感知在同一时频资源上共存的物理机制。
+
+在理论层面，本章推导并证明了角度估计 CRB 的闭式表达式，明确指出其随 $N_{\mathrm{R}}^{-2}$ 标度、与感知增益 $G(\theta)$ 成反比、与 $\cos^{2}\theta$ 成反比三条结论。其中 $N_{\mathrm{R}}^{-2}$ 这一标度与文献中常见的 $N^{-3}$ 表述不同，根源在于本文的回波幅度 $\lvert\alpha\rvert^{2}$ 已包含全部阵列增益；这一区别在第四章被蒙特卡洛实验确认。
+
+在建模层面，本章论证了加权和目标的物理不可解释性——权重趋于零时系统退化为不感知、CRB 发散至非物理的奇点——并据此提出以等通信速率为约束、最小化感知 CRB 的建模方式。本章进一步分析了问题可行域的结构，给出了临界目标速率的定义，说明功率受限系统存在硬性的速率上限。
+
+在求解层面，本章以迫零/MMSE 波束、匹配感知波束与一维闭式功率分配构造可行解，证明了"通信功率取可行下界、剩余功率全部用于感知"这一结构的最优性，并以交换论证证明了子载波选择的最优性，将规模为 $\binom{M}{n_s}$ 的组合搜索降为一次排序。本章同时明确了交换论证所依赖的窄带前提，并与注水解作了对比。
+
+在轨迹层面，本章建立了速度约束下的感知精度优化模型，说明了求解器选择与数值稳定化处理，并如实指出其局部最优性与初值依赖。
+
+第~\ref{chap:exp} 章将用完整仿真验证上述理论结论，并对不可行点、非单调点与未实现模块作明确标注。
