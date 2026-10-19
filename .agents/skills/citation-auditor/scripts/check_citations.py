@@ -343,6 +343,28 @@ class CrossrefClient:
             return data.get("__kind__", "network")
         return None
 
+    def retraction(self, doi):
+        """检测 DOI 是否已被撤稿。返回 (is_retracted, detail)；无法判定时返回 (None, None)。
+
+        依据 Crossref 官方元数据中的撤稿关系（与 citegate 的思路一致，不引入其代码）：
+          - relation.is-retracted-by : 本作品被这些撤稿声明撤稿（最直接的信号）
+          - update-to[].type == "retraction" : 本作品有撤稿更新记录
+        反向的 relation.is-retraction-of 属于撤稿声明自身，不在此判定范围内。
+        离线/网络异常时返回 (None, None)，由调用方跳过而不是误报。
+        """
+        item = self.by_doi(doi)
+        if not item:
+            return None, None
+        rel = item.get("relation") or {}
+        by = rel.get("is-retracted-by") or []
+        if by:
+            ids = [r.get("id") for r in by if isinstance(r, dict) and r.get("id")]
+            return True, "Crossref relation.is-retracted-by: " + (", ".join(ids) or "(未给出撤稿声明 DOI)")
+        for upd in (item.get("update-to") or []):
+            if isinstance(upd, dict) and (upd.get("type") or "").lower() == "retraction":
+                return True, "Crossref update-to type=retraction: " + str(upd.get("DOI") or "(无 DOI)")
+        return False, None
+
     def by_title(self, title, authors=None):
         """按标题检索；若提供作者姓序列，则优先选标题相似且作者兼容的候选。"""
         q = urllib.parse.quote(title)
@@ -422,6 +444,15 @@ def audit_entry(entry, client):
                 "warns": [], "checked": [], "resolved_doi": None}
 
     ref = crossref_fields(item)
+
+    # 撤稿检测：引用了已被撤稿的论文属学术事故，直接 FAIL。
+    # 这是本项目原先的盲区——元数据全对，但文献本身已失效。
+    if doi:
+        retracted, ret_detail = client.retraction(doi)
+        if retracted is not None:
+            checked.append("retraction")
+        if retracted:
+            problems.append(f"该文献已被撤稿（引用撤稿论文属学术事故）：{doi} — {ret_detail}")
 
     # 标题
     if title:

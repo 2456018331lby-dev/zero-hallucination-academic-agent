@@ -15,7 +15,10 @@ pip install -e . && zhaw doctor && zhaw selftest
 ```
 
 `zhaw doctor` 打印环境体检（Python / PyMuPDF / XeLaTeX / 7 个门禁脚本）；
-`zhaw selftest` 用 9 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.2 秒）。
+`zhaw selftest` 用 11 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.35 秒）。
+
+**这套东西现在到底能做到什么程度？** 见 [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：
+22 个子命令逐个实测、11/11 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译。
 
 ---
 
@@ -127,9 +130,9 @@ pip install -e ".[full]"            # 需要 Word 导出 / 画图时再加 pytho
 zhaw doctor                         # Python / PyMuPDF / XeLaTeX / 7 个门禁脚本是否就位
 ```
 
-### 3. 门禁自身对抗回归（9 个用例，零网络）
+### 3. 门禁自身对抗回归（11 个用例，零网络）
 ```bash
-zhaw selftest                       # 期望 9/9 PASS
+zhaw selftest                       # 期望 11/11 PASS
 ```
 
 ### 4. 四道门禁（一条命令，或分开跑）
@@ -167,8 +170,40 @@ python .agents/skills/thesis-latex-writer/scripts/tex_to_docx.py \
 > `.agents/skills/<技能>/scripts/<脚本>.py`。CI（`.github/workflows/quality-gates.yml`）会在
 > Ubuntu / Windows / macOS × Python 3.12 上重跑同一套命令，任何一条红则 PR 红。
 
+### 8. 研究生全生命周期（不止门禁）
+```bash
+zhaw new _demo/my_thesis --kind thesis --title "..." --author "..."   # 建工程（论文 / 开题）
+zhaw proposal _demo/my_proposal --force --title "..."                  # 开题报告六章模板
+zhaw proposal _demo/my_proposal --check                                # 开题配额与空话句式检查
+zhaw figures _demo/my_thesis                                           # CSV → 矢量图 + 三线表 + includegraphics 片段
+zhaw seminar  bupt_isac_workflow/survey/literature_comparison_matrix.md --compile   # 组会 Beamer
+zhaw defense  _demo/my_thesis --compile                                # 答辩 PPT + 讲稿 + 13 问 Q&A
+zhaw audit    _demo/my_thesis --offline --scaffold                     # 可交付度六维加权评分
+zhaw progress bupt_isac_workflow/thesis_project                        # 字数进度 / 待填清单 / 分章配额
+zhaw anonymize bupt_isac_workflow/thesis_project --out _demo/blind --force  # 盲审匿名化 + LEAKS.md
+zhaw archive  bupt_isac_workflow/thesis_project --out-dir _demo/archives    # zip + SHA-256 manifest
+zhaw math     bupt_isac_workflow/thesis_project                        # 符号契约 + sympy 恒等式验证
+zhaw docx     bupt_isac_workflow/thesis_project                        # 转 Word（无 pandoc 自动降级）
+```
+
+### 9. 可选增强能力（装了就用，没装自动降级）
+| 能力 | 依赖 | 行为 |
+|---|---|---|
+| IEEE / Nature 学术版式 | `scienceplots`（MIT） | 装了用 `plt.style.use(["science","ieee","no-latex"])`，没装用内置 rcParams |
+| 数学恒等式机器验证 | `sympy`（BSD-3） | 装了 `sympify` 后 `simplify(lhs-rhs)==0`，没装打印 `SKIPPED` |
+| 引用撤稿检测 | 无需额外依赖 | 走 Crossref `relation.is-retracted-by` / `update-to`，离线时跳过而不误报 |
+
+```bash
+pip install -e ".[full]"            # 一次装齐 scienceplots / sympy / python-docx / matplotlib
+```
+
 ---
 
 ## 五、许可证 (License)
 
 本项目采用 [MIT License](LICENSE) 开源协议。
+
+> ⚠️ **依赖许可证提示**：本仓库**代码**是 MIT，但核心依赖 `pymupdf` / `pymupdf4llm` 是
+> **AGPL-3.0 / Artifex 商业双许可**。若你要把本项目打包成对外分发的软件，AGPL 的义务会传导到你，
+> 需要二选一：整体改用 AGPL-3.0 开源，或向 Artifex 购买商业许可。详见
+> [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md)。仅自己科研使用（不分发）没有这个义务。

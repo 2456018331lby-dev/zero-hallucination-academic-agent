@@ -1,17 +1,38 @@
 """Command-line entry point for the Zero-Hallucination Academic Workflow.
 
-One command per gate, plus ``check`` which runs the full pipeline:
+The full graduate-school lifecycle, one command per step::
 
-    zhaw doctor                      # is this machine able to run the gates?
-    zhaw selftest                    # 8 adversarial regression cases
-    zhaw check  <project>            # Gate 1 -> 2 -> 3 -> 4, fail-fast
-    zhaw gate1  <project>            # citations vs Crossref
-    zhaw gate2  <project>            # every quantitative claim backed by a CSV
-    zhaw gate3  <project>            # GB/T 7713.1-2006 + GB/T 7714-2015 compliance
-    zhaw gate4  <project>            # real human sign-off, SHA-256 bound
-    zhaw grounding <matrix> --pdf-dir <dir>   # physical page evidence in real PDFs
-    zhaw compile <project>           # XeLaTeX, strict about overfull/undefined refs
-    zhaw survey <query>              # build a literature pool from OpenAlex/arXiv
+    # 0. environment
+    zhaw doctor                        # is this machine able to run everything?
+    zhaw selftest                      # 9 adversarial regression cases (proves gates bite)
+
+    # 1. start a project
+    zhaw new  my_thesis                # thesis scaffold, ready to compile
+    zhaw new  my_proposal --kind proposal   # 开题报告 scaffold
+    zhaw new  my_talk --kind seminar        # 组会 PPT scaffold
+
+    # 2. literature
+    zhaw survey "<keywords>"           # build a pool from OpenAlex / arXiv
+    zhaw grounding survey/matrix.md --pdf-dir literature   # page-level evidence gate
+
+    # 3. write + verify
+    zhaw bib    <project>              # rebuild every reference from Crossref (no memory)
+    zhaw math   <project>              # notation contract + theorem strength
+    zhaw check  <project>              # Gate 1 -> 2 -> 3 -> 4, fail-fast
+    zhaw gate1|gate2|gate3|gate4 <project>
+    zhaw audit  <project>              # everything + readiness score + gap list
+
+    # 4. data -> figures -> tables
+    zhaw figures <project> --csv experiments/run.csv --x snr --y psnr --series scheme
+
+    # 5. deliverables
+    zhaw compile  <project>            # XeLaTeX, strict about overfull/undefined refs
+    zhaw docx     <project>            # single-source Word export (pandoc)
+    zhaw seminar  <matrix> --compile   # 组会 Beamer from a comparison matrix
+    zhaw defense  <project> --compile  # 答辩 Beamer + speaker notes + Q&A bank
+    zhaw progress <project>            # how much is written, what is still TODO
+    zhaw anonymize <project> --out <dir>   # 盲审匿名化 + leak report
+    zhaw archive  <project>            # zip + sha256 manifest for submission
 
 Exit codes are the gate contract: 0 = PASS, 1 = FAIL, 2 = strict-mode failure.
 """
@@ -35,6 +56,9 @@ GROUNDING = "phd-literature-survey/scripts/verify_grounding.py"
 SELFTEST = "tests/run_selftest.py"
 COMPILE = "thesis-latex-writer/scripts/compile_thesis.py"
 SURVEY = "academic-paper-discovery/scripts/search_papers.py"
+MATH = "math-reviewer/scripts/check_math.py"
+TEX_TO_DOCX = "thesis-latex-writer/scripts/tex_to_docx.py"
+EXPORT_WORD = "thesis-latex-writer/scripts/export_to_word.py"
 
 OK, FAIL, WARN = 0, 1, 2
 
@@ -237,6 +261,236 @@ def cmd_survey(args: argparse.Namespace) -> int:
 
 
 # --------------------------------------------------------------------------- #
+# lifecycle: new / bib / math / docx / seminar / defense / figures
+#            audit / progress / anonymize / archive
+# --------------------------------------------------------------------------- #
+def cmd_new(args: argparse.Namespace) -> int:
+    from . import proposal, scaffold
+
+    meta = {
+        "title": args.title or "",
+        "author": args.author or "",
+        "student_id": args.student_id or "",
+        "institute": args.institute or "",
+        "major": args.major or "",
+        "direction": args.direction or "",
+        "advisor": args.advisor or "",
+    }
+    meta = {k: v for k, v in meta.items() if v}
+    if args.kind == "proposal":
+        result = proposal.new_proposal(Path(args.dest), meta=meta, force=args.force)
+    else:
+        result = scaffold.new_project(
+            Path(args.dest), kind=args.kind, source=args.source, meta=meta, force=args.force
+        )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    if result.get("status") != "PASS":
+        return FAIL
+    dest = Path(result.get("project") or result.get("dest") or args.dest)
+    print()
+    print(f"[OK] created: {dest}")
+    print(f"     next: zhaw check {dest} --scaffold --offline")
+    if (dest / "main.tex").is_file() and args.kind != "seminar":
+        print(f"           zhaw compile {dest}")
+    return OK
+
+
+def cmd_proposal(args: argparse.Namespace) -> int:
+    from . import proposal
+
+    dest = Path(args.dest)
+    if args.check:
+        result = proposal.check_proposal(dest, min_total=args.min_total, min_refs=args.min_refs)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return OK if result["status"] == "PASS" else FAIL
+    meta = {k: v for k, v in {
+        "title": args.title, "author": args.author, "student_id": args.student_id,
+        "institute": args.institute, "major": args.major, "topic": args.topic,
+        "advisor": args.advisor,
+    }.items() if v}
+    result = proposal.new_proposal(dest, meta=meta, force=args.force)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print()
+    print(f"[OK] proposal: {result.get('project', dest)}")
+    print(f"     next: zhaw proposal {result.get('project', dest)} --check")
+    return OK
+
+
+def cmd_bib(args: argparse.Namespace) -> int:
+    from . import bib
+
+    result = bib.rebuild(
+        Path(args.project), bib=args.bib, apply=args.apply,
+        offline=args.offline, cache=args.cache,
+    )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print()
+    print(bib.summary(result))
+    return OK if result.get("status", "PASS") == "PASS" else FAIL
+
+
+def cmd_math(args: argparse.Namespace) -> int:
+    extra = [args.project]
+    if args.notation:
+        extra += ["--notation", args.notation]
+    return _run(MATH, extra)
+
+
+def cmd_docx(args: argparse.Namespace) -> int:
+    from ._paths import script as _script
+
+    out = args.output
+    if args.survey:
+        extra = ["--survey", args.survey]
+        if args.output_survey:
+            extra += ["--output-survey", args.output_survey]
+        if args.thesis:
+            extra += ["--thesis", args.thesis]
+        if args.output_thesis:
+            extra += ["--output-thesis", args.output_thesis]
+        if out:
+            extra += ["--output", out]
+        if args.scaffold:
+            extra.append("--scaffold")
+        return _run(EXPORT_WORD, extra)
+
+    extra = [args.tex_file]
+    if out:
+        extra += ["--output", out]
+    if args.scaffold:
+        extra.append("--scaffold")
+    try:
+        _script(TEX_TO_DOCX)
+    except SystemExit:
+        return _run(EXPORT_WORD, [args.project, *(["--output", out] if out else [])])
+    return _run(TEX_TO_DOCX, [args.project, *extra])
+
+
+def cmd_seminar(args: argparse.Namespace) -> int:
+    from . import seminar
+
+    result = seminar.build(
+        Path(args.matrix), out_dir=args.out_dir, title=args.title, author=args.author,
+        advisor=args.advisor, topic=args.topic, institute=args.institute,
+        compile_pdf=args.compile,
+    )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    if result.get("status") != "PASS":
+        return FAIL
+    print()
+    print(f"[OK] seminar deck: {result['tex']}")
+    print(f"     notes       : {result['notes']}")
+    if result.get("pdf"):
+        print(f"     pdf         : {result['pdf']}")
+    return OK
+
+
+def cmd_defense(args: argparse.Namespace) -> int:
+    from . import defense
+
+    result = defense.build(
+        Path(args.project), out_dir=args.out_dir, title=args.title,
+        author=args.author, advisor=args.advisor, institute=args.institute,
+        compile=args.compile,
+    )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    outputs = result.get("outputs", {})
+    tex = outputs.get("tex") or result.get("tex")
+    if not tex or not Path(tex).is_file():
+        return FAIL
+    print()
+    print(f"[OK] defense deck : {tex}")
+    print(f"     speaker notes: {outputs.get('notes', result.get('notes'))}")
+    print(f"     Q&A bank     : {outputs.get('qa', result.get('qa'))}")
+    if args.compile:
+        pdf = outputs.get("pdf") or result.get("pdf")
+        if pdf:
+            print(f"     pdf          : {pdf}")
+        else:
+            print("     [WARN] PDF not built — see compile_log_tail in defense_report.json")
+    return OK
+
+
+def cmd_figures(args: argparse.Namespace) -> int:
+    from . import figures
+
+    result = figures.build(
+        Path(args.project), csv_file=args.csv, x=args.x, y=args.y, series=args.series,
+        caption=args.caption, label=args.label, higher_better=args.higher_better,
+        lower_better=args.lower_better, no_table=args.no_table,
+        no_plot=args.no_plot, outdir=args.outdir,
+    )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    if result.get("status") not in ("PASS", "NOTICE"):
+        return FAIL
+    snippet = figures.include_snippet(result, caption=args.caption or "", label=args.label or "")
+    if snippet:
+        print()
+        print("[OK] paste into your chapter:")
+        print(snippet)
+    return OK
+
+
+def cmd_audit(args: argparse.Namespace) -> int:
+    from . import audit
+
+    result = audit.run_audit(
+        Path(args.project), offline=args.offline, scaffold=args.scaffold,
+        min_bib=args.min_bib, matrix=args.matrix, pdf_dir=args.pdf_dir,
+        out=args.out,
+    )
+    print(audit.render_markdown(result))
+    print()
+    print(f"[OK] report: {result['report_md']}")
+    print(f"     json  : {result['report_json']}")
+    return OK if result["overall"] in ("PASS", "NOTICE") else FAIL
+
+
+def cmd_progress(args: argparse.Namespace) -> int:
+    from . import progress as progress_mod
+
+    result = progress_mod.progress(Path(args.project), target=args.target)
+    text = progress_mod.render_progress(result)
+    print(text)
+    if args.out:
+        from ._util import write_text
+
+        write_text(Path(args.out), text)
+        print(f"[OK] written: {args.out}")
+    return OK if result["status"] == "PASS" else OK
+
+
+def cmd_anonymize(args: argparse.Namespace) -> int:
+    from . import anonymize
+
+    scan = anonymize.scan(Path(args.project))
+    print(json.dumps(scan, ensure_ascii=False, indent=2))
+    if args.out:
+        result = anonymize.emit(Path(args.project), Path(args.out), force=args.force)
+        print()
+        print(f"[OK] anonymized copy: {result['output']}")
+        print(f"     leak report    : {Path(result['output']) / 'LEAKS.md'}")
+        print(f"     files copied   : {result['files_copied']}")
+        if scan["leak_count"]:
+            print(f"     [WARN] {scan['leak_count']} machine-detectable leak(s) were rewritten —"
+                  " read LEAKS.md and confirm by eye before submission")
+    return OK if scan["leak_count"] == 0 or args.out else WARN
+
+
+def cmd_archive(args: argparse.Namespace) -> int:
+    from . import progress as progress_mod
+
+    result = progress_mod.archive(
+        Path(args.project), out_dir=args.out_dir, name=args.name
+    )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print()
+    print(f"[OK] archive : {result['archive']}")
+    print(f"     manifest: {result['manifest']}")
+    return OK
+
+
+# --------------------------------------------------------------------------- #
 # parser
 # --------------------------------------------------------------------------- #
 def build_parser() -> argparse.ArgumentParser:
@@ -255,7 +509,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("doctor", help="check python/pymupdf/xelatex/gate scripts")
     p.set_defaults(func=cmd_doctor)
 
-    p = sub.add_parser("selftest", help="run the 8 adversarial regression cases")
+    p = sub.add_parser("selftest", help="run the 9 adversarial regression cases")
     p.add_argument("--verbose", action="store_true")
     p.set_defaults(func=cmd_selftest)
 
@@ -317,6 +571,124 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--deep-limit", type=int)
     p.add_argument("--no-download", action="store_true")
     p.set_defaults(func=cmd_survey)
+
+    # -- lifecycle ---------------------------------------------------------- #
+    p = sub.add_parser("new", help="scaffold a thesis / proposal / seminar project")
+    p.add_argument("dest", help="destination directory")
+    p.add_argument("--kind", choices=("thesis", "proposal", "seminar"), default="thesis")
+    p.add_argument("--source", help="override the template source directory")
+    p.add_argument("--force", action="store_true", help="write into a non-empty directory")
+    p.add_argument("--title")
+    p.add_argument("--author")
+    p.add_argument("--student-id", dest="student_id")
+    p.add_argument("--institute")
+    p.add_argument("--major")
+    p.add_argument("--direction")
+    p.add_argument("--advisor")
+    p.set_defaults(func=cmd_new)
+
+    p = sub.add_parser("proposal", help="scaffold a research proposal, or check one with --check")
+    p.add_argument("dest", help="proposal directory to create (or to check with --check)")
+    p.add_argument("--check", action="store_true", help="validate an existing proposal instead of creating one")
+    p.add_argument("--force", action="store_true", help="write into a non-empty directory")
+    p.add_argument("--min-total", dest="min_total", type=int, default=9000, help="minimum 汉字 for the whole proposal")
+    p.add_argument("--min-refs", dest="min_refs", type=int, default=20, help="minimum reference count")
+    p.add_argument("--title")
+    p.add_argument("--author")
+    p.add_argument("--student-id", dest="student_id")
+    p.add_argument("--institute")
+    p.add_argument("--major")
+    p.add_argument("--topic")
+    p.add_argument("--advisor")
+    p.set_defaults(func=cmd_proposal)
+
+    p = sub.add_parser("bib", help="rebuild .bib fields from Crossref (DOI/title anchored)")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--bib", help="path to the .bib file (default: auto-detect)")
+    p.add_argument("--apply", action="store_true", help="overwrite the .bib (keeps a .bak)")
+    p.add_argument("--offline", action="store_true")
+    p.add_argument("--cache", help="citation cache path")
+    p.set_defaults(func=cmd_bib)
+
+    p = sub.add_parser("math", help="math-rigour review: symbols, notation, theorem strength")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--notation", help="notation table markdown")
+    p.set_defaults(func=cmd_math)
+
+    p = sub.add_parser("docx", help="export the thesis / survey to Word")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("tex_file", nargs="?", default="main.tex")
+    p.add_argument("--output", help="output .docx path")
+    p.add_argument("--survey", help="survey directory to export instead of the thesis")
+    p.add_argument("--output-survey", dest="output_survey")
+    p.add_argument("--thesis", help="thesis directory when exporting a survey bundle")
+    p.add_argument("--output-thesis", dest="output_thesis")
+    p.add_argument("--scaffold", action="store_true")
+    p.set_defaults(func=cmd_docx)
+
+    p = sub.add_parser("seminar", help="build a group-meeting Beamer deck from a comparison matrix")
+    p.add_argument("matrix", nargs="?", default="survey/literature_comparison_matrix.md")
+    p.add_argument("--out-dir", dest="out_dir")
+    p.add_argument("--title")
+    p.add_argument("--author")
+    p.add_argument("--advisor")
+    p.add_argument("--topic")
+    p.add_argument("--institute")
+    p.add_argument("--compile", action="store_true", help="compile the PDF with xelatex")
+    p.set_defaults(func=cmd_seminar)
+
+    p = sub.add_parser("defense", help="build a defense deck + speaker notes + Q&A bank")
+    p.add_argument("project", help="LaTeX thesis project directory")
+    p.add_argument("--out-dir", dest="out_dir")
+    p.add_argument("--title")
+    p.add_argument("--author")
+    p.add_argument("--advisor")
+    p.add_argument("--institute")
+    p.add_argument("--compile", action="store_true")
+    p.set_defaults(func=cmd_defense)
+
+    p = sub.add_parser("figures", help="CSV -> booktabs table + academic vector curve")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--csv", help="experiments CSV (default: first one found)")
+    p.add_argument("--x", help="x column")
+    p.add_argument("--y", help="y column")
+    p.add_argument("--series", help="series column for multiple curves")
+    p.add_argument("--caption")
+    p.add_argument("--label")
+    p.add_argument("--higher-better", dest="higher_better")
+    p.add_argument("--lower-better", dest="lower_better")
+    p.add_argument("--no-table", dest="no_table", action="store_true")
+    p.add_argument("--no-plot", dest="no_plot", action="store_true")
+    p.add_argument("--outdir")
+    p.set_defaults(func=cmd_figures)
+
+    p = sub.add_parser("audit", help="one report: gates + content + data + refs + readiness")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--offline", action="store_true")
+    p.add_argument("--scaffold", action="store_true")
+    p.add_argument("--min-bib", type=int, default=60)
+    p.add_argument("--matrix", help="comparison matrix for the grounding gate")
+    p.add_argument("--pdf-dir", dest="pdf_dir")
+    p.add_argument("--out", help="output directory for audit_report.{md,json}")
+    p.set_defaults(func=cmd_audit)
+
+    p = sub.add_parser("progress", help="word-count quota, TODO list, figure/CSV/ref census")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--target", type=int, default=30000, help="total hanzi target (default 30000)")
+    p.add_argument("--out", help="write the markdown report here")
+    p.set_defaults(func=cmd_progress)
+
+    p = sub.add_parser("anonymize", help="blind-review anonymisation: scan leaks, emit a clean copy")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--out", help="emit an anonymised copy into this directory")
+    p.add_argument("--force", action="store_true")
+    p.set_defaults(func=cmd_anonymize)
+
+    p = sub.add_parser("archive", help="zip the project with a per-file SHA-256 manifest")
+    p.add_argument("project", help="LaTeX project directory")
+    p.add_argument("--out-dir", dest="out_dir")
+    p.add_argument("--name")
+    p.set_defaults(func=cmd_archive)
 
     return parser
 

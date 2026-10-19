@@ -30,12 +30,14 @@ sys.path.insert(0, os.path.join(BASE_DIR, "citation-auditor", "scripts"))
 sys.path.insert(0, os.path.join(BASE_DIR, "thesis-latex-writer", "scripts"))
 sys.path.insert(0, os.path.join(BASE_DIR, "phd-literature-survey", "scripts"))
 sys.path.insert(0, os.path.join(BASE_DIR, "academic-paper-discovery", "scripts"))
+sys.path.insert(0, os.path.join(BASE_DIR, "math-reviewer", "scripts"))
 
 import check_citations
 import run_quality_gates
 import check_thesis_compliance
 import verify_grounding
 import search_papers
+import check_math
 
 
 class TestQualityGatesAdversarial(unittest.TestCase):
@@ -334,6 +336,76 @@ class TestQualityGatesAdversarial(unittest.TestCase):
         # Scaffold mode downgrades the same finding to NOTICE instead of blocking a draft.
         res_scaffold = run_quality_gates.run_gate2_provenance(self.temp_dir, scaffold_mode=True)
         self.assertEqual(res_scaffold["status"], "NOTICE")
+
+
+    # ---------------------------------------------------------------
+    # 10. Gate 1: Retraction detection (metadata all correct, but paper retracted -> FAIL)
+    # ---------------------------------------------------------------
+    def test_10_retraction_detection(self):
+        """A citation whose metadata matches Crossref perfectly must still FAIL if retracted."""
+        cache_path = os.path.join(self.temp_dir, "retract_cache.json")
+        base = {
+            "author": [{"family": "Zhang", "given": "Wei"}],
+            "issued": {"date-parts": [[2023]]},
+            "volume": "1",
+            "page": "1-10",
+        }
+        cache = {
+            "https://api.crossref.org/works/10.9999/retracted.test": {
+                "message": dict(
+                    base,
+                    DOI="10.9999/retracted.test",
+                    title=["A Retracted Paper on ISAC Waveforms"],
+                    relation={"is-retracted-by": [{"id": "10.9999/retraction.notice", "id-type": "doi"}]},
+                )
+            },
+            "https://api.crossref.org/works/10.9999/clean.test": {
+                "message": dict(
+                    base,
+                    DOI="10.9999/clean.test",
+                    title=["A Clean Paper on ISAC Waveforms"],
+                )
+            },
+        }
+        with open(cache_path, "w", encoding="utf-8") as f:
+            json.dump(cache, f, ensure_ascii=False)
+
+        def entry(doi, title):
+            return {"key": "t", "fields": {
+                "doi": doi, "title": title, "author": "Zhang, Wei",
+                "year": "2023", "volume": "1", "pages": "1-10",
+            }}
+
+        client = check_citations.CrossrefClient(cache_path=cache_path, offline=True)
+        bad = check_citations.audit_entry(entry("10.9999/retracted.test", "A Retracted Paper on ISAC Waveforms"), client)
+        self.assertEqual(bad["status"], "FAIL", "Gate 1 must FAIL when the cited paper has been retracted")
+        self.assertIn("撤稿", " ".join(bad["problems"]))
+        self.assertIn("retraction", bad["checked"])
+
+        good = check_citations.audit_entry(entry("10.9999/clean.test", "A Clean Paper on ISAC Waveforms"), client)
+        self.assertEqual(good["status"], "OK", "A clean paper with matching metadata must not be flagged")
+        self.assertNotIn("撤稿", " ".join(good["problems"]))
+
+    # ---------------------------------------------------------------
+    # 11. Math: Symbolic identity mismatch (wrong derivation -> FAIL)
+    # ---------------------------------------------------------------
+    def test_11_symbolic_identity_mismatch(self):
+        """sympy-backed math gate must catch a false equation and keep a true one."""
+        if not check_math.SYMPY_AVAILABLE:
+            self.skipTest("sympy not installed")
+        tex = os.path.join(self.temp_dir, "chap_math.tex")
+        with open(tex, "w", encoding="utf-8") as f:
+            f.write(
+                "\\documentclass{article}\n\\begin{document}\n"
+                "$$a^2 - b^2 = (a-b)(a+b)$$\n"
+                "$$2 + 2 = 5$$\n"
+                "\\end{document}\n"
+            )
+        verified, failed, undecided, issues = check_math.verify_identities([tex], self.temp_dir)
+        self.assertGreaterEqual(verified, 1, "A true algebraic identity must be machine-verified")
+        self.assertGreaterEqual(failed, 1, "A false equation must be caught")
+        self.assertTrue(any(i["rule"] == "Symbolic Identity Mismatch" for i in issues))
+        self.assertTrue(any(i["level"] == "FAIL" for i in issues))
 
 
 if __name__ == "__main__":

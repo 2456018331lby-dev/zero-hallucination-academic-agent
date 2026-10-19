@@ -59,9 +59,9 @@ $ zhaw grounding bupt_isac_workflow/survey/literature_comparison_matrix.md \
 
 编译质量（`logs/06_compile.log`）：XeLaTeX **0 error / 0 Severe Overfull / 0 Undefined References**。
 
-## 4. 对抗验证（9/9 PASS）
+## 4. 对抗验证（11/11 PASS）
 
-`zhaw selftest` 用 9 个"故意造假"的用例证明门禁真的会拦，而不是只会说 PASS：
+`zhaw selftest` 用 11 个"故意造假"的用例证明门禁真的会拦，而不是只会说 PASS：
 
 | # | 攻击向量 | 期望 | 实测 |
 | :---: | :--- | :--- | :---: |
@@ -74,9 +74,14 @@ $ zhaw grounding bupt_isac_workflow/survey/literature_comparison_matrix.md \
 | 7 | PDF 落地页 4 重熔断（<40KB、缺 fitz、导航词、标题相似度<0.5） | 全部 REJECT | PASS |
 | 8 | Markdown `**` 残留 + TODO 泄漏进终稿 | FAIL | PASS |
 | 9 | **CSV 存在但不含该数字（41.7 dB vs CSV 28.53 dB）** | FAIL | PASS |
+| 10 | **引用已撤稿论文（合成 Crossref 缓存 `is-retracted-by`）** | FAIL | PASS |
+| 11 | **数学恒等式写错（`2 + 2 = 5`）** | FAIL | PASS |
 
 第 9 条是本次新增的：修复了旧 Gate 2 "只要存在任意 CSV 就全部放行"的漏洞。
 现在每个数字都要落进某个 CSV 单元格（支持四舍五入与百分比/小数换算），并报告 `文件:行号`。
+
+第 10、11 条对应两项新接入能力：撤稿检测（Crossref `relation.is-retracted-by` / `update-to`）
+与 sympy 符号恒等式验证（`simplify(lhs - rhs) == 0`，只对确定的非零差值判 FAIL，不产生假阳性）。
 
 ## 5. 诚实缺口清单（这些没做完，就是没做完）
 
@@ -93,7 +98,7 @@ $ zhaw grounding bupt_isac_workflow/survey/literature_comparison_matrix.md \
 # 0. 环境自检：Python / PyMuPDF / XeLaTeX / 7 个门禁脚本是否就位
 zhaw doctor
 
-# 1. 门禁自身有没有被改坏（9 个对抗用例，零网络）
+# 1. 门禁自身有没有被改坏（11 个对抗用例，零网络）
 zhaw selftest
 
 # 2. 引文取证（--offline 走本地 Crossref 缓存）
@@ -129,4 +134,5 @@ CI（`.github/workflows/quality-gates.yml`）在 Ubuntu / Windows / macOS 三平
 | 2026-09（旧版） | 宣称 11 PDF / 16 维矩阵 0 FAIL / 32 条 Crossref OK —— 当时为真 |
 | 2026-10-19 | 5 篇 PDF 被删 → grounding FAIL ×2；本报告重写为可复现格式 |
 | 2026-10-19 | 从 `2758826` 恢复 11 篇 PDF → grounding 重新 PASS |
-| 2026-10-19 | Gate 2 升级为 CSV 单元格级溯源；对抗用例 8 → 9 |
+| 2026-10-19 | Gate 2 升级为 CSV 单元格级溯源；对抗用例 8 → 11 |
+| 2026-10-19 | 接入撤稿检测与 sympy 符号验证；SciencePlots 学术版式；22 个子命令全生命周期实测（见 `CAPABILITY_REPORT.md`） |

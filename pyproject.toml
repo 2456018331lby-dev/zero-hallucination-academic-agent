@@ -7,6 +7,8 @@ name = "zhaw"
 version = "0.2.0"
 description = "Zero-Hallucination Academic Workflow — executable anti-fabrication gates for Chinese dissertations"
 readme = "README.md"
+# 本仓库自身代码为 MIT。注意：运行时依赖 pymupdf 为 AGPL-3.0/Artifex 双许可，
+# 对外分发组合产物时的义务见 THIRD_PARTY_LICENSES.md。
 license = { text = "MIT" }
 requires-python = ">=3.10"
 authors = [{ name = "2456018331lby-dev" }]
@@ -20,6 +22,8 @@ full = [
     "python-docx>=1.1.0",
     "matplotlib>=3.8.0",
     "numpy>=1.26.0",
+    "scienceplots>=2.1.0",
+    "sympy>=1.12",
 ]
 dev = [
     "pytest>=8.0",

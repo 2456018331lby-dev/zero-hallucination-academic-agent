@@ -10,7 +10,7 @@
 
 这是一个**方向正确、内核真实、外壳失控**的项目。
 
-- **内核真实**：四道"不可造假"门禁不是 PPT 概念，是 5000+ 行能跑的 Python，自测 9/9 对抗用例全过，引文审计和 PDF 页码取证都能真跑出结果。
+- **内核真实**：四道"不可造假"门禁不是 PPT 概念，是 5000+ 行能跑的 Python，自测 11/11 对抗用例全过，引文审计和 PDF 页码取证都能真跑出结果。
 - **外壳失控**：仓库里同时躺着 3 个论文工程、1 个平台桥接实验、50.7 MB vendored 依赖（已删除）、18 项与学术毫无关系的残留文件（Claude Desktop 汉化补丁、ADS 破解清理脚本、鹈鹕骑车动画，已归档进 `_attic/`）。
 - **最大硬伤（已修复）**：主力工程 `bupt_isac_workflow` 的**证据链曾经断了**——11 篇文献被删到 6 篇，接地门禁 `FAIL`（2 行矩阵引用的页码超出了留存 PDF 的实际页数），而 `E2E_VERIFICATION_REPORT.md` 仍保留着旧数字。这属于**工作区漂移导致的报告失真**（旧数字在其所属 commit 上为真），不是刻意造假；现已从 `2758826` 恢复 11 篇 PDF、重跑接地门禁 `0 FAIL / 0 WARN`，并把 E2E 报告重写为可复现格式。
 
@@ -30,7 +30,7 @@ pidemo/
 │   ├── academic-paper-discovery  ← OpenAlex/arXiv 检索
 │   ├── web-and-local-recon       ← （非学术，Pi 迁移遗留）
 │   ├── windows-computer-use      ← （非学术，未提交）
-│   └── tests/                    ← 8 个对抗自测
+│   └── tests/                    ← 11 个对抗自测
 │
 ├── bupt_isac_workflow/      L1-主力（北邮 085402 通信硕士，通感一体化）
 ├── ris_thesis_workflow/     L1-验收夹具（6G RIS，红/绿对抗记录最全）
@@ -210,11 +210,11 @@ FAIL → 整张矩阵作废。**本次它确实 FAIL 了**（见 §2.1），说�
 
 `search_papers.py`（23.7 KB）对接 OpenAlex + arXiv，`venue_weights.json` 按顶会/顶刊声誉、引用速率、出版年份加权，自动下载 OA 全文，输出「已就绪 / 需校园网补充」分流清单。
 
-### 3.6 自测：9/9 对抗用例全过
+### 3.6 自测：11/11 对抗用例全过
 
 ```
 py -3.12 .agents\skills\tests\run_selftest.py
-→ 9/9 PASS, 0.200s
+→ 11/11 PASS, 0.352s
 → [OK] ALL ADVERSARIAL GATES EFFECTIVELY INTERCEPTED!
 ```
 
@@ -239,7 +239,7 @@ py -3.12 .agents\skills\tests\run_selftest.py
 | GB/T 7714 模板 | `references/gbt7714-bibtex-template.md` | 中文参考文献著录 |
 | Beamer 组会模板 | `references/beamer-template.tex` | 16:9 组会 PPT |
 | 数学符号契约 | `math-reviewer` + `notation_table.md` | 跨章节符号统一 |
-| 对抗自测套件 | `.agents/skills/tests/test_gates.py` | 8 个用例是"怎么测门禁"的范本 |
+| 对抗自测套件 | `.agents/skills/tests/test_gates.py` | 11 个用例是"怎么测门禁"的范本 |
 
 ### B 级 · 需要适配
 
@@ -360,7 +360,7 @@ py -3.12 .agents\skills\tests\run_selftest.py
    zhaw survey <topic>      # 文献矩阵
    ```
    现在只能靠 `python scripts/xxx.py` 记住 8 个路径，这是复用的最大摩擦。
-10. ~~**加 GitHub Actions**~~ **（已完成）**：三平台（ubuntu/macos/windows）× Python 3.12，跑 `zhaw doctor` + `zhaw selftest`（9 个对抗用例）+ 四道门禁 + grounding，CI 徽章已进 README，首次运行 [39212688865](https://github.com/2456018331lby-dev/zero-hallucination-academic-agent/actions/runs/39212688865) 三平台全绿。
+10. ~~**加 GitHub Actions**~~ **（已完成）**：三平台（ubuntu/macos/windows）× Python 3.12，跑 `zhaw doctor` + `zhaw selftest`（11 个对抗用例）+ 四道门禁 + grounding，CI 徽章已进 README，首次运行 [39212688865](https://github.com/2456018331lby-dev/zero-hallucination-academic-agent/actions/runs/39212688865) 三平台全绿。
 11. **加 `pre-commit` hook**：commit 前自动跑 Gate1 + Gate3（快的两个），FAIL 就拦。
 12. **消架构债**：`newwork/skills/phd-literature-review/verify_grounding.py` 和 `.agents/skills/phd-literature-survey/scripts/verify_grounding.py` **合并成一个**，取增强版（newwork 那份含表模式 + 矩阵模式）。
 13. **Gate 2 升级**：正则 → 结构化断言。要求论文里的每个数字都能 `grep` 回 CSV 的某个 `(column, row)`，而不是靠正则猜。
@@ -369,7 +369,7 @@ py -3.12 .agents\skills\tests\run_selftest.py
 ### 一个月（出成果，对毕业论文直接有用）
 
 15. **把门禁体系写成一篇教研论文**。选题：*《面向学位论文的不可造假质量门禁：设计与对抗验证》*。你的素材是现成的：
-    - 8 个对抗用例（红队）
+    - 11 个对抗用例（红队）
     - RIS 工程 10 份红/绿日志（对照组）
     - 6/6 引文错误的历史事故（问题定义）
     - 三个不同学科工程（BUPT 通信 / RIS 通信 / PKU 语义通信）的横向验证
@@ -478,7 +478,7 @@ py -3.12 -m pip install -e .
 # 1. 环境自检：Python / PyMuPDF / XeLaTeX / 7 个门禁脚本是否就位
 py -3.12 -m zhaw doctor
 
-# 2. 门禁自身有没有被改坏（9 个对抗用例，零网络，约 0.2 秒）
+# 2. 门禁自身有没有被改坏（11 个对抗用例，零网络，约 0.35 秒）
 py -3.12 -m zhaw selftest
 
 # 3. 一条命令跑完四道门禁，写 gate_summary.json
@@ -512,8 +512,27 @@ CI 在 `.github/workflows/quality-gates.yml`，Ubuntu / Windows / macOS × Pytho
 
 **本次改进的落点**：提交 `2c84fd6`（已推送 `origin/main`），工作区干净。
 新增 `zhaw` 包（`pyproject.toml` + `zhaw/{__init__,__main__,_paths,cli}.py`）、CI workflow、
-Gate 2 的 CSV 单元格级溯源与第 9 个对抗用例、`E2E_VERIFICATION_REPORT.md` 重写、
+Gate 2 的 CSV 单元格级溯源与第 9 个对抗用例、撤稿检测与 sympy 符号验证（第 10/11 个）、`E2E_VERIFICATION_REPORT.md` 重写、
 `README.md` 的 CI 徽章 / 30 秒上手 / 真实成色、`PROJECT_AUDIT_REPORT.md`（本文件）全部数字对齐实测。
+
+### 第二轮改进（把「门禁」扩成「全生命周期」）
+
+第一轮解决的是「门禁能不能用」，第二轮解决的是「一个研究生从开题到归档，是不是每一步都有命令」。
+
+| 新增 | 说明 |
+| :--- | :--- |
+| **22 个子命令** | 原 10 个 → 新增 `new` / `proposal` / `bib` / `math` / `docx` / `seminar` / `defense` / `figures` / `audit` / `progress` / `anonymize` / `archive` |
+| **`zhaw audit`** | 可交付度六维加权评分（门禁 0.30 / 正文 0.25 / 数据 0.15 / 文献 0.10 / 签署 0.10 / 残留 0.10） |
+| **`zhaw anonymize`** | 盲审匿名化：封面姓名/学号/导师 + 正文署名 + 致谢章 + 攻读成果章，产出 `LEAKS.md`，副本可独立编译 |
+| **`zhaw progress`** | 字数进度、待填清单（文件:行号）、分章配额 |
+| **`zhaw defense`** | 答辩 PPT + 逐页讲稿 + 13 问预答辩问题库 |
+| **撤稿检测** | `check_citations.py:CrossrefClient.retraction()`，引用已撤稿论文直接 FAIL |
+| **sympy 符号验证** | `check_math.py:verify_identities()`，恒等式机器验证，只对确定的非零差值判 FAIL |
+| **SciencePlots 版式** | `plot_academic_curves.py` 支持 IEEE/Nature 版式，保留 CJK 逐字形回退 |
+| **许可证诚实化** | 新增 `THIRD_PARTY_LICENSES.md`，说明 `pymupdf` AGPL-3.0 与 MIT 声明的关系 |
+| **能力证明报告** | [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：22 命令逐个实测、11/11 对抗、三工程全过 |
+
+三个工程在纠正路径后（`ris_thesis_project` / `pku_thesis_project`，不是 `thesis_project`）**全部 Overall PASS**。
 
 ---
 

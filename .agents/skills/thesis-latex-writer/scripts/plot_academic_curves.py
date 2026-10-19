@@ -45,27 +45,67 @@ ACADEMIC_MARKERS = ['o', 's', '^', 'D', 'v', 'p', '*', 'x']
 ACADEMIC_LINESTYLES = ['-', '--', '-.', ':', '-', '--', '-.', ':']
 
 
-def setup_academic_style():
-    plt.rcParams.update({
-        'font.family': 'serif',
-        'font.serif': ['Times New Roman', 'DejaVu Serif', 'SimSun'],
-        'mathtext.fontset': 'stix',
-        'font.size': 11,
-        'axes.labelsize': 12,
-        'axes.titlesize': 13,
-        'xtick.labelsize': 10,
-        'ytick.labelsize': 10,
-        'legend.fontsize': 10,
-        'legend.framealpha': 0.9,
-        'figure.titlesize': 14,
-        'lines.linewidth': 2.0,
-        'lines.markersize': 6,
-        'axes.grid': True,
-        'grid.linestyle': '--',
-        'grid.alpha': 0.5,
-        'savefig.dpi': 300,
-        'savefig.bbox': 'tight'
-    })
+_FALLBACK_RCPARAMS = {
+    # 具体字体名的列表（而非 'serif' 泛称）才能启用 matplotlib>=3.6 的逐字形回退，
+    # 从而让英文走 Times New Roman、中文自动落到 SimSun。
+    'font.family': ['Times New Roman', 'SimSun', 'DejaVu Serif'],
+    'mathtext.fontset': 'stix',
+    'font.size': 11,
+    'axes.labelsize': 12,
+    'axes.titlesize': 13,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
+    'legend.fontsize': 10,
+    'legend.framealpha': 0.9,
+    'figure.titlesize': 14,
+    'lines.linewidth': 2.0,
+    'lines.markersize': 6,
+    'axes.grid': True,
+    'grid.linestyle': '--',
+    'grid.alpha': 0.5,
+}
+
+# 无论走 SciencePlots 还是回退路径，都必须最后覆盖的项：
+# 1) science 样式默认 serif 栈里没有中文字形，中文会变方框——用「具体字体名列表」
+#    启用 matplotlib>=3.6 的逐字形回退（英文 Times New Roman，中文 SimSun）；
+# 2) 学位论文插图统一要求 300 dpi、紧凑边距、负号用 ASCII。
+_ALWAYS_OVERRIDE = {
+    'font.family': ['Times New Roman', 'SimSun', 'DejaVu Serif'],
+    'mathtext.fontset': 'stix',
+    'axes.unicode_minus': False,
+    'savefig.dpi': 300,
+    'savefig.bbox': 'tight',
+}
+
+
+def setup_academic_style(journal="ieee"):
+    """应用期刊级排版。
+
+    优先使用 SciencePlots（github.com/garrettj403/SciencePlots, MIT, 9.3k★）：
+    它把 IEEE / Elsevier / Nature 的真实 rcParams 维护在上游，比手工抄写更准，
+    也让「换期刊只换一个字符串」成为可能。未安装时回退到内置 rcParams 表，
+    因此这是**可选依赖**，脚本永远不因缺包而失败。
+
+    返回 True 表示本次使用了 SciencePlots 版式。
+    """
+    used_scienceplots = False
+    try:
+        import scienceplots  # noqa: F401  (import 即注册样式)
+        for style_list in (["science", journal, "no-latex"], ["science", "no-latex"]):
+            try:
+                plt.style.use(style_list)
+                used_scienceplots = True
+                break
+            except Exception:
+                continue
+    except Exception:
+        used_scienceplots = False
+
+    if not used_scienceplots:
+        plt.rcParams.update(_FALLBACK_RCPARAMS)
+
+    plt.rcParams.update(_ALWAYS_OVERRIDE)
+    return used_scienceplots
 
 
 def plot_curves_from_csv(
@@ -78,7 +118,8 @@ def plot_curves_from_csv(
     title=None,
     output_pdf=None,
     output_png=None,
-    figsize=(6.5, 4.5)
+    figsize=(6.5, 4.5),
+    journal="ieee"
 ):
     if not os.path.exists(csv_path):
         print(f"[-] Input CSV file not found: {csv_path}", file=sys.stderr)
@@ -136,7 +177,7 @@ def plot_curves_from_csv(
         series_data.append(y_vals)
 
     # 绘图
-    setup_academic_style()
+    setup_academic_style(journal)
     fig, ax = plt.subplots(figsize=figsize)
 
     for i, (yi, y_data) in enumerate(zip(y_indices, series_data)):
@@ -179,6 +220,10 @@ if __name__ == "__main__":
     parser.add_argument("--title", default="", help="Chart title")
     parser.add_argument("--output-pdf", default="academic_curve.pdf", help="Output PDF file path")
     parser.add_argument("--output-png", default=None, help="Output PNG file path (optional)")
+    parser.add_argument(
+        "--style", default="ieee",
+        help="Journal style when SciencePlots is installed: ieee / nature / science / elsevier (default: ieee)",
+    )
 
     args = parser.parse_args()
 
@@ -198,6 +243,7 @@ if __name__ == "__main__":
         ylabel=args.ylabel or None,
         title=args.title or None,
         output_pdf=args.output_pdf,
-        output_png=args.output_png
+        output_png=args.output_png,
+        journal=args.style
     )
     sys.exit(0 if success else 1)

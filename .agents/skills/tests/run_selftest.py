@@ -3,7 +3,7 @@
 """
 run_selftest.py - Academic Quality Gates Adversarial Regression Test Runner
 
-Executes 9 core adversarial attack vectors, verifies that each DoD quality gate
+Executes 11 core adversarial attack vectors, verifies that each DoD quality gate
 correctly blocks adversarial attempts, and prints a structured benchmark table.
 """
 
@@ -89,6 +89,20 @@ TEST_SPECS = [
         "gate": "Gate 2: Data Provenance",
         "input_desc": "CSV has 28.53 dB, chapter claims 41.7 dB",
         "expected": "FAIL (Claim absent from every CSV cell)",
+    },
+    {
+        "method": "test_10_retraction_detection",
+        "name": "Gate 1 Retracted Paper Rejection",
+        "gate": "Gate 1: Citation Gate",
+        "input_desc": "Metadata perfect, but Crossref marks it retracted",
+        "expected": "FAIL (Cited paper has been retracted)",
+    },
+    {
+        "method": "test_11_symbolic_identity_mismatch",
+        "name": "Math Symbolic Identity Mismatch",
+        "gate": "Math Reviewer",
+        "input_desc": "True identity + '2 + 2 = 5' in display math",
+        "expected": "FAIL (sympy diff != 0)",
     },
 ]
 

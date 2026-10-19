@@ -52,6 +52,167 @@ def load_notation_table(notation_path):
     return {"symbols": clean_symbols, "pipeline": pipeline, "raw": text}
 
 
+# ---------------------------------------------------------------------------
+# 符号恒等式机器验证（可选依赖 sympy，缺失时整体降级为文本检查）
+# ---------------------------------------------------------------------------
+try:
+    import sympy as _sp  # noqa: F401
+
+    SYMPY_AVAILABLE = True
+except Exception:
+    SYMPY_AVAILABLE = False
+
+# 这些记号无法安全地转成 sympy 表达式，遇到即跳过（记为 undecided，不误报）
+_UNPARSEABLE_TOKENS = (
+    r"\sum", r"\int", r"\prod", r"\lim", r"\max", r"\min", r"\arg", r"\sup", r"\inf",
+    r"\le", r"\ge", r"\leq", r"\geq", r"\approx", r"\sim", r"\to", r"\rightarrow",
+    r"\mathbb", r"\nabla", r"\partial", r"\lVert", r"\rVert", r"\|",
+    r"\cdots", r"\ldots", r"\dots", r"\infty",
+)
+
+_MATH_ENVS = (
+    "equation", "equation*", "displaymath", "align", "align*",
+    "gather", "gather*", "multline", "multline*",
+)
+
+_GREEK = {
+    "alpha": "alpha", "beta": "beta", "gamma": "gamma", "delta": "delta",
+    "epsilon": "epsilon", "varepsilon": "epsilon", "zeta": "zeta", "eta": "eta",
+    "theta": "theta", "kappa": "kappa", "lambda": "lambda", "mu": "mu",
+    "nu": "nu", "xi": "xi", "pi": "pi", "rho": "rho", "sigma": "sigma",
+    "tau": "tau", "phi": "phi", "varphi": "phi", "chi": "chi", "psi": "psi",
+    "omega": "omega", "Delta": "Delta", "Sigma": "Sigma", "Omega": "Omega",
+}
+
+
+def _strip_latex(expr):
+    """把受限子集的 LaTeX 数学式转成 sympy 可解析的字符串（尽力而为）。"""
+    s = expr
+    s = re.sub(r"\\(left|right|big|Big|bigg|Bigg)\b", "", s)
+    s = re.sub(r"\\[,;:!]", "", s)
+    s = re.sub(r"\\(quad|qquad)\b", " ", s)
+    s = s.replace("~", " ")
+
+    # \frac{a}{b} -> ((a)/(b))，循环处理嵌套
+    for _ in range(6):
+        new = re.sub(r"\\frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}", r"((\1)/(\2))", s)
+        if new == s:
+            break
+        s = new
+    # \sqrt{x} -> sqrt(x)
+    for _ in range(4):
+        new = re.sub(r"\\sqrt\s*\{([^{}]*)\}", r"sqrt(\1)", s)
+        if new == s:
+            break
+        s = new
+
+    # 去装饰宏，保留内部内容
+    for _ in range(4):
+        new = re.sub(
+            r"\\(mathrm|text|mathbf|mathit|mathsf|mathcal|bm|hat|bar|tilde|overline|operatorname|boldsymbol)\s*\{([^{}]*)\}",
+            r"\2", s)
+        if new == s:
+            break
+        s = new
+
+    s = s.replace(r"\cdot", "*").replace(r"\times", "*")
+    s = re.sub(r"\\(log|ln)\b", "log", s)
+    s = re.sub(r"\\(exp|sin|cos|tan|min|max|sqrt)\b", r"\1", s)
+    for tex, py in _GREEK.items():
+        s = re.sub(r"\\" + tex + r"\b", py, s)
+
+    # 下标 _{k} -> _k（先于花括号替换）
+    for _ in range(4):
+        new = re.sub(r"_\s*\{([^{}]*)\}", r"_\1", s)
+        if new == s:
+            break
+        s = new
+    # 上标 ^{...} / ^x -> **(...)
+    for _ in range(4):
+        new = re.sub(r"\^\s*\{([^{}]*)\}", r"**(\1)", s)
+        if new == s:
+            break
+        s = new
+    s = re.sub(r"\^([A-Za-z0-9])", r"**\1", s)
+
+    s = s.replace("{", "(").replace("}", ")")
+    # 隐式乘法：)( -> )*( ，数字后接 ( -> *(
+    s = re.sub(r"\)\s*\(", ")*(", s)
+    s = re.sub(r"(?<=[0-9])\s*\(", "*(", s)
+    return s.strip()
+
+
+def _split_identity(text):
+    """把 'lhs = rhs' 拆成两侧；跳过不等式、多等号与含不可解析宏的式子。"""
+    body = text.strip()
+    if not body or any(tok in body for tok in _UNPARSEABLE_TOKENS):
+        return None
+    if body.count("=") != 1:
+        return None
+    lhs, rhs = body.split("=", 1)
+    if not lhs.strip() or not rhs.strip():
+        return None
+    return lhs, rhs
+
+
+def verify_identities(tex_files, project_dir, max_checks=200):
+    """对行间公式中的等式做 sympy 化简验证。
+
+    返回 (verified, failed, undecided, issues)。
+    仅在「化简结果是非零常数」时判 FAIL——符号未定的表达式记为 undecided，
+    绝不因为解析不了就报错，这是本门禁不产生假阳性的前提。
+    """
+    if not SYMPY_AVAILABLE:
+        return 0, 0, 0, []
+
+    verified = failed = undecided = 0
+    issues = []
+    # beta / gamma 等在 sympy 中是函数名，必须显式绑定为符号，否则 sympify 会报错
+    sym_locals = {name: _sp.Symbol(name) for name in set(_GREEK.values())}
+    for tf in tex_files:
+        if verified + failed + undecided >= max_checks:
+            break
+        rel_f = os.path.relpath(tf, project_dir)
+        with open(tf, "r", encoding="utf-8", errors="ignore") as fp:
+            content = fp.read()
+
+        candidates = []
+        for m in re.finditer(r"\$\$(.+?)\$\$", content, re.S):
+            candidates.append((content[:m.start()].count("\n") + 1, m.group(1)))
+        for env in _MATH_ENVS:
+            pat = re.compile(r"\\begin\{" + re.escape(env) + r"\}(.*?)\\end\{" + re.escape(env) + r"\}", re.S)
+            for m in pat.finditer(content):
+                candidates.append((content[:m.start()].count("\n") + 1, m.group(1)))
+
+        for line_no, raw in candidates:
+            if verified + failed + undecided >= max_checks:
+                break
+            for sub in raw.split(r"\\"):
+                split = _split_identity(_strip_latex(sub))
+                if not split:
+                    continue
+                lhs_s, rhs_s = split
+                try:
+                    lhs = _sp.sympify(lhs_s, evaluate=False, locals=sym_locals)
+                    rhs = _sp.sympify(rhs_s, evaluate=False, locals=sym_locals)
+                    diff = _sp.simplify(lhs - rhs)
+                except Exception:
+                    undecided += 1
+                    continue
+                if diff == 0:
+                    verified += 1
+                elif getattr(diff, "is_number", False) and diff.is_zero is False:
+                    failed += 1
+                    issues.append({
+                        "file": rel_f, "line": line_no, "level": "FAIL",
+                        "rule": "Symbolic Identity Mismatch",
+                        "msg": f"等式两侧化简后差值为 {diff}（不为 0），疑似推导错误：{sub.strip()[:120]}",
+                    })
+                else:
+                    undecided += 1
+    return verified, failed, undecided, issues
+
+
 def audit_math_project(project_dir, notation_path=None):
     project_dir = os.path.abspath(project_dir)
     if not notation_path:
@@ -141,6 +302,16 @@ def audit_math_project(project_dir, notation_path=None):
                                 "rule": "Notation Contract Alignment",
                                 "msg": f"Vector symbol '\\bm{{{v}}}' not formally registered in notation_table.md contract (de-duplicated per file)."
                             })
+
+    # 4. 符号恒等式机器验证（sympy 可选；缺失则跳过且不报错）
+    if SYMPY_AVAILABLE:
+        verified, failed_n, undecided, sym_issues = verify_identities(tex_files, project_dir)
+        issues.extend(sym_issues)
+        print(f"[+] Symbolic identity check: {verified} verified, {failed_n} failed, "
+              f"{undecided} undecided (skipped as non-decidable).")
+    else:
+        print("[+] Symbolic identity check: SKIPPED (sympy not installed; "
+              "install with: pip install sympy)")
 
     print("\n" + "=" * 75)
     print(f"[*] Mathematical Review finished: {len(issues)} finding(s).")
