@@ -156,6 +156,13 @@ def run_audit(
     if not project.is_dir():
         raise SystemExit(f"[zhaw audit] project directory not found: {project}")
 
+    # 夹具工程（FIXTURE.md）：故意保留缺陷用于回归测试，低分是预期结果而不是待办。
+    # 不识别它的话，audit 会把「故意留的假数据」当成「没做完的论文」，误导使用者。
+    fixture_note = ""
+    fixture_path = project / "FIXTURE.md"
+    if fixture_path.exists():
+        fixture_note = read_text(fixture_path).strip().splitlines()[0].lstrip("# ").strip()
+
     metrics = thesis_metrics(project)
 
     hr_path = project / ".human_review.json"
@@ -226,6 +233,7 @@ def run_audit(
         "gate_table": gate_status,
         "human_review": {"signed": signed, "reviewer": reviewer},
         "readiness": readiness,
+        "fixture": {"is_fixture": bool(fixture_note), "note": fixture_note},
     }
     statuses = list(gate_status.values()) + [grounding["status"]]
     report["overall"] = (
@@ -252,6 +260,7 @@ def _render_markdown(report: dict) -> str:
     m = report["metrics"]
     r = report["readiness"]
     g = report["gates"]
+    fixture = report.get("fixture") or {}
     lines = [
         f"# 审计报告 · {Path(report['project']).name}",
         "",
@@ -259,6 +268,16 @@ def _render_markdown(report: dict) -> str:
         f"模式：`offline={report['mode']['offline']}` `scaffold={report['mode']['scaffold']}` "
         f"`min_bib={report['mode']['min_bib']}`",
         "",
+    ]
+    if fixture.get("is_fixture"):
+        lines += [
+            "> [!IMPORTANT]",
+            f"> **这是夹具工程（fixture），不是待完成的论文。** {fixture.get('note', '')}",
+            "> 它故意保留假数据、缺 CSV、未签署等缺陷，用来回归测试四道门禁能否抓住问题。",
+            "> **下面的低分是预期结果**——不要拿它当「工作没做完」的证据，也不要为了提分去填造数据。",
+            "",
+        ]
+    lines += [
         "## 1. 总评",
         "",
         f"**可交付度 {r['overall']} / 100**",

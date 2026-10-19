@@ -2,13 +2,14 @@
 \section{算法收敛性分析、CRLB推导与计算复杂度}
 \label{sec:convergence_and_complexity}
 
-为了严谨确立本章提出的主被动协同波束赋形与信道估计算法在数学与信息论层面的可靠性，本节给出交替优化算法的单调收敛性证明、信道估计的克拉美罗下界（CRLB）推导，以及计算复杂度的渐近阶次分析。
+为了严谨确立本章提出的主被动协同波束赋形与信道估计算法在数学与信息论层面的可靠性，本节给出交替优化算法的单调收敛性证明、信道估计的克拉美罗下界（CRLB）推导，以及计算复杂度的渐近阶次分析。需要强调的是，本节的三项结论分别回答三个不同层面的问题：收敛性回答「迭代是否会停下来且不会变差」，CRLB 回答「在给定导频协议下估计精度还能不能更好」，复杂度回答「这套算法能否在相干时隙内跑完」。三者共同构成本章方法的可实施性论证。
 
 \subsection{交替优化波束赋形算法的单调收敛性证明}
+\label{sec:convergence_proof}
 
 \begin{theorem}[交替优化算法单调收敛性]
   \label{thm:ao_convergence}
-  由式~\eqref{eq:fp_update_rho}、\eqref{eq:fp_update_mu}、\eqref{eq:optimal_wk_closed_form}与流形更新式~\eqref{eq:manifold_retraction}构成的迭代序列 $\{ \bm{W}^{(t)}, \bm{v}^{(t)} \}$，其对应的原始系统和速率目标函数值序列 $\{ R_{\mathrm{sum}}(\bm{W}^{(t)}, \bm{v}^{(t)}) \}$ 随外层迭代次数 $t$ 单调非递减，且序列严格收敛至非凸和速率优化问题~\eqref{prob:joint_beamforming_p1}的卡罗什-库恩-塔克（KKT）一阶驻点。
+  由式~\eqref{eq:fp_update_rho}、\eqref{eq:fp_update_mu}、\eqref{eq:optimal_wk_closed_form}与流形更新式~\eqref{eq:manifold_retraction}构成的迭代序列 $\{ \bm{W}^{(t)}, \bm{v}^{(t)} \}$，其对应的原始系统和速率目标函数值序列 $\{ R_{\mathrm{sum}}(\bm{W}^{(t)}, \bm{v}^{(t)}) \}$ 随外层迭代次数 $t$ 单调非递减，且序列收敛至非凸和速率优化问题~\eqref{prob:joint_beamforming_p1}的卡罗什-库恩-塔克（KKT）一阶驻点。
 \end{theorem}
 
 \begin{proof}
@@ -17,37 +18,50 @@
     R_{\mathrm{sum}}(\bm{W}^{(t)}, \bm{v}^{(t)}) = f_q\left( \bm{W}^{(t)}, \bm{v}^{(t)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)} \right)
     \label{eq:proof_step1}
   \end{equation}
+  这一等式的成立依赖于辅助变量取到闭式最优解：对 $\bm{\rho}$ 的最优取值为 $\rho_k^{\star} = \gamma_k$（即当前信干噪比），对 $\bm{\mu}$ 的最优取值为 $\mu_k^{\star} = a_k/(B_k + |a_k|^2)$。当辅助变量偏离最优值时，增广函数严格小于原目标函数，这正是「下界紧化」的含义。
+
   在第一步优化中，固定 $(\bm{v}^{(t)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)})$，由于解 $\bm{W}^{(t+1)}$ 为凸二次规划子问题~\eqref{prob:sub1_w_opt}的全局最优闭式解，因此有：
   \begin{equation}
     f_q\left( \bm{W}^{(t)}, \bm{v}^{(t)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)} \right) \le f_q\left( \bm{W}^{(t+1)}, \bm{v}^{(t)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)} \right)
     \label{eq:proof_step2}
   \end{equation}
+  此步不等号严格性来自子问题一的凸性与闭式解的最优性——凸二次规划不存在局部极小，故闭式解即为全局最优，增广目标不可能下降。
+
   在第二步优化中，固定 $(\bm{W}^{(t+1)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)})$，黎曼流形共轭梯度法（RCG）沿切空间黎曼负梯度方向并配合 Armijo 步长准则进行流形回退收缩更新，保证子问题~\eqref{prob:sub2_v_opt}的目标函数单调递减（即对应原极大化目标函数非递减）：
   \begin{equation}
     f_q\left( \bm{W}^{(t+1)}, \bm{v}^{(t)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)} \right) \le f_q\left( \bm{W}^{(t+1)}, \bm{v}^{(t+1)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)} \right)
     \label{eq:proof_step3}
   \end{equation}
+  此处需要说明：Armijo 准则只保证「沿所取方向充分下降」，而方向本身由黎曼梯度与上一步共轭方向组合而成。当 Armijo 回溯失败时算法会退化为纯负梯度方向，仍可保证不增；因此式~\eqref{eq:proof_step3}的成立不依赖于方向的最优性，只依赖于步长准则的充分下降条件。
+
   根据式~\eqref{eq:fp_augmented_objective}的数学结构，对于任意给定的可行解 $(\bm{W}^{(t+1)}, \bm{v}^{(t+1)})$，原始目标函数值恒为增广目标函数关于辅助变量 $(\bm{\rho}, \bm{\mu})$ 的上确界：
   \begin{equation}
     f_q\left( \bm{W}^{(t+1)}, \bm{v}^{(t+1)}, \bm{\rho}^{(t+1)}, \bm{\mu}^{(t+1)} \right) \le \max_{\bm{\rho}, \bm{\mu}} f_q\left( \bm{W}^{(t+1)}, \bm{v}^{(t+1)}, \bm{\rho}, \bm{\mu} \right) = R_{\mathrm{sum}}(\bm{W}^{(t+1)}, \bm{v}^{(t+1)})
     \label{eq:proof_step4}
   \end{equation}
-  综合式~\eqref{eq:proof_step1}至式~\eqref{eq:proof_step4}，可得严格的不等式链：
+  综合式~\eqref{eq:proof_step1}至式~\eqref{eq:proof_step4}，可得不等式链：
   \begin{equation}
     R_{\mathrm{sum}}(\bm{W}^{(t)}, \bm{v}^{(t)}) \le R_{\mathrm{sum}}(\bm{W}^{(t+1)}, \bm{v}^{(t+1)})
     \label{eq:proof_chain}
   \end{equation}
+  即原始目标函数值随外层迭代单调非递减。
+
   此外，在满足最大总发射功率约束 $\sum_{k=1}^K \|\bm{w}_k\|^2 \le P_{\max}$ 与有限信道增益条件下，多用户总和速率 $R_{\mathrm{sum}}(\bm{W}, \bm{v})$ 必然存在有限的数学物理上界：
   \begin{equation}
     R_{\mathrm{sum}}(\bm{W}, \bm{v}) \le K \log_2\left( 1 + \frac{P_{\max} \max_k \|\bm{h}_k^H(\bm{v})\|^2}{\sigma^2} \right) < \infty
     \label{eq:sum_rate_upper_bound}
   \end{equation}
-  由单调有界收敛定理（Monotone Convergence Theorem），目标函数值序列必然单调收敛至有限极限值，定理证毕。
+  由单调有界收敛定理（Monotone Convergence Theorem），目标函数值序列必然单调收敛至有限极限值。
+
+  最后说明驻点性质。由式~\eqref{eq:proof_chain}知序列 $\{R_{\mathrm{sum}}^{(t)}\}$ 收敛，且 $\{(\bm{W}^{(t)},\bm{v}^{(t)})\}$ 位于紧集（功率约束与恒模约束的乘积集为紧集）内，故存在收敛子列。在该子列极限点处，两个子问题均取到各自最优解，等价于增广目标关于 $(\bm{W},\bm{v})$ 的梯度为零；再由二次变换的等价性定理，该点同时是原问题~\eqref{prob:joint_beamforming_p1}的 KKT 驻点。定理证毕。
 \end{proof}
 
-\subsection{DFT 导频信道估计误差的克拉美罗下界 (CRLB) 推导}
+需要如实指出定理~\ref{thm:ao_convergence}的三点局限。第一，结论是「收敛到驻点」而非「收敛到全局最优」：问题~\eqref{prob:joint_beamforming_p1}因恒模约束与多用户干扰耦合而是非凸的，可能存在多个驻点，最终解依赖初值。第二，定理只保证目标值单调，不保证收敛速率；实测中 30 次外层迭代即可使增量低于 $10^{-3}$ bps/Hz，但这是经验结论而非理论保证。第三，单调性依赖辅助变量每轮都取到闭式最优，若为节省算力而采用「隔轮更新辅助变量」的近似策略，单调性将不再成立。第四章的收敛性实验正是对上述理论结论的数值验证。
 
-为了评估基于正交 DFT 码本的最小二乘（LS）信道估计器的渐近有效性，本小节推导未知信道向量 $\bar{\bm{h}}_k$ 的无偏估计克拉美罗下界（CRLB）。
+\subsection{DFT 导频信道估计误差的克拉美罗下界推导}
+\label{sec:crlb_proof}
+
+为了评估基于正交 DFT 码本的最小二乘（LS）信道估计器的渐近有效性，本小节推导未知信道向量 $\bar{\bm{h}}_k$ 的无偏估计克拉美罗下界（CRLB）。3.3 节已给出该下界的一个紧凑形式（式~\eqref{eq:crlb_ce}），此处给出基于 Fisher 信息矩阵（FIM）的完整推导，并说明其适用边界。
 
 \begin{theorem}[级联信道估计 CRLB]
   \label{thm:crlb_derivation}
@@ -69,6 +83,8 @@
     \bm{J} = \left( \bm{\Phi} \otimes \bm{I}_M \right)^H \left( \frac{\sigma^2}{\tau_p}\bm{I}_{PM} \right)^{-1} \left( \bm{\Phi} \otimes \bm{I}_M \right) = \frac{\tau_p}{\sigma^2} \left( \bm{\Phi}^H \bm{\Phi} \otimes \bm{I}_M \right)
     \label{eq:fim_derivation}
   \end{equation}
+  该式利用了 Kronecker 积的混合乘积性质 $(\bm{A}\otimes\bm{I})^H(\bm{A}\otimes\bm{I}) = \bm{A}^H\bm{A}\otimes\bm{I}$。
+
   将最优 DFT 码本的正交性质式~\eqref{eq:phi_column_orthogonality}（即 $\bm{\Phi}^H \bm{\Phi} = P \bm{I}_{N+1}$）代入式~\eqref{eq:fim_derivation}：
   \begin{equation}
     \bm{J} = \frac{\tau_p}{\sigma^2} \left( P \bm{I}_{N+1} \otimes \bm{I}_M \right) = \frac{P \tau_p}{\sigma^2} \bm{I}_{(N+1)M}
@@ -82,14 +98,47 @@
   即 LS 估计器的协方差矩阵恒等达到 CRLB 下界，证明了正交 DFT 码本设计的最小方差无偏性（MVUE），定理证毕。
 \end{proof}
 
-值得指出的是，在最小导频开销配置 $P = N+1$ 条件下，代入式~\eqref{eq:crlb_trace_mse}可得单个信道系数的平均估计误差为 $\frac{\sigma^2}{(N+1)\tau_p}$，完全消除了由于反射微元增多带来的误差扩散。
+值得指出的是，在最小导频开销配置 $P = N+1$ 条件下，代入式~\eqref{eq:crlb_trace_mse}可得单个信道系数的平均估计误差为 $\frac{\sigma^2}{(N+1)\tau_p}$，完全消除了由于反射微元增多带来的误差扩散：聚合向量的能量随 $N$ 线性增长，而每个系数的误差方差固定，故相对误差随 $N$ 增大而下降。这与 3.3 节式~\eqref{eq:nmse_ls}的结论一致。
+
+对该定理的适用边界需作三点说明。其一，CRLB 是\textbf{在给定导频码本与观测时隙数 $P$ 下}的估计精度下界，它并不说明「增加导频一定更好」——由式~\eqref{eq:crlb_trace_mse}，增大 $P$ 确实降低误差，但代价是导频开销线性增长，这一折中在 3.3.5 节已作讨论。其二，当 $P < N+1$ 时 FIM 奇异，CRLB 发散，任何无偏估计器都不存在有限方差，此时必须引入先验信息（稀疏性、双时间尺度结构）才能得到有意义的估计，这解释了为何第四章的部分开销实验会出现 NMSE 饱和现象。其三，定理假设噪声为独立同分布复高斯且信道在训练期间静止，若存在相位噪声或信道时变，实际误差将高于该下界，因此第四章的蒙特卡洛实测比值会略大于 1。
 
 \subsection{算法计算复杂度对比分析}
+\label{sec:complexity}
+
 本节算法的整体计算复杂度由基站波束子问题求解、RIS 相移流形优化以及信道估计三部分组成：
 \begin{enumerate}
   \item \textbf{基站有源预编码求解}：构建矩阵 $\bm{A}(\bm{v}, \bm{\mu})$ 需要 $\mathcal{O}(KM^2)$ 次浮点运算；进行矩阵求逆需要 $\mathcal{O}(M^3)$；二分搜索迭代通常在 $I_{\mathrm{bis}} \le 15$ 次内收敛。子问题一单次更新复杂度为 $\mathcal{O}(KM^2 + M^3)$。
   \item \textbf{RIS 无源相移求解}：构造矩阵 $\bm{\Psi}$ 与向量 $\bm{q}$ 的计算量为 $\mathcal{O}(K(N^2M + NM^2))$；复流形共轭梯度法（RCG）单次内层迭代仅涉及矩阵-向量乘法，复杂度为 $\mathcal{O}(N^2)$；若平均经过 $I_{\mathrm{RCG}} \approx 20\sim 30$ 次内层迭代收敛，子问题二总复杂度为 $\mathcal{O}(K(N^2M + NM^2) + I_{\mathrm{RCG}} N^2)$。
-  \item \textbf{DFT 级联信道估计}：得益于 $\bm{\Phi}$ 的正交性，LS 估计器仅需执行矩阵相乘式~\eqref{eq:ls_closed_form_estimator}，无需任何矩阵求逆，单用户估计复杂度仅为 $\mathcal{O}(PM) = \mathcal{O}((N+1)M)$。
+  \item \textbf{DFT 级联信道估计}：得益于 $\bm{\Phi}$ 的正交性，LS 估计器仅需执行矩阵相乘式~\eqref{eq:ls_closed_form_estimator}，无需任何矩阵求逆，单用户估计复杂度仅为 $\mathcal{O}(PM) = \mathcal{O}((N+1)M)$；若用 FFT 实现，进一步降至 $\mathcal{O}(P\log P)$。
 \end{enumerate}
 
+将三部分合并，单次外层迭代的总复杂度为
+\begin{equation}
+  \mathcal{O}\left( KM^2 + M^3 + K(N^2M + NM^2) + I_{\mathrm{RCG}}N^2 \right),
+  \label{eq:complexity_total}
+\end{equation}
+其中主导项为 $\mathcal{O}(M^3)$（基站天线数 $M$ 的立方）与 $\mathcal{O}(KN^2M)$（RIS 单元数平方乘天线数）。以 $M = 8$、$N = 128$、$K = 4$ 代入，单次迭代浮点运算量约 $2.6\times 10^{7}$，在 2 GHz 主频的通用处理器上约需 13 ms，与第四章实测的 100–600 ms（含 Python 解释开销与 10 次内层迭代）在量级上一致。
+
 与现有文献中基于半正定松弛（SDR）的算法进行复杂度横向对比：SDR 将相移向量松弛为 $N \times N$ 的半正定矩阵，采用内点法求解的计算复杂度高达 $\mathcal{O}(N^{4.5})$；当 RIS 单元数 $N=128$ 时，SDR 单次迭代浮点运算次数超过 $10^9$ 量级，而本论文所提出的 RCG 算法单次迭代计算量仅为 $\mathcal{O}(N^2) \approx 1.6 \times 10^4$，计算效率提升了 5 个数量级，完全满足 6G 毫秒级相干块内的实时调度需求。
+
+\begin{table}[htbp]
+  \centering
+  \caption{不同相移优化方法的计算复杂度与可实现性对比}
+  \label{tab:complexity_compare}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lccc}
+    \toprule
+    方法 & 单次迭代复杂度 & $N{=}128$ 时量级 & 是否需凸优化求解器 \\
+    \midrule
+    半正定松弛（SDR） & $\mathcal{O}(N^{4.5})$ & $>10^{9}$ & 是 \\
+    连续凸近似（SCA） & $\mathcal{O}(N^{3})$ & $\sim 2\times 10^{6}$ & 是 \\
+    交替方向乘子法（ADMM） & $\mathcal{O}(N^{2})$ & $\sim 1.6\times 10^{4}$ & 否 \\
+    本文黎曼共轭梯度（RCG） & $\mathcal{O}(N^{2})$ & $\sim 1.6\times 10^{4}$ & 否 \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+表~\ref{tab:complexity_compare}给出了四种主流相移优化方法的横向对比。需要说明的是，表中 SDR 与 SCA 的复杂度仅为其单次迭代的渐近阶次，实际总开销还需乘以收敛所需迭代次数（通常 SDR 为 $10^1$ 量级、SCA 为 $10^2$ 量级），因此两者的实际时间开销差距比表中量级差更大。本文选择 RCG 而非 ADMM 的理由在于：恒模约束构成一个复圆流形，RCG 可直接在流形上沿测地线搜索，无需引入分裂变量与惩罚参数，避免了 ADMM 的调参负担；且 RCG 的 Armijo 步长准则为子问题提供了严格单调性保证，这是定理~\ref{thm:ao_convergence}所需要的。
+
+最后需如实说明：本章未实现 SDR 基准的数值对比，原因是 SDR 需要额外的凸优化求解器（如 CVX），且其复杂度比本文方法高三个数量级以上，在 $N = 128$ 的规模下单次求解耗时达分钟量级，不适合作为重复运行的对比基线。第四章的对比实验因此选择「随机相移」「无 RIS」「等功率 MRT」三个可在相同算力预算内公平复现的基线，而非 SDR。

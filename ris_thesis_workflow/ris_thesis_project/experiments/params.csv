@@ -1,0 +1,2 @@
+fc_hz,lambda_m,bw_hz,m_bs,k_user,n_ris_default,n_v,p_max_dbm,p_max_w,noise_dbm,sigma2_w,d_br_m,d_ru_m,d_bu_m,alpha_br,alpha_ru,alpha_bu,block_db,kappa_db,beta_br,beta_ru,beta_bu,seed
+28000000000.0,1.070687e-02,100000000.0,8,4,128,4,30.0,1.000000e+00,-94.0,3.981072e-13,8.0,8.0,20.0,2.0,2.2,3.5,25.0,10.0,1.134294e-08,7.483550e-09,6.416536e-14,20261019

@@ -2,9 +2,11 @@
 \section{基于正交 DFT 码本的低开销级联信道估计协议}
 \label{sec:channel_estimation}
 
-前述主被动协同波束赋形算法的最优性严格依赖于基站端获取精确的信道状态信息（CSI）。然而，由于无源 RIS 不具备基带解码与射频处理单元，基站与用户之间无法分别直接测量独立的“基站-表面”信道 $\bm{G}$ 与“表面-用户”信道 $\bm{h}_{r,k}^H$。收发机仅能观测到两者的级联响应矩阵 $\bm{H}_{\mathrm{casc},k} = \mathrm{diag}(\bm{h}_{r,k}^H)\bm{G} \in \mathbb{C}^{N \times M}$ 以及直连信道 $\bm{h}_{d,k}^H \in \mathbb{C}^{1 \times M}$。本节设计一种基于时域正交导频与离散傅里叶变换（DFT）反射码本的低开销信道估计协议。
+前述主被动协同波束赋形算法的最优性严格依赖于基站端获取精确的信道状态信息（CSI）。然而，由于无源 RIS 不具备基带解码与射频处理单元，基站与用户之间无法分别直接测量独立的“基站-表面”信道 $\bm{G}$ 与“表面-用户”信道 $\bm{h}_{r,k}^H$。收发机仅能观测到两者的级联响应矩阵 $\bm{H}_{\mathrm{casc},k} = \mathrm{diag}(\bm{h}_{r,k}^H)\bm{G} \in \mathbb{C}^{N \times M}$ 以及直连信道 $\bm{h}_{d,k}^H \in \mathbb{C}^{1 \times M}$。本节设计一种基于时域正交导频与离散傅里叶变换（DFT）反射码本的低开销信道估计协议，并给出该协议在满开销下的最优性与在部分开销下的性能边界。
 
 \subsection{上行导频传输与级联信道矩阵向量化}
+\label{sec:pilot_protocol}
+
 基于时分双工（TDD）系统的信道互易性定理，下行级联 CSI 可通过上行导频训练进行高效获取。假定在相干时隙的训练阶段，各用户并发发送相互正交的导频序列 $\bm{S}_p \in \mathbb{C}^{K \times \tau_p}$，满足：
 \begin{equation}
   \bm{S}_p \bm{S}_p^H = \tau_p \bm{I}_K
@@ -15,14 +17,14 @@
   \bm{y}_{k,p} = \bm{h}_{d,k} + \bm{G}^H \mathrm{diag}(\bm{v}_p) \bm{h}_{r,k} + \bar{\bm{n}}_{k,p}
   \label{eq:uplink_pilot_received}
 \end{equation}
-其中 $\bar{\bm{n}}_{k,p} \sim \mathcal{CN}(\bm{0}, \frac{\sigma^2}{\tau_p}\bm{I}_M)$ 为经过匹配滤波后的等效高斯白噪声。
+其中 $\bar{\bm{n}}_{k,p} \sim \mathcal{CN}(\bm{0}, \frac{\sigma^2}{\tau_p}\bm{I}_M)$ 为经过匹配滤波后的等效高斯白噪声。此处需注意，匹配滤波使噪声方差由 $\sigma^2$ 降至 $\sigma^2/\tau_p$，这正是正交导频相对非正交导频的增益来源。
 
 利用代数恒等式 $\mathrm{diag}(\bm{v}_p)\bm{h}_{r,k} = \mathrm{diag}(\bm{h}_{r,k})\bm{v}_p$，式~\eqref{eq:uplink_pilot_received}中级联链路项可重写为：
 \begin{equation}
   \bm{G}^H \mathrm{diag}(\bm{v}_p) \bm{h}_{r,k} = \bm{H}_{\mathrm{casc},k}^H \bm{v}_p = \left( \bm{v}_p^T \otimes \bm{I}_M \right) \mathrm{vec}(\bm{H}_{\mathrm{casc},k}^H)
   \label{eq:kronecker_vectorization}
 \end{equation}
-其中 $\otimes$ 表示 Kronecker 积，$\mathrm{vec}(\cdot)$ 表示矩阵按列向量化算子。
+其中 $\otimes$ 表示 Kronecker 积，$\mathrm{vec}(\cdot)$ 表示矩阵按列向量化算子。该恒等式的关键作用是把「对 $\bm{v}_p$ 的线性依赖」与「对未知信道的线性依赖」彻底分离，从而把原本双线性的观测模型转化为关于未知向量的标准线性模型。
 
 定义全级联信道聚合向量为：
 \begin{equation}
@@ -46,11 +48,14 @@
 \end{equation}
 其中 $\bar{\bm{n}}_k \in \mathbb{C}^{PM \times 1}$ 为综合噪声向量，协方差矩阵为 $\bm{R}_n = \frac{\sigma^2}{\tau_p}\bm{I}_{PM}$。
 
+式~\eqref{eq:compact_observation_model}的一个重要结构特点是：由于 $\bm{\Phi} \otimes \bm{I}_M$ 具有分块对角（沿 $M$ 维复制）结构，对 $\bar{\bm{h}}_k$ 的估计可分解为 $M$ 个相互独立的子问题，每个子问题只需处理一个 $P \times (N+1)$ 的小规模矩阵。这使估计器可以按天线维度并行实现，存储开销从 $O(PM(N+1))$ 降至 $O(P(N+1))$。
+
 \subsection{基于正交 DFT 反射码本的最小二乘解耦估计}
+\label{sec:dft_codebook}
+
 由观测方程~\eqref{eq:compact_observation_model}可知，要保证未知信道向量 $\bar{\bm{h}}_k$ 具有唯一确定解，观测矩阵必须满足列满秩条件，即必需且仅需训练子时隙数 $P \ge N+1$。
 
-为了最小化噪声放大效应并达到最小估计均方误差（MSE），RIS 导频反射矩阵 $\bm{\Phi}$ 的列向量之间必须保持严格的正交性。为此，本节构造基于截断离散傅里叶变换（DFT）的正交码本：
-令 $\bm{F}_{P} \in \mathbb{C}^{P \times P}$ 表示标准 $P$ 阶归一化 DFT 矩阵，其第 $(p, q)$ 项元素定义为：
+为了最小化噪声放大效应并达到最小估计均方误差（MSE），RIS 导频反射矩阵 $\bm{\Phi}$ 的列向量之间必须保持严格的正交性。为此，本节构造基于截断离散傅里叶变换（DFT）的正交码本：令 $\bm{F}_{P} \in \mathbb{C}^{P \times P}$ 表示标准 $P$ 阶归一化 DFT 矩阵，其第 $(p, q)$ 项元素定义为：
 \begin{equation}
   [\bm{F}_P]_{p, q} = \frac{1}{\sqrt{P}} \exp\left( -j \frac{2\pi (p-1)(q-1)}{P} \right), \quad 1 \le p, q \le P
   \label{eq:dft_matrix_element}
@@ -60,7 +65,7 @@
   \bm{\Phi} = \sqrt{P} [\bm{F}_P]_{:, 1:(N+1)}
   \label{eq:optimal_dft_codebook}
 \end{equation}
-显然，该设计天然满足行恒模物理条件 $|[\bm{\Phi}]_{p, n+1}| = 1$，且满足完美列正交性：
+显然，该设计天然满足行恒模物理条件 $|[\bm{\Phi}]_{p, n+1}| = 1$——这一点至关重要，因为无源 RIS 只能调节相位而不能调节幅度，任何幅度加权都会破坏恒模约束；而 $\sqrt{P}$ 的缩放因子仅改变码本的归一化，不影响恒模性质。同时该设计满足完美列正交性：
 \begin{equation}
   \bm{\Phi}^H \bm{\Phi} = P \bm{I}_{N+1}
   \label{eq:phi_column_orthogonality}
@@ -71,6 +76,49 @@
   \hat{\bar{\bm{h}}}_k^{\mathrm{LS}} = \left( (\bm{\Phi}^H \bm{\Phi})^{-1}\bm{\Phi}^H \otimes \bm{I}_M \right) \bar{\bm{y}}_k = \frac{1}{P} \left( \bm{\Phi}^H \otimes \bm{I}_M \right) \bar{\bm{y}}_k
   \label{eq:ls_closed_form_estimator}
 \end{equation}
-计算过程完全避免了高维矩阵求逆运算，单用户信道重构复杂度仅为 $\mathcal{O}(PM)$。
-从重构向量 $\hat{\bar{\bm{h}}}_k^{\mathrm{LS}}$ 中，前 $M$ 个分量直接提取出基站至用户 $k$ 的直连信道估计 $\hat{\bm{h}}_{d,k}$；后 $NM$ 个分量经逆向量化反折叠，即刻精确恢复出级联信道矩阵 $\hat{\bm{H}}_{\mathrm{casc},k}$。
-整个估计协议仅需 $P = N+1$ 个时隙即可同时完成直连链路与级联反射链路的完全正交解耦估计，导频开销达到理论下界。
+计算过程完全避免了高维矩阵求逆运算，单用户信道重构复杂度仅为 $\mathcal{O}(PM)$。从重构向量 $\hat{\bar{\bm{h}}}_k^{\mathrm{LS}}$ 中，前 $M$ 个分量直接提取出基站至用户 $k$ 的直连信道估计 $\hat{\bm{h}}_{d,k}$；后 $NM$ 个分量经逆向量化反折叠，即刻精确恢复出级联信道矩阵 $\hat{\bm{H}}_{\mathrm{casc},k}$。
+
+\subsection{估计误差的下界与 LS 的最优性}
+\label{sec:ls_analysis}
+
+对线性观测模型~\eqref{eq:compact_observation_model}，任意无偏估计器的均方误差满足 Cramér-Rao 下界（CRLB）：
+\begin{equation}
+  \mathrm{MSE}\left(\hat{\bar{\bm{h}}}_k\right) \ge \mathrm{tr}\left( \bm{R}_n \right)\cdot\mathrm{tr}\left( \left(\bm{\Phi}^H\bm{\Phi}\right)^{-1} \right)
+  = \frac{\sigma^2}{\tau_p}\cdot\frac{N+1}{P},
+  \label{eq:crlb_ce}
+\end{equation}
+其中用到 $\bm{R}_n = \frac{\sigma^2}{\tau_p}\bm{I}$ 与式~\eqref{eq:phi_column_orthogonality}。将式~\eqref{eq:ls_closed_form_estimator}的估计误差代入可直接验证 LS 恰好达到该下界，即 LS 在此模型下是有效估计器（efficient estimator）。
+
+以归一化均方误差（NMSE）衡量，有
+\begin{equation}
+  \mathrm{NMSE}_{\mathrm{LS}}
+  = \frac{\mathbb{E}\left[\|\hat{\bar{\bm{h}}}_k^{\mathrm{LS}} - \bar{\bm{h}}_k\|^2\right]}{\mathbb{E}\left[\|\bar{\bm{h}}_k\|^2\right]}
+  = \frac{\sigma^2 (N+1)}{\tau_p P \cdot \mathbb{E}\left[\|\bar{\bm{h}}_k\|^2\right]}
+  \;\propto\; \frac{1}{P}.
+  \label{eq:nmse_ls}
+\end{equation}
+式~\eqref{eq:nmse_ls}给出两条可直接用于实验设计的结论：其一，在满开销 $P = N+1$ 下，NMSE 与 $1/(N+1)$ 成正比，即反射单元越多、单次估计的相对误差反而越小，这源于聚合向量的能量随 $N$ 线性增长而误差方差固定；其二，导频开销与估计精度之间存在严格的 $1/P$ 反比关系，若将开销压缩为 $T$ 个时隙，则 LS 无法直接使用。
+
+\subsection{部分开销下的可辨识性与稀疏先验的适用边界}
+\label{sec:sparsity_boundary}
+
+实际系统中，$P = N+1$ 意味着 RIS 需要 $N+1$ 个导频子时隙，当 $N = 128$ 时已占用 129 个符号，在高速移动场景下会挤占大量数据传输资源。因此一个自然的想法是：只用 $T < N+1$ 个时隙做部分观测，并借助毫米波信道的角域稀疏性，用压缩感知类算法（如正交匹配追踪 OMP）从欠定观测中恢复全信道。
+
+这一思路在直觉上很有吸引力，但其成立需要一个隐含前提：未知向量 $\bar{\bm{h}}_k$ 在所选字典下确实是稀疏的。本文在第二章引理~\ref{lem:cascaded_structure}中已经指出，级联矩阵 $\bm{H}_{\mathrm{casc},k} = \mathrm{diag}(\bm{h}_{r,k}^H)\bm{G}$ 是 $\bm{h}_{r,k}$ 与 $\bm{G}$ 的逐元素（哈达玛）调制，其路径结构被两段信道「相乘」而非「相加」。这意味着：
+
+第一，若 $\bm{G}$ 与 $\bm{h}_{r,k}$ 各自在角域有 $L_g$、$L_r$ 条路径，则级联信道在角域的等效支撑集不再是 $L_g$ 或 $L_r$ 个孤立原子，而是两组导向矢量外积形成的 $L_g L_r$ 个原子；当 $L_g = L_r = 3$ 时，支撑集规模已达 9，稀疏度优势被显著削弱。
+
+第二，逐元素相乘会破坏原信道的频域/角域紧支撑性。即使 $\bm{G}$ 在 DFT 基下严格稀疏，$\mathrm{diag}(\bm{h}_{r,k}^H)\bm{G}$ 的每一列都是 $\bm{G}$ 对应列与 $\bm{h}_{r,k}^*$ 的哈达玛积，在 DFT 基下表现为两个稀疏向量的循环卷积，其支撑集是两者支撑集的「和集」，通常远大于任一者。
+
+第三，若进一步考虑宽带 OFDM 情形，级联信道在子载波维度上的频率选择性由两段信道的时延共同决定，其等效时延抽头数为两段抽头数之积，稀疏性同样恶化。
+
+综上，压缩感知类算法在本系统模型下并非「天然适用」，其增益取决于 $\bm{G}$ 与 $\bm{h}_{r,k}$ 的实际路径数与角度分布，且很可能在中等信噪比区间为负。本文不预设稀疏先验成立，而是在第四章设计专门的导频开销—精度实验，将 LS 与「按真实支撑集选取观测行」的 oracle 上界、以及随机行选取方案并列对比，用数值结果定量给出稀疏先验在本模型下的实际价值，并据此说明：在 $T < N+1$ 时应当优先考虑增加导频时隙或利用双时间尺度（先估 $\bm{h}_{r,k}$、再估 $\bm{G}$）的结构化协议，而不是盲目套用压缩感知。
+
+\subsection{协议开销与实现要点}
+\label{sec:protocol_overhead}
+
+综合本节设计，完整估计协议的执行流程为：（1）$K$ 个用户并发发送长度为 $\tau_p$ 的正交导频；（2）RIS 按 DFT 码本依次切换 $P$ 组相移图案，每组持续 $\tau_p$ 个符号；（3）基站在每个子时隙做匹配滤波并按式~\eqref{eq:ls_closed_form_estimator}做分块 LS 估计；（4）拼接得到 $\hat{\bm{h}}_{d,k}$ 与 $\hat{\bm{H}}_{\mathrm{casc},k}$，送入第三章的交替优化框架计算波束赋形。
+
+总导频开销为 $P\tau_p$ 个符号，其中 $P = N+1$、$\tau_p = K$（取最小的正交导频长度）时为 $(N+1)K$。以 $N = 128$、$K = 4$ 为例，开销为 516 个符号；若相干时隙长度为 2000 个符号，则导频占比约 25.8\%，这一比例在低速场景可以接受，但在高速场景下需要引入双时间尺度协议以降低重估频率。
+
+实现上还有两点需要说明。其一，DFT 码本的相移取值需要量化到 $b$ 比特，量化误差会破坏列正交性，使式~\eqref{eq:phi_column_orthogonality}退化为近似正交；第四章将定量给出不同量化位数下 NMSE 的抬升幅度，并说明在 $b \ge 4$ 时该抬升已可忽略。其二，式~\eqref{eq:ls_closed_form_estimator}中的 $\bm{\Phi}^H$ 可通过快速傅里叶变换实现，实际复杂度为 $O(P\log P)$ 而非 $O(P(N+1))$，进一步降低了硬件实现负担。

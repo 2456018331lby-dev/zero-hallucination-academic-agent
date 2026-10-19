@@ -139,6 +139,13 @@ TEST_SPECS = [
         "input_desc": "zhaw submit/review without --out",
         "expected": "PASS (writes <project>/submission, never caller CWD)",
     },
+    {
+        "method": "test_17_fixture_project_is_labelled",
+        "name": "Fixture Project Is Labelled",
+        "gate": "Audit Report",
+        "input_desc": "pku_thesis_project carries FIXTURE.md (deliberate defects)",
+        "expected": "PASS (report banners it as a fixture; low score is expected)",
+    },
 ]
 def run_all_selftests():
     print("=" * 115)
@@ -154,7 +161,19 @@ def run_all_selftests():
     for idx, spec in enumerate(TEST_SPECS, 1):
         method_name = spec["method"]
         suite = unittest.TestSuite()
-        suite.addTest(test_gates.TestQualityGatesAdversarial(method_name))
+        # 用例可能分布在 test_gates 的多个 TestCase 类里（例如夹具标注单独成类），
+        # 因此按方法名解析所属类，而不是硬编码 TestQualityGatesAdversarial。
+        holder = None
+        for _name, obj in vars(test_gates).items():
+            if isinstance(obj, type) and issubclass(obj, unittest.TestCase) \
+                    and hasattr(obj, method_name):
+                holder = obj
+                break
+        if holder is None:
+            raise SystemExit(
+                f"[selftest] TEST_SPECS 里登记了 {method_name}，但 test_gates.py 里找不到这个用例"
+            )
+        suite.addTest(holder(method_name))
 
         # Redirect internal output to avoid noisy clutter during clean tabular presentation
         buf = io.StringIO()

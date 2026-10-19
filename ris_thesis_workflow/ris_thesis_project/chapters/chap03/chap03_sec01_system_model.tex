@@ -4,7 +4,11 @@
 
 考虑如图所示的典型下行多用户单小区多天线无线通信系统。基站（BS）部署有 $M$ 根均匀线阵（ULA）全向发射天线，服务区域内随机分布着 $K$ 个单天线移动通信用户，记为集合 $\mathcal{K} = \{1, 2, \dots, K\}$。由于建筑物密集体、植被遮挡或人体阻隔，基站至部分移动用户之间的视距（LoS）直接链路可能发生严重衰落或完全阻断。为此，在基站视线良好的建筑物外立面部署一块配备 $N$ 个亚波长无源反射单元的可重构智能表面（RIS），通过自适应协同重构空间电磁波反射路径，为主覆盖盲区用户提供高品质虚拟直射通道。
 
+本节依次给出信号与信道传播模型、复合级联信道的代数结构、以及主被动联合优化问题的形式化表征，并在此基础上分析问题固有的非凸性来源，为后续交替优化框架的引入提供依据。
+
 \subsection{传输信号与信道传播模型}
+\label{sec:tx_model}
+
 基站向 $K$ 个用户并发传输下行独立数据符号。令 $s_k \in \mathbb{C}$ 表示基站发送给第 $k$ 个用户的归一化信息数据符号，满足统计独立假设：
 \begin{equation}
   \mathbb{E}[|s_k|^2] = 1, \quad \mathbb{E}[s_k s_j^*] = 0, \quad \forall k \neq j
@@ -29,7 +33,23 @@
 \end{equation}
 其中 $\theta_n \in [0, 2\pi)$ 表示第 $n$ 个反射单元的相移控制角，$\beta_n \in [0, 1]$ 为其幅度反射系数。在无源理想超表面设计中，为实现入射电磁能量的最大化无损反射，通常设置理想全反射状态，即 $\beta_n = 1, \forall n=1,\dots,N$。
 
+上述四个信道量在毫米波与太赫兹频段均采用 Saleh-Valenzuela 几何多径模型刻画。以基站—用户直连信道为例，
+\begin{equation}
+  \bm{h}_{d,k}^H = \sqrt{\frac{M}{\rho_{d,k}}} \sum_{\ell=1}^{L_d} \alpha_{d,k,\ell}\, \bm{a}_M^H(\phi_{d,k,\ell}),
+  \label{eq:channel_geometry}
+\end{equation}
+其中 $L_d$ 为直连路径数，$\alpha_{d,k,\ell} \sim \mathcal{CN}(0,1)$ 为第 $\ell$ 条路径的复增益，$\phi_{d,k,\ell}$ 为对应的离开角，$\rho_{d,k}$ 为路径损耗。均匀线阵的导向矢量定义为
+\begin{equation}
+  \bm{a}_M(\phi) = \frac{1}{\sqrt{M}} \left[ 1,\, e^{j\pi\sin\phi},\, \dots,\, e^{j\pi (M-1)\sin\phi} \right]^T,
+  \label{eq:array_response}
+\end{equation}
+其中相邻阵元间距取半波长。基站—RIS 与 RIS—用户信道 $\bm{G}$、$\bm{h}_{r,k}$ 具有同构的几何表示，其路径损耗按 $\rho(d) = (4\pi d/\lambda)^{\alpha}$ 计算，$\alpha$ 为相应链路的路径损耗指数。
+
+由于毫米波频段散射体稀少，各信道的有效路径数远小于天线数，即 $L_d, L_g, L_r \ll \min(M,N)$，这构成了后续低开销信道估计得以成立的空间角域稀疏性基础。同时注意到，级联链路经历基站—表面、表面—用户两段自由空间衰落，其路径损耗近似为两段损耗之积，在相同物理距离下比直连链路高出数十 dB；因此 RIS 必须在阵列增益与反射聚焦上提供足够补偿，才能形成有效增益。
+
 \subsection{多用户接收信号与复合级联信道表示}
+\label{sec:rx_model}
+
 经由直连路径与 RIS 反射路径叠加后，第 $k$ 个移动用户处的接收信号 $y_k \in \mathbb{C}$ 可建模为：
 \begin{equation}
   y_k = \left( \bm{h}_{d,k}^H + \bm{h}_{r,k}^H \bm{\Theta} \bm{G} \right) \bm{x} + n_k
@@ -60,7 +80,24 @@
 \end{equation}
 其中第一项为用户 $k$ 期望的有效信号分量，第二项为其他多用户间的共道多址干扰（Multi-User Interference, MUI），第三项为热噪声。
 
+式~\eqref{eq:equivalent_composite_channel}揭示了复合信道关于反射向量的仿射结构，这一性质是后续交替优化的关键。但同时必须指出，级联矩阵 $\bm{H}_{\mathrm{casc},k}$ 具有特殊的秩一逐元素调制结构。
+
+\begin{lemma}[级联信道的秩一调制结构]
+\label{lem:cascaded_structure}
+记 $\bm{G}$ 的第 $m$ 列为 $\bm{g}_m \in \mathbb{C}^{N}$，$\bm{h}_{r,k}$ 的各元素为 $h_{r,k,n}$，则级联矩阵满足
+\begin{equation}
+  \bm{H}_{\mathrm{casc},k} = \mathrm{diag}(\bm{h}_{r,k}^H)\bm{G}
+  = \left[ \bm{h}_{r,k}^* \odot \bm{g}_1,\ \bm{h}_{r,k}^* \odot \bm{g}_2,\ \dots,\ \bm{h}_{r,k}^* \odot \bm{g}_M \right],
+  \label{eq:cascaded_rank1}
+\end{equation}
+其中 $\odot$ 表示哈达玛积。若 $\bm{G}$ 的某列 $\bm{g}_m$ 本身由 $L_g$ 条路径叠加而成，则 $\bm{h}_{r,k}^* \odot \bm{g}_m$ 的路径结构会被 $\bm{h}_{r,k}$ 的路径结构调制，其等效路径数为 $L_g L_r$，而不再是 $\max(L_g, L_r)$。
+\end{lemma}
+
+引理~\ref{lem:cascaded_structure}说明，级联信道虽然在基站侧仍表现为 $M$ 维向量，但其在 RIS 侧的有效自由度被 $\bm{h}_{r,k}$ 逐元素相乘所改变。这一结构在第四章的导频开销实验中会产生可观测的后果：当采用基于离散傅里叶变换的固定码本进行部分观测时，级联信道在码本域的稀疏度并不等于 $\bm{G}$ 或 $\bm{h}_{r,k}$ 单独的稀疏度，从而使得压缩感知类算法的增益被显著削弱。本文将在第四章以数值实验定量给出这一失配，而不是默认稀疏先验成立。
+
 \subsection{瞬时信干噪比与和速率优化问题形式化}
+\label{sec:problem_formulation}
+
 根据式~\eqref{eq:signal_interference_decomposition}，用户 $k$ 处的瞬时接收信号与干扰加噪声比（SINR）可精确表征为：
 \begin{equation}
   \gamma_k(\bm{W}, \bm{v}) = \frac{|\bm{h}_k^H(\bm{v})\bm{w}_k|^2}{\sum_{j \neq k}^K |\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2}
@@ -82,4 +119,14 @@
   \end{align}
 \end{subequations}
 
-优化问题~\eqref{prob:joint_beamforming_p1}呈现出极高的数学求解复杂性：一方面，目标函数~\eqref{prob:p1_obj}由多用户非凸对数分式求和构成，变量 $\bm{W}$ 与 $\bm{v}$ 在分子与分母中深度强耦合；另一方面，约束条件~\eqref{prob:p1_unimodular}施加了严格的单位圆单位模非凸等式约束。直接对其进行凸松弛往往会导致严重的维度灾难与次优极值陷阱。
+优化问题~\eqref{prob:joint_beamforming_p1}呈现出极高的数学求解复杂性，其非凸性来自三个彼此独立的层面。
+
+第一，目标函数~\eqref{prob:p1_obj}由多用户非凸对数分式求和构成，变量 $\bm{W}$ 与 $\bm{v}$ 在分子与分母中深度强耦合。对固定的 $\bm{v}$，问题退化为经典的多用户 MISO 和速率最大化问题，其在 $\bm{W}$ 上仍是非凸的；对固定的 $\bm{W}$，问题在 $\bm{v}$ 上同样非凸。
+
+第二，约束条件~\eqref{prob:p1_unimodular}施加了严格的单位圆单位模非凸等式约束，其可行域是 $N$ 维复空间中 $N$ 个独立单位圆的乘积流形。该流形非凸且非欧氏，常规的梯度类方法无法直接在欧氏空间中使用。
+
+第三，即使将单位模约束松弛为凸的球约束，松弛解通常也不满足秩一条件，需要额外的高斯随机化步骤还原，而随机化的方差会使所得解的性能与松弛上界之间存在不可控的差距。
+
+上述三个层面的非凸性叠加，使得直接对~\eqref{prob:joint_beamforming_p1}进行凸松弛会导致严重的维度灾难与次优极值陷阱。特别地，若采用半正定松弛，需要将 $\bm{W}$ 与 $\bm{v}$ 的乘积项升维为 $MN \times MN$ 的协方差矩阵，其变量规模随天线数与反射单元数之积平方增长；当 $M=8$、$N=256$ 时，单次求解的变量数已达百万量级，在实时系统中不可接受。
+
+因此，本文不采用升维松弛路线，而是沿「分块解耦 + 保持可行域结构」的思路，将原问题分解为两个交替求解的子问题：在固定反射向量时求解有源预编码，在固定预编码时求解反射相移。为使两个子问题都能获得闭式或拟闭式解，本文引入二次变换分式规划处理对数分式和速率，并借助黎曼流形上的共轭梯度法处理单位模约束。下一节将给出该框架的完整推导。

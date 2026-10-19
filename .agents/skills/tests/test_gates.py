@@ -615,5 +615,62 @@ class TestQualityGatesAdversarial(unittest.TestCase):
         self.assertEqual(str(got), "custom_dir", "explicit --out must win verbatim")
 
 
+class TestFixtureAnnotation(unittest.TestCase):
+    """夹具工程必须在审计报告里被显式标注，否则低分会误导使用者。
+
+    历史教训：`pku_thesis_project` 是故意保留假数据/缺 CSV/未签署的门禁回归靶子，
+    但 `zhaw audit` 只报「可交付度 24.4/100」，使用者会以为这是没做完的论文，
+    进而去「补全」它——那等于把测试用例删掉。FIXTURE.md 是显式声明，
+    报告顶部必须打出警告并说明低分是预期结果。
+    """
+
+    def test_17_fixture_project_is_labelled(self):
+        repo_root = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+        if repo_root not in sys.path:
+            sys.path.insert(0, repo_root)
+        try:
+            from zhaw import audit
+        except Exception as exc:  # pragma: no cover
+            self.skipTest(f"zhaw not importable: {exc}")
+
+        fixture_dir = os.path.join(repo_root, "pku_thesis_workflow", "pku_thesis_project")
+        if not os.path.isfile(os.path.join(fixture_dir, "FIXTURE.md")):
+            self.skipTest("fixture marker missing")
+
+        report = {
+            "generated_at": "2026-01-01T00:00:00+0800",
+            "project": fixture_dir,
+            "mode": {"offline": True, "scaffold": False, "min_bib": 60},
+            "metrics": {"hanzi_total": 0, "has_experiments_csv": False,
+                        "refs": 0, "todo_total": 0, "chapters": 0, "figures": 0,
+                        "per_chapter": {}},
+            "overall": "FAIL",
+            "readiness": {"overall": 0.0, "gate_score": 0.0, "content_score": 0.0,
+                          "data_score": 0.0, "refs_score": 0.0, "human_score": 0.0,
+                          "todo_penalty": 0.0,
+                          "weights": {"gates": 0.3, "content": 0.25, "data": 0.15,
+                                      "refs": 0.1, "human": 0.1, "no_todo": 0.1}},
+            "gates": {
+                "gate1": {"status": "PASS", "stats": {}, "tail": []},
+                "gate2_4": {"status": "FAIL", "gates": {}, "tail": []},
+                "gate3": {"status": "FAIL", "tail": []},
+                "grounding": {"status": "SKIP", "matrix": None, "pdf_dir": None, "tail": []},
+            },
+            "gate_table": {"Gate 1": "PASS", "Gate 2": "FAIL",
+                           "Gate 3": "FAIL", "Gate 4": "FAIL"},
+            "human_review": {"signed": False, "reviewer": ""},
+            "fixture": {"is_fixture": True,
+                        "note": "夹具工程：故意保留缺陷的门禁回归靶子"},
+        }
+        md = audit._render_markdown(report)
+        self.assertIn("夹具工程", md, "fixture banner missing from report")
+        self.assertIn("预期结果", md, "report must say the low score is expected")
+
+        # 非夹具工程不得出现该警告
+        report["fixture"] = {"is_fixture": False, "note": ""}
+        md2 = audit._render_markdown(report)
+        self.assertNotIn("夹具工程（fixture）", md2)
+
+
 if __name__ == "__main__":
     unittest.main()

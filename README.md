@@ -15,10 +15,10 @@ pip install -e . && zhaw doctor && zhaw selftest
 ```
 
 `zhaw doctor` 打印环境体检（Python / PyMuPDF / XeLaTeX / 7 个门禁脚本）；
-`zhaw selftest` 用 14 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.4 秒）。
+`zhaw selftest` 用 17 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.4 秒）。
 
 **这套东西现在到底能做到什么程度？** 见 [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：
-29 个子命令逐个实测、16/16 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译（13 处泄露全清、产物默认排除）。
+29 个子命令逐个实测、17/17 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译（13 处泄露全清、产物默认排除）。
 
 **你是 AI Agent、要接手这个仓库？** 直接读 [`AGENTS.md`](AGENTS.md)——那是给机器看的说明书：
 仓库地图（哪些能改哪些别碰）、29 个命令按场景速查、四个任务剧本、以及**绝对不能做的六件事**。
@@ -43,29 +43,31 @@ pidemo/
   * 源码位于 `survey/seminar_presentation.tex`，编译成果为 `survey/seminar_presentation.pdf`（14 页 16:9 宽屏 Beamer 幻灯片）；
   * 每张技术幻灯片均包含**本地真实物理文献证据链页脚**，并内置了完整的 `\note{}` **逐字演讲稿**；
 * **真正帮你写论文（交付 A）**：
-  * 源码位于 `thesis_project/`，生成符合 GB/T 7713.1-2006 标准的学位论文 `thesis_project/main.pdf`（32 页，375.4 KB，0 LaTeX 错误，0 严重溢出，0 未定义引用）与单源 Word 转换成果 `thesis_project/thesis.docx`（带 `C00000` 红条水印）；
-  * 包含单源数学符号契约 `notation_table.md`，第 4 章采用严格规范的纯脚手架模式（**0 虚构量化数据**）；
+  * 源码位于 `thesis_project/`，生成符合 GB/T 7713.1-2006 标准的学位论文 `thesis_project/main.pdf`（**72 页，759.5 KB，0 LaTeX 错误，0 严重溢出，0 未定义引用**）；
+  * **正文 30,038 汉字，0 处 `\TODO{}`**，五章正文 + 附录 CRB 推导全部写完；
+  * 第 4 章的数字全部来自 `thesis_project/experiments/*.csv`（8 个 CSV，由 `sim_bupt.py` 产出）与 7 张图（`make_bupt_figures.py`）；
 * **文献与数据闭环**：
   * 实际下载 **11 篇开源物理 OA PDF** 至 `literature/`；
   * 15+1 维对比矩阵经 PyMuPDF 真实物理页码核验达成 **0 FAIL, 0 WARN**；
-  * 论文 16 篇参考文献（32 条记录）经 Crossref 官方 REST API 元数据核验（**FAIL=0, OK=32**）。注意：首次联网回填后命中本地 `.citation_cache.json`（SHA-256 绑定），并非每次运行都实时联网；`--offline` 时完全只用缓存。要强制实时核验，删掉 `thesis_project/.citation_cache.json` 再跑；
+  * 论文 **62 条参考文献**（手写 `thebibliography`）经 Crossref 官方 REST API 逐字段核验，**FAIL=0**；作者字段按 GB/T 7714 格式 `SURNAME I N` 回填；
   * 完整保留从自检到编译的 **7 大原始无润色终端执行日志**（`logs/00_selftest.log` 至 `06_compile.log`）。
 * **当前真实成色（诚实标注，不吹）**：
-  * 正文 **8,547 汉字**（硕士常规 3–5 万字）→ 约完成 20–25%；
-  * 第 4 章有 **18 处 `\TODO{}`** 占位，`experiments/*.csv` 尚未产出，所以 Gate 2 目前只能证明"没有自由漂浮的数字"，还不能证明"数字是对的"；
-  * 引文**元数据全对、但类型标识有错**：16 条里有 13 条 Crossref 判为 `proceedings-article`（会议）却著录成 `[J]`，1 条 `posted-content`（预印本）也按期刊著录。Gate 3 只查结构查不出这个 → Gate 1 现已把它报为 **WARN**（`著录类型与 Crossref 不一致`），需人工订正为 `[C]`；
-  * `literature/` 的 11 篇 PDF 与正文被引的 16 篇**完全不相交**：接地门禁证明的是"矩阵里那 11 篇确实写了那些话"，不等于"论文引的文献被读过"。这两件事不要混为一谈；
-  * Gate 4 **未签署**——`.human_review.json` 不存在是设计如此，送审前必须由真人在终端执行 `zhaw gate4 bupt_isac_workflow/thesis_project --confirm-review --reviewer <你的名字>`；
+  * 四门禁：Gate 1 PASS（62/62）、Gate 2 PASS（数字逐格命中 CSV）、Gate 3 PASS（0 ERROR / 0 WARNING）、Gate 4 **FAIL（未签署，设计如此）**；
+  * `zhaw audit` = **82.5 / 100**，扣掉的 17.5 分全部落在「真人签字」这一项上；
+  * 仿真模型为「ZF + 匹配感知波束 + 一维闭式功率分配 + MMSE 不动点」的可实现方案，**未实现 SDR 基准**（cvxpy 未安装，且开销高三个数量级），正文已如实声明，没有编造 SDR 对比数字；
+  * Gate 4 送审前必须由真人在终端执行 `zhaw gate4 bupt_isac_workflow/thesis_project --confirm-review --reviewer <你的名字>`；
   * 组会 PPT 14 页（目标 15–20 页）。
 
-### 2. `ris_thesis_workflow/` —— 终审验收与对抗防御夹具
-* **课题设定**：面向 6G 的 RIS（可重构智能表面）辅助通信波束赋形与信道估计；
-* **定位与价值**：为了向第三方审计方证明“平台换一套全新课题，机制上不可能再造假”，从零搭建的验收夹具。成功拦截了恶意假引文注入、虚假数据百分比注入以及 Gate 4 SHA-256 哈希篡改攻击；
-* **与你目标的关系**：仅交付了论文脚手架，未做组会 Beamer 汇报，属于平台的防伪实证档案。
+### 2. `ris_thesis_workflow/` —— 第二套真实工程（换课题复现的验收证据）
+* **课题设定**：面向 6G 的 RIS（可重构智能表面）辅助多用户 MISO 联合波束赋形与级联信道估计；
+* **定位与价值**：为了向第三方审计方证明「平台换一套全新课题，机制上不可能再造假」，从零搭建的第二个真实工程（不是空壳夹具）——它跑通的是同一套门禁，但课题、仿真、正文、文献全部另起一套；
+* **实测成色**：正文 **30,322 汉字 / 0 处 `\TODO{}`**；`main.pdf` **73 页 / 755.9 KB / 0 错误 / 0 严重溢出 / 0 未定义引用**；**81 条参考文献**；`experiments/` 8 个 CSV（`sim_ris.py`）+ 6 张图（`make_ris_figures.py`）；四门禁 Gate 1/2/3 PASS + Gate 4 FAIL（未签）；`zhaw audit` = **82.5 / 100**；
+* **刻意保留的负结果**：OMP 压缩感知在该级联信道模型下**失效**（−0.25/−0.14/−0.76/−0.42 dB），根因是 `g = diag(h_r^H) G w_p` 的逐元素 rank-1 调制使 DFT 域不稀疏——正文如实报告并给出理论解释，而不是删掉这个实验。
 
-### 3. `pku_thesis_workflow/` —— 初号机与整改基准夹具
+### 3. `pku_thesis_workflow/` —— 初号机与**门禁回归夹具**（不要「修好」它）
 * **课题设定**：面向高速时变信道的轻量化自适应信源信道联合语义通信机制研究（Deep JSCC）；
-* **定位与价值**：平台最初的试验田与问题暴露地。最初发现传统 AI 辅助科研存在引文虚构、数据脑补、橡皮图章等严重问题后，在此目录下完成了全部缺陷定性与最初的门禁脚本试验。其保留的 [`PROJECT_SUMMARY.md`](pku_thesis_workflow/PROJECT_SUMMARY.md) 记录了最完整的整改背景与平台技术路线演进。
+* **定位与价值**：平台最初的试验田与问题暴露地。它**故意保留**了编造的量化结论、缺失的 `experiments/`、22 处 `\TODO{}`、6 条文献、未签署的 Gate 4、接地矩阵缺字段——这些不是「没做完」，是用来证明四道门禁抓得住问题的**活体样本**；
+* **`zhaw audit` = 24.4 / 100，低分是预期结果**：`pku_thesis_project/FIXTURE.md` 显式声明它是夹具，`audit` 读到就在报告顶部打 `> [!IMPORTANT]` 警告并说明「不要为了提分去填造数据」；
 
 ---
 
@@ -135,9 +137,9 @@ pip install -e ".[full]"            # 需要 Word 导出 / 画图时再加 pytho
 zhaw doctor                         # Python / PyMuPDF / XeLaTeX / 7 个门禁脚本是否就位
 ```
 
-### 3. 门禁自身对抗回归（14 个用例，零网络）
+### 3. 门禁自身对抗回归（17 个用例，零网络）
 ```bash
-zhaw selftest                       # 期望 16/16 PASS
+zhaw selftest                       # 期望 17/17 PASS
 ```
 
 ### 4. 四道门禁（一条命令，或分开跑）

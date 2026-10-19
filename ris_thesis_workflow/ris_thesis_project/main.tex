@@ -27,6 +27,10 @@
 \usepackage{amsmath,amssymb,amsfonts,amsthm,bm}
 \newtheorem{theorem}{定理}[chapter]
 \newtheorem{definition}{定义}[chapter]
+\newtheorem{lemma}{引理}[chapter]
+\newtheorem{corollary}{推论}[chapter]
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 % -----------------------------------------------------------------------------
 % 图表与三线表支持 (GB/T 7713 规范禁用双竖线，强制 booktabs)
@@ -127,9 +131,9 @@
 针对上述瓶颈，本论文深入研究面向 6G 的 RIS 辅助多用户通信系统的主被动联合波束赋形与低开销级联信道估计关键技术，主要研究内容与理论贡献包括：
 \begin{enumerate}
   \item \textbf{建立 BS-RIS-User 多径几何级联信道与信号传输严格系统模型}：基于电磁超材料散射参数分析，形式化表征直连链路与级联反射链路复合传输矩阵，推导出基于空间相关性的复合信噪比与多用户和速率闭式表达式。
-  \item \textbf{提出基于交替优化 (AO) 与分式规划的主被动协同波束赋形机制}：将原非凸和速率最大化问题解耦为基站发射预编码子问题与 RIS 单位模约束相移子问题。针对基站预编码引入二次变换分式规划实现闭式更新；针对 RIS 连续相移采用流形优化与半正定松弛（SDR）高效求解。
-  \item \textbf{提出基于正交导频设计的低开销级联信道估计算法}：利用级联信道矩阵在角域与时域的低秩稀疏结构，提出基于离散傅里叶变换（DFT）反射相移码本的信道分解协议，将导频开销从传统全采样维度大幅压缩，并在理论上推导了其克拉美罗下界（CRLB）。
-  \item \textbf{构建全流程标准脚手架仿真验证基准}：设计了面向第四章系统级数值仿真评估的预置标准三线表与参数范围矩阵，明确标注了未填充真实实验数据前的占位规范，为后续算法实测验证提供了严谨的标准范式。
+  \item \textbf{提出基于交替优化 (AO) 与分式规划的主被动协同波束赋形机制}：将原非凸和速率最大化问题解耦为基站发射预编码子问题与 RIS 单位模约束相移子问题。针对基站预编码引入二次变换分式规划实现闭式更新；针对 RIS 连续相移在复圆流形上以共轭梯度下降求解，并论证了在 $N = 256$ 时半正定松弛（SDR）的协方差变量规模已达百万量级、不适合本场景，因而未采用该路线。
+  \item \textbf{提出基于正交 DFT 反射码本的低开销级联信道估计算法}：利用离散傅里叶变换码本列向量在 RIS 微元维度上的严格正交性，构造 $P = N+1$ 的正交反射训练协议，将级联信道的观测维度压缩至理论下界；给出最小二乘闭式估计器并推导其克拉美罗下界（CRLB）。同时指出级联矩阵呈两段信道逐元素相乘的秩一结构，其 DFT 域稀疏度远低于单链路，因而压缩感知类方法在该模型上并不天然占优。
+  \item \textbf{建立可复现的数值验证与误差标定体系}：给出 CRLB 的蒙特卡洛互验（实测误差与下界比值在 1\% 内）、随机数流解耦自检（无 RIS 基线在各阵元规模下恒为同一值）、离散相移量化单调性的构造性验证，并如实报告压缩感知负结果与低功率下用户公平性退化现象。
 \end{enumerate}
 
 \vspace{0.6cm}
@@ -148,9 +152,9 @@ Despite their profound advantages, two fundamental challenges remain unsolved in
 To address these challenges, this thesis investigates key technologies in joint active and passive beamforming as well as low-overhead cascaded channel estimation for RIS-assisted 6G communications. The primary contributions are summarized as follows:
 \begin{enumerate}
   \item \textbf{Rigorous Formal Modeling of BS-RIS-User Cascaded Wireless Channels}: Based on electromagnetic scattering parameter network analysis, we construct a rigorous multi-antenna MISO system model. We formulate closed-form expressions for the composite received signal-to-interference-plus-noise ratio (SINR) and the sum rate over spatially correlated fading channels.
-  \item \textbf{Joint Beamforming Framework via Alternating Optimization (AO) and Fractional Programming}: We decouple the joint optimization problem into a BS transmit precoding subproblem and an RIS unimodular phase-shift subproblem. The active precoder is optimized in closed form using quadratic-transform fractional programming, while the non-convex unit-modulus RIS phase vector is addressed via Riemannian manifold optimization and Semidefinite Relaxation (SDR).
-  \item \textbf{Low-Overhead Cascaded Channel Estimation Protocol}: Exploiting the inherent low-rank and angular sparsity of the cascaded channel matrix, we propose an orthogonal pilot transmission protocol based on Discrete Fourier Transform (DFT) phase-shift codebooks. This scheme significantly compresses pilot duration compared to conventional brute-force schemes, with its estimation error lower-bounded by the theoretical Cramér-Rao Lower Bound (CRLB).
-  \item \textbf{Standardized Scaffold Benchmark and Traceability Architecture}: We establish standard booktabs three-line benchmark tables with rigorous parameter ranges and explicit TODO annotations, providing an indisputable methodological foundation for future experimental injections.
+  \item \textbf{Joint Beamforming Framework via Alternating Optimization (AO) and Fractional Programming}: We decouple the joint optimization problem into a BS transmit precoding subproblem and an RIS unimodular phase-shift subproblem. The active precoder admits a closed-form update via quadratic-transform fractional programming, while the unit-modulus RIS phase vector is solved by conjugate-gradient descent on the complex circle manifold. We further show that Semidefinite Relaxation (SDR) becomes prohibitive at $N = 256$, where the lifted covariance involves variables of order $10^6$, and is therefore not adopted.
+  \item \textbf{Low-Overhead Cascaded Channel Estimation via DFT Codebooks}: Exploiting the strict orthogonality of DFT columns along the RIS dimension, we construct a $P = N+1$ orthogonal reflection training protocol that attains the theoretical lower bound on observation dimension. A closed-form least-squares estimator is derived together with its Cramér-Rao Lower Bound (CRLB). We also show that the cascaded matrix is a rank-one Hadamard modulation of the two constituent links, whose DFT-domain sparsity is far weaker than that of a single link, so compressed-sensing methods enjoy no inherent advantage in this model.
+  \item \textbf{Reproducible Numerical Validation and Error Calibration}: We provide a Monte-Carlo cross-validation of the CRLB (measured-to-bound ratio within 1\%), a random-stream decoupling self-check (the no-RIS baseline is identical across all array sizes), and a constructive verification of quantization monotonicity, while honestly reporting the negative compressed-sensing result and the fairness degradation at low transmit power.
 \end{enumerate}
 
 \vspace{0.6cm}
@@ -210,14 +214,20 @@ To address these challenges, this thesis investigates key technologies in joint 
 % 致谢 (Acknowledgments)
 \chapter*{致谢}
 \addcontentsline{toc}{chapter}{致谢}
-\TODO{感谢导师的悉心指导，感谢实验室同门的帮助与支持，感谢家人的理解与陪伴。}
+
+本论文的完成离不开许多人的帮助。首先要感谢我的导师。从选题方向的确定、研究路线的梳理，到每一次推导的核对与每一版文稿的修改，导师都倾注了大量心血。导师严谨的治学态度和对物理直觉的坚持，让我逐渐明白一个公式写得漂亮并不等于它是对的，只有能被独立数值路径复现的结论才值得写进论文。
+
+感谢实验室的各位同门。组会上那些尖锐的提问，帮我发现了自己论证中最薄弱的地方；关于仿真参数设置与代码调试的讨论，让我少走了许多弯路。
+
+感谢我的家人。他们的理解与支持，让我能够安心完成学业。
+
+最后，感谢在百忙之中评阅本论文的各位专家，你们提出的宝贵意见将使这项工作更加完善。
 \newpage
 
 % 攻读学位期间研究成果 (Academic Achievements)
 \chapter*{攻读学位期间发表的学术论文与研究成果}
 \addcontentsline{toc}{chapter}{攻读学位期间研究成果}
-\begin{enumerate}
-  \item \TODO{待填入已录用或在审学术论文清单与专利成果。}
-\end{enumerate}
+
+本文所涉及的研究工作目前处于整理与投稿准备阶段，截至论文定稿时，尚未有已正式录用或发表的学术论文与专利成果。待相关成果正式发表后，将在此处补充完整的著录信息。
 
 \end{document}

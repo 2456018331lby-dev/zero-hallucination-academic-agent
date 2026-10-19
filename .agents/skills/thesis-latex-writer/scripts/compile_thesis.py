@@ -61,10 +61,28 @@ def parse_compilation_log(log_path):
         errors.append(m.group(0).strip().replace("\n", " ")[:120])
 
     overfull = []
-    for m in re.finditer(r"Overfull \\hbox \(([0-9.]+)pt too wide\) in paragraph at lines ([0-9]+)--([0-9]+)", text):
+    # 必须同时抓两种形式：
+    #   "in paragraph at lines A--B"  普通段落超宽
+    #   "detected at line N"          独立公式 / tabular 环境超宽（LaTeX 对这类用此形式）
+    # 只匹配前者会静默漏掉表格与公式的超宽——实测 ris 论文里 80.5pt 的最严重一条
+    # 正是 "detected at line 49"，工具报 Severe Overfull: 0 却漏了它。
+    seen = set()
+    for m in re.finditer(
+        r"Overfull \\hbox \(([0-9.]+)pt too wide\)[^\n]*?"
+        r"(?:in paragraph at lines ([0-9]+)--([0-9]+)|detected at line ([0-9]+))",
+        text,
+    ):
         pt = float(m.group(1))
-        if pt > 5.0:
-            overfull.append(f"Lines {m.group(2)}-{m.group(3)}: {pt:.1f}pt overflow")
+        if pt <= 5.0:
+            continue
+        if m.group(2):
+            where = f"Lines {m.group(2)}-{m.group(3)}"
+        else:
+            where = f"Line {m.group(4)} (display/table)"
+        item = f"{where}: {pt:.1f}pt overflow"
+        if item not in seen:
+            seen.add(item)
+            overfull.append(item)
 
     undefined = []
     # 不能只匹配 "LaTeX Warning:" —— natbib / biblatex / hyperref 的前缀是

@@ -2,50 +2,105 @@
 \section{基于交替优化与分式规划的主被动波束协同设计}
 \label{sec:beamforming_optimization}
 
-针对多用户 MISO 和速率优化问题~\eqref{prob:joint_beamforming_p1}中发射预编码矩阵 $\bm{W}$ 与无源相移向量 $\bm{v}$ 的高度非凸非线性耦合，本节提出一套基于交替优化（Alternating Optimization, AO）与多比率分式规划（Fractional Programming, FP）的高效解耦协同优化算法。
+针对多用户 MISO 和速率优化问题~\eqref{prob:joint_beamforming_p1}中发射预编码矩阵 $\bm{W}$ 与无源相移向量 $\bm{v}$ 的高度非凸非线性耦合，本节提出一套基于交替优化（Alternating Optimization, AO）与多比率分式规划（Fractional Programming, FP）的高效解耦协同优化算法。整体思路是：先用拉格朗日对偶变换把「对数」从目标函数中剥离，再用二次变换把「分式」化为二次型，从而使原本关于 $\bm{W}$ 与 $\bm{v}$ 均非凸的问题在两个子问题上分别获得凸结构或流形上的光滑结构。
 
-\subsection{基于二次变换的多比率分式规划解耦}
-由于目标函数中 SINR 处于对数函数内部且各项互为干扰，传统 Dinkelbach 标量分式规划无法直接处理多比率求和问题。在此，引入基于拉格朗日对偶的二次变换技术（Quadratic Transform）。
-定义辅助变量 $\bm{\rho} = [\rho_1, \rho_2, \dots, \rho_K]^T \in \mathbb{R}_+^K$ 与 $\bm{\mu} = [\mu_1, \mu_2, \dots, \mu_K]^T \in \mathbb{C}^{K \times 1}$，根据分式规划等价转化定理，问题~\eqref{prob:joint_beamforming_p1}等价重构为如下增广目标函数的极大化问题：
+\subsection{基于拉格朗日对偶与二次变换的多比率分式规划}
+\label{sec:fp_transform}
+
+由于目标函数中 SINR 处于对数函数内部且各项互为干扰，传统 Dinkelbach 标量分式规划无法直接处理多比率求和问题。为此，本文依次引入拉格朗日对偶变换与二次变换两级解耦。
+
+\textbf{第一级：拉格朗日对偶变换。}为书写简洁，以下以自然对数表述目标函数；换算到以 2 为底仅相差常数因子 $1/\ln 2$，不影响最优解的位置。引入辅助变量 $\bm{\rho} = [\rho_1, \dots, \rho_K]^T \in \mathbb{R}_{+}^K$，利用恒等式
 \begin{equation}
-  f_q(\bm{W}, \bm{v}, \bm{\rho}, \bm{\mu}) \triangleq \sum_{k=1}^K \left[ \log_2(1 + \rho_k) - \rho_k + \frac{(1+\rho_k) \cdot 2\mathrm{Re}\{\mu_k^* \bm{h}_k^H(\bm{v})\bm{w}_k\}}{1 + \gamma_k(\bm{W}, \bm{v})} - |\mu_k|^2 \left( \sum_{j=1}^K |\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2 \right) \right]
+  \ln\left(1 + \gamma_k\right) = \max_{\rho_k > 0}\ \ln(1+\rho_k) - \rho_k + \frac{(1+\rho_k)\gamma_k}{1+\gamma_k},
+  \label{eq:dual_transform}
+\end{equation}
+可将和速率中的每一项对数从 SINR 内部解耦。式~\eqref{eq:dual_transform}右端关于 $\rho_k$ 是严格凹的，令其导数为零即得驻点条件
+\begin{equation}
+  \frac{1}{1+\rho_k} - 1 + \frac{\gamma_k}{1+\gamma_k} = 0
+  \quad\Longleftrightarrow\quad
+  \rho_k^{\star} = \gamma_k(\bm{W}, \bm{v}),
+  \label{eq:fp_update_rho}
+\end{equation}
+即辅助变量在最优处恰等于当前迭代点的 SINR。将 $\gamma_k$ 的定义~\eqref{eq:sinr_formulation}代入并整理，右端分式可写成
+\begin{equation}
+  \frac{(1+\rho_k)\gamma_k}{1+\gamma_k}
+  = (1+\rho_k)\cdot\frac{|\bm{h}_k^H\bm{w}_k|^2}{\sum_{j=1}^{K}|\bm{h}_k^H\bm{w}_j|^2 + \sigma_k^2}
+  = (1+\rho_k)\cdot\frac{|a_k|^2}{B_k + |a_k|^2},
+  \label{eq:qt_transform}
+\end{equation}
+其中记 $a_k \triangleq \bm{h}_k^H(\bm{v})\bm{w}_k$ 为期望信号分量，$B_k \triangleq \sum_{j\neq k}|\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2$ 为干扰加噪声功率。
+
+\textbf{第二级：二次变换。}式~\eqref{eq:qt_transform}右端仍是分式。引入第二组辅助变量 $\mu_k$（$k = 1,\dots,K$），利用二次变换恒等式
+\begin{equation}
+  \frac{|a_k|^2}{B_k + |a_k|^2}
+  = \max_{\mu_k \in \mathbb{C}}\ 2\mathrm{Re}\{\mu_k^* a_k\} - |\mu_k|^2\left(B_k + |a_k|^2\right),
+  \label{eq:qt_identity}
+\end{equation}
+该式关于 $\mu_k$ 是严格凹的二次函数，最优解为
+\begin{equation}
+  \mu_k^{\star} = \frac{a_k}{B_k + |a_k|^2}
+  = \frac{\bm{h}_k^H(\bm{v})\bm{w}_k}{\sum_{j=1}^{K}|\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2}.
+  \label{eq:fp_update_mu}
+\end{equation}
+将式~\eqref{eq:dual_transform}与式~\eqref{eq:qt_identity}逐项代入和速率，原问题~\eqref{prob:joint_beamforming_p1}等价重构为如下增广目标函数的极大化问题：
+\begin{equation}
+\begin{aligned}
+  f_q(\bm{W}, \bm{v}, \bm{\rho}, \bm{\mu}) \triangleq \sum_{k=1}^K \Bigl[ &\ln(1 + \rho_k) - \rho_k \\
+  &+ (1+\rho_k)\Bigl( 2\mathrm{Re}\{\mu_k^* \bm{h}_k^H(\bm{v})\bm{w}_k\} \\
+  &\qquad - |\mu_k|^2 \Bigl( \sum_{j=1}^K |\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2 \Bigr) \Bigr) \Bigr]
+\end{aligned}
   \label{eq:fp_augmented_objective}
 \end{equation}
-通过对辅助变量求偏导并令其为零，可得辅助变量 $\bm{\rho}$ 与 $\bm{\mu}$ 在固定 $\bm{W}$ 与 $\bm{v}$ 时的解析闭式最优更新：
-\begin{align}
-  \rho_k^* &= \gamma_k(\bm{W}, \bm{v}) = \frac{|\bm{h}_k^H(\bm{v})\bm{w}_k|^2}{\sum_{j \neq k}^K |\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2} \label{eq:fp_update_rho} \\
-  \mu_k^* &= \frac{\sqrt{1 + \rho_k^*} \bm{h}_k^H(\bm{v})\bm{w}_k}{\sum_{j=1}^K |\bm{h}_k^H(\bm{v})\bm{w}_j|^2 + \sigma_k^2} \label{eq:fp_update_mu}
-\end{align}
 
-\subsection{子问题一：固定相移求解基站有源预编码 \texorpdfstring{$\bm{W}$}{W}}
+\begin{theorem}[等价性]
+\label{thm:fp_equivalence}
+对任意可行 $(\bm{W}, \bm{v})$，有
+\begin{equation}
+  \max_{\bm{\rho},\bm{\mu}} f_q(\bm{W}, \bm{v}, \bm{\rho}, \bm{\mu}) = \sum_{k=1}^K \ln\left(1 + \gamma_k(\bm{W}, \bm{v})\right),
+  \label{eq:fp_equivalence}
+\end{equation}
+且最优辅助变量由式~\eqref{eq:fp_update_rho}与式~\eqref{eq:fp_update_mu}唯一给出。因此交替优化 $(\bm{W},\bm{v})$ 与 $(\bm{\rho},\bm{\mu})$ 不改变原问题的最优值。
+\end{theorem}
+
+定理~\ref{thm:fp_equivalence}的意义在于：原问题中对数、分式、耦合三重困难被转移为「辅助变量闭式更新 + 两个结构化子问题」。辅助变量更新不涉及任何搜索，计算量为 $O(KM)$，可忽略；真正的计算负担集中在两个子问题上。
+
+\subsection{子问题一：固定相移求解基站有源预编码}
+\label{sec:sub_w}
+
 在固定 $\bm{v}$、$\bm{\rho}$ 与 $\bm{\mu}$ 的条件下，目标函数式~\eqref{eq:fp_augmented_objective}关于基站有源预编码矩阵 $\bm{W}$ 退化为一个标准的凸二次规划（QP）问题：
 \begin{subequations}
   \label{prob:sub1_w_opt}
   \begin{align}
-    \min_{\bm{W}} \quad & \sum_{j=1}^K \bm{w}_j^H \left( \sum_{k=1}^K |\mu_k|^2 \bm{h}_k(\bm{v})\bm{h}_k^H(\bm{v}) \right) \bm{w}_j - 2\sum_{k=1}^K \sqrt{1+\rho_k} \mathrm{Re}\left\{ \mu_k^* \bm{h}_k^H(\bm{v})\bm{w}_k \right\} \label{prob:sub1_obj} \\
+    \min_{\bm{W}} \quad & \sum_{j=1}^K \bm{w}_j^H \left( \sum_{k=1}^K (1+\rho_k)|\mu_k|^2 \bm{h}_k(\bm{v})\bm{h}_k^H(\bm{v}) \right) \bm{w}_j - 2\sum_{k=1}^K (1+\rho_k)\mathrm{Re}\left\{ \mu_k^* \bm{h}_k^H(\bm{v})\bm{w}_k \right\} \label{prob:sub1_obj} \\
     \text{s.t.} \quad & \sum_{k=1}^K \|\bm{w}_k\|^2 \le P_{\max} \label{prob:sub1_power}
   \end{align}
 \end{subequations}
 
 利用拉格朗日乘子法，引入对偶乘子 $\lambda \ge 0$ 对应发射功率约束~\eqref{prob:sub1_power}，构造拉格朗日函数 $\mathcal{L}(\bm{W}, \lambda)$。对任意用户 $k$ 的波束赋形向量 $\bm{w}_k$ 求复梯度并令其为零：
 \begin{equation}
-  \nabla_{\bm{w}_k^*} \mathcal{L} = \left( \sum_{j=1}^K |\mu_j|^2 \bm{h}_j(\bm{v})\bm{h}_j^H(\bm{v}) + \lambda \bm{I}_M \right) \bm{w}_k - \sqrt{1+\rho_k}\mu_k \bm{h}_k(\bm{v}) = \bm{0}
+  \nabla_{\bm{w}_k^*} \mathcal{L} = \left( \sum_{j=1}^K (1+\rho_j)|\mu_j|^2 \bm{h}_j(\bm{v})\bm{h}_j^H(\bm{v}) + \lambda \bm{I}_M \right) \bm{w}_k - (1+\rho_k)\mu_k \bm{h}_k(\bm{v}) = \bm{0}
   \label{eq:w_k_derivative}
 \end{equation}
 由此可得最优发射预编码向量 $\bm{w}_k^*$ 的显式解析闭式解：
 \begin{equation}
-  \bm{w}_k^*(\lambda) = \left( \bm{A}(\bm{v}, \bm{\mu}) + \lambda \bm{I}_M \right)^{-1} \sqrt{1+\rho_k}\mu_k \bm{h}_k(\bm{v})
+  \bm{w}_k^*(\lambda) = \left( \bm{A}(\bm{v}, \bm{\mu}) + \lambda \bm{I}_M \right)^{-1} (1+\rho_k)\mu_k \bm{h}_k(\bm{v})
   \label{eq:optimal_wk_closed_form}
 \end{equation}
-其中 $\bm{A}(\bm{v}, \bm{\mu}) \triangleq \sum_{j=1}^K |\mu_j|^2 \bm{h}_j(\bm{v})\bm{h}_j^H(\bm{v}) \in \mathbb{C}^{M \times M}$ 为半正定等效协方差矩阵。对偶乘子 $\lambda \ge 0$ 可通过一维二分搜索法（Bisection Method）在区间 $[0, \lambda_{\max}]$ 内精确确定，满足互补松弛条件：
+其中 $\bm{A}(\bm{v}, \bm{\mu}) \triangleq \sum_{j=1}^K (1+\rho_j)|\mu_j|^2 \bm{h}_j(\bm{v})\bm{h}_j^H(\bm{v}) \in \mathbb{C}^{M \times M}$ 为半正定等效协方差矩阵。对偶乘子 $\lambda \ge 0$ 可通过一维二分搜索法（Bisection Method）在区间 $[0, \lambda_{\max}]$ 内精确确定，满足互补松弛条件：
 \begin{equation}
   \lambda \left( \sum_{k=1}^K \|\bm{w}_k^*(\lambda)\|^2 - P_{\max} \right) = 0
   \label{eq:slackness_condition}
 \end{equation}
+由于 $\sum_k\|\bm{w}_k^*(\lambda)\|^2$ 关于 $\lambda$ 单调递减，二分搜索的收敛性有保证。该子问题因此具有「闭式解 + 一维搜索」的结构，单次求解复杂度仅为 $O(M^3 + KM^2 + M^2\log(1/\epsilon))$。
 
-\subsection{子问题二：固定预编码求解 RIS 无源相移向量 \texorpdfstring{$\bm{v}$}{v}}
-在给定基站预编码矩阵 $\bm{W}$ 及辅助变量 $\bm{\rho}, \bm{\mu}$ 的条件下，将复合信道 $\bm{h}_k^H(\bm{v}) = \bm{h}_{d,k}^H + \bm{v}^H \bm{H}_{\mathrm{casc},k}$ 代入目标函数式~\eqref{eq:fp_augmented_objective}中展开。
-经代数重组，关于相移向量 $\bm{v} \in \mathbb{C}^{N \times 1}$ 的优化问题可等价整理为标准的复二次型极大化问题：
+需要指出，子问题~\eqref{prob:sub1_w_opt}的凸性依赖于辅助变量 $(\bm{\rho},\bm{\mu})$ 被固定。若直接从原始和速率出发优化 $\bm{W}$，问题在 $\bm{W}$ 上并不凸；正是分式规划把非凸性「搬进」了辅助变量，才使 $\bm{W}$ 子问题成为标准 QP。这是本文采用 FP 而非直接梯度法的根本原因。
+
+\subsection{子问题二：固定预编码求解 RIS 无源相移向量}
+\label{sec:sub_v}
+
+在给定基站预编码矩阵 $\bm{W}$ 及辅助变量 $\bm{\rho}, \bm{\mu}$ 的条件下，将复合信道 $\bm{h}_k^H(\bm{v}) = \bm{h}_{d,k}^H + \bm{v}^H \bm{H}_{\mathrm{casc},k}$ 代入目标函数式~\eqref{eq:fp_augmented_objective}中展开。注意到 $\bm{h}_k^H(\bm{v})$ 关于 $\bm{v}$ 是仿射的，因此 $|\bm{h}_k^H\bm{w}_j|^2$ 是 $\bm{v}$ 的二次型，$\mathrm{Re}\{\mu_k^*\bm{h}_k^H\bm{w}_k\}$ 是 $\bm{v}$ 的线性项。
+
+经代数重组，关于相移向量 $\bm{v} \in \mathbb{C}^{N \times 1}$ 的优化问题可等价整理为标准的复二次型极小化问题：
 \begin{subequations}
   \label{prob:sub2_v_opt}
   \begin{align}
@@ -55,23 +110,53 @@
 \end{subequations}
 其中矩阵 $\bm{\Psi} \in \mathbb{C}^{N \times N}$ 与向量 $\bm{q} \in \mathbb{C}^{N \times 1}$ 分别定义为：
 \begin{align}
-  \bm{\Psi} &\triangleq \sum_{k=1}^K |\mu_k|^2 \sum_{j=1}^K \bm{H}_{\mathrm{casc},k} \bm{w}_j \bm{w}_j^H \bm{H}_{\mathrm{casc},k}^H \label{eq:psi_matrix_def} \\
-  \bm{q} &\triangleq \sum_{k=1}^K \left[ \sqrt{1+\rho_k}\mu_k \bm{H}_{\mathrm{casc},k}\bm{w}_k - |\mu_k|^2 \sum_{j=1}^K \bm{H}_{\mathrm{casc},k} \bm{w}_j \bm{w}_j^H \bm{h}_{d,k} \right] \label{eq:q_vector_def}
+  \bm{\Psi} &\triangleq \sum_{k=1}^K (1+\rho_k)|\mu_k|^2 \sum_{j=1}^K \bm{H}_{\mathrm{casc},k} \bm{w}_j \bm{w}_j^H \bm{H}_{\mathrm{casc},k}^H \label{eq:psi_matrix_def} \\
+  \bm{q} &\triangleq \sum_{k=1}^K (1+\rho_k)\left[ \mu_k \bm{H}_{\mathrm{casc},k}\bm{w}_k - |\mu_k|^2 \sum_{j=1}^K \bm{H}_{\mathrm{casc},k} \bm{w}_j \bm{w}_j^H \bm{h}_{d,k} \right] \label{eq:q_vector_def}
 \end{align}
-根据定义，矩阵 $\bm{\Psi}$ 为半正定厄米特矩阵（$\bm{\Psi} \succeq \bm{0}$）。
+根据定义，矩阵 $\bm{\Psi}$ 为半正定厄米特矩阵（$\bm{\Psi} \succeq \bm{0}$），因此式~\eqref{prob:sub2_obj}在无约束时是凸的；非凸性完全来自单位模约束~\eqref{prob:sub2_unimodular}。
 
-由于约束~\eqref{prob:sub2_unimodular}构成了由 $N$ 个复平面单位圆构成的黎曼流形 $\mathcal{M} = \{\bm{v} \in \mathbb{C}^N : |v_n|=1, \forall n\}$，本节采用复流形共轭梯度法（Riemannian Conjugate Gradient, RCG）进行直接求解：
+由于约束~\eqref{prob:sub2_unimodular}构成了由 $N$ 个复平面单位圆构成的黎曼流形 $\mathcal{M} = \{\bm{v} \in \mathbb{C}^N : |v_n|=1, \forall n\}$，本节采用复流形共轭梯度法（Riemannian Conjugate Gradient, RCG）进行直接求解。算法~\ref{alg:rcg}给出完整流程。
+
+\begin{algorithm}[t]
+\caption{单位模约束下的黎曼共轭梯度法}
+\label{alg:rcg}
+\begin{algorithmic}[1]
+\REQUIRE $\bm{\Psi} \succeq \bm{0}$, $\bm{q}$, 初始点 $\bm{v}_0 \in \mathcal{M}$
+\ENSURE 局部最优相移向量 $\bm{v}$
+\STATE 初始化 $\bm{d}_0 = -\mathrm{grad}\,g(\bm{v}_0)$，$t \leftarrow 0$
+\REPEAT
+  \STATE 计算欧氏梯度 $\nabla g(\bm{v}_t) = 2\bm{\Psi}\bm{v}_t - 2\bm{q}$
+  \STATE 投影至切空间：$\mathrm{grad}\,g(\bm{v}_t) = \nabla g(\bm{v}_t) - \mathrm{Re}\{\nabla g(\bm{v}_t)\circ\bm{v}_t^*\}\circ\bm{v}_t$
+  \STATE Armijo 线搜索确定步长 $\alpha_t$，使目标函数充分下降
+  \STATE 收缩回流形：$\bm{v}_{t+1} = \mathcal{R}_{\bm{v}_t}(\alpha_t \bm{d}_t)$
+  \STATE 计算 Polak-Ribière 系数 $\beta_t = \frac{\langle \mathrm{grad}\,g(\bm{v}_{t+1}),\ \mathrm{grad}\,g(\bm{v}_{t+1}) - \mathrm{grad}\,g(\bm{v}_t)\rangle}{\langle \mathrm{grad}\,g(\bm{v}_t),\ \mathrm{grad}\,g(\bm{v}_t)\rangle}$
+  \STATE 更新搜索方向 $\bm{d}_{t+1} = -\mathrm{grad}\,g(\bm{v}_{t+1}) + \beta_t \mathcal{T}(\bm{d}_t)$
+  \STATE $t \leftarrow t+1$
+\UNTIL{$\|\mathrm{grad}\,g(\bm{v}_t)\| \le \epsilon$ 或达到最大迭代次数}
+\RETURN $\bm{v}_t$
+\end{algorithmic}
+\end{algorithm}
+
+其中两个关键算子的具体形式为：
 \begin{enumerate}
   \item \textbf{黎曼梯度投影}：计算欧几里得空间梯度 $\nabla_{\bm{v}} g(\bm{v}) = 2\bm{\Psi}\bm{v} - 2\bm{q}$，并将其切空间投影至复流形 $\mathcal{M}$ 的切空间 $T_{\bm{v}}\mathcal{M}$：
     \begin{equation}
       \mathrm{grad} \, g(\bm{v}) = \nabla_{\bm{v}} g(\bm{v}) - \mathrm{Re}\left\{ \nabla_{\bm{v}} g(\bm{v}) \circ \bm{v}^* \right\} \circ \bm{v}
       \label{eq:riemannian_grad}
     \end{equation}
-    其中 $\circ$ 表示 Hadamard 逐元素积。
+    其中 $\circ$ 表示 Hadamard 逐元素积。该投影的几何含义是剔除梯度中沿半径方向（即破坏单位模）的分量。
   \item \textbf{流形回退收缩 (Retraction)}：沿着共轭搜索方向 $\bm{d}$ 进行 Armijo 线搜索步长更新后，通过如下收缩算子将迭代点投影回单位模复圆流形上：
     \begin{equation}
       \mathcal{R}_{\bm{v}}(\alpha \bm{d}) = \left[ \frac{(\bm{v} + \alpha \bm{d})_1}{|(\bm{v} + \alpha \bm{d})_1|}, \dots, \frac{(\bm{v} + \alpha \bm{d})_N}{|(\bm{v} + \alpha \bm{d})_N|} \right]^T
       \label{eq:manifold_retraction}
     \end{equation}
 \end{enumerate}
-流形共轭梯度法避开了 SDR 升维将变量转化为 $N \times N$ 矩阵的巨大计算开销，直接在 $N$ 维流形上实现超线性收敛。
+
+流形共轭梯度法避开了 SDR 升维将变量转化为 $N \times N$ 矩阵的巨大计算开销，直接在 $N$ 维流形上实现超线性收敛。相较于仅沿负梯度方向的黎曼梯度下降，共轭方向利用了历史梯度信息，在病态二次型（$\bm{\Psi}$ 条件数较大）上能显著减少迭代次数；这一点在第四章的收敛性实验中表现为：共轭梯度在十余次迭代内即可把和速率提升到稳定值的 99\% 以上。
+
+\subsection{交替优化框架与复杂度汇总}
+\label{sec:ao_summary}
+
+将上述两块拼合，得到完整的交替优化流程：固定 $(\bm{\rho},\bm{\mu})$ 更新 $\bm{W}$（闭式 + 二分），固定 $\bm{W}$ 更新 $\bm{v}$（RCG），随后用式~\eqref{eq:fp_update_rho}与式~\eqref{eq:fp_update_mu}刷新辅助变量。由于每一步都在增广目标函数 $f_q$ 上做精确或单调提升的极大化，而 $f_q$ 有上界，整个交替过程单调不减且必然收敛到 $f_q$ 的驻点。需要强调的是，由于原问题非凸，所得驻点是局部最优而非全局最优，其质量依赖初始点；第四章将给出多初值重启策略以缓解这一问题。
+
+单次交替迭代的复杂度为 $O(M^3 + KM^2 + N^2 M + N^3)$，其中 $M^3$ 来自 $\bm{W}$ 子问题的矩阵求逆（可用 Sherman-Morrison 加速至 $O(KM^2)$），$N^3$ 来自 $\bm{v}$ 子问题中 $\bm{\Psi}$ 的构造与矩阵—向量乘。在 $M=8$、$N=128$、$K=4$ 的典型配置下，单次迭代的浮点运算量约为 $4\times 10^{6}$ 量级，可在毫秒级完成，满足实时重构需求。
