@@ -36,7 +36,7 @@ jobs:
       - name: Doctor (environment + gate scripts present)
         run: zhaw doctor
 
-      - name: Adversarial self-test (11 cases)
+      - name: Adversarial self-test (16 cases)
         # This is the load-bearing job: it proves the gates still intercept
         # fabricated DOIs, tampered titles, forged sign-offs, out-of-bounds
         # page evidence, CSV-mismatched numbers, retracted papers, and broken
@@ -80,5 +80,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gate-summary-${{ matrix.os }}
-          path: gate_summary.json
+          # gate_summary.json is written next to the audited project, not to
+          # the caller's CWD (that was a bug: running from the repo root
+          # littered the root and let two projects overwrite each other).
+          path: bupt_isac_workflow/thesis_project/gate_summary.json
           if-no-files-found: warn
