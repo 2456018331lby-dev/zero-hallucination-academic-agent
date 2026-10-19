@@ -291,6 +291,50 @@ class TestQualityGatesAdversarial(unittest.TestCase):
         res_code = check_thesis_compliance.check_thesis(self.temp_dir, scaffold_mode=False, strict=False)
         self.assertEqual(res_code, 1, "Gate 3 must return exit code 1 when markdown or TODO leaks into non-scaffold draft")
 
+    def test_09_gate2_csv_value_mismatch(self):
+        """Case 9: Gate 2 resolves each claimed number against an actual CSV cell.
+
+        Historical hole: the presence of *any* experiments/*.csv made every claim
+        pass. This case pins the fix — a CSV that exists but does not contain the
+        asserted number must still FAIL, and the same claim must PASS once the
+        number is genuinely there (rounding- and percent-aware).
+        """
+        exp_dir = os.path.join(self.temp_dir, "experiments")
+        os.makedirs(exp_dir)
+        csv_path = os.path.join(exp_dir, "snr_results.csv")
+        with open(csv_path, "w", encoding="utf-8") as f:
+            f.write("scheme,psnr_db,rate,delta_pct\n")
+            f.write("proposed,28.53,12.4,35.0\n")
+            f.write("baseline,22.10,9.8,0.0\n")
+
+        chap_file = os.path.join(self.temp_dir, "chap04_experiments.tex")
+        with open(chap_file, "w", encoding="utf-8") as f:
+            f.write("所提方案使 PSNR 达到 28.5 dB，和速率达到 12.4 bps/Hz，较基线提升了约百分之三十五。\n")
+
+        res_ok = run_quality_gates.run_gate2_provenance(self.temp_dir, scaffold_mode=False)
+        self.assertEqual(
+            res_ok["status"], "PASS",
+            f"Gate 2 must PASS when every number exists in the CSV, got: {res_ok['details']}",
+        )
+        self.assertEqual(len(res_ok["csv_files"]), 1, "Gate 2 must discover the experiments CSV")
+
+        # Fabricate one number that is nowhere in the CSV.
+        with open(chap_file, "w", encoding="utf-8") as f:
+            f.write("所提方案使 PSNR 达到 41.7 dB，较基线提升了约百分之六十二。\n")
+
+        res_bad = run_quality_gates.run_gate2_provenance(self.temp_dir, scaffold_mode=False)
+        self.assertEqual(
+            res_bad["status"], "FAIL",
+            "Gate 2 must FAIL when a CSV exists but the claimed number is not in it",
+        )
+        details = " ".join(res_bad["details"])
+        self.assertIn("41.7", details)
+        self.assertIn("chap04_experiments.tex:1", details, "Gate 2 must report file:line for the fabricated claim")
+
+        # Scaffold mode downgrades the same finding to NOTICE instead of blocking a draft.
+        res_scaffold = run_quality_gates.run_gate2_provenance(self.temp_dir, scaffold_mode=True)
+        self.assertEqual(res_scaffold["status"], "NOTICE")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,58 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>目录</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>CONTENTS</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '28px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <Box style={{ height: 92, background: '#F0F5FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 24px', gap: 24 }}>
+            <Box style={{ width: 56, height: 56, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFFFFF' }}>01</Text>
+            </Box>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1A2230' }}>研究定位：低空 ISAC 要解决什么</Text>
+                <Text style={{ fontSize: 17, color: '#4A5568' }}>低慢小目标的两类失效 · 频谱与硬件经济性 · 安全的内生性 · 三重结构矛盾</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 92, background: '#F0F5FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 24px', gap: 24 }}>
+            <Box style={{ width: 56, height: 56, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFFFFF' }}>02</Text>
+            </Box>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1A2230' }}>发展脉络：从资源争夺到资源免用</Text>
+                <Text style={{ fontSize: 17, color: '#4A5568' }}>固定基站 → 机动协同 → 消除开销 → 多维并行，四个阶段的技术转向</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 92, background: '#F0F5FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 24px', gap: 24 }}>
+            <Box style={{ width: 56, height: 56, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFFFFF' }}>03</Text>
+            </Box>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1A2230' }}>方法格局：五类技术路线</Text>
+                <Text style={{ fontSize: 17, color: '#4A5568' }}>波形调制 · 波束与架构 · 资源与轨迹 · 感知算法 · 安全与数据基准</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 92, background: '#F0F5FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 24px', gap: 24 }}>
+            <Box style={{ width: 56, height: 56, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFFFFF' }}>04</Text>
+            </Box>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#1A2230' }}>代表文献：八篇核心工作拆解</Text>
+                <Text style={{ fontSize: 17, color: '#4A5568' }}>零感知开销 · RAA 阵列 · UW-OCDM · PCRB 协同 · 数字孪生 · LAMBDA</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 92, background: '#E8EFF8', border: '1px solid #3D7BD9', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 24px', gap: 24 }}>
+            <Box style={{ width: 56, height: 56, background: '#0E3F8C', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFFFFF' }}>05</Text>
+            </Box>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0E3F8C' }}>未解问题：两个根本缺口与切入机会</Text>
+                <Text style={{ fontSize: 17, color: '#4A5568' }}>指标不可比 · 全链路无实测 → 五个挑战与五个博士生切入方向</Text>
+            </Box>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>02 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

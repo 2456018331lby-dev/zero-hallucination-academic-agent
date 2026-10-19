@@ -1,0 +1,40 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>目录</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>CONTENTS</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '30px 56px 0 56px', display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 28px' }}>
+            <Text style={{ fontSize: 54, fontWeight: 'bold', color: '#C7D7EE', width: 120 }}>01</Text>
+            <Box style={{ width: 1, height: 90, background: '#D6DCE5', marginRight: 28 }} />
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0E3F8C' }}>为什么难</Text>
+                <Text style={{ fontSize: 18, color: '#4A5568', marginTop: 8 }}>方向定位 · 三重矛盾 —— OFDM 家族的前提在低空高机动下失效</Text>
+            </Box>
+            <Text style={{ fontSize: 16, color: '#8B97A8' }}>P04 – P05</Text>
+        </Box>
+        <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 28px' }}>
+            <Text style={{ fontSize: 54, fontWeight: 'bold', color: '#C7D7EE', width: 120 }}>02</Text>
+            <Box style={{ width: 1, height: 90, background: '#D6DCE5', marginRight: 28 }} />
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0E3F8C' }}>文献格局</Text>
+                <Text style={{ fontSize: 18, color: '#4A5568', marginTop: 8 }}>四阶段演进 · 四类方法 · 六篇代表文献 —— 这一支已经做到哪一步</Text>
+            </Box>
+            <Text style={{ fontSize: 16, color: '#8B97A8' }}>P07 – P11</Text>
+        </Box>
+        <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 28px' }}>
+            <Text style={{ fontSize: 54, fontWeight: 'bold', color: '#C7D7EE', width: 120 }}>03</Text>
+            <Box style={{ width: 1, height: 90, background: '#D6DCE5', marginRight: 28 }} />
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0E3F8C' }}>还缺什么</Text>
+                <Text style={{ fontSize: 18, color: '#4A5568', marginTop: 8 }}>对比总结 · 五个切入点 —— 哪些是真空白，研一可以怎么做</Text>
+            </Box>
+            <Text style={{ fontSize: 16, color: '#8B97A8' }}>P13 – P15</Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>02 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

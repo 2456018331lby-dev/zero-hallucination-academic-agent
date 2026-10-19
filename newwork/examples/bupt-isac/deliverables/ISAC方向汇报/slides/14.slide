@@ -1,0 +1,96 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>五个挑战与对应的博士生切入点</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>挑战与切入</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>左侧为文献明确承认或明显未覆盖的空白；右侧为可在有限算力与周期内推进的切入方向</Text>
+        </Box>
+        <Box style={{ height: 88, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 18px', gap: 14 }}>
+            <Box style={{ width: 34, height: 34, background: '#1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>1</Text>
+            </Box>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.45, width: 430 }}>
+                感知指标不统一：PCRB、CRB、感知 SINR、分辨率各用各的，成果无法横向比较
+            </Text>
+            <Text style={{ fontSize: 20, color: '#3D7BD9', width: 26, textAlign: 'center' }}>→</Text>
+            <Text style={{ fontSize: 19, color: '#0E3F8C', lineHeight: 1.45, flex: 1 }}>
+                以 [7] 数据为底座建统一评测框架，在同一场景同一信道下复现 [2][4][8][11]
+            </Text>
+            <Box style={{ width: 62, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐高</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 88, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 18px', gap: 14 }}>
+            <Box style={{ width: 34, height: 34, background: '#1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>2</Text>
+            </Box>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.45, width: 430 }}>
+                指标选择本身从未被质疑：[2] 用 PCRB、[11] 用感知 SINR，同一系统换指标会得到什么
+            </Text>
+            <Text style={{ fontSize: 20, color: '#3D7BD9', width: 26, textAlign: 'center' }}>→</Text>
+            <Text style={{ fontSize: 19, color: '#0E3F8C', lineHeight: 1.45, flex: 1 }}>
+                研究感知指标选择对最优解结构的影响机理——回答「我们该优化什么」
+            </Text>
+            <Box style={{ width: 62, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐高</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 88, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 18px', gap: 14 }}>
+            <Box style={{ width: 34, height: 34, background: '#1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>3</Text>
+            </Box>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.45, width: 430 }}>
+                强杂波与非合作条件下的鲁棒感知，[3] 明确列为开放挑战
+            </Text>
+            <Text style={{ fontSize: 20, color: '#3D7BD9', width: 26, textAlign: 'center' }}>→</Text>
+            <Text style={{ fontSize: 19, color: '#0E3F8C', lineHeight: 1.45, flex: 1 }}>
+                结合 [6] 的 UW 抗多普勒骨架与 [8] 的空间域去噪，做杂波抑制的波形与接收联合设计
+            </Text>
+            <Box style={{ width: 62, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐高</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 88, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 18px', gap: 14 }}>
+            <Box style={{ width: 34, height: 34, background: '#3D7BD9', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>4</Text>
+            </Box>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.45, width: 430 }}>
+                多目标与移动性缺口：[2] 单目标、[8] 三静止目标、[12] 单目标，规模化未验证
+            </Text>
+            <Text style={{ fontSize: 20, color: '#3D7BD9', width: 26, textAlign: 'center' }}>→</Text>
+            <Text style={{ fontSize: 19, color: '#0E3F8C', lineHeight: 1.45, flex: 1 }}>
+                把 [2] 的 PCRB 框架扩展到移动多目标，解决数据关联与 PCRB 耦合带来的新结构
+            </Text>
+            <Box style={{ width: 62, height: 30, background: '#3D7BD9', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐中</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 88, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 18px', gap: 14 }}>
+            <Box style={{ width: 34, height: 34, background: '#3D7BD9', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>5</Text>
+            </Box>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.45, width: 430 }}>
+                合成数据可信度：[7] 全部由数字孪生生成，未做真实一致性校验
+            </Text>
+            <Text style={{ fontSize: 20, color: '#3D7BD9', width: 26, textAlign: 'center' }}>→</Text>
+            <Text style={{ fontSize: 19, color: '#0E3F8C', lineHeight: 1.45, flex: 1 }}>
+                量化合成与真实环境的偏差边界，为数据驱动的分支划定可用范围
+            </Text>
+            <Box style={{ width: 62, height: 30, background: '#3D7BD9', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐中</Text>
+            </Box>
+        </Box>
+        <Box style={{ height: 52, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#FFFFFF' }}>
+                如果只选一个：<span style={{ fontWeight: 'bold' }}>切入点 1 或 2</span>——当前最缺的不是新算法，而是可比性与指标合理性
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>14 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

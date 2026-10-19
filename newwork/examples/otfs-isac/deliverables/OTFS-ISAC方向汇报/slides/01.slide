@@ -1,0 +1,19 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', position: 'relative', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 8, width: '100%', background: '#1E4FA8' }} />
+    <Box style={{ height: 588, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px' }}>
+        <Text style={{ fontSize: 16, letterSpacing: 4, color: '#3D7BD9', fontWeight: 'bold' }}>LITERATURE REVIEW · 组会文献汇报</Text>
+        <Text style={{ fontSize: 58, fontWeight: 'bold', color: '#0E3F8C', lineHeight: 1.24, marginTop: 20 }}>
+            高机动低空场景下的<br />时延-多普勒域（OTFS）通感一体化
+        </Text>
+        <Text style={{ fontSize: 23, color: '#4A5568', marginTop: 20 }}>波形/调制层 · DD 域感知参数估计 · 感知-通信折中刻画</Text>
+        <Box style={{ height: 3, width: 120, background: '#1E4FA8', marginTop: 26 }} />
+        <Text style={{ fontSize: 20, color: '#4A5568', marginTop: 26, lineHeight: 1.9 }}>
+            文献基础：本地精读 12 篇（IEEE / Springer / 机构库 OA 刊，池 39 篇）<br />
+            汇报人：＿＿＿＿　　指导老师：＿＿＿＿　　日期：2026-09-14
+        </Text>
+    </Box>
+    <Box style={{ height: 124, background: '#F0F5FC', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px', gap: 8 }}>
+        <Text style={{ fontSize: 16, color: '#4A5568' }}>证据来源：examples/otfs-isac/input/literature 全部本地 PDF 全文</Text>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>全篇定量结论均可回溯原文，并经接地门禁校验（11/11 通过）；原文未给出者标注「文献未说明」，不做推断补全</Text>
+    </Box>
+</Slide>

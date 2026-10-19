@@ -1,0 +1,78 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>对比总结：什么已经解决，什么仍然没有</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>对比总结</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>左栏限定在文献自身的设定范围内成立；右栏是文献自身承认或明显未覆盖的空白</Text>
+        </Box>
+        <Box style={{ height: 430, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '2px solid #1E4FA8', borderRadius: 8, padding: '16px 18px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 38, background: '#1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>已经解决 · 5 项</Text>
+                </Box>
+                <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginTop: 10 }}>
+                    <Box style={{ height: 62, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '7px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#0E3F8C' }}>「感知必须占用专用资源」被打破</Text>
+                        <Text style={{ fontSize: 16, color: '#4A5568', marginTop: 3 }}>[8] 零开销框架；[4] 逐子载波 Fisher 判据</Text>
+                    </Box>
+                    <Box style={{ height: 62, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '7px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#0E3F8C' }}>感知与通信的折中已被解析刻画</Text>
+                        <Text style={{ fontSize: 16, color: '#4A5568', marginTop: 3 }}>[4] 给出有界注水结构与可解释分配判据</Text>
+                    </Box>
+                    <Box style={{ height: 62, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '7px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#0E3F8C' }}>平台机动性可作为优化自由度</Text>
+                        <Text style={{ fontSize: 16, color: '#4A5568', marginTop: 3 }}>[2] 定位误差最大降低 61.1%，速度误差 59.9%</Text>
+                    </Box>
+                    <Box style={{ height: 62, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '7px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#0E3F8C' }}>一个结构可同时解多个问题</Text>
+                        <Text style={{ fontSize: 16, color: '#4A5568', marginTop: 3 }}>[6] UW 承担四重功能；[10] RAA 兼顾成本与分辨率</Text>
+                    </Box>
+                    <Box style={{ height: 62, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '7px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#0E3F8C' }}>数据稀缺已有初步应对</Text>
+                        <Text style={{ fontSize: 16, color: '#4A5568', marginTop: 3 }}>[7] 模态对齐、参数可定制，可作统一评测底座</Text>
+                    </Box>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '2px solid #D9534F', borderRadius: 8, padding: '16px 18px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 38, background: '#D9534F', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>仍然没有解决 · 7 项</Text>
+                </Box>
+                <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginTop: 10 }}>
+                    <Box style={{ height: 42, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '5px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: '#1A2230' }}><span style={{ fontWeight: 'bold', color: '#A32D2D' }}>① 感知指标不统一</span>：PCRB / CRB / SINR / 分辨率各用各的，跨方案不可比</Text>
+                    </Box>
+                    <Box style={{ height: 42, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '5px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: '#1A2230' }}><span style={{ fontWeight: 'bold', color: '#A32D2D' }}>② 全链路无实测</span>：11 篇全部为仿真，无硬件原型或现场实测结果</Text>
+                    </Box>
+                    <Box style={{ height: 42, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '5px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: '#1A2230' }}><span style={{ fontWeight: 'bold', color: '#A32D2D' }}>③ 强杂波鲁棒感知</span>：严重地杂波与多径条件下，[3] 明列为开放挑战</Text>
+                    </Box>
+                    <Box style={{ height: 42, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '5px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: '#1A2230' }}><span style={{ fontWeight: 'bold', color: '#A32D2D' }}>④ 多站融合可扩展性</span>：可扩展的多基站协同融合，[3] 明列为开放问题</Text>
+                    </Box>
+                    <Box style={{ height: 42, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '5px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: '#1A2230' }}><span style={{ fontWeight: 'bold', color: '#A32D2D' }}>⑤ 多目标与移动性</span>：[2] 单目标、[8] 三静止目标、[12] 单目标</Text>
+                    </Box>
+                    <Box style={{ height: 42, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '5px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: '#1A2230' }}><span style={{ fontWeight: 'bold', color: '#A32D2D' }}>⑥ 合成数据可信度</span>：[7] 未给出与真实实测数据的一致性对比</Text>
+                    </Box>
+                    <Box style={{ height: 42, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '5px 12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 17, color: '#1A2230' }}><span style={{ fontWeight: 'bold', color: '#A32D2D' }}>⑦ 安全代价未量化</span>：[5] 仅 M=6 天线，未验证大规模阵列</Text>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 58, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                右侧七项中，① 与 ② 属于<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>方法论层面的缺口</span>，优先解决它们能让其余五项的进展变得可衡量
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>13 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

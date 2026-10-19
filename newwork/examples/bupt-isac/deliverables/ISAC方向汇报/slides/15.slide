@@ -1,0 +1,53 @@
+<Slide style={{ width: 1280, height: 720, background: '#0E3F8C', padding: 0, display: 'flex', flexDirection: 'column', position: 'relative', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 8, width: '100%', background: '#3D7BD9' }} />
+    <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 88px' }}>
+        <Text style={{ fontSize: 16, letterSpacing: 4, color: '#7FB0F0', fontWeight: 'bold' }}>SUMMARY · 总结</Text>
+        <Text style={{ fontSize: 42, fontWeight: 'bold', color: '#FFFFFF', marginTop: 12, lineHeight: 1.25 }}>
+            核心研究逻辑：一条三重折中的求解链
+        </Text>
+
+        <Box style={{ marginTop: 30, height: 128, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Box style={{ flex: 1, height: 120, background: '#12306B', border: '1.5px solid #3D7BD9', borderRadius: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#FFFFFF' }}>感知精度</Text>
+                <Text style={{ fontSize: 15, color: '#A8C2E8' }}>PCRB / CRB / 感知 SINR</Text>
+            </Box>
+            <Text style={{ width: 56, textAlign: 'center', fontSize: 26, color: '#3D7BD9' }}>⇌</Text>
+            <Box style={{ flex: 1, height: 120, background: '#12306B', border: '1.5px solid #3D7BD9', borderRadius: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#FFFFFF' }}>通信速率</Text>
+                <Text style={{ fontSize: 15, color: '#A8C2E8' }}>频谱效率 / 开销占比</Text>
+            </Box>
+            <Text style={{ width: 56, textAlign: 'center', fontSize: 26, color: '#3D7BD9' }}>⇌</Text>
+            <Box style={{ flex: 1, height: 120, background: '#12306B', border: '1.5px solid #3D7BD9', borderRadius: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#FFFFFF' }}>系统开销</Text>
+                <Text style={{ fontSize: 15, color: '#A8C2E8' }}>算力 / 硬件 / 功耗</Text>
+            </Box>
+        </Box>
+        <Text style={{ fontSize: 18, color: '#A8C2E8', marginTop: 16, lineHeight: 1.5 }}>
+            从「资源争夺」到「资源复用」再到「资源免用」，所有方法的差异，只在于把折中点放在这条链的哪个位置。
+        </Text>
+
+        <Box style={{ marginTop: 26, background: '#12306B', borderLeft: '6px solid #FFC24B', borderRadius: 8, padding: '22px 28px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <Text style={{ fontSize: 15, letterSpacing: 3, color: '#FFC24B', fontWeight: 'bold' }}>结论金句</Text>
+            <Text style={{ fontSize: 27, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.5 }}>
+                低空 ISAC 不缺新算法，缺的是<span style={{ color: '#FFC24B' }}>可比性</span>——谁先把不可比的指标变得可比，谁就拿到了入场券。
+            </Text>
+        </Box>
+
+        <Box style={{ marginTop: 26, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, height: 58, background: '#12306B', border: '1px solid #3D7BD9', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 17, color: '#E6EEFA' }}>① 统一评测底座</Text>
+            </Box>
+            <Box style={{ flex: 1, height: 58, background: '#12306B', border: '1px solid #3D7BD9', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 17, color: '#E6EEFA' }}>② 感知指标合理性</Text>
+            </Box>
+            <Box style={{ flex: 1, height: 58, background: '#12306B', border: '1px solid #3D7BD9', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 17, color: '#E6EEFA' }}>③ 全链路验证</Text>
+            </Box>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 88px' }}>
+        <Text style={{ fontSize: 14, color: '#7FB0F0' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#FFFFFF' }}>15 / 15</Text>
+    </Box>
+    <Box style={{ height: 18 }} />
+</Slide>

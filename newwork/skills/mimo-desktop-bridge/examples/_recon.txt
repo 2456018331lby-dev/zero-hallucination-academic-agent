@@ -1,0 +1,404 @@
+﻿=== ALL PROCESSES ===
+12772	AcPowerNotification		
+7684	AdskAccessServiceHost		
+7388	AdskLicensingService		
+13704	AggregatorHost		
+4472	amdfendrsr		
+36460	amdow		C:\Program Files\WindowsApps\AdvancedMicroDevicesInc-2.AMDRadeonSoftware_10.24.10035.0_x64__0a9344xs7nr4m\radeonsoftware\amdow.exe
+7944	AMDRSServ		C:\Program Files\WindowsApps\AdvancedMicroDevicesInc-2.AMDRadeonSoftware_10.24.10035.0_x64__0a9344xs7nr4m\radeonsoftware\AMDRSServ.exe
+36468	AMDRSSrcExt		C:\Program Files\WindowsApps\AdvancedMicroDevicesInc-2.AMDRadeonSoftware_10.24.10035.0_x64__0a9344xs7nr4m\radeonsoftware\AMDRSSrcExt.exe
+29308	ansyslmd		
+10496	AppActions		C:\WINDOWS\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\AppActions.exe
+25664	ArmouryCrate		C:\Program Files\WindowsApps\B9ECED6F.ArmouryCrate_6.5.14.0_x64__qmba6cd70vzyy\ArmouryCrate.exe
+7296	ArmouryCrate.Service		
+17044	ArmouryCrate.UserSessionHelper		
+7276	ArmouryCrateControlInterface		
+16804	ArmouryHtmlDebugServer		
+15440	ArmourySocketServer		
+50848	ArmourySwAgent		
+12988	AsHotplugCtrl	AsHotplugCtrl	
+13048	AsMonitorControl	AsHDRControl	
+32224	asus_framework		C:\Program Files (x86)\ASUS\ArmouryDevice\asus_framework.exe
+51136	asus_framework		
+31672	asus_framework		
+32216	asus_framework		
+7416	AsusAppService		
+4480	AsusCertService		
+6828	AsusOptimization		
+9500	AsusOptimizationStartupTask		C:\WINDOWS\System32\DriverStore\FileRepository\asussci2.inf_amd64_ec0a7aca8834d5bc\ASUSOptimization\AsusOptimizationStartupTask.exe
+30968	AsusOSD		
+7360	AsusPTPService		
+13220	ASUSSmartDisplayControl		
+7368	AsusSoftwareManager		
+37424	AsusSoftwareManagerAgent		
+7380	AsusSwitch		
+7396	AsusSystemAnalysis		
+7404	AsusSystemDiagnosis		
+4880	atieclxx		
+4488	atiesrxx		
+40592	audiodg		
+7668	AuraWallpaperService		
+33564	CefSharp.BrowserSubprocess		C:\Program Files (x86)\Razer\Razer Services\Razer Central\CefSharp.BrowserSubprocess.exe
+34044	CefSharp.BrowserSubprocess		C:\Program Files (x86)\Razer\Razer Services\Razer Central\CefSharp.BrowserSubprocess.exe
+15044	CefSharp.BrowserSubprocess		C:\Program Files (x86)\Razer\Razer Services\Razer Central\CefSharp.BrowserSubprocess.exe
+9228	CefSharp.BrowserSubprocess		C:\Program Files (x86)\Razer\Razer Services\Razer Central\CefSharp.BrowserSubprocess.exe
+11548	CefSharp.BrowserSubprocess		C:\Program Files (x86)\Razer\Razer Services\Razer Central\CefSharp.BrowserSubprocess.exe
+7472	cer_service		
+14136	ChsIME		
+7436	clash-verge-service		
+61876	cmd		C:\WINDOWS\system32\cmd.exe
+61836	cmd		C:\WINDOWS\system32\cmd.exe
+61828	cmd		C:\WINDOWS\system32\cmd.exe
+61892	cmd		C:\WINDOWS\system32\cmd.exe
+62284	cmd		C:\WINDOWS\system32\cmd.exe
+61920	cmd		C:\WINDOWS\system32\cmd.exe
+61908	cmd		C:\WINDOWS\system32\cmd.exe
+60976	cmd		C:\Windows\system32\cmd.exe
+53204	cmd		C:\WINDOWS\system32\cmd.exe
+50960	cmd		C:\Windows\system32\cmd.exe
+50608	cmd		C:\Windows\system32\cmd.exe
+57832	cmd		C:\Windows\system32\cmd.exe
+60784	cmd		C:\Windows\system32\cmd.exe
+60664	cmd		C:\Windows\system32\cmd.exe
+59824	cmd		C:\Windows\system32\cmd.exe
+36344	cncmd		C:\Program Files\WindowsApps\AdvancedMicroDevicesInc-2.AMDRadeonSoftware_10.24.10035.0_x64__0a9344xs7nr4m\radeonsoftware\cncmd.exe
+57716	conhost		C:\WINDOWS\system32\conhost.exe
+57828	conhost		C:\WINDOWS\system32\conhost.exe
+57604	conhost		C:\WINDOWS\system32\conhost.exe
+55396	conhost		C:\WINDOWS\system32\conhost.exe
+57380	conhost		C:\WINDOWS\system32\conhost.exe
+60852	conhost		C:\WINDOWS\system32\conhost.exe
+60992	conhost		C:\WINDOWS\system32\conhost.exe
+60768	conhost		C:\WINDOWS\system32\conhost.exe
+58764	conhost		C:\WINDOWS\system32\conhost.exe
+60700	conhost		C:\WINDOWS\system32\conhost.exe
+17104	conhost		
+20256	conhost		
+12632	conhost		C:\WINDOWS\system32\conhost.exe
+9268	conhost		
+9300	conhost		
+50640	conhost		C:\WINDOWS\system32\conhost.exe
+54820	conhost		C:\WINDOWS\system32\conhost.exe
+47124	conhost		C:\WINDOWS\system32\conhost.exe
+20428	conhost		C:\WINDOWS\system32\conhost.exe
+27132	conhost		C:\WINDOWS\system32\conhost.exe
+7464	CortexLauncherService		
+10516	cowork-svc		
+16076	CrossDeviceResume		C:\WINDOWS\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\CrossDeviceResume.exe
+18220	CrossDeviceService		C:\Program Files\WindowsApps\MicrosoftWindows.CrossDevice_1.26071.84.0_x64__cw5n1h2txyewy\CrossDeviceService.exe
+1892	csrss		
+1108	csrss		
+27920	cstd		
+7452	CSTDCMainController_AMD64		
+7444	CSTDCSolverServer_AMD64		
+6524	ctfmon		
+11568	DAX3API		
+7620	DAX3API		
+37192	DefenderSessionHelper		C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.26080.3-0\DefenderSessionHelper.exe
+61068	dllhost		C:\WINDOWS\system32\DllHost.exe
+61028	dllhost		C:\WINDOWS\system32\DllHost.exe
+60824	dllhost		C:\WINDOWS\SysWOW64\DllHost.exe
+2844	dwm		
+54604	editor_sdk		C:\Users\24560\AppData\Local\Programs\WorkBuddy\resources\app.asar.unpacked\node_modules\@tencent\tencent-docs-ai-engine\bin\win32-x64\editor_sdk.exe
+48956	explorer		C:\WINDOWS\Explorer.EXE
+7588	FlashHelperService		
+7572	FNPLicensingService		
+7524	FNPLicensingService64		
+2324	fontdrvhost		
+2316	fontdrvhost		
+8268	GameInputRedistService		C:\Program Files\Microsoft GameInput\x64\GameInputRedistService.exe
+7480	GameInputRedistService		
+25500	GameInputSvc		
+24356	GameInputSvc		
+19052	GameManagerService3		
+7564	GameSDK		
+10668	gamingservices		
+10676	gamingservicesnet		
+7548	GlideXNearService		
+7612	GlideXRemoteService		
+7488	GlideXService		
+7540	GlideXServiceExt		
+7532	hasplms		
+15172	hasplmv		
+33740	identity_helper		C:\Program Files (x86)\Microsoft\Edge\Application\153.0.4234.32\identity_helper.exe
+0	Idle		
+7556	jtagserver		
+7744	LightingService		
+7988	lkads		
+9520	lktsrv		
+18972	lmgrd		
+20420	lmgrd		
+30092	lmgrd		
+7812	lmgrd		
+7820	lmgrd		
+10252	lmgrd		
+2152	LsaIso		
+2172	lsass		
+6284	Memory Compression		
+2344	MotionProHttpd		C:\Program Files\Array Networks\MotionPro VPN Client\MotionProHttpd.exe
+7760	MpDefenderCoreService		
+36712	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+37300	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+34144	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+34504	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+50920	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+59948	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+44836	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+45532	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+32212	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+19148	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+19484	msedge	880一页纸总结-13 无穷级数（数二不学）_哔哩哔哩_bilibili 和另外 2 个页面 - 个人 - Microsoft​ Edge	C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+6812	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+18308	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+29940	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+31180	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+29164	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+29764	msedge		C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+51424	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+45624	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+36852	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+52360	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+51636	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+51500	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+15060	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+11452	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+10864	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+36104	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+27620	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+26032	msedgewebview2		C:\Program Files (x86)\Microsoft\EdgeWebView\Application\152.0.4191.66\msedgewebview2.exe
+13020	MsMpEng		
+7792	MSOfficePLUSService		
+12056	MSPCManager		C:\Program Files\WindowsApps\Microsoft.MicrosoftPCManager_3.22.4.0_x64__8wekyb3d8bbwe\PCManager\MSPCManager.exe
+1772	MSPCManagerCore		
+10584	MSPCManagerService		
+17484	NgcIso		
+7712	niauth_daemon		
+9808	niDiscSvc		
+9528	nidmsrv		
+36168	nierserver		C:\Program Files (x86)\National Instruments\Shared\NI Error Reporting\nierserver.exe
+9308	nimdnsResponder		
+28488	NisSrv		
+7836	nisvcloc		
+61952	node		C:\Program Files\nodejs\node.exe
+62012	node		C:\Program Files\nodejs\node.exe
+60596	node		C:\Users\24560\.workbuddy\binaries\node\versions\22.22.2-2\node.exe
+61944	node		C:\Program Files\nodejs\node.exe
+62168	node		C:\Program Files\nodejs\node.exe
+62308	node		C:\Program Files\nodejs\node.exe
+62096	node		C:\Program Files\nodejs\node.exe
+62104	node		C:\Program Files\nodejs\node.exe
+59076	node		C:\Program Files\nodejs\node.exe
+59088	node		C:\Program Files\nodejs\node.exe
+59056	node		C:\Program Files\nodejs\node.exe
+59068	node		C:\Program Files\nodejs\node.exe
+59108	node		C:\Program Files\nodejs\node.exe
+60508	node		C:\Users\24560\.workbuddy\binaries\node\versions\22.22.2-2\node.exe
+59092	node		C:\Program Files\nodejs\node.exe
+59096	node		C:\Program Files\nodejs\node.exe
+15456	nvcontainer		C:\Program Files\NVIDIA Corporation\NvContainer\nvcontainer.exe
+15592	nvcontainer		C:\Program Files\NVIDIA Corporation\NvContainer\nvcontainer.exe
+7720	nvcontainer		
+13932	nvcontainer		
+4776	NVDisplay.Container		
+4416	NVDisplay.Container		
+23436	NVIDIA Overlay		C:\Program Files\NVIDIA Corporation\NVIDIA App\CEF\NVIDIA Overlay.exe
+24936	NVIDIA Overlay		C:\Program Files\NVIDIA Corporation\NVIDIA App\CEF\NVIDIA Overlay.exe
+22532	NVIDIA Overlay	NVIDIA GeForce Overlay	C:\Program Files\NVIDIA Corporation\NVIDIA App\CEF\NVIDIA Overlay.exe
+20292	NVIDIA Overlay		C:\Program Files\NVIDIA Corporation\NVIDIA App\CEF\NVIDIA Overlay.exe
+21944	NVIDIA Overlay		C:\Program Files\NVIDIA Corporation\NVIDIA App\CEF\NVIDIA Overlay.exe
+16088	nvsphelper64		
+7580	OfficeClickToRun		
+57964	Photos		C:\Program Files\WindowsApps\Microsoft.Windows.Photos_2026.11080.24002.0_x64__8wekyb3d8bbwe\Photos.exe
+17560	powershell		C:\Windows\System32\WindowsPowerShell\v1.0\powershell.EXE
+7752	pservice		
+57584	python		C:\Users\24560\AppData\Roaming\uv\tools\windows-mcp\Scripts\python.exe
+48284	python		C:\Users\24560\anaconda3\python.exe
+36240	RadeonSoftware		C:\Program Files\WindowsApps\AdvancedMicroDevicesInc-2.AMDRadeonSoftware_10.24.10035.0_x64__0a9344xs7nr4m\radeonsoftware\RadeonSoftware.exe
+34348	Razer Central		C:\Program Files (x86)\Razer\Razer Services\Razer Central\Razer Central.exe
+35116	razer_elevation_service		
+35656	RazerAppEngine		C:\Program Files\Razer\RazerAppEngine\app-4.0.821\RazerAppEngine.exe
+35856	RazerAppEngine		C:\Program Files\Razer\RazerAppEngine\app-4.0.821\RazerAppEngine.exe
+35996	RazerAppEngine		C:\Program Files\Razer\RazerAppEngine\app-4.0.821\RazerAppEngine.exe
+10296	RazerAppEngine		C:\Program Files\Razer\RazerAppEngine\app-4.0.821\RazerAppEngine.exe
+35244	RazerAppEngine		C:\Program Files\Razer\RazerAppEngine\app-4.0.821\RazerAppEngine.exe
+35620	RazerAppEngine		C:\Program Files\Razer\RazerAppEngine\app-4.0.821\RazerAppEngine.exe
+32812	RazerAxon		C:\Program Files (x86)\Razer\Razer Axon\RazerAxon.exe
+18656	RazerCentralService		
+20020	RazerCortex		
+376	Registry		
+19092	ROGLiveService		
+19264	RtkAudUService64		
+18460	RtkAudUService64		
+10816	RtkAudUService64		C:\WINDOWS\System32\DriverStore\FileRepository\realtekservice.inf_amd64_ce5439e78b33e147\RtkAudUService64.exe
+23820	RuntimeBroker		C:\Windows\System32\RuntimeBroker.exe
+33328	RuntimeBroker		C:\Windows\System32\RuntimeBroker.exe
+2392	RuntimeBroker		C:\Windows\System32\RuntimeBroker.exe
+21656	RuntimeBroker		C:\Windows\System32\RuntimeBroker.exe
+20556	RzEngineMon		C:\Program Files\Razer\RazerAppEngine\app-4.0.821\CommonDLL\RzEngineMon.exe
+54496	sandbox-center		C:\Users\24560\AppData\Local\Programs\WorkBuddy\resources\app.asar.unpacked\cli\vendor\sandbox\5.5.5\sandbox-center.exe
+62368	sandbox-cli		C:\Users\24560\AppData\Local\Programs\WorkBuddy\resources\app.asar.unpacked\cli\vendor\sandbox\5.5.5\sandbox-cli.exe
+54028	sandbox-cli-gc		C:\Users\24560\AppData\Local\Programs\WorkBuddy\resources\app.asar.unpacked\cli\vendor\sandbox\5.5.5\sandbox-cli-gc.exe
+52012	SearchHost		C:\WINDOWS\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\SearchHost.exe
+19400	SearchIndexer		
+332	Secure System		
+4504	SecurityHealthService		
+4516	SecurityHealthSystray		C:\Windows\System32\SecurityHealthSystray.exe
+2120	services		
+53916	ShellExperienceHost		C:\WINDOWS\SystemApps\ShellExperienceHost_cw5n1h2txyewy\ShellExperienceHost.exe
+20140	ShellHost		C:\Windows\System32\ShellHost.exe
+12028	sihost		C:\WINDOWS\system32\sihost.exe
+50988	smartscreen		C:\Windows\System32\smartscreen.exe
+1132	smss		
+7012	spoolsv		
+47872	StartMenuExperienceHost		C:\WINDOWS\SystemApps\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\StartMenuExperienceHost.exe
+14488	svchost		
+14544	svchost		
+14732	svchost		
+12524	svchost		
+13908	svchost		
+14056	svchost		
+17124	svchost		
+17212	svchost		
+17308	svchost		
+15572	svchost		
+16288	svchost		
+16628	svchost		
+12332	svchost		C:\WINDOWS\system32\svchost.exe
+10956	svchost		
+11380	svchost		
+11868	svchost		C:\WINDOWS\system32\svchost.exe
+9056	svchost		
+9096	svchost		
+9152	svchost		
+12140	svchost		C:\WINDOWS\system32\svchost.exe
+12184	svchost		C:\WINDOWS\system32\svchost.exe
+12272	svchost		
+11932	svchost		
+11948	svchost		
+11988	svchost		
+27460	svchost		
+29368	svchost		
+30524	svchost		C:\WINDOWS\system32\svchost.exe
+25992	svchost		
+26248	svchost		
+26920	svchost		
+48828	svchost		
+59840	svchost		
+61128	svchost		
+34696	svchost		
+35132	svchost		
+37964	svchost		
+23828	svchost		C:\WINDOWS\system32\svchost.exe
+18692	svchost		
+19056	svchost		
+19372	svchost		
+17392	svchost		C:\WINDOWS\system32\svchost.exe
+18664	svchost		
+18672	svchost		
+21228	svchost		
+22932	svchost		C:\WINDOWS\system32\svchost.exe
+23204	svchost		
+19388	svchost		
+19928	svchost		
+21180	svchost		
+7696	svchost		
+3452	svchost		
+3484	svchost		
+3520	svchost		
+3316	svchost		
+3320	svchost		
+3372	svchost		
+3988	svchost		
+3996	svchost		
+4192	svchost		
+3560	svchost		
+3624	svchost		
+3640	svchost		
+3220	svchost		
+2936	svchost		
+2968	svchost		
+3080	svchost		
+2308	svchost		
+2480	svchost		
+2524	svchost		
+3112	svchost		
+3120	svchost		
+3200	svchost		
+3088	svchost		
+3096	svchost		
+3104	svchost		
+6460	svchost		
+6676	svchost		
+6788	svchost		
+6268	svchost		
+6276	svchost		
+6428	svchost		
+7508	svchost		
+7516	svchost		
+7628	svchost		
+6836	svchost		
+7120	svchost		
+7496	svchost		
+6256	svchost		
+4720	svchost		
+4764	svchost		
+4924	svchost		
+4280	svchost		
+4496	svchost		
+4696	svchost		
+5708	svchost		
+6152	svchost		
+6160	svchost		
+5072	svchost		
+5224	svchost		
+5628	svchost		
+10840	sw_d		
+18616	SWVisualize.Queue.Server		
+4	System		
+13032	taskhostw		C:\WINDOWS\system32\taskhostw.exe
+53308	TextInputHost	Windows 输入体验	C:\WINDOWS\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TextInputHost.exe
+34556	unsecapp		
+47048	UserOOBEBroker		C:\Windows\System32\oobe\UserOOBEBroker.exe
+57804	uv		C:\Users\24560\AppData\Local\hermes\bin\uv.exe
+59412	uvx		C:\Users\24560\AppData\Local\hermes\bin\uvx.exe
+23288	vmcompute		
+19212	VPNService		
+20384	wetype_renderer		C:\Program Files\Tencent\WeType\2.1.3.18\wetype_renderer.exe
+20400	wetype_server		C:\Program Files\Tencent\WeType\2.1.3.18\wetype_server.exe
+19248	wetype_service		
+20172	wetype_update		C:\Program Files\Tencent\WeType\2.1.3.18\wetype_update.exe
+10604	Widgets		C:\Program Files\WindowsApps\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\Dashboard\Widgets.exe
+23692	WidgetService		C:\Program Files\WindowsApps\Microsoft.WidgetsPlatformRuntime_1.6.19.0_x64__8wekyb3d8bbwe\WidgetService\WidgetService.exe
+59236	windows-mcp		C:\Users\24560\AppData\Roaming\uv\tools\windows-mcp\Scripts\windows-mcp.exe
+1608	wininit		
+2096	winlogon		
+34196	wlanext		
+35588	WmiApSrv		
+58480	WmiPrvSE		
+49984	WmiPrvSE		
+9156	WmiPrvSE		
+56440	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+55828	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+54452	WorkBuddy	WorkBuddy	C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+61996	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+56808	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+56476	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+45560	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+45224	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+21372	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+53088	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+46840	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+46724	WorkBuddy		C:\Users\24560\AppData\Local\Programs\WorkBuddy\WorkBuddy.exe
+15112	wslservice		
+2808	WUDFHost		
+4152	WUDFHost		
+2384	WUDFHost		
+2676	WUDFHost		
+52076	Xiaomi MiMo		C:\Users\24560\AppData\Local\Programs\Xiaomi MiMo\Xiaomi MiMo.exe
+54540	Xiaomi MiMo		C:\Users\24560\AppData\Local\Programs\Xiaomi MiMo\Xiaomi MiMo.exe
+45196	Xiaomi MiMo		C:\Users\24560\AppData\Local\Programs\Xiaomi MiMo\Xiaomi MiMo.exe
+1612	Xiaomi MiMo		C:\Users\24560\AppData\Local\Programs\Xiaomi MiMo\Xiaomi MiMo.exe
+23328	Xiaomi MiMo	Xiaomi MiMo	C:\Users\24560\AppData\Local\Programs\Xiaomi MiMo\Xiaomi MiMo.exe
+19580	YunDetectService		C:\Users\24560\AppData\Roaming\baidu\BaiduNetdisk\YunDetectService.exe
+30808	点点通	点点通	
+=== END ===

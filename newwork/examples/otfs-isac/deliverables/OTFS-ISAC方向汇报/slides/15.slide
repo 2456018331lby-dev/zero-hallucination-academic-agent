@@ -1,0 +1,24 @@
+<Slide style={{ width: 1280, height: 720, background: '#0E3F8C', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 8, width: '100%', background: '#3D7BD9' }} />
+    <Box style={{ height: 612, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px' }}>
+        <Text style={{ fontSize: 16, letterSpacing: 3, color: '#3D7BD9', fontWeight: 'bold' }}>CONCLUSION · 总结</Text>
+        <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#FFFFFF', lineHeight: 1.5, marginTop: 22 }}>
+            OTFS-ISAC 的核心动作是一次坐标变换：<br />
+            把信道从时频域搬到 DD 域，让高机动造成的时变特性变得稀疏、近似时不变
+        </Text>
+        <Box style={{ height: 3, width: 120, background: '#3D7BD9', marginTop: 26 }} />
+        <Text style={{ fontSize: 22, color: '#A8C2E8', lineHeight: 1.95, marginTop: 24 }}>
+            两个前提优势已被证实：[06] 说明优势来自 GI 结构，[04] 说明 ISI/ICI 可被利用<br />
+            但结构性缺口仍在——感知指标不可比、全链路无实测，与第一个实例同构且更突出
+        </Text>
+        <Box style={{ height: 96, background: '#1E4FA8', borderRadius: 8, marginTop: 30, display: 'flex', alignItems: 'center', padding: '0 30px', borderLeft: '6px solid #FFC24B' }}>
+            <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#FFC24B', lineHeight: 1.55 }}>
+                关键转折点不在于再提出一个更好的波形，而在于：为 OTFS-ISAC 建立统一、可复现的感知评测基准，并把 DD 域折中从数值曲线推进到理论刻画
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 100, background: '#0A2E66', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 96px' }}>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>证据来源：本地 PDF 池 39 篇，深读 12 篇；全部定量结论经接地门禁校验</Text>
+        <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>15 / 15</Text>
+    </Box>
+</Slide>

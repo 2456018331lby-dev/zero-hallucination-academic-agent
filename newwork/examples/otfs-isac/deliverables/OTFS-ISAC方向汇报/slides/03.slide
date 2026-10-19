@@ -1,0 +1,16 @@
+<Slide style={{ width: 1280, height: 720, background: '#0E3F8C', padding: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ width: 620, height: 720, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', padding: '0 40px 0 96px' }}>
+        <Text style={{ fontSize: 240, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>01</Text>
+    </Box>
+    <Box style={{ width: 2, height: 320, background: '#3D7BD9' }} />
+    <Box style={{ flex: 1, height: 720, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px 0 64px', gap: 20 }}>
+        <Text style={{ fontSize: 16, letterSpacing: 3, color: '#3D7BD9', fontWeight: 'bold' }}>PART ONE</Text>
+        <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#FFFFFF' }}>为什么难</Text>
+        <Box style={{ height: 3, width: 100, background: '#3D7BD9' }} />
+        <Text style={{ fontSize: 22, color: '#A8C2E8', lineHeight: 2 }}>
+            既有 ISAC 工作都在 OFDM 家族内部改良<br />
+            其隐含前提是「信道在符号周期内近似不变」<br />
+            低空高机动恰恰违反这个前提，波形改良的收益被信道时变吃掉
+        </Text>
+    </Box>
+</Slide>

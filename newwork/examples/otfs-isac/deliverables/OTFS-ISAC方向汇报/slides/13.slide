@@ -1,0 +1,39 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>对比总结：已解决 6 项 vs 未解决 5 项</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>对比总结</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '28px 40px 0 40px', display: 'flex', flexDirection: 'row', gap: 0 }}>
+        <Box style={{ flex: 1, background: '#F2F8F3', border: '1px solid #C9E2CE', borderRadius: 8, padding: '18px 22px', display: 'flex', flexDirection: 'column' }}>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#1E7A3C' }}>已在文献自身设定内解决</Text>
+            <Box style={{ height: 3, width: 80, background: '#4CAF50', marginTop: 10, marginBottom: 12 }} />
+            <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.72, flex: 1 }}>
+                ① OTFS 的数学根基已清楚——DZT 给出简洁统一的 DD 域描述（[35]）<br /><br />
+                ② 「OTFS 是否真的优于 OFDM」已有公平答案，且优势归因到 GI 结构（[06]）<br /><br />
+                ③ 高多普勒下的通信性能已系统评估，量级到 1200 m/s（[37]）<br /><br />
+                ④ MIMO-OTFS ISAC 信号模型已建立，ISI/ICI 可被利用（[04]）<br /><br />
+                ⑤ 信道估计可达离网格高精度，DSE 已被显式建模（[20]）<br /><br />
+                ⑥ OTFS/OFDM 共存的工程路径与量化收益已有（[25]）
+            </Text>
+        </Box>
+        <Box style={{ width: 70, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#3D7BD9' }}>VS</Text>
+        </Box>
+        <Box style={{ flex: 1, background: '#FDF3F3', border: '1px solid #E8C9C9', borderRadius: 8, padding: '18px 22px', display: 'flex', flexDirection: 'column' }}>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#A32D2D' }}>仍然没有解决</Text>
+            <Box style={{ height: 3, width: 80, background: '#D32F2F', marginTop: 10, marginBottom: 12 }} />
+            <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.72, flex: 1 }}>
+                ① <span style={{ fontWeight: 'bold' }}>感知指标不可比</span>：四篇各用检测/定位、NMSE、估计误差、BER，无一篇给出可横向比较的基准<br /><br />
+                ② <span style={{ fontWeight: 'bold' }}>全链路无实测</span>：池内 12 篇均为理论或仿真<br /><br />
+                ③ <span style={{ fontWeight: 'bold' }}>DD 域折中未打通理论</span>：[04] 给数值曲线，[05] 给理论边界，两者之间无桥梁<br /><br />
+                ④ <span style={{ fontWeight: 'bold' }}>多用户/多站缺席</span>：[04] 明确列为未来工作<br /><br />
+                ⑤ <span style={{ fontWeight: 'bold' }}>波形收益边界不清</span>：何时值得换，缺可操作准则
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>13 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

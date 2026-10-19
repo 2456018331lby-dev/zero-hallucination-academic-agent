@@ -1,0 +1,65 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>矛盾落在三个层面</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>研究定位</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column' }}>
+        <Box style={{ height: 44, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px', marginBottom: 16 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>同一份频谱 · 同一套硬件 · 同一个波形 —— 冲突由此产生，且逐层传导</Text>
+        </Box>
+        <Box style={{ height: 400, display: 'flex', flexDirection: 'row', alignItems: 'stretch' }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 44, height: 44, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>A</Text>
+                </Box>
+                <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#0E3F8C', marginTop: 14 }}>波形层</Text>
+                <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.6, marginTop: 10, flex: 1 }}>
+                    同一波形既要承载信息又要承载探测；OFDM 在时变信道下的 ICI/CP 开销两难，需在 DD 域另起炉灶。
+                </Text>
+                <Box style={{ height: 40, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#1E4FA8' }}>文献 [35] [34] [25]</Text>
+                </Box>
+            </Box>
+            <Box style={{ width: 34, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 22, color: '#3D7BD9' }}>→</Text>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 44, height: 44, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>B</Text>
+                </Box>
+                <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#0E3F8C', marginTop: 14 }}>感知算法层</Text>
+                <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.6, marginTop: 10, flex: 1 }}>
+                    DD 域里 ISI/ICI 既可致目标遮蔽，也可被利用；多普勒斜视与网格失配会让估计精度悄悄下降。
+                </Text>
+                <Box style={{ height: 40, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#1E4FA8' }}>文献 [04] [20] [39]</Text>
+                </Box>
+            </Box>
+            <Box style={{ width: 34, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 22, color: '#3D7BD9' }}>→</Text>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 44, height: 44, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>C</Text>
+                </Box>
+                <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#0E3F8C', marginTop: 14 }}>系统层</Text>
+                <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.6, marginTop: 10, flex: 1 }}>
+                    全盘换 OTFS 未必经济；需按用户移动性决定谁用 OTFS、谁用 OFDM，并回答「折中的极限在哪」。
+                </Text>
+                <Box style={{ height: 40, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#1E4FA8' }}>文献 [05] [06] [25]</Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 68, marginTop: 16, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 22px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                三层并非独立：波形决定可用的信号结构，算法决定能从结构里取出多少信息，系统决定前两者的适用边界——<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>任一层的简化都会使结论失真</span>
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>05 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

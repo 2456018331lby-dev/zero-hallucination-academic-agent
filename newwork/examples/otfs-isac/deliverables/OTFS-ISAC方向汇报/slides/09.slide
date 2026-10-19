@@ -1,0 +1,73 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>代表文献 Ⅰ · 机制层：优势到底从哪来</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>代表文献</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>共同主张：优势必须被解释到机制层，而不是「新波形天然更好」</Text>
+        </Box>
+        <Box style={{ height: 424, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[04]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>ISI/ICI 由干扰变为资源</Text>
+                </Box>
+                <Box style={{ height: 60, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 8 }}>
+                    <Text style={{ fontSize: 50, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>M 倍</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>无模糊距离<br />扩大倍数</Text>
+                </Box>
+                <Text style={{ fontSize: 21, color: '#1A2230', lineHeight: 1.55, flex: 1, marginTop: 8 }}>
+                    推导显式含 ISI/ICI 的 MIMO-OTFS ISAC 信号模型；GLRT 做时延-多普勒-角度三维估计；delay-Doppler 复用为雷达构造虚拟阵列。
+                </Text>
+                <Box style={{ height: 52, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>相对标准 FFT 方法在检测与定位上显著提升；无模糊距离扩大 M 倍而保持距离分辨率
+                    </Text>
+                </Box>
+                <Box style={{ height: 52, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>纯仿真；窄带近似（|vk| &lt; 150 m/s）；单用户/单站，多用户被列为未来工作
+                    </Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[06]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>优势来自 GI，不是波形魔法</Text>
+                </Box>
+                <Box style={{ height: 60, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 8 }}>
+                    <Text style={{ fontSize: 50, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>3.125%</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>选定导频开销<br />（重估后）</Text>
+                </Box>
+                <Text style={{ fontSize: 21, color: '#1A2230', lineHeight: 1.55, flex: 1, marginTop: 8 }}>
+                    在相同导频/信道估计开销下对比可达速率，为两种调制各自设计适配稀疏信道的导频与估计算法，并联合优化导频开销。
+                </Text>
+                <Box style={{ height: 52, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>结论：</span>OTFS 速率更高，主因是 per-symbol GI 而非 per-symbol CP；OTFS 对多普勒量级不敏感
+                    </Text>
+                </Box>
+                <Box style={{ height: 52, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>只比较通信速率、不含感知；依赖稀疏信道假设；OTFS 估计需大块运算
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 56, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                两篇合起来回答了核心问题的一半：<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>「为什么 OTFS 值得换」已经清楚，「换取多少感知收益」仍只有 [04] 一家在给数值曲线</span>
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>09 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

@@ -1,0 +1,16 @@
+<Slide style={{ width: 1280, height: 720, background: '#0E3F8C', padding: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ width: 620, height: 720, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', padding: '0 40px 0 96px' }}>
+        <Text style={{ fontSize: 240, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>03</Text>
+    </Box>
+    <Box style={{ width: 2, height: 320, background: '#3D7BD9' }} />
+    <Box style={{ flex: 1, height: 720, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px 0 64px', gap: 20 }}>
+        <Text style={{ fontSize: 16, letterSpacing: 3, color: '#3D7BD9', fontWeight: 'bold' }}>PART THREE</Text>
+        <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#FFFFFF' }}>还缺什么</Text>
+        <Box style={{ height: 3, width: 100, background: '#3D7BD9' }} />
+        <Text style={{ fontSize: 22, color: '#A8C2E8', lineHeight: 2 }}>
+            最根本的缺口不是算法创新，而是可比性与可验证性<br />
+            11 篇全部仿真、全部预印本、感知指标互不统一<br />
+            这意味着「哪种设计更优」这一基本问题尚无答案
+        </Text>
+    </Box>
+</Slide>

@@ -1,0 +1,42 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>方向定位：不是「更难的 OFDM」，而是换一个维度描述信道</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>研究定位</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '26px 56px 0 56px', display: 'flex', flexDirection: 'column' }}>
+        <Box style={{ height: 52, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 22px' }}>
+            <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#FFFFFF' }}>OFDM-ISAC 在低空高机动下同时踩到两个失效点</Text>
+        </Box>
+        <Box style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <Box style={{ background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '14px 22px', display: 'flex', flexDirection: 'row', gap: 16, alignItems: 'flex-start' }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#1E4FA8', width: 92 }}>感知侧</Text>
+                <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.6, flex: 1 }}>
+                    高机动目标造成不可忽略的 ICI，MIMO-OFDM 雷达的 2-D FFT 处理因高旁瓣而性能显著下降，必须改用 ICI 感知算法补救（[39]）。
+                </Text>
+            </Box>
+            <Box style={{ background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '14px 22px', display: 'flex', flexDirection: 'row', gap: 16, alignItems: 'flex-start' }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#1E4FA8', width: 92 }}>通信侧</Text>
+                <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.6, flex: 1 }}>
+                    子载波数增大时，即使小到中等多普勒也会让 OFDM 显著退化；而 CP 长度在某些标准中可占符号时间最高 25%（[06]）。
+                </Text>
+            </Box>
+            <Box style={{ background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, padding: '14px 22px', display: 'flex', flexDirection: 'row', gap: 16, alignItems: 'flex-start' }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#0E3F8C', width: 92 }}>OTFS 的<br />回应</Text>
+                <Text style={{ fontSize: 18, color: '#1A2230', lineHeight: 1.6, flex: 1 }}>
+                    把调制搬到 <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>时延-多普勒（DD）域</span>：恒定多普勒的时变信道在 OTFS 看来是<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>时不变</span>的（[04]）；DD 域 I/O 关系可用离散 Zak 变换简洁写出，比 OFDM 的复合结构更直接（[35]）。
+                </Text>
+            </Box>
+        </Box>
+        <Box style={{ flex: 1 }} />
+        <Box style={{ height: 74, background: '#FCEBEB', borderLeft: '5px solid #D32F2F', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 22px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                因此这不是「再优化一次 OFDM」，而是<span style={{ fontWeight: 'bold', color: '#A32D2D' }}>换一个维度描述信道</span>——波形层的选择本身成为一个待回答的研究问题，而非默认沿用 OFDM
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>04 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

@@ -1,0 +1,26 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>研究定位：这个方向在解什么问题</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>方向概述</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '28px 40px 0 40px', display: 'flex', flexDirection: 'column' }}>
+        <Box style={{ height: 452, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0E3F8C' }}>低空经济的核心矛盾</Text>
+            <Text style={{ fontSize: 21, color: '#1A2230', lineHeight: 1.72 }}>
+                低空空域同时是高价值作业空间与高风险开放空间。文献 [1] 指出，低空环境中「低慢小」目标密集聚集，会带来两类失效——<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>连续广域感知失效</span>与<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>目标意图判别失效</span>，而现有监管框架无力应对。文献 [3] 把问题进一步聚焦到最难的设定——<span style={{ fontWeight: 'bold', color: '#D9534F' }}>非合作目标</span>：它不主动配合、不提供专用信令、不预先共享坐标，系统只能被动地从回波中提取信息。<br />
+                为什么值得做？三篇文献指向同一个经济性命题。文献 [3] 论证：MIMO 提供目标分辨所需的空间分辨率，OFDM 可在既有通信框架内完成时延-多普勒感知，因此能<span style={{ fontWeight: 'bold' }}>复用蜂窝基础设施而无需新增专用硬件</span>。文献 [8] 给出产业侧量化对照——中国移动已部署的 5G-A ISAC 实验系统通常要划出 <span style={{ fontWeight: 'bold', color: '#D9534F' }}>10%–20%</span> 的时频资源专用于感知，这部分是对通信容量的净损耗。<br />
+                而低空并非地面蜂窝的简单外推。文献 [3] 归纳出三项独特传播特性：强地杂波、信道快速变化、近场与远场效应混合。安全则是内生需求而非常规附加项：文献 [1] 把安全作为整个技术体系的组织主线，文献 [5] 揭示更微妙的机理——通信与感知共用同一发射信号，通信侧窃听能力会与感知侧信息泄漏<span style={{ fontWeight: 'bold' }}>相互耦合</span>，形成单侧防护无法覆盖的风险面。
+            </Text>
+        </Box>
+        <Box style={{ height: 72, marginTop: 16, background: '#0E3F8C', borderRadius: 8, display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 24px' }}>
+            <Text style={{ fontSize: 20, color: '#FFFFFF', lineHeight: 1.5 }}>
+                一句话概括：本方向的全部工作，都是在回答「如何把通信与感知的相互干扰，转化为相互支撑」
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>04 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

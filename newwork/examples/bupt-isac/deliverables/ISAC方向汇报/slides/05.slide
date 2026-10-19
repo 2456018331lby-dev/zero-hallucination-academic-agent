@@ -1,0 +1,65 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>矛盾落在三个层面</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>研究定位</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column' }}>
+        <Box style={{ height: 44, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px', marginBottom: 16 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>同一份频谱 · 同一套硬件 · 同一个发射波形 —— 冲突由此产生</Text>
+        </Box>
+        <Box style={{ height: 400, display: 'flex', flexDirection: 'row', alignItems: 'stretch' }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 44, height: 44, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>A</Text>
+                </Box>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0E3F8C', marginTop: 14 }}>波形层面</Text>
+                <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.65, marginTop: 10, flex: 1 }}>
+                    同一份时频资源既要承载信息、又要承载探测，二者对波形的要求存在结构性冲突。
+                </Text>
+                <Box style={{ height: 40, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#1E4FA8' }}>文献 [4] [6] [8]</Text>
+                </Box>
+            </Box>
+            <Box style={{ width: 34, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 22, color: '#3D7BD9' }}>→</Text>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 44, height: 44, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>B</Text>
+                </Box>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0E3F8C', marginTop: 14 }}>空间层面</Text>
+                <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.65, marginTop: 10, flex: 1 }}>
+                    目标高机动，容易偏离天线阵视轴；且通信与感知的波束指向需求并不相同。
+                </Text>
+                <Box style={{ height: 40, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#1E4FA8' }}>文献 [10] [12] [5]</Text>
+                </Box>
+            </Box>
+            <Box style={{ width: 34, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 22, color: '#3D7BD9' }}>→</Text>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '20px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 44, height: 44, background: '#1E4FA8', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>C</Text>
+                </Box>
+                <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#0E3F8C', marginTop: 14 }}>系统层面</Text>
+                <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.65, marginTop: 10, flex: 1 }}>
+                    固定基站在覆盖边缘与盲区失效；多机多站的轨迹、关联、带宽需要联合优化。
+                </Text>
+                <Box style={{ height: 40, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold', color: '#1E4FA8' }}>文献 [2] [11]</Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 68, marginTop: 16, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 22px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                三个层面并非独立：波形决定资源划分粒度，空间决定波束自由度，系统决定前两者的约束边界——<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>任一层的简化都会使结论失真</span>
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>05 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

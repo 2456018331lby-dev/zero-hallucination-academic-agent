@@ -1,0 +1,73 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>代表文献 Ⅰ · 资源复用：让感知不再额外占用资源</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>代表文献</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>共同主张：感知不应以牺牲通信的时频资源为代价</Text>
+        </Box>
+        <Box style={{ height: 430, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[8]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>零感知时频资源开销</Text>
+                </Box>
+                <Box style={{ height: 62, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 10 }}>
+                    <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>0%</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>专用感知<br />时频开销</Text>
+                </Box>
+                <Text style={{ fontSize: 22, color: '#1A2230', lineHeight: 1.6, flex: 1, marginTop: 10 }}>
+                    提出免专用感知时频资源的 MIMO-OFDM ISAC 框架，通信时频资源被感知完全复用；搜索阶段给出闭式、免优化的波束赋形算法。
+                </Text>
+                <Box style={{ height: 50, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>跟踪阶段所需功率比搜索阶段低约 25 dB；近距离场景分辨全部 3 个目标
+                    </Text>
+                </Box>
+                <Box style={{ height: 50, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>仿真规模 U=4 用户、K=3 目标，未验证大规模；未涉及强地杂波与近远场混合
+                    </Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[4]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>逐子载波的分配判据</Text>
+                </Box>
+                <Box style={{ height: 62, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 10 }}>
+                    <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>cm 级</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>实用功率约束下<br />的测距精度</Text>
+                </Box>
+                <Text style={{ fontSize: 22, color: '#1A2230', lineHeight: 1.6, flex: 1, marginTop: 10 }}>
+                    提出 JPCDE 联合路径系数与时延估计方案，证明可达通信速率由通信子载波数量决定、时延精度由感知子载波索引分布决定，并给出闭式迭代解。
+                </Text>
+                <Box style={{ height: 50, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>判据：</span>子载波进感知 ⟺ Fisher 信息增益 &gt; 通信速率损失；功率服从有界注水
+                    </Text>
+                </Box>
+                <Box style={{ height: 50, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>限定双基地固定几何与单一 OFDM 发射机，未考虑低空高动态与机动性
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 58, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                对照基准：中国移动已部署的 5G-A ISAC 实验系统通常划出 <span style={{ fontWeight: 'bold', color: '#D9534F' }}>10%–20%</span> 时频资源专用于感知（见文献 [8]）——这是这两篇工作要消掉的成本
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>09 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

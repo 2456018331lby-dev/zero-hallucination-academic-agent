@@ -1,0 +1,53 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>五个挑战 → 五个切入点</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>博士生切入</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '22px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <Box style={{ flex: 1, background: '#EAF1FB', border: '1px solid #3D7BD9', borderRadius: 8, padding: '12px 20px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#3D7BD9', width: 46 }}>1</Text>
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#0E3F8C' }}>统一 OTFS-ISAC 感知评测基准</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', marginTop: 3 }}>以 [04] 的信号模型为底座，同一场景下并列检测概率、估计 RMSE、分辨能力与可达速率</Text>
+            </Box>
+            <Box style={{ background: '#1E7A3C', borderRadius: 5, padding: '4px 12px' }}><Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐 高</Text></Box>
+        </Box>
+        <Box style={{ flex: 1, background: '#EAF1FB', border: '1px solid #3D7BD9', borderRadius: 8, padding: '12px 20px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#3D7BD9', width: 46 }}>2</Text>
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#0E3F8C' }}>DD 域感知-通信折中的理论刻画</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', marginTop: 3 }}>把 [05] 的容量-失真框架移植到 DD 域，给出 OTFS-ISAC 折中的内外界，接通 [04] 的数值曲线</Text>
+            </Box>
+            <Box style={{ background: '#1E7A3C', borderRadius: 5, padding: '4px 12px' }}><Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐 高</Text></Box>
+        </Box>
+        <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '12px 20px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#8B97A8', width: 46 }}>3</Text>
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#0E3F8C' }}>更极端机动下的鲁棒参数估计</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', marginTop: 3 }}>检验 [04] 的窄带近似（|vk| &lt; 150 m/s）失效边界，把 DSE 与宽带效应联合建模</Text>
+            </Box>
+            <Box style={{ background: '#1E4FA8', borderRadius: 5, padding: '4px 12px' }}><Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐 中</Text></Box>
+        </Box>
+        <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '12px 20px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#8B97A8', width: 46 }}>4</Text>
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#0E3F8C' }}>低空场景的波形自适应选择准则</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', marginTop: 3 }}>合成 [06] 的速率模型与 [04] 的感知折中曲线，给出可量化的波形切换判据</Text>
+            </Box>
+            <Box style={{ background: '#1E4FA8', borderRadius: 5, padding: '4px 12px' }}><Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>推荐 中</Text></Box>
+        </Box>
+        <Box style={{ flex: 1, background: '#FDF3F3', border: '1px solid #E8C9C9', borderRadius: 8, padding: '12px 20px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#D32F2F', width: 46 }}>5</Text>
+            <Box style={{ flex: 1 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#0E3F8C' }}>单站到多站的 OTFS-ISAC 扩展</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', marginTop: 3 }}>填 [04] 自己点名的空白；可用 [25] 的移动性分组与功控框架改造</Text>
+            </Box>
+            <Box style={{ background: '#A32D2D', borderRadius: 5, padding: '4px 12px' }}><Text style={{ fontSize: 15, fontWeight: 'bold', color: '#FFFFFF' }}>谨慎</Text></Box>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>14 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

@@ -1,0 +1,16 @@
+<Slide style={{ width: 1280, height: 720, background: '#0E3F8C', padding: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ width: 620, height: 720, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', padding: '0 40px 0 96px' }}>
+        <Text style={{ fontSize: 240, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>02</Text>
+    </Box>
+    <Box style={{ width: 2, height: 320, background: '#3D7BD9' }} />
+    <Box style={{ flex: 1, height: 720, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px 0 64px', gap: 20 }}>
+        <Text style={{ fontSize: 16, letterSpacing: 3, color: '#3D7BD9', fontWeight: 'bold' }}>PART TWO</Text>
+        <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#FFFFFF' }}>别人怎么做</Text>
+        <Box style={{ height: 3, width: 100, background: '#3D7BD9' }} />
+        <Text style={{ fontSize: 22, color: '#A8C2E8', lineHeight: 2 }}>
+            主线一：资源争夺 → 资源复用 → 资源免用<br />
+            主线二：固定基站 → 机动平台 → 多站协同<br />
+            主线三：单一波形 → 架构重构 → 外部先验与数据基础设施
+        </Text>
+    </Box>
+</Slide>

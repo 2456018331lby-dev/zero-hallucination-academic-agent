@@ -1,0 +1,73 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>代表文献 Ⅲ · 基线与系统：要不要全盘替换</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>代表文献</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>共同主张：一支给出「为什么必须换」，一支给出「不必全换」</Text>
+        </Box>
+        <Box style={{ height: 424, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[39]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>OFDM 自身的失败证据</Text>
+                </Box>
+                <Box style={{ height: 60, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 8 }}>
+                    <Text style={{ fontSize: 44, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>2-D FFT</Text>
+                    <Text style={{ fontSize: 15, color: '#8B97A8', lineHeight: 1.4 }}>因高旁瓣<br />显著退化</Text>
+                </Box>
+                <Text style={{ fontSize: 21, color: '#1A2230', lineHeight: 1.55, flex: 1, marginTop: 8 }}>
+                    高机动目标使 MIMO-OFDM 雷达出现不可忽略 ICI；用 APES 空间滤波把感知重构为信道估计问题，在角域分离目标反射。
+                </Text>
+                <Box style={{ height: 52, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>强 ICI 下实现高精度多目标参数估计；传统 2-D FFT 因 DD 域高旁瓣性能显著下降
+                    </Text>
+                </Box>
+                <Box style={{ height: 52, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>仍基于 OFDM；只关注感知，未涉通信速率与一体化联合设计
+                    </Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#EAF1FB', border: '1px solid #3D7BD9', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#0E3F8C', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[25]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>OTFS 不必全盘替代 OFDM</Text>
+                </Box>
+                <Box style={{ height: 60, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 8 }}>
+                    <Text style={{ fontSize: 44, fontWeight: 'bold', color: '#0E3F8C', lineHeight: 1 }}>约 20%</Text>
+                    <Text style={{ fontSize: 15, color: '#8B97A8', lineHeight: 1.4 }}>低移动性用户<br />95%-likely SE 提升</Text>
+                </Box>
+                <Text style={{ fontSize: 21, color: '#1A2230', lineHeight: 1.55, flex: 1, marginTop: 8 }}>
+                    提出按用户移动性分组的混合 OTFS/OFDM 下行协议；比较 FZF/PZF 预编码，并采用加权 max-min 功率分配提升公平性。
+                </Text>
+                <Box style={{ height: 52, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>FZF 消除全部干扰但复杂度高；加权 max-min 使 LM-UE 的 95%-likely SE 提升约 20%
+                    </Text>
+                </Box>
+                <Box style={{ height: 52, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>只评估通信 SE、不含感知；未涉及 ISAC 折中
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 56, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                这一对回答的是同一个问题的两端：<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>[39] 说明 OFDM 在高机动下会输，[25] 说明输的不一定全部要换</span>——「何时该用 OTFS」仍缺可操作准则
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>11 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

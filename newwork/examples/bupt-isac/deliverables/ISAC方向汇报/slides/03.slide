@@ -1,0 +1,16 @@
+<Slide style={{ width: 1280, height: 720, background: '#0E3F8C', padding: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ width: 620, height: 720, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', padding: '0 40px 0 96px' }}>
+        <Text style={{ fontSize: 240, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>01</Text>
+    </Box>
+    <Box style={{ width: 2, height: 320, background: '#3D7BD9' }} />
+    <Box style={{ flex: 1, height: 720, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px 0 64px', gap: 20 }}>
+        <Text style={{ fontSize: 16, letterSpacing: 3, color: '#3D7BD9', fontWeight: 'bold' }}>PART ONE</Text>
+        <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#FFFFFF' }}>为什么难</Text>
+        <Box style={{ height: 3, width: 100, background: '#3D7BD9' }} />
+        <Text style={{ fontSize: 22, color: '#A8C2E8', lineHeight: 2 }}>
+            低空安全是真实刚需，但现有监管与技术手段均失效<br />
+            通信与感知共享频谱、硬件与波形，存在结构性矛盾<br />
+            矛盾并非单点，而是落在波形、空间、系统三个层面
+        </Text>
+    </Box>
+</Slide>

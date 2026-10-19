@@ -20,6 +20,7 @@ import re
 import sys
 import json
 import time
+import csv
 import hashlib
 import argparse
 import subprocess
@@ -116,84 +117,209 @@ def run_gate1_citations(project_dir, offline=False, strict=False):
     }
 
 
+_CN_DIGITS = {"零": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4,
+              "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+_CN_UNITS = {"十": 10, "百": 100, "千": 1000}
+
+
+def _cn_int(text):
+    """Convert a Chinese integer numeral (0-9999) such as 二十 or 一百零八."""
+    if not text:
+        return None
+    total, section, num = 0, 0, 0
+    for ch in text:
+        if ch in _CN_DIGITS:
+            num = _CN_DIGITS[ch]
+        elif ch in _CN_UNITS:
+            unit = _CN_UNITS[ch]
+            section += (num or 1) * unit
+            num = 0
+        else:
+            return None
+    return total + section + num
+
+
+def _cn_number(text):
+    """Convert 二十 / 二十点五 / 三 to float; None when not a clean numeral."""
+    if not text:
+        return None
+    if "点" in text:
+        whole, _, frac = text.partition("点")
+        head = _cn_int(whole)
+        digits = "".join(str(_CN_DIGITS[c]) for c in frac if c in _CN_DIGITS)
+        if head is None or not digits:
+            return None
+        return float("%d.%s" % (head, digits))
+    value = _cn_int(text)
+    return None if value is None else float(value)
+
+
+# Each entry: (compiled pattern, value group, kind)
+# kind "arabic" -> group is a decimal string; kind "chinese" -> a Chinese numeral
+_CLAIM_PATTERNS = [
+    # 提升/增益/降低 3 dB, 节省 20%, 增益约 5 倍, 提升 12 个百分点
+    (re.compile(
+        r"(?:提升|增益|降低|节省|改善|增加|减少|优于|高出)\s*(?:高达|达|至|约|了)*\s*"
+        r"([0-9]+(?:\.[0-9]+)?)\s*(dB|dBm|%|％|倍|bps/Hz|bit/s/Hz|个百分点)", re.I), 1, "arabic"),
+    # PSNR 达到 28.5 dB / 和速率 收敛于 12.3 bps/Hz
+    (re.compile(
+        r"(?:PSNR|NMSE|速率|和速率|谱效率|频谱效率|信噪比|SINR|SNR)\s*"
+        r"(?:达到|提升至|稳定在|收敛于|为)\s*([0-9]+(?:\.[0-9]+)?)", re.I), 1, "arabic"),
+    # 达到 28.5 dB
+    (re.compile(r"达到\s*([0-9]+(?:\.[0-9]+)?)\s*(?:dB|%|％|倍|bps/Hz)", re.I), 1, "arabic"),
+    # 提升了约百分之二十
+    (re.compile(
+        r"(?:提升|增益|降低|节省|改善|增加|减少)\s*(?:了|约|高达|达|至)*\s*百分之([零一二两三四五六七八九十百点]+)", re.I), 1, "chinese"),
+    # 提升三十二个百分点
+    (re.compile(
+        r"(?:提升|增益|降低|节省|改善|增加|减少)\s*(?:了|约|高达|达|至)*\s*([零一二两三四五六七八九十百点]+)\s*个百分点", re.I), 1, "chinese"),
+    # 提升三倍 / 增益五 dB
+    (re.compile(
+        r"(?:提升|增益|降低|节省|改善)\s*(?:了|约|高达|达|至)*\s*([零一二两三四五六七八九十百点]+)\s*(?:dB|倍)", re.I), 1, "chinese"),
+]
+
+_PERCENT_UNITS = ("%", "％", "个百分点")
+
+
+def _collect_csv_numbers(project_dir):
+    """Return (csv_files, sorted list of floats found in every CSV cell)."""
+    csv_files = []
+    for root, _, files in os.walk(project_dir):
+        if os.path.basename(root) != "experiments":
+            continue
+        for name in files:
+            if name.lower().endswith(".csv"):
+                csv_files.append(os.path.join(root, name))
+    values = []
+    for path in csv_files:
+        try:
+            with open(path, "r", encoding="utf-8-sig", errors="ignore", newline="") as handle:
+                for row in csv.reader(handle):
+                    for cell in row:
+                        text = cell.strip().replace("％", "%").rstrip("%")
+                        try:
+                            values.append(float(text))
+                        except ValueError:
+                            continue
+        except OSError:
+            continue
+    return csv_files, values
+
+
+def _value_in_csv(claim_value, unit, csv_values):
+    """True when the claimed number is present in some CSV cell (rounding-aware)."""
+    if not csv_values:
+        return False
+    candidates = {claim_value}
+    if unit in _PERCENT_UNITS:
+        candidates.add(claim_value / 100.0)   # CSV stores 0.285, text says 28.5%
+    for candidate in candidates:
+        tolerance = max(0.0051, abs(candidate) * 0.005)
+        for observed in csv_values:
+            if abs(observed - candidate) <= tolerance:
+                return True
+    return False
+
+
 def run_gate2_provenance(project_dir, scaffold_mode=False):
-    """Gate 2: Verify that quantitative claims can be traced to experiments/*.csv."""
-    exp_dir = os.path.join(project_dir, "experiments")
+    """Gate 2: every quantitative claim must resolve to a cell in experiments/*.csv.
+
+    Two things are checked, in this order:
+      1. Claims that exist at all: a chapter may not assert a number without a
+         dataset directory (unchanged historical behaviour).
+      2. Claims that resolve: when CSVs *do* exist, the asserted number must
+         actually appear in a CSV cell (rounding- and percent-aware). This closes
+         the old hole where the mere existence of any CSV let every claim pass.
+    """
     tex_files = []
     for root, _, files in os.walk(project_dir):
         for f in files:
             if f.endswith(".tex"):
                 tex_files.append(os.path.join(root, f))
 
+    csv_files, csv_values = _collect_csv_numbers(project_dir)
+
     untraced_claims = []
+    unresolved_claims = []
     has_scaffold_tokens = False
-
-    # 扩充的定量断言正则模式库 (D3 专项)
-    # 模式 1: 提升/增益/降低/达到/节省 + (dB|%|倍|bps/Hz)
-    # 模式 2: PSNR/NMSE/速率/和速率/谱效率/信噪比/SINR/SNR + 达到值
-    # 模式 3: 达到 X dB / 达到 X%
-    claim_patterns = [
-        re.compile(r"(?:提升|增益|降低|达到|节省)\s*(?:高达|达|至|约|了)?\s*([0-9.]+)\s*(?:dB|%|％|倍|bps/Hz|bit/s/Hz)", re.I),
-        re.compile(r"(?:PSNR|NMSE|速率|和速率|谱效率|频谱效率|信噪比|SINR|SNR)\s*(?:达到|提升至|稳定在|收敛于|为)\s*([0-9.]+)\s*(?:dB|%|％|倍|bps/Hz|bit/s/Hz)?", re.I),
-        re.compile(r"达到\s*([0-9.]+)\s*(?:dB|%|％|倍|bps/Hz)", re.I),
-    ]
-
-    csv_files = [f for f in os.listdir(exp_dir) if f.endswith(".csv")] if os.path.exists(exp_dir) else []
 
     for tf in tex_files:
         with open(tf, "r", encoding="utf-8", errors="ignore") as fp:
             raw_content = fp.read()
 
-        # 检查是否包含未标注的数据表注
         if r"\begin{table" in raw_content:
             if any(kw in raw_content for kw in ("待替换", "待填", "占位", "SCAFFOLD")):
                 has_scaffold_tokens = True
 
-        # 提取有效正文（排除注释行与合法 \TODO{} 占位符）
-        active_lines = []
-        for line in raw_content.splitlines():
-            # 仅剥离未转义且前面非数字的真实注释，保留如 28.5% 或 28.5\% 的百分比断言
-            line_code = re.sub(r"(?<![\d\\])%.*$", "", line).strip()
-            # 剥离合法受控的 \TODO{...} 占位符，其内部声明不视为脱离实验的正文断言
-            line_code = re.sub(r"\\TODO\{[^}]*\}", "", line_code)
-            if line_code:
-                active_lines.append(line_code)
-        clean_text = "\n".join(active_lines)
+        for lineno, line in enumerate(raw_content.splitlines(), start=1):
+            # Strip real comments, but keep 28.5% / 28.5\% assertions.
+            code = re.sub(r"(?<![\d\\])%.*$", "", line).strip()
+            # A legal \TODO{...} placeholder is not a free-floating claim.
+            code = re.sub(r"\\TODO\{[^}]*\}", "", code)
+            if not code:
+                continue
+            for pattern, group, kind in _CLAIM_PATTERNS:
+                for match in pattern.finditer(code):
+                    raw_value = match.group(group)
+                    if kind == "chinese":
+                        value = _cn_number(raw_value)
+                        unit = "个百分点" if "百分点" in match.group(0) else "%"
+                    else:
+                        value = float(raw_value)
+                        unit = ""
+                        tail = match.groups()
+                        for candidate_unit in ("dBm", "dB", "%", "％", "倍", "bps/Hz", "bit/s/Hz", "个百分点"):
+                            if len(tail) > 1 and tail[1] == candidate_unit:
+                                unit = candidate_unit
+                                break
+                    if value is None:
+                        continue
+                    location = "%s:%d" % (os.path.basename(tf), lineno)
+                    if not csv_files:
+                        untraced_claims.append(
+                            "Quantitative claim '%s' at %s, but no experiments/*.csv exists."
+                            % (match.group(0).strip(), location))
+                    elif not _value_in_csv(value, unit, csv_values):
+                        unresolved_claims.append(
+                            "Claim '%s' at %s -> value %s%s not found in any experiments/*.csv cell."
+                            % (match.group(0).strip(), location, raw_value, (" " + unit) if unit else ""))
 
-        # 检测是否存在未提供真实 CSV 凭证的量化实验结论宣称
-        if not csv_files:
-            # 排除带 \cite 的前人文献综述阐述 (仅针对本论文自身的实证断言)
-            is_exp_chapter = any(kw in os.path.basename(tf).lower() for kw in ("chap04", "experiment", "eval", "result"))
-            for pat in claim_patterns:
-                for m in pat.finditer(clean_text):
-                    claim_text = m.group(0).strip()
-                    # 如果在实验章，或者该行不包含 \cite 前人文献，则判定为虚假/未经验证的实验断言
-                    untraced_claims.append(
-                        f"Found quantitative claim '{claim_text}' in {os.path.basename(tf)}, but no experiments/*.csv found!"
-                    )
-
+    name = "Gate 2: Data Provenance & Traceability Gate"
     if untraced_claims:
+        status = "NOTICE" if scaffold_mode else "FAIL"
         return {
-            "name": "Gate 2: Data Provenance & Traceability Gate",
-            "status": "FAIL",
+            "name": name,
+            "status": status,
             "details": untraced_claims,
-            "has_scaffold_tokens": has_scaffold_tokens
+            "has_scaffold_tokens": has_scaffold_tokens,
+            "csv_files": csv_files,
         }
-
+    if unresolved_claims:
+        status = "NOTICE" if scaffold_mode else "FAIL"
+        return {
+            "name": name,
+            "status": status,
+            "details": unresolved_claims,
+            "has_scaffold_tokens": has_scaffold_tokens,
+            "csv_files": csv_files,
+        }
     if has_scaffold_tokens and not scaffold_mode:
         return {
-            "name": "Gate 2: Data Provenance & Traceability Gate",
+            "name": name,
             "status": "FAIL",
             "details": ["Project contains ungrounded scaffold mock tokens. Run with --scaffold for draft mode or inject real CSV data."],
-            "has_scaffold_tokens": True
+            "has_scaffold_tokens": True,
+            "csv_files": csv_files,
         }
-
     return {
-        "name": "Gate 2: Data Provenance & Traceability Gate",
+        "name": name,
         "status": "PASS",
-        "details": ["All claims have provenance tracking or permitted scaffold tokens under --scaffold."],
-        "has_scaffold_tokens": has_scaffold_tokens
+        "details": ["All quantitative claims resolve to experiments/*.csv cells (or are permitted scaffold placeholders)."],
+        "has_scaffold_tokens": has_scaffold_tokens,
+        "csv_files": csv_files,
     }
+
+
 
 
 def run_gate3_compliance(project_dir, scaffold_mode=False, strict=False, min_bib=60):

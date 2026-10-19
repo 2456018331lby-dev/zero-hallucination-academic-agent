@@ -1,0 +1,13 @@
+# Regenerable isolated dependencies (see README step 0)
+#   python -m pip install --target libs/site-packages pypdf openpyxl
+libs/site-packages/
+
+# PPT build scratch
+**/.slidep/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# --- Optional: uncomment if you do NOT want the example input PDFs in git (~39 MB) ---
+# examples/bupt-isac/input/literature/*.pdf

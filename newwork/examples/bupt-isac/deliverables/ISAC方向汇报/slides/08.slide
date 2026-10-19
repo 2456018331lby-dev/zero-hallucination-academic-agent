@@ -1,0 +1,80 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>方法分类：五类技术路线</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>方法格局</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <Box style={{ height: 44, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, color: '#1A2230' }}>依据 11 篇文献的方法学内核划分，A–C 类改变「资源如何用」，D–E 类改变「结果如何被验证与保护」</Text>
+        </Box>
+        <Box style={{ height: 240, display: 'flex', flexDirection: 'row', gap: 14 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: 16, display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 36, height: 36, background: '#1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>A</Text>
+                </Box>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>波形与调制设计</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.6, marginTop: 8, flex: 1 }}>
+                    在同一发射波形内部完成通信与感知的功能划分，粒度可细到子载波、符号或序列结构。
+                </Text>
+                <Box style={{ height: 30, background: '#E8EFF8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[4] [6] [8]</Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: 16, display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 36, height: 36, background: '#1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>B</Text>
+                </Box>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>波束赋形与天线架构</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.6, marginTop: 8, flex: 1 }}>
+                    在空间维度同时满足通信与感知的指向需求；或从阵列结构入手突破传统阵列的几何限制。
+                </Text>
+                <Box style={{ height: 30, background: '#E8EFF8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[8] [10] [12] [5]</Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: 16, display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 36, height: 36, background: '#1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>C</Text>
+                </Box>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>资源分配与轨迹联合优化</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.6, marginTop: 8, flex: 1 }}>
+                    把无人机的运动自由度纳入优化，与基站关联、带宽分配、波束设计共同考虑。
+                </Text>
+                <Box style={{ height: 30, background: '#E8EFF8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[2] [11]</Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 240, display: 'flex', flexDirection: 'row', gap: 14 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: 16, display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 36, height: 36, background: '#3D7BD9', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>D</Text>
+                </Box>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>感知算法与信号处理</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.6, marginTop: 8, flex: 1 }}>
+                    在给定波形与资源的前提下，通过信号处理提升检测、估计、跟踪与识别的性能和鲁棒性。多数算法可独立于波形设计单独评估，且开始给出专门的复杂度分析。
+                </Text>
+                <Box style={{ height: 30, background: '#E8EFF8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[8] [6] [3]</Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#E8EFF8', border: '1px solid #3D7BD9', borderRadius: 8, padding: 16, display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ width: 36, height: 36, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>E</Text>
+                </Box>
+                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>安全防护与数据基准</Text>
+                <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.6, marginTop: 8, flex: 1 }}>
+                    处理 ISAC 的安全副作用，并为方法研究提供可信的数据与评测基础。前者关注防护机理，后者关注研究底座，共同决定成果的可信度。
+                </Text>
+                <Box style={{ height: 30, background: '#FFFFFF', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[1] [5] [7]</Text>
+                </Box>
+            </Box>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>08 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

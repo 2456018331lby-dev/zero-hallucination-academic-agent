@@ -4,8 +4,18 @@
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![LaTeX Engine](https://img.shields.io/badge/LaTeX-XeLaTeX-green.svg)](https://miktex.org/)
 [![DoD Quality Gates](https://img.shields.io/badge/DoD%20Gates-Gate%201~4%20PASS-success.svg)](#四道质量门禁体系-dod-enforcement)
+[![Quality Gates CI](https://github.com/2456018331lby-dev/zero-hallucination-academic-agent/actions/workflows/quality-gates.yml/badge.svg)](https://github.com/2456018331lby-dev/zero-hallucination-academic-agent/actions/workflows/quality-gates.yml)
 
 本项目是一个**机制上杜绝学术造假、零幻觉（Zero-Hallucination）且具备端到端落地能力**的 AI 科研协作工作流底座。通过在工具层与门禁层设立硬约束，彻底解决大模型在科研协助中“引文凭记忆脑补、量化数据无据捏造、人工复核流于橡皮图章”等系统性缺陷。
+
+**30 秒上手**（装一次，之后任何目录都能用）：
+
+```bash
+pip install -e . && zhaw doctor && zhaw selftest
+```
+
+`zhaw doctor` 打印环境体检（Python / PyMuPDF / XeLaTeX / 7 个门禁脚本）；
+`zhaw selftest` 用 9 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.2 秒）。
 
 ---
 
@@ -34,6 +44,11 @@ pidemo/
   * 15+1 维对比矩阵经 PyMuPDF 真实物理页码核验达成 **0 FAIL, 0 WARN**；
   * 论文 16 篇参考文献（32 条记录）全部直连 Crossref 官方 REST API 权威元数据核验（**FAIL=0, OK=32**）；
   * 完整保留从自检到编译的 **7 大原始无润色终端执行日志**（`logs/00_selftest.log` 至 `06_compile.log`）。
+* **当前真实成色（诚实标注，不吹）**：
+  * 正文 **8,547 汉字**（硕士常规 3–5 万字）→ 约完成 20–25%；
+  * 第 4 章有 **18 处 `\TODO{}`** 占位，`experiments/*.csv` 尚未产出，所以 Gate 2 目前只能证明"没有自由漂浮的数字"，还不能证明"数字是对的"；
+  * Gate 4 **未签署**——`.human_review.json` 不存在是设计如此，送审前必须由真人在终端执行 `zhaw gate4 bupt_isac_workflow/thesis_project --confirm-review --reviewer <你的名字>`；
+  * 组会 PPT 14 页（目标 15–20 页）。
 
 ### 2. `ris_thesis_workflow/` —— 终审验收与对抗防御夹具
 * **课题设定**：面向 6G 的 RIS（可重构智能表面）辅助通信波束赋形与信道估计；
@@ -101,34 +116,56 @@ pidemo/
 
 ## 四、快速开始与一键复现指南
 
-### 1. 依赖安装
+### 1. 安装（一次性）
 ```bash
-pip install -r .agents/skills/requirements.txt
+pip install -e .                    # 核心依赖只有 pymupdf
+pip install -e ".[full]"            # 需要 Word 导出 / 画图时再加 python-docx / matplotlib / numpy
 ```
 
-### 2. 平台对抗回归自检（100% 拦截率复现）
+### 2. 环境自检
 ```bash
-python .agents/skills/tests/run_selftest.py
+zhaw doctor                         # Python / PyMuPDF / XeLaTeX / 7 个门禁脚本是否就位
 ```
 
-### 3. 主力工程门禁审查与论文编译
+### 3. 门禁自身对抗回归（9 个用例，零网络）
 ```bash
-# 执行四道质量门禁调度
-python .agents/skills/thesis-latex-writer/scripts/run_quality_gates.py bupt_isac_workflow/thesis_project --scaffold
-
-# 双遍 XeLaTeX 论文严格编译
-python .agents/skills/thesis-latex-writer/scripts/compile_thesis.py bupt_isac_workflow/thesis_project main.tex --strict
-
-# 单源转换为带红条水印的 Word 审阅稿
-python .agents/skills/thesis-latex-writer/scripts/tex_to_docx.py bupt_isac_workflow/thesis_project main.tex --output bupt_isac_workflow/thesis_project/thesis.docx --scaffold
+zhaw selftest                       # 期望 9/9 PASS
 ```
 
-### 4. 组会汇报 Beamer 幻灯片编译
+### 4. 四道门禁（一条命令，或分开跑）
 ```bash
-cd bupt_isac_workflow/survey
-xelatex -interaction=nonstopmode seminar_presentation.tex
-xelatex -interaction=nonstopmode seminar_presentation.tex
+# 串跑 + 生成 gate_summary.json
+zhaw check bupt_isac_workflow/thesis_project --scaffold --offline
+
+# 分开跑
+zhaw gate1 bupt_isac_workflow/thesis_project --offline      # 引文取证（DOI → Crossref 逐字段）
+zhaw gate2 bupt_isac_workflow/thesis_project --scaffold     # 数据溯源（数字必须落进 CSV 单元格）
+zhaw gate3 bupt_isac_workflow/thesis_project --scaffold     # 国标合规（GB/T 7713.1 + 7714-2015）
+zhaw gate4 bupt_isac_workflow/thesis_project --scaffold     # 签字状态（送审时换 --confirm-review）
 ```
+
+### 5. 文献页码物理取证
+```bash
+zhaw grounding bupt_isac_workflow/survey/literature_comparison_matrix.md \
+  --pdf-dir bupt_isac_workflow/literature
+```
+
+### 6. 编译论文 / 组会 PPT
+```bash
+zhaw compile bupt_isac_workflow/thesis_project      # 严格模式：overfull > 5pt 或未定义引用即失败
+cd bupt_isac_workflow/survey && xelatex -interaction=nonstopmode seminar_presentation.tex
+```
+
+### 7. 转 Word 审阅稿（带红条水印）
+```bash
+python .agents/skills/thesis-latex-writer/scripts/tex_to_docx.py \
+  bupt_isac_workflow/thesis_project main.tex \
+  --output bupt_isac_workflow/thesis_project/thesis.docx --scaffold
+```
+
+> 不想装 CLI？`zhaw xxx` 等价于 `py -3.12 -m zhaw xxx`，也等价于直接调用
+> `.agents/skills/<技能>/scripts/<脚本>.py`。CI（`.github/workflows/quality-gates.yml`）会在
+> Ubuntu / Windows / macOS × Python 3.12 上重跑同一套命令，任何一条红则 PR 红。
 
 ---
 

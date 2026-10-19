@@ -1,17 +1,37 @@
-# Unrelated sub-projects and scratch files
+# ===========================================================================
+# Zero-Hallucination Academic Agent Workflow — ignore rules
+# ===========================================================================
+
+# --- Archived / non-academic scratch (kept locally, never committed) -------
+_attic/
+.workbuddy/
 4k-image-api/
 pelican_bicycle.svg
 pelican_viewer.html
 PI-DARWIN-SELECTION.md
 /gate_summary.json
 
-# Python cache
+# --- Vendored dependencies (regenerate with: pip install -r requirements.txt)
+newwork/libs/
+
+# --- Example literature pools -------------------------------------------------
+# Large third-party PDFs (copyright) and their extracted text are inputs, not
+# source. Keep them on disk for local runs; fetch with scripts/litpool_fetch.py.
+newwork/examples/*/input/
+newwork/examples/*/work/pdftext/
+newwork/examples/*/deliverables/*.xlsx
+
+# --- Python ------------------------------------------------------------------
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
 
-# LaTeX auxiliary compilation files
+# --- LaTeX auxiliary compilation files ---------------------------------------
 *.aux
 *.toc
 *.lof
@@ -26,12 +46,12 @@ __pycache__/
 *.fls
 *.fdb_latexmk
 
-# Ignore root/intermediate LaTeX logs, but preserve authentic execution logs in logs/
+# Ignore root/intermediate LaTeX logs, but preserve authentic execution logs
 *.log
 !*/logs/*.log
 !logs/*.log
 
-# OS & Editor files
+# --- OS & Editor -------------------------------------------------------------
 .DS_Store
 Thumbs.db
 .vscode/

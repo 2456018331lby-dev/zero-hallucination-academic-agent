@@ -1,0 +1,16 @@
+<Slide style={{ width: 1280, height: 720, background: '#0E3F8C', padding: 0, display: 'flex', flexDirection: 'row', alignItems: 'center', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ width: 620, height: 720, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', padding: '0 40px 0 96px' }}>
+        <Text style={{ fontSize: 240, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>03</Text>
+    </Box>
+    <Box style={{ width: 2, height: 320, background: '#3D7BD9' }} />
+    <Box style={{ flex: 1, height: 720, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 96px 0 64px', gap: 20 }}>
+        <Text style={{ fontSize: 16, letterSpacing: 3, color: '#3D7BD9', fontWeight: 'bold' }}>PART THREE</Text>
+        <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#FFFFFF' }}>还缺什么</Text>
+        <Box style={{ height: 3, width: 100, background: '#3D7BD9' }} />
+        <Text style={{ fontSize: 22, color: '#A8C2E8', lineHeight: 2 }}>
+            这一支已经解决 6 个问题，但仍有 5 个空白<br />
+            两个缺口与第一个实例（低空 ISAC）同构，且更突出：指标不可比、全链路无实测<br />
+            真正值得做的，是给后来者一个可比较的坐标系
+        </Text>
+    </Box>
+</Slide>

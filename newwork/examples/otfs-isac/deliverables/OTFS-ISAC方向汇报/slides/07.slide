@@ -1,0 +1,69 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>四个阶段：从通信波形到 ISAC 完整方案</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>发展脉络</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '30px 40px 0 40px', display: 'flex', flexDirection: 'column' }}>
+        <Box style={{ height: 396, display: 'flex', flexDirection: 'row', alignItems: 'stretch' }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 18px', display: 'flex', flexDirection: 'column' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#8B97A8', letterSpacing: 1 }}>PHASE 01 · 2017–2022</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>OTFS 被理论化</Text>
+                <Text style={{ fontSize: 17, color: '#1A2230', lineHeight: 1.6, marginTop: 10, flex: 1 }}>
+                    用离散 Zak 变换导出 DD 域 I/O 关系与容量；推导所有 OTFS 变体的通用 I/O 与低复杂度检测。让 OTFS 可分析、可实现。
+                </Text>
+                <Box style={{ height: 36, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#1E4FA8' }}>[35] [38]</Text>
+                </Box>
+            </Box>
+            <Box style={{ width: 30, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 20, color: '#3D7BD9' }}>→</Text>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 18px', display: 'flex', flexDirection: 'column' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#8B97A8', letterSpacing: 1 }}>PHASE 02 · 2021–2022</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>OFDM 困境暴露</Text>
+                <Text style={{ fontSize: 17, color: '#1A2230', lineHeight: 1.6, marginTop: 10, flex: 1 }}>
+                    高机动 ICI 让 MIMO-OFDM 雷达的 2-D FFT 失效；OTFS 机载 BER 评估确认其多普勒鲁棒性。张力就此框定。
+                </Text>
+                <Box style={{ height: 36, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#1E4FA8' }}>[39] [37]</Text>
+                </Box>
+            </Box>
+            <Box style={{ width: 30, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 20, color: '#3D7BD9' }}>→</Text>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 18px', display: 'flex', flexDirection: 'column' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#8B97A8', letterSpacing: 1 }}>PHASE 03 · 2022–2024</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>公平对比与折中澄清</Text>
+                <Text style={{ fontSize: 17, color: '#1A2230', lineHeight: 1.6, marginTop: 10, flex: 1 }}>
+                    同开销下比较速率，指出优势来自 GI/CP 结构；ISAC 折中的信息论标尺建立。问题从「谁更好」变为「好多少、为什么」。
+                </Text>
+                <Box style={{ height: 36, background: '#E8EFF8', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#1E4FA8' }}>[06] [05]</Text>
+                </Box>
+            </Box>
+            <Box style={{ width: 30, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 20, color: '#3D7BD9' }}>→</Text>
+            </Box>
+            <Box style={{ flex: 1, background: '#EAF1FB', border: '1px solid #3D7BD9', borderRadius: 8, padding: '18px 18px', display: 'flex', flexDirection: 'column' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#3D7BD9', letterSpacing: 1 }}>PHASE 04 · 2024–2026</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0E3F8C', marginTop: 10 }}>OTFS-ISAC 成型</Text>
+                <Text style={{ fontSize: 17, color: '#1A2230', lineHeight: 1.6, marginTop: 10, flex: 1 }}>
+                    ISI/ICI 被显式建模并利用；波形统一框架、离网格信道估计、混合调度、标准化路径相继出现。
+                </Text>
+                <Box style={{ height: 36, background: '#D6E4F7', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#0E3F8C' }}>[04] [34] [20] [25] [23]</Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 92, marginTop: 20, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 22px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.55 }}>
+                脉络的转折点在第 2→3 阶段之间：<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>前半段在证明「OTFS 可用」，后半段在回答「OTFS 比 OFDM 强在哪、强多少」</span>——而第 4 阶段仍未回答「感知指标如何横向比较」
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>07 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

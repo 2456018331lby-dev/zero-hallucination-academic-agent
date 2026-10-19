@@ -1,0 +1,73 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>代表文献 Ⅱ · 波形与架构：从设计与硬件两侧同时破局</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>代表文献</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>共同思路：用「一个巧妙结构」同时解决多个原本互相冲突的需求</Text>
+        </Box>
+        <Box style={{ height: 430, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[6]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>UW-OCDM：一个结构解四件事</Text>
+                </Box>
+                <Box style={{ height: 62, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 10 }}>
+                    <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>4 重</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>同步 / 多普勒补偿<br />/ 信道估计 / 感知参考</Text>
+                </Box>
+                <Text style={{ fontSize: 22, color: '#1A2230', lineHeight: 1.6, flex: 1, marginTop: 10 }}>
+                    把确定性唯一字嵌入正交线性调频多分复用。UW 作为已知先验，使分布式基站可本地构造感知字典，无需实时交换随机 payload 符号。
+                </Text>
+                <Box style={{ height: 50, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>fc=5 GHz、B=40 MHz、N=2048、NUW=256；LoS 多普勒对应 100 km/h
+                    </Text>
+                </Box>
+                <Box style={{ height: 50, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>原文承认接收机复杂度高于基于最小二乘的 CP-OFDM；未考虑硬件损伤
+                    </Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[10]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>射线天线阵列 RAA</Text>
+                </Box>
+                <Box style={{ height: 62, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 10 }}>
+                    <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>&lt;1%</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>M=16 时相对<br />HBF 架构的硬件成本</Text>
+                </Box>
+                <Text style={{ fontSize: 22, color: '#1A2230', lineHeight: 1.6, flex: 1, marginTop: 10 }}>
+                    大量低成本阵元配少量射频链路，阵元按「射线」结构排布，每条射线是刻意设计朝向的简单均匀线阵，经射线选择网络选通接入基带。
+                </Text>
+                <Box style={{ height: 50, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>严格证明全方向均匀角分辨率；无需移相器
+                    </Text>
+                </Box>
+                <Box style={{ height: 50, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>仅仿真验证、无硬件原型实测；选通网络的时延与切换开销未量化
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 58, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                启发：两篇都没有「更用力地优化」，而是<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>改变了问题的结构</span>——一个改波形组织方式，一个改天线的物理连接方式
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>10 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

@@ -1,0 +1,72 @@
+name: quality-gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: quality-gates-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gates:
+    name: ${{ matrix.os }} / py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Doctor (environment + gate scripts present)
+        run: zhaw doctor
+
+      - name: Adversarial self-test (8 cases)
+        # This is the load-bearing job: it proves the gates still intercept
+        # fabricated DOIs, tampered titles, forged sign-offs, and out-of-bounds
+        # page evidence. It needs no network (pre-seeded Crossref cache).
+        run: zhaw selftest
+
+      - name: Gate 1 — citations vs Crossref (offline cache)
+        run: zhaw gate1 bupt_isac_workflow/thesis_project --offline
+
+      - name: Gate 2 — data provenance
+        run: zhaw gate2 bupt_isac_workflow/thesis_project --scaffold
+
+      - name: Gate 3 — GB/T compliance
+        run: zhaw gate3 bupt_isac_workflow/thesis_project --scaffold
+
+      - name: Gate 4 — human sign-off state
+        run: zhaw gate4 bupt_isac_workflow/thesis_project --scaffold
+
+      - name: Full pipeline (fail-fast)
+        run: zhaw check bupt_isac_workflow/thesis_project --scaffold --offline
+
+      - name: Grounding gate — physical page evidence in real PDFs
+        run: >
+          zhaw grounding
+          bupt_isac_workflow/survey/literature_comparison_matrix.md
+          --pdf-dir bupt_isac_workflow/literature
+
+      - name: Upload gate summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate-summary-${{ matrix.os }}
+          path: gate_summary.json
+          if-no-files-found: warn

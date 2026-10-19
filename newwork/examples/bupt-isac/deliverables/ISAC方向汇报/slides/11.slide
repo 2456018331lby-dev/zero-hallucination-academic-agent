@@ -1,0 +1,73 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>代表文献 Ⅲ · 先验与数据：补齐信息与底座</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>代表文献</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>共同视角：不改进算法本身，而是补上算法所依赖的输入条件</Text>
+        </Box>
+        <Box style={{ height: 430, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[12]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>数字孪生辅助波束设计</Text>
+                </Box>
+                <Box style={{ height: 62, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 10 }}>
+                    <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#D9534F', lineHeight: 1 }}>−10 dB</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>LoS 主导区相对<br />全信道方案的差距</Text>
+                </Box>
+                <Text style={{ fontSize: 22, color: '#1A2230', lineHeight: 1.6, flex: 1, marginTop: 10 }}>
+                    用环境电磁三维模型与射线追踪预测感知信道的 LoS / NLoS 路径方向并识别主导路径，以最大化主导分量感知 SNR 为目标设计波束。
+                </Text>
+                <Box style={{ height: 50, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>3.5 GHz、3233 条用户信道、最小通信 SINR 10 dB、10000 次重复实验
+                    </Text>
+                </Box>
+                <Box style={{ height: 50, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>孪生无法推断感知路径精确复增益；单基站单用户单目标
+                    </Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[7]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>LAMBDA 多模态数据集</Text>
+                </Box>
+                <Box style={{ height: 62, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 10 }}>
+                    <Text style={{ fontSize: 56, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>5%</Text>
+                    <Text style={{ fontSize: 16, color: '#8B97A8', lineHeight: 1.4 }}>训练样本比例即达<br />PCK@16 = 0.8512</Text>
+                </Box>
+                <Text style={{ fontSize: 22, color: '#1A2230', lineHeight: 1.6, flex: 1, marginTop: 10 }}>
+                    用高保真数字孪生流水线生成同步的 RGB、深度、LiDAR、IMU、位姿、CSI 与雷达资源，覆盖城郊校园、多机多站、夜间与四种天气。
+                </Text>
+                <Box style={{ height: 50, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>CSI 覆盖 1.4–77 GHz；CSI 与雷达参数支持用户自定义
+                    </Text>
+                </Box>
+                <Box style={{ height: 50, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>数据为数字孪生合成而非实测；与真实数据一致性对比文献未说明
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 58, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                注意：[12] 的 −10 dB 与 [7] 的「合成数据」其实是<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>同一件事的两面</span>——先验与数据的完备程度，直接决定方法能走多远
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>低空经济场景下的通感一体化（ISAC）· 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>11 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

@@ -3,7 +3,7 @@
 """
 run_selftest.py - Academic Quality Gates Adversarial Regression Test Runner
 
-Executes 8 core adversarial attack vectors, verifies that each DoD quality gate
+Executes 9 core adversarial attack vectors, verifies that each DoD quality gate
 correctly blocks adversarial attempts, and prints a structured benchmark table.
 """
 
@@ -83,6 +83,13 @@ TEST_SPECS = [
         "input_desc": "Literal '**' residue & 'TODO' in final draft",
         "expected": "FAIL (Exit code 1, Errors flagged)",
     },
+    {
+        "method": "test_09_gate2_csv_value_mismatch",
+        "name": "Gate 2 CSV Value Mismatch Catch",
+        "gate": "Gate 2: Data Provenance",
+        "input_desc": "CSV has 28.53 dB, chapter claims 41.7 dB",
+        "expected": "FAIL (Claim absent from every CSV cell)",
+    },
 ]
 
 
@@ -91,7 +98,7 @@ def run_all_selftests():
     print("  ACADEMIC QUALITY GATES ADVERSARIAL REGRESSION TEST SUITE (SELFTEST)")
     print(f"  Execution Time : {time.strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"  Python Runtime : {sys.version.split()[0]} ({sys.executable})")
-    print(f"  Suite Target   : 8 DoD Adversarial Attack Vectors (Gate 1 - Gate 4 + Filter + Grounding)")
+    print(f"  Suite Target   : {len(TEST_SPECS)} DoD Adversarial Attack Vectors (Gate 1 - Gate 4 + Filter + Grounding)")
     print("=" * 115)
 
     results = []

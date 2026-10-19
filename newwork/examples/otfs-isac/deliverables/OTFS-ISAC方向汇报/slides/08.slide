@@ -1,0 +1,55 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>四类方法：改动发生在哪一层</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>方法分类</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '26px 40px 0 40px', display: 'flex', flexDirection: 'column' }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px', marginBottom: 14 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>四个家族互斥，且各自有明确的代价——没有「全都更好」的选项</Text>
+        </Box>
+        <Box style={{ height: 392, display: 'flex', flexDirection: 'row', gap: 14 }}>
+            <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '14px 18px', display: 'flex', flexDirection: 'column' }}>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>A · 波形与调制设计</Text>
+                    <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.55, marginTop: 6, flex: 1 }}>
+                        在 DD 域或其分数阶推广上构造通感波形。统一矩阵可退化为多种波形，但分数阶参数无通用选择准则（[34]）。
+                    </Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[34] [35] [25] [23]</Text>
+                </Box>
+                <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '14px 18px', display: 'flex', flexDirection: 'column' }}>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>B · DD 域感知估计与检测</Text>
+                    <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.55, marginTop: 6, flex: 1 }}>
+                        把 ISI/ICI 纳入模型甚至加以利用。GLRT 三维估计 + DD 复用可突破无模糊距离上限，但采用窄带近似（[04]）。
+                    </Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[04] [20] [39]</Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '14px 18px', display: 'flex', flexDirection: 'column' }}>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>C · 信道估计与低复杂度接收机</Text>
+                    <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.55, marginTop: 6, flex: 1 }}>
+                        把同步误差并入信道、利用时域更高稀疏度降复杂度；通用 MRC 对全部 OTFS 变体性能一致。但不含感知（[30] [38]）。
+                    </Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#1E4FA8' }}>[30] [38]</Text>
+                </Box>
+                <Box style={{ flex: 1, background: '#EAF1FB', border: '1px solid #3D7BD9', borderRadius: 8, padding: '14px 18px', display: 'flex', flexDirection: 'column' }}>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>D · 折中刻画与系统调度</Text>
+                    <Text style={{ fontSize: 16, color: '#1A2230', lineHeight: 1.55, marginTop: 6, flex: 1 }}>
+                        刻画感知-通信折中，或决定「谁用 OTFS」。但信息论折中与波形脱节，混合方案只覆盖通信维度（[05] [06] [25]）。
+                    </Text>
+                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#0E3F8C' }}>[05] [06] [25]</Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 72, marginTop: 16, background: '#FCEBEB', borderLeft: '5px solid #D32F2F', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 22px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                这四类中，<span style={{ fontWeight: 'bold', color: '#A32D2D' }}>没有一类同时给出「感知 + 通信 + 可比较的评测」</span>——每一类都在自己的维度里成立了，而维度之间尚未打通
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>08 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>

@@ -1,0 +1,73 @@
+<Slide style={{ width: 1280, height: 720, background: '#FFFFFF', padding: 0, display: 'flex', flexDirection: 'column', fontFamily: "'Source Han Sans SC','Microsoft YaHei',sans-serif" }}>
+    <Box style={{ height: 80, background: '#1E4FA8', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#FFFFFF' }}>代表文献 Ⅱ · 场景与波形：把参数做实</Text>
+        <Text style={{ fontSize: 15, color: '#A8C2E8' }}>代表文献</Text>
+    </Box>
+    <Box style={{ height: 580, padding: '24px 40px 0 40px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <Box style={{ height: 42, background: '#0E3F8C', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFFFFF' }}>共同主张：低空高机动必须落到可写进仿真配置的数字与可实现的复杂度</Text>
+        </Box>
+        <Box style={{ height: 424, display: 'flex', flexDirection: 'row', gap: 16 }}>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[37]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>「高机动」到底有多高</Text>
+                </Box>
+                <Box style={{ height: 60, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 8 }}>
+                    <Text style={{ fontSize: 44, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>1200 m/s</Text>
+                    <Text style={{ fontSize: 15, color: '#8B97A8', lineHeight: 1.4 }}>相对速度<br />量级</Text>
+                </Box>
+                <Text style={{ fontSize: 21, color: '#1A2230', lineHeight: 1.55, flex: 1, marginTop: 8 }}>
+                    系统评估 OTFS 在机载高多普勒网络中的 BER：变化物理层参数、DD bin 数、直达/两径地反射信道与 MIMO-OTFS。
+                </Text>
+                <Box style={{ height: 52, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>对应多普勒 52–72 kHz；OTFS 能在很宽的相对速度范围内补偿极高多普勒
+                    </Text>
+                </Box>
+                <Box style={{ height: 52, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>只评估 BER、不含感知；信道模型简化；无实测数据
+                    </Text>
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, background: '#F7F9FC', border: '1px solid #D6DCE5', borderRadius: 8, padding: '18px 20px', display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ height: 34, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 46, height: 30, background: '#1E4FA8', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>[34]</Text>
+                    </Box>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#0E3F8C' }}>把波形做成统一容器</Text>
+                </Box>
+                <Box style={{ height: 60, display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 8 }}>
+                    <Text style={{ fontSize: 44, fontWeight: 'bold', color: '#1E4FA8', lineHeight: 1 }}>对数线性</Text>
+                    <Text style={{ fontSize: 15, color: '#8B97A8', lineHeight: 1.4 }}>均衡器复杂度<br />（BER 无退化）</Text>
+                </Box>
+                <Text style={{ fontSize: 21, color: '#1A2230', lineHeight: 1.55, flex: 1, marginTop: 8 }}>
+                    用 DFrFT 给出统一矩阵框架，UM-OTFS 可通过分数阶退化为其他波形；三阶段感知估计 + 基于 LU 分解的分数阶均衡。
+                </Text>
+                <Box style={{ height: 52, background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#1A2230' }}>
+                        <span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>证据：</span>高 SNR 下速度/距离估计误差更小；均衡达到对数线性复杂度且 BER 无退化
+                    </Text>
+                </Box>
+                <Box style={{ height: 52, background: '#FCEBEB', borderRadius: 6, padding: '6px 12px', display: 'flex', alignItems: 'center', marginTop: 8 }}>
+                    <Text style={{ fontSize: 16, color: '#A32D2D' }}>
+                        <span style={{ fontWeight: 'bold' }}>代价：</span>以仿真为主；分数阶参数如何选择无通用准则——波形层的又一次内部改良
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+        <Box style={{ height: 56, background: '#F0F5FC', borderLeft: '5px solid #1E4FA8', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 20px' }}>
+            <Text style={{ fontSize: 19, color: '#1A2230', lineHeight: 1.5 }}>
+                这两篇把方向钉在现实上：<span style={{ fontWeight: 'bold', color: '#0E3F8C' }}>[37] 给出场景参数的量级，[34] 给出波形层的实现代价</span>——但收益边界（何时值得换）仍无人给出
+            </Text>
+        </Box>
+    </Box>
+    <Box style={{ height: 40, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px' }}>
+        <Text style={{ fontSize: 14, color: '#8B97A8' }}>高机动低空场景下的 OTFS 通感一体化 · 文献调研</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#0E3F8C' }}>10 / 15</Text>
+    </Box>
+    <Box style={{ height: 20 }} />
+</Slide>
