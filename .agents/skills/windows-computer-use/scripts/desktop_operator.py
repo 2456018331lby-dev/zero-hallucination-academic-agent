@@ -315,6 +315,14 @@ def type_text(text: str, press_enter: bool = False, use_clipboard: bool = True):
         send_key_chord(["enter"])
 
 def main():
+    # 中文 Windows 控制台默认 cp936，打印窗口标题里的非常用字会抛 UnicodeEncodeError
+    # （表现为列表打到一半就 Traceback）。强制 UTF-8 输出，与 zhaw CLI 保持一致。
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
     parser = argparse.ArgumentParser(description="Production Windows Desktop Operator")
     subparsers = parser.add_subparsers(dest="command", required=True)
 

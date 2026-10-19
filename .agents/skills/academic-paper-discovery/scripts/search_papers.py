@@ -28,16 +28,21 @@ import difflib
 import unicodedata
 
 try:
-    import fitz  # PyMuPDF
+    import pymupdf as fitz  # PyMuPDF >= 1.24：`import fitz` 已弃用会告警
     HAS_PYMUPDF = True
 except ImportError:
-    HAS_PYMUPDF = False
-
-if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     try:
-        sys.stdout.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
+        import fitz  # 旧版 PyMuPDF 兼容
+        HAS_PYMUPDF = True
+    except ImportError:
+        HAS_PYMUPDF = False
+
+for _stream in (sys.stdout, sys.stderr):
+    if _stream and hasattr(_stream, "reconfigure"):
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
 
 # 内置回退权重表（若 venue_weights.json 未找到时使用）
 DEFAULT_VENUES_WEIGHTS = {

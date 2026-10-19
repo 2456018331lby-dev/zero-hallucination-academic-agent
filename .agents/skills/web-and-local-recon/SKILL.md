@@ -69,6 +69,9 @@ metadata:
 | **文件读取** | `cat file` | `Get-Content "file" -Raw -Encoding utf8` | 默认编码会导致中文乱码，`-Raw` 保证作为单字符串读取。 |
 | **安全探测** | 直接读取不存在的文件 | `if (Test-Path "路径") { Get-Content "路径" -Raw -Encoding utf8 } else { Write-Output "不存在" }` | 避免因文件不存在导致进程抛出非零退出码。 |
 | **环境探测** | `echo $VAR` | `[Environment]::GetEnvironmentVariable("VAR", "User")` | 保证能跨进程读取到注册表级别的用户环境变量。 |
+| **中文输出** | 依赖控制台默认编码（cp936） | 子进程前设 `$env:PYTHONIOENCODING="utf-8"`；脚本内部 `sys.stdout.reconfigure(encoding="utf-8", errors="replace")` | 中文 Windows 控制台是 cp936，打印窗口标题/论文标题里的生僻字会抛 `UnicodeEncodeError`，表现为「输出打到一半就 Traceback」或乱码。本项目 `desktop_operator.py`、`zhaw/cli.py` 均已在入口强制 UTF-8。 |
+
+> **踩过的坑**：`desktop_operator.py list-windows` 在 cp936 控制台下会打印到第 1 个窗口就崩，因为窗口标题里有 GBK 无法编码的字符。加上 `reconfigure(errors="replace")` 后正常输出全部窗口。
 
 ---
 
