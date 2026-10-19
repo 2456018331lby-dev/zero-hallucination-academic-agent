@@ -9,7 +9,7 @@ _attic/
 pelican_bicycle.svg
 pelican_viewer.html
 PI-DARWIN-SELECTION.md
-/gate_summary.json
+gate_summary.json
 
 # --- Vendored dependencies (regenerate with: pip install -r requirements.txt)
 newwork/libs/
@@ -63,7 +63,16 @@ _attic/
 
 _ci_*/
 
-# 门禁运行产物
+# 门禁运行产物（含子目录；不要提交别人的真实姓名与路径）
+gate_summary.json
 audit_report.json
 audit_report.md
+*_anonymize_report.json
+*_LEAKS.md
 LEAKS.md
+main.docx
+main.pdf.bak
+
+# 冷启动验证产物（含真实身份，绝不入库）
+_cold/
+

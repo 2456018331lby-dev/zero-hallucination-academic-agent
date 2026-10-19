@@ -105,7 +105,10 @@ def extract_pdf(pdf_path: str, max_pages: Optional[int] = None) -> str:
     except Exception:
         pass
 
-    import fitz
+    try:
+        import pymupdf as fitz
+    except ImportError:  # pragma: no cover - legacy PyMuPDF
+        import fitz
     doc = fitz.open(pdf_path)
     total_pages = len(doc)
     pages_to_read = total_pages if max_pages is None else min(total_pages, max_pages)

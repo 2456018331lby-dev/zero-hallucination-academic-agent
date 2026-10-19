@@ -146,7 +146,10 @@ def cmd_doctor(_args: argparse.Namespace) -> int:
 
     print()
     try:
-        import fitz  # noqa: F401  (PyMuPDF)
+        try:
+            import pymupdf as fitz  # noqa: F401  (PyMuPDF >= 1.24)
+        except ImportError:  # pragma: no cover - legacy PyMuPDF
+            import fitz  # noqa: F401
 
         print(f"pymupdf     : {fitz.__doc__.strip().splitlines()[0]}")
     except Exception as exc:  # pragma: no cover - env dependent
@@ -298,6 +301,8 @@ def cmd_new(args: argparse.Namespace) -> int:
         "title": args.title or "",
         "author": args.author or "",
         "student_id": args.student_id or "",
+        "school": getattr(args, "school", "") or "",
+        "school_en": getattr(args, "school_en", "") or "",
         "institute": args.institute or "",
         "major": args.major or "",
         "direction": args.direction or "",
@@ -314,6 +319,12 @@ def cmd_new(args: argparse.Namespace) -> int:
     if result.get("status") != "PASS":
         return FAIL
     dest = Path(result.get("project") or result.get("dest") or args.dest)
+    inherited = result.get("inherited_content") or []
+    if inherited:
+        print()
+        print("[!] 这个工程里有【不是你的】内容，动手前先看：")
+        for note in inherited:
+            print(f"    - {note}")
     print()
     print(f"[OK] created: {dest}")
     print(f"     next: zhaw check {dest} --scaffold --offline")
@@ -496,12 +507,14 @@ def cmd_anonymize(args: argparse.Namespace) -> int:
         result = anonymize.emit(Path(args.project), Path(args.out), force=args.force)
         print()
         print(f"[OK] anonymized copy: {result['output']}")
-        print(f"     leak report    : {Path(result['output']) / 'LEAKS.md'}")
+        print(f"     leak report    : {result['leaks_md']}  (提交目录之外，不要打包)")
         print(f"     files copied   : {result['files_copied']}")
+        print(f"     residual       : {len(result.get('residual_after_emit') or [])} 处（产物复扫）")
         if scan["leak_count"]:
             print(f"     [WARN] {scan['leak_count']} machine-detectable leak(s) were rewritten —"
-                  " read LEAKS.md and confirm by eye before submission")
-    return OK if scan["leak_count"] == 0 or args.out else WARN
+                  " read the leak report and confirm by eye before submission")
+        return OK if result["status"] == "PASS" else WARN
+    return OK if scan["leak_count"] == 0 else WARN
 
 
 def cmd_archive(args: argparse.Namespace) -> int:
@@ -574,7 +587,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--offline", action="store_true")
     p.add_argument("--strict", action="store_true")
     p.add_argument("--min-bib", type=int, default=60)
-    p.add_argument("--json", default="gate_summary.json", help="summary output path")
+    p.add_argument("--json", default=None, help="summary output path (default: <project>/gate_summary.json)")
     p.set_defaults(func=cmd_check)
 
     p = sub.add_parser("grounding", help="physical page-evidence gate over real PDFs")
@@ -608,7 +621,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--title")
     p.add_argument("--author")
     p.add_argument("--student-id", dest="student_id")
-    p.add_argument("--institute")
+    p.add_argument("--school", help="university name, e.g. 北京邮电大学")
+    p.add_argument("--school-en", dest="school_en", help="university name in English")
+    p.add_argument("--institute", help="college / department, e.g. 信息与通信工程学院")
     p.add_argument("--major")
     p.add_argument("--direction")
     p.add_argument("--advisor")

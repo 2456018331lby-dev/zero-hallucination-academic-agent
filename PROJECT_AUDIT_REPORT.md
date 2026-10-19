@@ -10,7 +10,7 @@
 
 这是一个**方向正确、内核真实、外壳失控**的项目。
 
-- **内核真实**：四道"不可造假"门禁不是 PPT 概念，是 5000+ 行能跑的 Python，自测 11/11 对抗用例全过，引文审计和 PDF 页码取证都能真跑出结果。
+- **内核真实**：四道"不可造假"门禁不是 PPT 概念，是 5000+ 行能跑的 Python，自测 14/14 对抗用例全过，引文审计和 PDF 页码取证都能真跑出结果。
 - **外壳失控**：仓库里同时躺着 3 个论文工程、1 个平台桥接实验、50.7 MB vendored 依赖（已删除）、18 项与学术毫无关系的残留文件（Claude Desktop 汉化补丁、ADS 破解清理脚本、鹈鹕骑车动画，已归档进 `_attic/`）。
 - **最大硬伤（已修复）**：主力工程 `bupt_isac_workflow` 的**证据链曾经断了**——11 篇文献被删到 6 篇，接地门禁 `FAIL`（2 行矩阵引用的页码超出了留存 PDF 的实际页数），而 `E2E_VERIFICATION_REPORT.md` 仍保留着旧数字。这属于**工作区漂移导致的报告失真**（旧数字在其所属 commit 上为真），不是刻意造假；现已从 `2758826` 恢复 11 篇 PDF、重跑接地门禁 `0 FAIL / 0 WARN`，并把 E2E 报告重写为可复现格式。
 
@@ -210,11 +210,11 @@ FAIL → 整张矩阵作废。**本次它确实 FAIL 了**（见 §2.1），说�
 
 `search_papers.py`（23.7 KB）对接 OpenAlex + arXiv，`venue_weights.json` 按顶会/顶刊声誉、引用速率、出版年份加权，自动下载 OA 全文，输出「已就绪 / 需校园网补充」分流清单。
 
-### 3.6 自测：11/11 对抗用例全过
+### 3.6 自测：14/14 对抗用例全过
 
 ```
 py -3.12 .agents\skills\tests\run_selftest.py
-→ 11/11 PASS, 0.352s
+→ 14/14 PASS, 0.352s
 → [OK] ALL ADVERSARIAL GATES EFFECTIVELY INTERCEPTED!
 ```
 
@@ -530,7 +530,7 @@ Gate 2 的 CSV 单元格级溯源与第 9 个对抗用例、撤稿检测与 symp
 | **sympy 符号验证** | `check_math.py:verify_identities()`，恒等式机器验证，只对确定的非零差值判 FAIL |
 | **SciencePlots 版式** | `plot_academic_curves.py` 支持 IEEE/Nature 版式，保留 CJK 逐字形回退 |
 | **许可证诚实化** | 新增 `THIRD_PARTY_LICENSES.md`，说明 `pymupdf` AGPL-3.0 与 MIT 声明的关系 |
-| **能力证明报告** | [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：22 命令逐个实测、11/11 对抗、三工程全过 |
+| **能力证明报告** | [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：22 命令逐个实测、14/14 对抗、三工程全过 |
 
 三个工程在纠正路径后（`ris_thesis_project` / `pku_thesis_project`，不是 `thesis_project`）**全部 Overall PASS**。
 

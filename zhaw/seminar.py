@@ -42,14 +42,27 @@ TEX_SPECIALS = {
 }
 
 
+MATH_SPAN_RE = re.compile(r"(\$[^$]*\$)")
+
+
 def tex_escape(value: str) -> str:
-    """Escape a matrix cell for safe LaTeX body text (math delimiters stripped)."""
+    """Escape a matrix cell for safe LaTeX body text, preserving inline math.
+
+    Cells in a literature matrix often carry inline math such as ``$V_{\\max}$``.
+    Stripping the ``$`` and then escaping ``_`` mangles it into
+    ``V\\_\\{\\textbackslash{}max\\}``, so math spans are passed through verbatim
+    and only the surrounding text is escaped.
+    """
     s = (value or "").strip()
-    s = s.replace("$", "")
     s = re.sub(r"\s+", " ", s)
+    if "$" not in s:
+        return "".join(TEX_SPECIALS.get(ch, ch) for ch in s)
     out = []
-    for ch in s:
-        out.append(TEX_SPECIALS.get(ch, ch))
+    for part in MATH_SPAN_RE.split(s):
+        if len(part) >= 2 and part.startswith("$") and part.endswith("$"):
+            out.append(part)
+        else:
+            out.append("".join(TEX_SPECIALS.get(ch, ch) for ch in part))
     return "".join(out)
 
 

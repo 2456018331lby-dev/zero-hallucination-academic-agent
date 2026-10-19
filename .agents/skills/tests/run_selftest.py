@@ -3,7 +3,7 @@
 """
 run_selftest.py - Academic Quality Gates Adversarial Regression Test Runner
 
-Executes 12 core adversarial attack vectors, verifies that each DoD quality gate
+Executes 14 core adversarial attack vectors, verifies that each DoD quality gate
 correctly blocks adversarial attempts, and prints a structured benchmark table.
 """
 
@@ -111,9 +111,21 @@ TEST_SPECS = [
         "input_desc": "Stale main.pdf (real name inside) next to main.tex",
         "expected": "PASS (PDF excluded, figures kept)",
     },
+    {
+        "method": "test_13_anonymize_strips_institution_fingerprints",
+        "name": "Institution Name Fingerprint Rejection",
+        "gate": "Anonymizer",
+        "input_desc": "School name in \\fancyhead page header + pdfauthor + exported docx",
+        "expected": "PASS (header/pdfmeta stripped, docx excluded, zero residual)",
+    },
+    {
+        "method": "test_14_citation_type_mismatch_detected",
+        "name": "Citation Type Marker Mismatch Catch",
+        "gate": "Gate 1: Citation Gate",
+        "input_desc": "Conference paper (Crossref proceedings-article) recorded as [J]",
+        "expected": "WARN (declared [J] != Crossref type)",
+    },
 ]
-
-
 def run_all_selftests():
     print("=" * 115)
     print("  ACADEMIC QUALITY GATES ADVERSARIAL REGRESSION TEST SUITE (SELFTEST)")

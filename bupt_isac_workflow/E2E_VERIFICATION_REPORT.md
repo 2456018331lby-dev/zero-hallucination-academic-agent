@@ -28,7 +28,9 @@
 - **Gate 1 PASS**：`zhaw gate1 bupt_isac_workflow/thesis_project --offline` → 32 条记录（16 篇文献 × `.bib`/`thebibliography` 双参考源）全部命中 Crossref 缓存，
   0 FAIL，1 WARN（`.bib` 与 `thebibliography` 双参考源，建议收敛为单一事实源）。
 - **Gate 2 PASS（scaffold）**：第 4 章的数字都在 `\TODO{}` 占位符内，属受控脚手架；未发现"自由漂浮"的量化断言。
-- **Gate 3 PASS**：GB/T 7713.1-2006 结构、GB/T 7714-2015 著录、三线表、图表标题位置、前后件齐备、Markdown 残留 = 0。
+- **Gate 3 PASS（脚手架模式）**：GB/T 7713.1-2006 结构、GB/T 7714-2015 著录、三线表、图表标题位置、前后件齐备、Markdown 残留 = 0。
+  ⚠️ **这个 PASS 只在 `--scaffold` 下成立**。按 `AGENTS.md` §5 铁律 4「正式交付必须不带 `--scaffold` 跑」，去掉该参数后
+  Gate 3 报 **20 条 ERROR**（第 4 章 18 处 `\TODO{}`、`experiments/` 缺失等）。**送审前必须用不带 `--scaffold` 的命令复跑并清零。**
 - **Gate 4 NOTICE**：`thesis_project/.human_review.json` 不存在。这是**设计如此**——AI 不能给自己签字；
   送审前必须由真人在终端执行 `zhaw gate4 bupt_isac_workflow/thesis_project --confirm-review --reviewer <你的名字>`，
   签署后逐章 SHA-256 会被写入，之后改一个字签名即失效。
@@ -59,9 +61,9 @@ $ zhaw grounding bupt_isac_workflow/survey/literature_comparison_matrix.md \
 
 编译质量（`logs/06_compile.log`）：XeLaTeX **0 error / 0 Severe Overfull / 0 Undefined References**。
 
-## 4. 对抗验证（11/11 PASS）
+## 4. 对抗验证（14/14 PASS）
 
-`zhaw selftest` 用 11 个"故意造假"的用例证明门禁真的会拦，而不是只会说 PASS：
+`zhaw selftest` 用 14 个"故意造假"的用例证明门禁真的会拦，而不是只会说 PASS：
 
 | # | 攻击向量 | 期望 | 实测 |
 | :---: | :--- | :--- | :---: |
@@ -98,7 +100,7 @@ $ zhaw grounding bupt_isac_workflow/survey/literature_comparison_matrix.md \
 # 0. 环境自检：Python / PyMuPDF / XeLaTeX / 7 个门禁脚本是否就位
 zhaw doctor
 
-# 1. 门禁自身有没有被改坏（11 个对抗用例，零网络）
+# 1. 门禁自身有没有被改坏（14 个对抗用例，零网络）
 zhaw selftest
 
 # 2. 引文取证（--offline 走本地 Crossref 缓存）
@@ -135,4 +137,5 @@ CI（`.github/workflows/quality-gates.yml`）在 Ubuntu / Windows / macOS 三平
 | 2026-10-19 | 5 篇 PDF 被删 → grounding FAIL ×2；本报告重写为可复现格式 |
 | 2026-10-19 | 从 `2758826` 恢复 11 篇 PDF → grounding 重新 PASS |
 | 2026-10-19 | Gate 2 升级为 CSV 单元格级溯源；对抗用例 8 → 11 |
+| 2026-10-20 | 接入撤稿检测 / sympy 符号验证 / SciencePlots；盲审产物排除与机构指纹清理；开题硬检查；对抗用例 11 → 14 |
 | 2026-10-19 | 接入撤稿检测与 sympy 符号验证；SciencePlots 学术版式；22 个子命令全生命周期实测（见 `CAPABILITY_REPORT.md`） |

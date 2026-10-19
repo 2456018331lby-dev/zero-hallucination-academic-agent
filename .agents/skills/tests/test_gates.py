@@ -445,7 +445,110 @@ class TestQualityGatesAdversarial(unittest.TestCase):
             "Figure PDFs must be preserved so the blind copy still compiles",
         )
         self.assertIn("main.pdf", report.get("skipped_build_products", []))
-        self.assertTrue(os.path.exists(os.path.join(out, "LEAKS.md")))
+        # 报告写在提交目录**外面**（报告必然含身份词，不能自己泄露）
+        self.assertFalse(os.path.exists(os.path.join(out, "LEAKS.md")))
+        self.assertTrue(os.path.exists(report["leaks_md"]))
+
+    # ---------------------------------------------------------------
+    # 13. Anonymize: institution names in header / PDF metadata / docx
+    # ---------------------------------------------------------------
+    def test_13_anonymize_strips_institution_fingerprints(self):
+        """Cold-start audit found 12 leak classes the old anonymizer missed.
+
+        The most damaging were institution names printed on **every page**
+        (`\\fancyhead`), the school name inside `pdfauthor`, and an exported
+        `thesis.docx` that has no sibling `thesis.tex` and was copied verbatim.
+        """
+        try:
+            from zhaw import anonymize
+        except Exception as exc:  # pragma: no cover - zhaw not installed
+            self.skipTest(f"zhaw package not importable: {exc}")
+
+        src = os.path.join(self.temp_dir, "thesis_inst")
+        os.makedirs(src, exist_ok=True)
+        main_tex = (
+            "\\documentclass{ctexbook}\n"
+            "\\hypersetup{pdfauthor={北京邮电大学硕士研究生},pdftitle={论文}}\n"
+            "\\fancyhead[C]{\\small 北京邮电大学硕士学位论文：\\leftmark}\n"
+            "\\begin{document}\n"
+            "\\chapter{绪论}\n正文\n"
+            "\\end{document}\n"
+        )
+        with open(os.path.join(src, "main.tex"), "w", encoding="utf-8") as f:
+            f.write(main_tex)
+        with open(os.path.join(src, "thesis.docx"), "wb") as f:
+            f.write(b"PK\x03\x04 fake docx with real name")
+
+        scan = anonymize.scan(src)
+        kinds = set(scan["kinds"])
+        self.assertIn("header_institution", kinds, "Page header school name must be flagged")
+        self.assertIn("pdf_metadata", kinds, "pdfauthor school name must be flagged")
+
+        out = os.path.join(self.temp_dir, "thesis_inst_blind")
+        report = anonymize.emit(src, out, force=True)
+        blind = open(os.path.join(out, "main.tex"), encoding="utf-8").read()
+
+        self.assertNotIn("北京邮电大学", blind, "School name must be gone from blind copy")
+        self.assertIn("\\leftmark", blind, "Chapter mark must survive so headers still work")
+        self.assertFalse(os.path.exists(os.path.join(out, "thesis.docx")),
+                         "Exported docx has no sibling .tex but still carries identity")
+        self.assertEqual(report.get("residual_after_emit"), [],
+                         "Post-emit self-scan must find zero leftovers")
+
+    # ---------------------------------------------------------------
+    # 14. Gate 1: publication-type mismatch (conference cited as [J])
+    # ---------------------------------------------------------------
+    def test_14_citation_type_mismatch_detected(self):
+        """Metadata can be 100% correct while the GB/T type marker is wrong.
+
+        A cold-start audit found 13 of 16 references were conference papers
+        (`proceedings-article`) yet recorded as journal articles `[J]`. Gate 3
+        only checks structure, so this needs Gate 1 to compare against the
+        Crossref `type` field.
+        """
+        try:
+            import check_citations as cc
+        except Exception as exc:  # pragma: no cover - path not set up
+            self.skipTest(f"check_citations not importable: {exc}")
+
+        item = {
+            "type": "proceedings-article",
+            "title": ["Joint Waveform Design for ISAC Systems"],
+            "DOI": "10.1109/test.2024.1234567",
+            "issued": {"date-parts": [[2024]]},
+            "author": [{"family": "Zhang", "given": "San"}],
+            "container-title": ["Proc. IEEE ICC"],
+            "page": "1-6",
+        }
+
+        class StubClient:
+            def by_doi(self, doi):
+                return dict(item)
+
+            def doi_error_kind(self, doi):
+                return None
+
+            def retraction(self, doi):
+                return False, None
+
+        fields = {
+            "title": "Joint Waveform Design for ISAC Systems",
+            "author": "San Zhang",
+            "doi": "10.1109/test.2024.1234567",
+            "year": "2024",
+            "pages": "1-6",
+        }
+        wrong = cc.audit_entry({"origin": "references.tex", "type": "article",
+                                "key": "zhang2024", "fields": fields}, StubClient())
+        self.assertIn("pub_type", wrong["checked"])
+        self.assertTrue(any("著录类型" in w for w in wrong["warns"]),
+                        f"Conference-cited-as-journal must warn, got {wrong}")
+
+        # 正确著录（会议）不应报类型问题
+        right = cc.audit_entry({"origin": "references.tex", "type": "inproceedings",
+                                "key": "zhang2024", "fields": fields}, StubClient())
+        self.assertFalse(any("著录类型" in w for w in right["warns"]),
+                         f"Correct [C] entry must not warn, got {right}")
 
 
 if __name__ == "__main__":

@@ -412,6 +412,46 @@ def crossref_fields(item):
 # 单条比对
 # ---------------------------------------------------------------------------
 
+# ---- 著录类型一致性（Crossref type vs 条目标识）--------------------------
+# 冷启动体检发现：16 条引文的标题/年/卷/期/页与 Crossref 全对，但 13 条把
+# 会议论文（proceedings-article）著录成 [J]，另有 1 条预印本（posted-content）
+# 著录成 [J] 并写了期刊名。Gate 3 只查结构，查不到「类型标识错」→ 本门禁盲区。
+_CROSSREF_TYPE_KIND = {
+    "journal-article": "article",
+    "proceedings-article": "inproceedings",
+    "book-chapter": "incollection",
+    "book": "book",
+    "monograph": "book",
+    "dissertation": "phdthesis",
+    "report": "techreport",
+    "posted-content": "preprint",
+    "dataset": "misc",
+}
+_BIB_TYPE_KIND = {
+    "article": "article", "inproceedings": "inproceedings", "conference": "inproceedings",
+    "incollection": "incollection", "inbook": "incollection", "book": "book",
+    "phdthesis": "phdthesis", "mastersthesis": "phdthesis", "techreport": "techreport",
+    "misc": "misc", "online": "misc", "unpublished": "preprint",
+}
+_GB_MARKER_KIND = {"J": "article", "C": "inproceedings", "M": "book", "D": "phdthesis",
+                   "R": "techreport", "EB/OL": "misc", "Z": "misc", "N": "misc"}
+_KIND_LABEL = {
+    "article": "期刊 [J]", "inproceedings": "会议 [C]", "incollection": "文集析出 [M]",
+    "book": "专著 [M]", "phdthesis": "学位论文 [D]", "techreport": "报告 [R]",
+    "preprint": "预印本（不应按期刊著录）", "misc": "其他 [Z]",
+}
+
+
+def _declared_kind(entry):
+    """条目自己声明的文献类型：先看 BibTeX 条目类型，再看 GB/T 标识符 [J]/[C]。"""
+    kind = _BIB_TYPE_KIND.get((entry.get("type") or "").lower())
+    if kind:
+        return kind
+    blob = " ".join(str(v) for v in entry.get("fields", {}).values())
+    m = re.search(r"\[(EB/OL|J|C|M|D|R|Z|N)\]", blob)
+    return _GB_MARKER_KIND.get(m.group(1)) if m else None
+
+
 def audit_entry(entry, client):
     """返回 {status, problems[], warns[], checked[], resolved_doi}"""
     f = entry["fields"]
@@ -453,6 +493,18 @@ def audit_entry(entry, client):
             checked.append("retraction")
         if retracted:
             problems.append(f"该文献已被撤稿（引用撤稿论文属学术事故）：{doi} — {ret_detail}")
+
+    # 著录类型一致性：元数据全对、Gate 3 结构全过，仍可能把 [C] 写成 [J]。
+    # 判为 WARN 而非 FAIL —— 需要人确认是否真错（少数数据库 type 标注本身有误）。
+    declared = _declared_kind(entry)
+    actual = _CROSSREF_TYPE_KIND.get((item.get("type") or "").lower())
+    if declared and actual:
+        checked.append("pub_type")
+        if declared != actual:
+            warn_problems.append(
+                f"著录类型与 Crossref 不一致：条目按「{_KIND_LABEL.get(declared, declared)}」著录，"
+                f"但 Crossref 记录 type='{item.get('type')}'（应为「{_KIND_LABEL.get(actual, actual)}」）"
+            )
 
     # 标题
     if title:

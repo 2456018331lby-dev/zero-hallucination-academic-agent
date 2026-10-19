@@ -23,41 +23,45 @@
 
 | 维度 | 实测值 | 证据位置 |
 |---|---|---|
-| 对抗自测用例 | **11 / 11 PASS，0.352 s** | §2 |
+| 对抗自测用例 | **14 / 14 PASS，0.41 s** | §2 |
 | 真实工程门禁 | **3 个工程全部 Overall PASS** | §3 |
 | 接地门禁（PDF 物理页码核验） | **11 篇 PDF / 8 行矩阵 / 0 FAIL / 0 WARN** | §4 |
 | CLI 子命令 | **22 个，全部实测可用** | §5 |
 | 学位论文编译 | **32 页 / 375.6 KB / 0 错误** | §5.1 |
 | 组会 PPT | **16 页 / 243.0 KB** | §5.5 |
 | 答辩 PPT | **9 页 / 82.1 KB + 讲稿 + 13 问 Q&A** | §5.6 |
-| 盲审匿名化 | **7 处机检泄露全部重写，副本可独立编译** | §5.7 |
+| 盲审匿名化 | **13 处机检泄露全部重写，产物默认排除，自检复扫 0 残留** | §5.7 |
 | 归档 | **985,054 字节 zip + SHA-256 manifest** | §5.8 |
 | 可交付度评分（demo 工程） | **55.2 / 100**（诚实打分，缺口逐条列出） | §5.4 |
+| 开题报告机检 | `_cold/d/proposal` **PASS**：9,351 汉字 / 23 篇文献 / 0 issue | §5.10 |
 
 ---
 
-## 2. 对抗自测：11 / 11 全部拦截
+## 2. 对抗自测：14 / 14 全部拦截
 
-`zhaw selftest` 不是「跑通就行」的测试，而是**主动构造 11 种造假/出错场景，验证门禁真的能拦住**。
+`zhaw selftest` 不是「跑通就行」的测试，而是**主动构造 14 种造假/出错场景，验证门禁真的能拦住**。
 
 | # | 攻击场景 | 拦截者 | 结果 |
 |---|---|---|---|
-| 1 | 伪造引文（作者/年份/卷期错配） | Gate 1 | PASS |
-| 2 | 编造 DOI | Gate 1 | PASS |
-| 3 | 数据表里出现正文没写的数字 | Gate 2 | PASS |
-| 4 | 正文数字与 CSV 对不上 | Gate 2 | PASS |
-| 5 | 用中文数字绕过数值检查 | Gate 2 | PASS |
-| 6 | 缺参考文献 / 引用不存在的条目 | Gate 1 | PASS |
-| 7 | 绕过 GB/T 格式（缺摘要/关键词） | Gate 3 | PASS |
-| 8 | 伪造人工签字 | Gate 4 | PASS |
-| 9 | **CSV 数值与正文不一致（第 9 项，本轮新增）** | Gate 2 | PASS |
-| 10 | **引用已撤稿论文（本轮新增）** | Gate 1 | PASS |
-| 11 | **数学恒等式写错（本轮新增）** | Math Reviewer | PASS |
-| 12 | **盲审版 PDF 里残留真实姓名/学号（本轮新增）** | Anonymize | PASS |
+| 1 | 编造 DOI | Gate 1 | PASS |
+| 2 | 真实 DOI 但标题被篡改（相似度 < 0.85） | Gate 1 | PASS |
+| 3 | 正文有量化断言但没有任何 CSV 支撑 | Gate 2 | PASS |
+| 4 | 正文数字与 CSV 单元格对不上（逐格比对） | Gate 2 | PASS |
+| 5 | 用中文数字（「百分之三十五」）绕过数值检查 | Gate 2 | PASS |
+| 6 | 论文页数超出被引 PDF 实际页数 | Grounding | PASS |
+| 7 | 下载器四道熔断（非 OA / 域名 / 体积 / 重复） | Survey | PASS |
+| 8 | 正文残留 Markdown 与 `\TODO{}` 占位符 | Gate 3 | PASS |
+| 9 | 人工签字后章节被改动（SHA-256 不匹配） | Gate 4 | PASS |
+| 10 | 签字人填「北京大学研究生/导师复核组」占位名 | Gate 4 | PASS |
+| 11 | 引用已被撤稿的论文 | Gate 1 | PASS |
+| 12 | 数学恒等式写错（sympy 反证 `2+2=5`） | Math Reviewer | PASS |
+| 13 | 盲审版里残留编译产物（PDF/DOCX 携带真名） | Anonymize | PASS |
+| 14 | 页眉/PDF 元数据/正文残留校名与学院名 | Anonymize | PASS |
 
-> 第 9 项是把 Gate 2 从「有 CSV 就放行」升级为「逐单元格比对」后加的；第 10、11 项对应撤稿检测与
-> sympy 符号验证；第 12 项对应盲审版 PDF 泄露——`anonymize` 现在默认排除所有编译产物，并在扫描阶段
-> 直接拦下带个人标识的 PDF/DOCX，而不是只在 `.tex` 里替换文本。
+> 第 4、5 项是把 Gate 2 从「有 CSV 就放行」升级为「逐单元格比对 + 认中文数字」后加的；
+> 第 11、12 项对应撤稿检测与 sympy 符号验证；第 13、14 项对应冷启动实测挖出的
+> 12 类盲审泄露——`anonymize` 现在默认排除所有编译产物，并清理页眉校名、PDF 元数据、
+> 封面机构名，产物落盘后还会自检复扫。
 
 ---
 
@@ -149,9 +153,10 @@ zhaw defense _demo\demo_thesis --out _demo\demo_defense --compile
 ```
 zhaw anonymize bupt_isac_workflow\thesis_project --out _demo\bupt_blind_repro --force
 ```
-→ 20 个文件、**7 处机检泄露全部重写**（封面姓名 / 学号 / 导师 / 正文署名 / 致谢章 / 攻读成果章），生成 `LEAKS.md`，**盲审副本可独立 xelatex 编译通过**
+→ **13 处**机检泄露全部重写（封面姓名 / 学号 / 导师 / 正文署名 / 致谢章 / 攻读成果章 / 页眉校名 / 封面机构名 / PDF 元数据 `pdfauthor`），`main.pdf`、`thesis.docx` 等编译产物**默认排除**（否则字节相同、真名原样带出），落盘后自检复扫 `residual_leaks=[]`，**盲审副本可独立 xelatex 编译通过（30 页 / 369.5 KB / 0 错误）**
 
-> `LEAKS.md` 明确列出「机器管不了」的 6 类：PDF 元数据、图片水印、表格姓名列、自引表述、致谢中的间接指认、基金号。
+> `LEAKS.md` 明确列出「机器管不了」的 5 类：图片水印、表格姓名列、自引表述、致谢中的间接指认、基金号。
+> 报告文件 `*_LEAKS.md` / `*_anonymize_report.json` 写在盲审目录**之外**，避免自己把真名/真学号带进交付物。
 
 ### 5.8 归档
 ```
@@ -167,9 +172,24 @@ zhaw archive bupt_isac_workflow\thesis_project --out-dir _demo\archives --name b
 | `zhaw progress` | 28.5%（8,547 / 30,000 汉字）、待填 20 处、16 条文献、分章进度表 |
 | `zhaw figures` | CSV → PDF + PNG 矢量图 + `\includegraphics` 片段 + 三线表 `.tex` |
 | `zhaw math` | 43 个契约符号，0 findings；符号恒等式 0 验证/0 失败/5 未定（不假阳性） |
-| `zhaw proposal` | 六章开题模板 + 配额检查；demo 诚实报 10 条缺口（562 字 < 9000 等），exit 1 |
+| `zhaw proposal` | 六章开题模板 + 配额检查 + **交付链路硬检查**（封面占位符 / 残留旧校名 / `\cite` 的 key 是否在 bib / 图片是否真实存在）；`_cold/d/proposal` PASS |
 | `zhaw docx` | 无 pandoc 时自动降级到 Python 原生 GB/T 引擎，产出 `main.docx` |
-| `zhaw bib` | 16 条 Crossref 回填，0 查无此文 |
+| `zhaw bib` | 16 条 Crossref 回填，0 查无此文；`--apply` 前自动备份 `.bib.bak` |
+| `zhaw anonymize` | `scan` 与 `status` 分离：`scan=LEAKS_FOUND` 是「发现了待清理项」，`status=ATTENTION` 才是「需要你看一眼」 |
+| `zhaw archive` | 821,692 字节 zip + SHA-256 manifest（全生命周期 demo 实测） |
+
+### 5.10 开题报告（真实内容，不是空模板）
+
+`_cold/d/proposal` 是冷启动子代理从零写的开题报告（9,351 汉字 / 23 篇文献）：
+
+```
+zhaw proposal _cold\d\proposal --check
+```
+→ **PASS**：六章配额全部达标、23 篇文献全部 Crossref 回填、`issues` 为空；
+`main.pdf` 21 页 / 250.2 KB / 0 错误 / 0 undefined / 0 严重溢出。
+
+> 对比：`_demo\demo_proposal`（空模板）会被诚实地判 10 条缺口并 exit 1。
+> 同一个检查器，对空模板严、对真内容放——这正是它该有的行为。
 
 ---
 
@@ -207,7 +227,7 @@ py -3.12 -m pip install -e .
 
 # 1) 环境与自测
 zhaw doctor
-zhaw selftest                          # 期望 12/12 PASS
+zhaw selftest                          # 期望 14/14 PASS
 
 # 2) 三工程门禁
 zhaw check bupt_isac_workflow\thesis_project        --scaffold --offline
@@ -235,9 +255,11 @@ zhaw archive  bupt_isac_workflow\thesis_project --out-dir _demo\archives --name 
 
 | 项 | 第一轮（`2c84fd6`） | 本轮 |
 |---|---|---|
-| 对抗用例 | 9 | **12** |
+| 对抗用例 | 9 | **14** |
 | 子命令 | 10 | **22** |
 | 端到端链路 | 门禁 + 编译 | **建工程→图→组会→开题→答辩→盲审→归档** |
+| 建工程 | 复制 bupt 工程（带入他人内容与旧校名） | **身份净化 + 「不是你的内容」告警 + `--school` 可选** |
+| 编译门禁 | 只跑两遍 xelatex，不跑 bibtex；natbib 未定义引文漏报 | **自动 bibtex + 认 `Package natbib Warning:`** |
 | 撤稿检测 | 无 | **有** |
 | 数学机器验证 | 无 | **有（sympy）** |
 | 图表版式 | 手写 rcParams | **SciencePlots IEEE** |
@@ -248,7 +270,7 @@ zhaw archive  bupt_isac_workflow\thesis_project --out-dir _demo\archives --name 
 
 ## 10. 诚实结论
 
-- 作为**质量门禁**：已经能用了。11 种造假场景全拦，三个真实工程全过，PDF 页码级核验跑通。
+- 作为**质量门禁**：已经能用了。**14 种**造假场景全拦，三个真实工程全过，PDF 页码级核验跑通。
 - 作为**写作辅助**：只到「脚手架 + 配额 + 缺口清单」这一层，正文得你自己写。
 - 作为**研究生科研基础设施**：组会（每 1–2 周）、开题、答辩、盲审、归档这五个高频场景都有命令覆盖；中期检查与投稿流程仍是空白。
 - 最大的剩余价值不在加功能，而在**把 bupt 那 8,547 字写成 30,000 字** —— 工具已经就位了。

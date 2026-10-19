@@ -15,10 +15,10 @@ pip install -e . && zhaw doctor && zhaw selftest
 ```
 
 `zhaw doctor` 打印环境体检（Python / PyMuPDF / XeLaTeX / 7 个门禁脚本）；
-`zhaw selftest` 用 12 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.35 秒）。
+`zhaw selftest` 用 14 个"故意造假"的用例证明门禁真的会拦（零网络，约 0.4 秒）。
 
 **这套东西现在到底能做到什么程度？** 见 [`CAPABILITY_REPORT.md`](CAPABILITY_REPORT.md)：
-22 个子命令逐个实测、12/12 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译。
+22 个子命令逐个实测、14/14 对抗用例、三个真实工程门禁全过、接地门禁 0 FAIL、盲审副本可独立编译（13 处泄露全清、产物默认排除）。
 
 **你是 AI Agent、要接手这个仓库？** 直接读 [`AGENTS.md`](AGENTS.md)——那是给机器看的说明书：
 仓库地图（哪些能改哪些别碰）、22 个命令按场景速查、四个任务剧本、以及**绝对不能做的六件事**。
@@ -48,11 +48,13 @@ pidemo/
 * **文献与数据闭环**：
   * 实际下载 **11 篇开源物理 OA PDF** 至 `literature/`；
   * 15+1 维对比矩阵经 PyMuPDF 真实物理页码核验达成 **0 FAIL, 0 WARN**；
-  * 论文 16 篇参考文献（32 条记录）全部直连 Crossref 官方 REST API 权威元数据核验（**FAIL=0, OK=32**）；
+  * 论文 16 篇参考文献（32 条记录）经 Crossref 官方 REST API 元数据核验（**FAIL=0, OK=32**）。注意：首次联网回填后命中本地 `.citation_cache.json`（SHA-256 绑定），并非每次运行都实时联网；`--offline` 时完全只用缓存。要强制实时核验，删掉 `thesis_project/.citation_cache.json` 再跑；
   * 完整保留从自检到编译的 **7 大原始无润色终端执行日志**（`logs/00_selftest.log` 至 `06_compile.log`）。
 * **当前真实成色（诚实标注，不吹）**：
   * 正文 **8,547 汉字**（硕士常规 3–5 万字）→ 约完成 20–25%；
   * 第 4 章有 **18 处 `\TODO{}`** 占位，`experiments/*.csv` 尚未产出，所以 Gate 2 目前只能证明"没有自由漂浮的数字"，还不能证明"数字是对的"；
+  * 引文**元数据全对、但类型标识有错**：16 条里有 13 条 Crossref 判为 `proceedings-article`（会议）却著录成 `[J]`，1 条 `posted-content`（预印本）也按期刊著录。Gate 3 只查结构查不出这个 → Gate 1 现已把它报为 **WARN**（`著录类型与 Crossref 不一致`），需人工订正为 `[C]`；
+  * `literature/` 的 11 篇 PDF 与正文被引的 16 篇**完全不相交**：接地门禁证明的是"矩阵里那 11 篇确实写了那些话"，不等于"论文引的文献被读过"。这两件事不要混为一谈；
   * Gate 4 **未签署**——`.human_review.json` 不存在是设计如此，送审前必须由真人在终端执行 `zhaw gate4 bupt_isac_workflow/thesis_project --confirm-review --reviewer <你的名字>`；
   * 组会 PPT 14 页（目标 15–20 页）。
 
@@ -133,9 +135,9 @@ pip install -e ".[full]"            # 需要 Word 导出 / 画图时再加 pytho
 zhaw doctor                         # Python / PyMuPDF / XeLaTeX / 7 个门禁脚本是否就位
 ```
 
-### 3. 门禁自身对抗回归（11 个用例，零网络）
+### 3. 门禁自身对抗回归（14 个用例，零网络）
 ```bash
-zhaw selftest                       # 期望 12/12 PASS
+zhaw selftest                       # 期望 14/14 PASS
 ```
 
 ### 4. 四道门禁（一条命令，或分开跑）

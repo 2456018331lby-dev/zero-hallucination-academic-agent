@@ -100,6 +100,11 @@ MAIN_TEX = r"""% !TeX program = xelatex
 \usepackage{booktabs,longtable,multirow,array}
 \usepackage{tikz}
 \usepackage[hidelinks]{hyperref}
+% GB/T 7714 参考文献：必须同时具备 gbt7714 宏包与 gbt7714-numeric.bst。
+% 只写 \bibliographystyle 而不引入宏包，\cite 会退化成打印 bst 的作者-年标签，
+% 渲染成「[Liu et al.(2022)Liu，Cui，…]」并造成严重溢出行。
+% MiKTeX: mpm --install=gbt7714    TeX Live: tlmgr install gbt7714
+\usepackage[super]{gbt7714}
 \usepackage{caption}
 \captionsetup{font=small,labelsep=quad}
 \graphicspath{{figures/}}
@@ -160,7 +165,7 @@ MAIN_TEX = r"""% !TeX program = xelatex
 \input{chapters/sec06_schedule.tex}
 
 \clearpage
-\bibliographystyle{gb7714-2015}
+\bibliographystyle{gbt7714-numeric}
 \bibliography{references}
 
 \end{document}
@@ -307,6 +312,53 @@ def check_proposal(project: Path, min_total: int = 9000, min_refs: int = 20) -> 
     schedule = chap_dir / "sec06_schedule.tex"
     if not schedule.exists() or "tabular" not in schedule.read_text(encoding="utf-8", errors="replace"):
         issues.append("进度安排章节缺少表格（tabular）")
+
+    # ---- 交付链路硬检查（冷启动实测暴露的三类漏报）----
+    # 1) 封面字段仍是模板默认值/占位符 —— 开题报告最容易被跳过的一步。
+    # 2) \cite 的 key 在 references.bib 里不存在 —— 编译后是「?」不是报错。
+    # 3) \includegraphics 指向的图件不存在 —— 开题要求技术路线图，空 figures/ 也能过。
+    tex_sources: list[tuple[str, str]] = []
+    main_tex = project / "main.tex"
+    if main_tex.exists():
+        tex_sources.append(("main.tex", main_tex.read_text(encoding="utf-8", errors="replace")))
+    if chap_dir.exists():
+        for path in sorted(chap_dir.glob("*.tex")):
+            tex_sources.append((f"chapters/{path.name}", path.read_text(encoding="utf-8", errors="replace")))
+
+    if main_tex.exists():
+        mt = tex_sources[0][1]
+        for label, pattern in (
+            ("标题", r"\\title\{([^}]*)\}"),
+            ("作者", r"\\author\{([^}]*)\}"),
+        ):
+            m = re.search(pattern, mt)
+            value = (m.group(1) if m else "").strip()
+            if not value or "待填" in value:
+                issues.append(f"封面{label}仍是占位符（{value or '空'}）")
+        for stale in ("北京大学", "清华大学", "PEKING UNIVERSITY"):
+            if stale in mt:
+                issues.append(f"封面/页眉残留模板校名「{stale}」")
+
+    if bib.exists():
+        bib_keys = set(re.findall(r"^@\w+\{([^,]+),", bib.read_text(encoding="utf-8", errors="replace"), re.MULTILINE))
+        cite_keys: list[str] = []
+        for _, text in tex_sources:
+            for group in re.findall(r"\\cite[a-zA-Z]*\{([^}]*)\}", text):
+                cite_keys.extend(k.strip() for k in group.split(",") if k.strip())
+        missing = sorted({k for k in cite_keys if k not in bib_keys})
+        if missing:
+            issues.append("引用了参考文献里不存在的 key：" + ", ".join(missing[:8]))
+        if bib_keys and not cite_keys:
+            issues.append(f"references.bib 有 {len(bib_keys)} 条，但正文一次都没 \\cite")
+
+    for where, text in tex_sources:
+        for graphic in re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]*)\}", text):
+            rel = graphic.strip()
+            if not rel:
+                continue
+            if (project / rel).exists() or (project / "figures" / rel).exists():
+                continue
+            issues.append(f"{where}: \\includegraphics 指向的图件不存在：{rel}")
 
     status = "PASS" if not issues else "FAIL"
     return {

@@ -66,11 +66,14 @@ def parse_compilation_log(log_path):
             overfull.append(f"Lines {m.group(2)}-{m.group(3)}: {pt:.1f}pt overflow")
 
     undefined = []
-    for m in re.finditer(r"LaTeX Warning: (?:Reference `([^']+)' on page \d+ undefined|Citation `([^']+)' on page \d+ undefined)", text):
-        ref = m.group(1) or m.group(2)
-        undefined.append(ref)
-
-    if "There were undefined references" in text and not undefined:
+    # 不能只匹配 "LaTeX Warning:" —— natbib / biblatex / hyperref 的前缀是
+    # "Package natbib Warning:" 等。只认内核前缀会让 GB/T 引文路径上的未定义引用
+    # 静默放行（实测：删掉 main.bbl 后参考文献整章消失，工具仍报 Undefined Refs: 0）。
+    for m in re.finditer(r"(?:Reference|Citation) [`']([^`']+)'[^\n]{0,120}?undefined", text):
+        ref = m.group(1)
+        if ref not in undefined:
+            undefined.append(ref)
+    if not undefined and re.search(r"undefined (?:references|citations)", text):
         undefined.append("(General undefined references flagged)")
 
     return {"errors": errors, "overfull": overfull, "undefined": undefined}
@@ -90,11 +93,51 @@ def compile_pdf(tex_dir, tex_file="main.tex", strict=False):
 
     cmd = [xelatex, "-interaction=nonstopmode", "-synctex=1", tex_file]
 
+    # 是否需要 BibTeX：main.tex 里有 \bibliography{...} 且没有手写 thebibliography。
+    # 早先这里只跑两遍 xelatex，从不跑 bibtex，导致 .bib 改动永远进不了 PDF。
+    bib_needed = False
+    try:
+        with open(os.path.join(tex_dir, tex_file), "r", encoding="utf-8", errors="ignore") as fp:
+            tex_src = fp.read()
+        bib_needed = bool(re.search(r"\\bibliography\{", tex_src)) and not re.search(
+            r"\\begin\{thebibliography\}", tex_src
+        )
+    except OSError:
+        pass
+
     print(f"[*] Running Pass 1 (XeLaTeX {tex_file})...")
     p1 = subprocess.run(cmd, cwd=tex_dir, env=env, capture_output=True, text=True, errors="ignore")
 
+    bibtex_log = ""
+    if bib_needed:
+        bibtex = shutil.which("bibtex")
+        if not bibtex:
+            for cand in ("bibtex", "bibtex.exe"):
+                probe = os.path.join(bin_dir, cand)
+                if os.path.isfile(probe):
+                    bibtex = probe
+                    break
+        if bibtex:
+            print("[*] Running BibTeX (bibliography detected)...")
+            bib = subprocess.run(
+                [bibtex, os.path.splitext(tex_file)[0]],
+                cwd=tex_dir, env=env, capture_output=True, text=True, errors="ignore",
+            )
+            bibtex_log = (bib.stdout or "") + (bib.stderr or "")
+            if "I found no \\citation" in bibtex_log or "error message" in bibtex_log.lower():
+                print("    [!] BibTeX reported a problem:")
+                print("    " + bibtex_log.strip().splitlines()[-1][:200])
+        else:
+            print("[!] BibTeX not found but \\bibliography{} is used — citations may be undefined.")
+
     print("[*] Running Pass 2 (XeLaTeX to resolve references and TOC)...")
     p2 = subprocess.run(cmd, cwd=tex_dir, env=env, capture_output=True, text=True, errors="ignore")
+
+    if bib_needed:
+        print("[*] Running Pass 3 (XeLaTeX after BibTeX)...")
+        p3 = subprocess.run(cmd, cwd=tex_dir, env=env, capture_output=True, text=True, errors="ignore")
+        if p3.returncode == 0:
+            p2 = p3
 
     pdf_name = os.path.splitext(tex_file)[0] + ".pdf"
     pdf_path = os.path.join(tex_dir, pdf_name)

@@ -572,6 +572,10 @@ def run_gate4_human_review(project_dir, scaffold_mode=False):
 
 def orchestrate_gates(project_dir, scaffold_mode=False, offline=False, strict=False, min_bib=60, json_out=None):
     project_dir = os.path.abspath(project_dir)
+    # 默认把 summary 写进被检工程目录，而不是调用者 CWD —— 否则检查多个工程时
+    # 后一次会静默覆盖前一次，且产物落在仓库根污染工作区。
+    if not json_out:
+        json_out = os.path.join(project_dir, "gate_summary.json")
     print("=" * 75)
     print(f"[*] Academic Quality Gates Orchestration (DoD Enforcement)")
     print(f"[*] Project Target: {project_dir}")
@@ -660,7 +664,7 @@ if __name__ == "__main__":
     parser.add_argument("--offline", action="store_true", help="Gate 1 offline mode (use cache only)")
     parser.add_argument("--strict", action="store_true", help="Strict mode: warnings cause failure")
     parser.add_argument("--min-bib", type=int, default=60, help="Minimum reference threshold")
-    parser.add_argument("--json", dest="json_out", default="gate_summary.json", help="Output summary JSON path")
+    parser.add_argument("--json", dest="json_out", default=None, help="Output summary JSON path (default: <project>/gate_summary.json)")
     parser.add_argument("--confirm-review", action="store_true", help="Launch interactive human sign-off terminal protocol (real humans only)")
     parser.add_argument("--reviewer", help="Reviewer real name (for scripted confirmation/verification)")
     parser.add_argument("-y", "--yes", action="store_true", dest="auto_yes", help="Auto-confirm all chapters (for verification test harnesses only)")

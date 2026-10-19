@@ -59,12 +59,48 @@ COVER_KEYS = [
     ("author", re.compile(r"姓\s*(?:\\qquad|\s)*名|作\s*者")),
     ("student_id", re.compile(r"学\s*(?:\\qquad|\s)*号")),
     ("advisor", re.compile(r"指\s*导\s*教\s*师|导\s*师")),
+    ("institution", re.compile(r"学\s*校|校\s*名|学\s*院|单\s*位|University|College|Institute", re.I)),
 ]
 COVER_FIX = {
     "author": ("匿名", "封面姓名 → 匿名"),
     "student_id": ("000000000", "封面学号 → 000000000"),
     "advisor": ("导师", "封面指导教师 → 导师"),
+    "institution": ("—", "封面机构名 → —"),
 }
+
+# 机构标识：校名/学院名会印在**每一页页眉**或封面上，比姓名更隐蔽。
+# 盲审版必须去掉，否则整本论文每一页都在自报家门。
+INSTITUTION_RE = re.compile(
+    r"[\u4e00-\u9fa5]{2,12}(?:大学|学院|研究院|研究所)"
+    r"|BEIJING\s+UNIVERSITY[^}\\]*"
+    r"|UNIVERSITY\s+OF\s+[A-Z ]{3,}"
+    r"|\bBUPT\b",
+    re.IGNORECASE,
+)
+# 页眉页脚：`\fancyhead[C]{北京邮电大学硕士学位论文：\leftmark}`
+FANCYHEAD_RE = re.compile(
+    r"\\(?:fancyhead|fancyfoot|lhead|chead|rhead)\s*(?:\[[^\]]*\])?\s*\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}"
+)
+# hypersetup 里的 PDF 元数据：`pdfauthor={北京邮电大学硕士研究生}`
+PDFMETA_RE = re.compile(
+    r"(pdf(?:author|subject|keywords|creator))\s*=\s*\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}",
+    re.IGNORECASE,
+)
+# 这些是**本工具自己的报告**，含绝对路径与真实学号，绝不能进提交目录
+REPORT_NAMES = {
+    "LEAKS.md", "anonymize_report.json", "audit_report.json", "audit_report.md",
+    "gate_summary.json", "figures_report.json", "progress_report.json",
+    "seminar_report.json", "defense_report.json", "proposal_report.json",
+}
+# Crossref 回填缓存：含检索关键词与作者机构，不是论文源文件
+CACHE_NAMES = {".citation_cache.json"}
+_ABS_PATH_RE = re.compile(r"[A-Za-z]:\\[^\s|]*")
+
+
+def _redact(text: str) -> str:
+    """报告里的绝对路径与长数字（学号/手机号）一律打码，防止「防泄露报告自己泄露」。"""
+    text = _ABS_PATH_RE.sub("[路径已隐藏]", text)
+    return re.sub(r"\d{6,}", lambda m: m.group(0)[:4] + "*" * (len(m.group(0)) - 4), text)
 
 
 def _iter_tex(project: Path) -> list[Path]:
@@ -206,14 +242,47 @@ def scan(project: Path) -> dict:
             leaks.append({"file": rel, "line": idx, "kind": "cover_field",
                           "detail": f"{kind}: {value}", "fix": fix})
 
+        # 页眉页脚里的校名：会印在每一页上，是最隐蔽的一类
+        for idx, line in enumerate(lines, start=1):
+            match = FANCYHEAD_RE.search(line)
+            if match and INSTITUTION_RE.search(match.group(1)):
+                leaks.append({"file": rel, "line": idx, "kind": "header_institution",
+                              "detail": line.strip()[:120],
+                              "fix": "页眉去校名，只留「硕士学位论文：\\leftmark」"})
+
+        # PDF 元数据（hypersetup）：xelatex 会把它写进 PDF Info
+        for idx, line in enumerate(lines, start=1):
+            for match in PDFMETA_RE.finditer(line):
+                if INSTITUTION_RE.search(match.group(2)):
+                    leaks.append({"file": rel, "line": idx, "kind": "pdf_metadata",
+                                  "detail": line.strip()[:120],
+                                  "fix": f"{match.group(1)}={{匿名}}"})
+
+        # 正文/封面里裸露的校名、学院名（工具不敢自动全删，列出来给人确认）
+        for idx, line in enumerate(lines, start=1):
+            if line.lstrip().startswith("%"):
+                continue
+            if FANCYHEAD_RE.search(line) or PDFMETA_RE.search(line):
+                continue
+            if COVER_ROW_RE.match(line.rstrip("\n")):
+                continue  # 封面行已由 cover_field 覆盖
+            found = INSTITUTION_RE.search(line)
+            if found:
+                leaks.append({"file": rel, "line": idx, "kind": "institution_text",
+                              "detail": found.group(0), "fix": "人工确认：盲审版应删除校名/学院名"})
+
         for start, end in _chapter_blocks(text):
             leaks.append({"file": rel, "line": start + 1, "kind": "chapter_block",
                           "detail": lines[start].strip()[:120],
                           "fix": f"删除第 {start + 1}--{end} 行整块"})
 
     kinds = sorted({item["kind"] for item in leaks})
+    # 注意语义：这里是「扫描结论」，不是「匿名化是否成功」。
+    # 冷启动实测踩过坑：把扫描 status 当成结果 status，会让人误以为 emit 失败。
+    # 真正的成败看 emit() 返回的 residual_after_emit。
     return {
-        "status": "PASS" if not leaks else "FAIL",
+        "scan": "CLEAN" if not leaks else "LEAKS_FOUND",
+        "status": "PASS" if not leaks else "ATTENTION",
         "project": str(project),
         "author_names": names,
         "leak_count": len(leaks),
@@ -237,6 +306,14 @@ def _rewrite_cover_line(line: str) -> str:
     return line
 
 
+def _rewrite_header(match: re.Match) -> str:
+    """页眉去校名，保留 ``\\leftmark`` 让章节标题仍然显示。"""
+    prefix = match.group(0).split("{", 1)[0]
+    inner = match.group(1)
+    mark = "\\leftmark" if "\\leftmark" in inner else ""
+    return f"{prefix}{{硕士学位论文：{mark}}}" if mark else f"{prefix}{{}}"
+
+
 def _anonymize_text(text: str, names: list[str]) -> str:
     lines = text.splitlines(keepends=True)
     drop: set[int] = set()
@@ -258,14 +335,45 @@ def _anonymize_text(text: str, names: list[str]) -> str:
     for name in names:
         if len(name) >= 2:
             body = body.replace(name, "作者")
+    body = FANCYHEAD_RE.sub(_rewrite_header, body)
+    body = PDFMETA_RE.sub(lambda m: f"{m.group(1)}={{匿名}}", body)
+    body = INSTITUTION_RE.sub("某单位", body)
     return body
 
 
 def _is_build_product(src: Path) -> bool:
-    """同目录存在同名 .tex 的 PDF/DOCX/PPTX 是编译产物，含真实姓名，不可复制。"""
-    if src.suffix.lower() not in BUILD_PRODUCT_SUFFIXES:
-        return False
-    return src.with_suffix(".tex").exists()
+    """DOCX/PPTX 一律是导出成品；PDF 仅当有同名 ``.tex`` 或名为 main/thesis 才算构建产物。
+
+    冷启动实测教训：``thesis.docx`` 没有同名 ``thesis.tex``，旧规则（只认同名 .tex）
+    把它原样复制进盲审目录，直接推翻「编译产物已全部排除」的声明。
+    """
+    suffix = src.suffix.lower()
+    if suffix in {".docx", ".pptx"}:
+        return True
+    if suffix == ".pdf":
+        return src.with_suffix(".tex").exists() or src.stem in {"main", "thesis"}
+    return False
+
+
+def _residual_leaks(out_dir: Path, names: list[str]) -> list[str]:
+    """对**产物目录**再扫一遍：emit 之后仍残留的身份词（校名/姓名/机构）。
+
+    这是一道自检闸门 —— 正常应返回空列表；非空说明替换逻辑有洞。
+    """
+    hits: list[str] = []
+    for path in sorted(out_dir.rglob("*.tex")):
+        rel = path.relative_to(out_dir).as_posix()
+        for idx, line in enumerate(_read(path).splitlines(), start=1):
+            if line.lstrip().startswith("%"):
+                continue
+            hit = next((n for n in names if n and len(n) >= 2 and n in line), None)
+            if hit:
+                hits.append(f"{rel}:{idx} 含姓名「{hit}」")
+                continue
+            found = INSTITUTION_RE.search(line)
+            if found:
+                hits.append(f"{rel}:{idx} 含机构名「{found.group(0)}」")
+    return hits
 
 
 def emit(project: Path, out: Path, force: bool = False) -> dict:
@@ -289,6 +397,8 @@ def emit(project: Path, out: Path, force: bool = False) -> dict:
             continue
         if src.suffix in SKIP_SUFFIXES or src.name.endswith(".synctex.gz"):
             continue
+        if src.name in REPORT_NAMES or src.name in CACHE_NAMES:
+            continue
         if _is_build_product(src):
             skipped_build.append(str(src.relative_to(project)))
             continue
@@ -303,14 +413,23 @@ def emit(project: Path, out: Path, force: bool = False) -> dict:
             shutil.copy2(src, dest)
         copied += 1
 
+    residual = _residual_leaks(out, names)
+
     leaks_md = [f"# 匿名化报告：{project.name}", "", f"生成时间：{now_iso()}", "",
                 f"- 检出泄露点：**{result['leak_count']}**",
                 f"- 涉及类型：{', '.join(result['kinds']) or '无'}", "",
                 "## 已自动处理", "",
                 "1. `\\author{}` → `\\author{匿名}`；2. 删除 `\\thanks{}`；3. 删除致谢章；",
-                "4. 删除攻读期间成果章；5. 删除基金声明；6. 姓名→「作者」；7. 邮箱/ORCID 打码。", "",
+                "4. 删除攻读期间成果章；5. 删除基金声明；6. 姓名→「作者」；7. 邮箱/ORCID 打码；",
+                "8. 页眉校名 → 「硕士学位论文：\\leftmark」；9. `pdfauthor` 等 PDF 元数据 → 匿名；",
+                "10. 封面机构名 → 「—」；11. 正文校名/学院名 → 「某单位」。", "",
                 "## 必须人工再确认（机器管不了）", "",
-                "- **重新编译**：编译产物（PDF/DOCX）已全部排除，盲审版必须重新编译后再提交",
+                "- **重新编译**：编译产物（PDF/DOCX/PPTX）已排除，盲审版必须重新编译后再提交",
+                "- **⚠️ 编译会重新注入路径泄露**：在盲审目录跑 xelatex 会在 `main.log` 里写入",
+                "  `C:\\Users\\<用户名>\\...` 八十余次。**提交前删掉 `main.log`/`*.aux`/`*.synctex.gz`**，",
+                "  或只提交 `main.tex` + 章节 + 图 + `references.bib`。",
+                "- **本报告 `LEAKS.md` 与 `*_report.json` 不进提交目录**（它们必须写出被删的校名/路径，",
+                "  本身必然含身份词）",
                 "- PDF 元数据里的作者名（xelatex 会写入 `\\author`）",
                 "- 图片/截图中的姓名、单位、水印",
                 "- 表格里的姓名列",
@@ -322,17 +441,28 @@ def emit(project: Path, out: Path, force: bool = False) -> dict:
         leaks_md += [f"- `{name}`" for name in skipped_build]
     else:
         leaks_md.append("无")
+    leaks_md += ["", "## 产物自检（emit 后复扫，正常应为 0）", ""]
+    if residual:
+        leaks_md += [f"- ❌ {_redact(line)}" for line in residual]
+    else:
+        leaks_md.append("✅ 产物目录内未再检出姓名/校名/学院名")
     leaks_md += ["", "## 泄露点清单", ""]
     if result["leaks"]:
         leaks_md += ["| 文件 | 行 | 类型 | 内容 | 处理 |", "|---|---|---|---|---|"]
         for item in result["leaks"]:
             leaks_md.append(
                 f"| `{item['file']}` | {item['line']} | {item['kind']} | "
-                f"{item['detail'].replace('|', '\\|')[:80]} | {item['fix']} |"
+                f"{_redact(item['detail']).replace('|', '\\|')[:80]} | {item['fix']} |"
             )
     else:
         leaks_md.append("无")
-    write_text(out / "LEAKS.md", "\n".join(leaks_md) + "\n")
+    # 报告写到提交目录**外面**：报告必须写出被删的校名/路径，本身必然含身份词。
+    # 冷启动实测教训：报告留在 blind/ 里等于「防泄露报告自己泄露」。
+    report_dir = out.parent
+    leaks_md_path = report_dir / f"{out.name}_LEAKS.md"
+    report_json_path = report_dir / f"{out.name}_anonymize_report.json"
+
+    write_text(leaks_md_path, "\n".join(leaks_md) + "\n")
 
     report = {
         "generated_at": now_iso(),
@@ -343,7 +473,14 @@ def emit(project: Path, out: Path, force: bool = False) -> dict:
         "leak_count": result["leak_count"],
         "kinds": result["kinds"],
         "author_names": names,
-        "status": "PASS" if copied else "FAIL",
+        "residual_after_emit": residual,
+        "status": "PASS" if copied and not residual else "FAIL",
+        "leaks_md": str(leaks_md_path),
+        "report_json": str(report_json_path),
     }
-    write_json(out / "anonymize_report.json", report)
+    # 落盘版把绝对路径打码（报告可能被随手打包进提交目录，路径含用户名 = 身份）；
+    # 返回值保留真实路径供 CLI 打印。
+    write_json(report_json_path, {
+        **report, "source": _redact(report["source"]), "output": _redact(report["output"]),
+    })
     return report

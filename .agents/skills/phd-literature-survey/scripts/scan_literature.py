@@ -32,7 +32,10 @@ def extract_pdf_metadata(pdf_path):
     }
     
     try:
-        import fitz  # PyMuPDF
+        try:
+            import pymupdf as fitz  # PyMuPDF >= 1.24
+        except ImportError:  # pragma: no cover - legacy PyMuPDF
+            import fitz  # PyMuPDF
         doc = fitz.open(pdf_path)
         entry["pages"] = len(doc)
         
